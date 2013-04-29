@@ -1,1 +1,6 @@
-.DS-Store;.project;.pydevproject;
+
+.DS_Store
+
+.project
+
+.pydevproject
