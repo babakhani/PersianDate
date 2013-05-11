@@ -1,3 +1,5 @@
+
+
 var globalTextstringFromat = "YYYY-MM-DD HH:mm:ss a";
 module("Parse");
 test("Parse", function() {
@@ -80,13 +82,13 @@ test("Format", function() {
 		key : "YYYY/MM/DD",
 		trueResult : "۱۳۹۱/۱۰/۰۴"
 	}, {
-		key : "YYYY/MM/DDD",
+		key : "YYYY/MM/ddd",
 		trueResult : "۱۳۹۱/۱۰/د"
 	}, {
-		key : "YYYY/MM/DDDD",
+		key : "YYYY/MM/dddd",
 		trueResult : "۱۳۹۱/۱۰/دوشنبه"
 	}, {
-		key : "YYYY/MM/dddd",
+		key : "YYYY/MM/ddddd",
 		trueResult : "۱۳۹۱/۱۰/شهریور"
 	}, {
 		key : "YYYY/MM/DD ** H",
@@ -111,23 +113,47 @@ test("Format", function() {
 		trueResult : "۱۳۹۱/۱۰/۰۴ ** ۱۱:۲۷:۵۳ ---- ق ظ"
 	}, {
 		key : "YYYY/MM/DD ** HH:mm:ss ---- a ---- Z",
-		trueResult : "۱۳۹۱/۱۰/۰۴ ** ۱۱:۲۷:۵۳ ---- ق ظ ---- -۲۱۰"
+		trueResult :"۱۳۹۱/۱۰/۰۴ ** ۱۱:۲۷:۵۳ ---- ق ظ ---- -۰۳:۳۰"
 	}, {
 		key : "YYYY/MM/DD ** HH:mm:ss ---- a ---- ZZ",
-		trueResult : "۱۳۹۱/۱۰/۰۴ ** ۱۱:۲۷:۵۳ ---- ق ظ ---- -۲۱۰"
+		trueResult : "۱۳۹۱/۱۰/۰۴ ** ۱۱:۲۷:۵۳ ---- ق ظ ---- -۰۳۳۰"
 	}, {
 		key : "L",
 		trueResult : "۱۳۹۱/۱۰/۰۴"
-	}, {
+	},{
+            key : "l",
+            trueResult : "۱۳۹۱/۱۰/۴"
+      }, {
 		key : "LL",
-		trueResult : " دی ۰۴ ۱۳۹۱"
+		trueResult : "دی ۰۴ ۱۳۹۱"
+	},{
+            key : "ll",
+            trueResult : "دی ۰۴ ۱۳۹۱"
+      }, {
+		key : "LLL",
+		trueResult : "دی ۱۳۹۱ ۰۴   ۱۱:۲۷  ق ظ"
 	}, {
-		key : "LL",
-		trueResult : " دی ۰۴ ۱۳۹۱"
-	}, {
+            key : "lll",
+            trueResult : "دی ۱۳۹۱ ۰۴   ۱۱:۲۷  ق ظ"
+      }, {
 		key : "LLLL",
-		trueResult : " دی دوشنبه ۱۳۹۱ -- ۱۱:۲۷:۵۳ - ق ظ"
-	}];
+		trueResult :"دوشنبه ۴ دی ۱۳۹۱  ۱۱:۲۷  ق ظ"
+	},{
+            key : "llll",
+            trueResult :"د ۴ دی ۱۳۹۱  ۱۱:۲۷  ق ظ"
+      },{
+	      key:"X",
+	      trueResult :"1356335873"
+	},
+	{
+            key:"Z",
+            trueResult :"-۰۳:۳۰"
+      },
+      {
+            key:"ZZ",
+            trueResult :"-۰۳۳۰"
+      }
+      ];
 	//  "L", "LL", "LLL", "LLLL"];
 	for(i in fString) {
 		var output = new persianDate([1391, 10, 4, 11, 27, 53]).format(fString[i].key);
@@ -217,15 +243,15 @@ test("Leap Year", function() {
 	var t1 = new persianDate([1391]);
 	var t2 = new persianDate([1392]);
 	var tt = t1.diff(t2, "days");
-	equal(tt, 366, "years between 1391 days: " + tt);
+	equal(tt, -366, "years between 1391 days: " + tt);
 	var t1 = new persianDate([1392]);
 	var t2 = new persianDate([1393]);
 	var tt = t1.diff(t2, "days");
-	equal(tt, 365, "years between 1391 1392 as days: " + tt);
+	equal(tt, -365, "years between 1391 1392 as days: " + tt);
 	var t1 = new persianDate([1392]);
 	var t2 = new persianDate([1393]);
 	var tt = t1.diff(t2, "years");
-	equal(tt, 1, "years between 1391 1392 as Years: " + tt);
+	equal(tt, -1, "years between 1391 1392 as Years: " + tt);
 });
 
 
@@ -267,22 +293,22 @@ test("Diffre", function() {
 
 	var keyArray = [{
 		key : "years",
-		trueResult : 1
+		trueResult : -1
 	}, {
 		key : "months",
-		trueResult : 12
+		trueResult : -12
 	}, {
 		key : "days",
-		trueResult : 366
+		trueResult : -366
 	}, {
 		key : "hours",
-		trueResult : 8784
+		trueResult : -8784
 	}, {
 		key : "minutes",
-		trueResult : 527040
+		trueResult : -527040
 	}, {
 		key : "seconds",
-		trueResult : 31622400
+		trueResult : -31622400
 	}];
 	for(i in keyArray) {
 		var t3 = t1.diff(t2, keyArray[i].key);
