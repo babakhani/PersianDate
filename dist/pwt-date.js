@@ -292,8 +292,6 @@ GREGORIAN_EPOCH = 1721425.5,
         var pa = calcGregorian(gd.getFullYear(), gd.getMonth(), gd.getDate());
         var output = {};
         output.monthDayNumber = pa[2] - 1;
-        // TODO: simplify this code
-        // Sync Gregorian Week Index Width Persian  week Index
         if (pa[3] == 6) {
             output.weekDayNumber = 1;
         } else if (pa[3] == 5) {
@@ -309,7 +307,6 @@ GREGORIAN_EPOCH = 1721425.5,
         } else if (pa[3] == 0) {
             output.weekDayNumber = 2;
         }
-
         output.year = pa[0];
         output.month = pa[1];
         output.day = output.weekDayNumber;
@@ -562,18 +559,27 @@ PersianDate.prototype = {
                 case("DDD"):
                 {
                     var t = self.startOf("year")
-                    return self.diff(t, "days");
+                    if (formatToPersian)
+                        return toPersianDigit(self.diff(t, "days"));
+                    else
+                        return self.diff(t, "days");
                 }
                 // Return Week Day Full Name
                 case("DDDD"):
                 {
                     var t = self.startOf("year")
-                    return leftZeroFill(self.diff(t, "days"), 3);
+                    if (formatToPersian)
+                        return leftZeroFill(self.diff(t, "days"), 3);
+                    else
+                        return toPersianDigit(leftZeroFill(self.diff(t, "days"), 3));
                 }
                 // Return day Of week
                 case("d"):
                 {
-                    return self.pDate.weekDayNumber;
+                    if (formatToPersian)
+                        return toPersianDigit(self.pDate.weekDayNumber);
+                    else
+                        return self.pDate.weekDayNumber;
                 }
                 // Return week day name abbr
                 case("ddd"):

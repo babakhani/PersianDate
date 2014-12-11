@@ -151,18 +151,27 @@ PersianDate.prototype = {
                 case("DDD"):
                 {
                     var t = self.startOf("year")
-                    return self.diff(t, "days");
+                    if (formatToPersian)
+                        return toPersianDigit(self.diff(t, "days"));
+                    else
+                        return self.diff(t, "days");
                 }
                 // Return Week Day Full Name
                 case("DDDD"):
                 {
                     var t = self.startOf("year")
-                    return leftZeroFill(self.diff(t, "days"), 3);
+                    if (formatToPersian)
+                        return leftZeroFill(self.diff(t, "days"), 3);
+                    else
+                        return toPersianDigit(leftZeroFill(self.diff(t, "days"), 3));
                 }
                 // Return day Of week
                 case("d"):
                 {
-                    return self.pDate.weekDayNumber;
+                    if (formatToPersian)
+                        return toPersianDigit(self.pDate.weekDayNumber);
+                    else
+                        return self.pDate.weekDayNumber;
                 }
                 // Return week day name abbr
                 case("ddd"):
