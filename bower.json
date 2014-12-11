@@ -1,0 +1,9 @@
+{
+    "name": "persianDate",
+    "version": "0.1.7",
+    "main": "dist/pwt-date.js",
+    "ignore": [
+        ".jshintrc",
+        "**/*.txt"
+    ]
+}
