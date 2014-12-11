@@ -11,7 +11,7 @@ module.exports = function (grunt) {
             dist: {
                 src: ['src/helper.method.js', 'src/pre.data.js', 'src/date.convert.js'
                     , 'src/duration.js', 'src/constructor.js', 'src/prototype.js', 'src/init.object.js'],
-                dest: 'dist/pwt-date.js'
+                dest: 'dist/<%= pkg.name %>.js'
             }
         },
         uglify: {
