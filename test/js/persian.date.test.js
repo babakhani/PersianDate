@@ -326,6 +326,8 @@ test("Convert", function() {
 	}
 });
 
+
+
 module("DST");
 test("Dst", function() {
 	/// IS Not DST
@@ -338,11 +340,10 @@ test("Dst", function() {
 	var pd = new persianDate([1391,10,20]);
 	var dst = pd.isDST();
 	equal(dst ,false, pd.format("YYYY - MM - DD *** HH:mm") + " Is Not DST" )
-	
 	/// IS DST
 	var pd = new persianDate([1391,1,2]);
 	var dst = pd.isDST();
-	equal(dst ,false, pd.format("YYYY - MM - DD *** HH:mm") + " Is DST" )
+	equal(dst ,true, pd.format("YYYY - MM - DD *** HH:mm") + " Is DST" )
 	var pd = new persianDate([1391,6,30]);
 	var dst = pd.isDST();
 	equal(dst ,true, pd.format("YYYY - MM - DD *** HH:mm") + " Is DST" )
