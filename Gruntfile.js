@@ -2,6 +2,16 @@
  * @author Reza Babakhani
  */
 
+var sources = [
+  'src/banner.js',
+  'src/constants.js',
+  'src/helpers.js',
+  'src/algorithms.js',
+  'src/duration.js',
+  'src/date.js',
+  'src/compat.js'
+];
+
 module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
@@ -13,15 +23,7 @@ module.exports = function (grunt) {
         footer: '}());'
       },
       dist: {
-        src: [
-          'src/banner.js',
-          'src/constants.js',
-          'src/helpers.js',
-          'src/algorithms.js',
-          'src/duration.js',
-          'src/date.js',
-          'src/compat.js'
-        ],
+        src: sources,
         dest: 'dist/<%= pkg.version %>/<%= pkg.name %>-<%= pkg.version %>.js'
       }
     },
@@ -30,9 +32,18 @@ module.exports = function (grunt) {
         src: 'dist/<%= pkg.version %>/<%= pkg.name %>-<%= pkg.version %>.js',
         dest: 'dist/<%= pkg.version %>/<%= pkg.name %>-<%= pkg.version %>.min.js'
       }
+    },
+    jsdoc: {
+      dist: {
+        src: sources,
+        options: {
+          destination: 'doc/<%= pkg.version %>'
+        }
+      }
     }
   });
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.registerTask('default', ['concat', 'uglify']);
+  grunt.loadNpmTasks('grunt-jsdoc');
+  grunt.registerTask('default', ['concat', 'uglify', 'jsdoc']);
 };

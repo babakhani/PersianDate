@@ -218,7 +218,7 @@ function persianArrayToGregorianDate(parray) {
 /**
  *
  * @param pDate
- * @returns {*[]}
+ * @returns {array}
  */
 function getPersianArrayFromPDate(pDate) {
   return [pDate.year, pDate.month, pDate.date, pDate.hours, pDate.minutes, pDate.seconds, pDate.milliseconds];

@@ -762,7 +762,7 @@ PersianDate.prototype = {
 
   /**
    * Returns Array Of Persian Date
-   * @returns {*[]}
+   * @returns {array}
    */
   toArray: function () {
     return [this.year(), this.month(), this.day(), this.hour(), this.minute(), this.second(), this.millisecond()];
