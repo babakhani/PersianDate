@@ -1,4 +1,4 @@
-/* persian-date - v0.1.8a */ ( function () {
+/* persian-date - v0.1.8b */ ( function () {
 /**
  * Persian Date
  * Written under the GPL version 2.0
@@ -713,7 +713,7 @@ PersianDate.prototype = {
   /**
    * @type {string}
    */
-  version: "0.1.8a",
+  version: "0.1.8b",
 
   /**
    * @type {string}

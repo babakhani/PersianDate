@@ -394,24 +394,30 @@ module("DST");
 test("Dst", function () {
     /// IS Not DST
     var pd = new persianDate([1391, 1, 1]);
-    var dst = pd.isDST();
-    equal(dst, false, pd.format("YYYY - MM - DD *** HH:mm") + " Is Not DST")
-    var pd = new persianDate([1391, 6, 31]);
-    var dst = pd.isDST();
-    equal(dst, false, pd.format("YYYY - MM - DD *** HH:mm") + " Is Not DST")
-    var pd = new persianDate([1391, 10, 20]);
-    var dst = pd.isDST();
-    equal(dst, false, pd.format("YYYY - MM - DD *** HH:mm") + " Is Not DST")
+    equal(pd.isDST(), false, pd.format("YYYY - MM - DD *** HH:mm") + " Is Not DST")
+
+    pd = new persianDate([1391, 6, 31]);
+    equal(pd.isDST(), false, pd.format("YYYY - MM - DD *** HH:mm") + " Is Not DST")
+
+    pd = new persianDate([1391, 1, 2]);
+    equal(pd.isDST(), false, pd.format("YYYY - MM - DD *** HH:mm") + " Is Not DST")
+
+    pd = new persianDate([1391, 6, 30]);
+    equal(pd.isDST(), false, pd.format("YYYY - MM - DD *** HH:mm") + " Is Not DST")
+
+    pd = new persianDate([1391, 4, 30]);
+    equal(pd.isDST(), false, pd.format("YYYY - MM - DD *** HH:mm") + " Is Not DST")
+
     /// IS DST
-    var pd = new persianDate([1391, 1, 2]);
-    var dst = pd.isDST();
-    equal(dst, true, pd.format("YYYY - MM - DD *** HH:mm") + " Is DST")
-    var pd = new persianDate([1391, 6, 30]);
-    var dst = pd.isDST();
-    equal(dst, true, pd.format("YYYY - MM - DD *** HH:mm") + " Is DST")
-    var pd = new persianDate([1391, 4, 30]);
-    var dst = pd.isDST();
-    equal(dst, true, pd.format("YYYY - MM - DD *** HH:mm") + " Is DST")
+    pd = new persianDate([1391, 7, 2]);
+    equal(pd.isDST(), true, pd.format("YYYY - MM - DD *** HH:mm") + " Is DST")
+
+    pd = new persianDate([1391, 10, 20]);
+    equal(pd.isDST(), true, pd.format("YYYY - MM - DD *** HH:mm") + " Is DST")
+
+    pd = new persianDate([1391, 12, 30]);
+    equal(pd.isDST(), true, pd.format("YYYY - MM - DD *** HH:mm") + " Is DST")
+
 });
 
 

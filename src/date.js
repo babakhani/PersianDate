@@ -52,7 +52,7 @@ PersianDate.prototype = {
   /**
    * @type {string}
    */
-  version: "0.1.8a",
+  version: "0.1.8b",
 
   /**
    * @type {string}
@@ -697,27 +697,18 @@ PersianDate.prototype = {
    * version 0.0.1
    */
   isDST: function () {
-    // Just Iran Day light saving time
-    var output = false;
-    if (this.month() >= 1 && this.month() <= 6) {
-      output = true;
-      switch (this.month()) {
-        case(1):
-          if (this.date() < 2) {
-            output = false
-          }
-          ;
-          break;
-        case(6):
-          if (this.date() > 30) {
-            output = false
-          }
-          ;
-          break;
-      }
+    var
+        month = this.month(),
+        day = this.date();
+
+    if (month < 7){
+      return false;
     }
-    ;
-    return output;
+
+    if ((month == 7 && day >= 2) ||
+        month > 7 ){
+      return true;
+    }
   },
 
 

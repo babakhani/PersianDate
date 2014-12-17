@@ -1,6 +1,6 @@
 
 Context: !context
-  version: 0.1.8a
+  version: 0.1.8b
   path: !import os.path
   sourceDir: !template ${manifest_dir}/src
   buildDir: !template ${manifest_dir}/dist
