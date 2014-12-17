@@ -46,13 +46,36 @@ Duration = function (duration) {
     return this;
 };
 
+
+/**
+ * @class Duration
+ * @type {{weeks: Function, valueOf: Function, humanize: Function}}
+ */
 Duration.prototype = {
+
+    /**
+     *
+     * @returns {string}
+     */
     weeks: function () {
         return "Must Implement";
     },
+
+
+    /**
+     *
+     * @returns {*}
+     */
     valueOf: function () {
         return this._milliseconds + this._days * (864e5) + this._months * (2592e6);
     },
+
+
+    /**
+     *
+     * @param withSuffix
+     * @returns {string}
+     */
     humanize: function (withSuffix) {
         return "Must Implement";
     }

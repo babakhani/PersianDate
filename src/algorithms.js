@@ -5,30 +5,55 @@
  */
 
 
+/**
+ *
+ * @param j
+ * @returns {*}
+ */
 function jwday(j) {
   return mod(Math.floor((j + 1.5)), 7);
 }
 
 
-//  LEAP_GREGORIAN  --  Is a given year in the Gregorian calendar a leap year ?
+/**
+ * Is a given year in the Gregorian calendar a leap year ?
+ * @param year
+ * @returns {boolean}
+ */
 function isLeapGregorian(year) {
   return ((year % 4) == 0) && (!(((year % 100) === 0) && ((year % 400) != 0)));
 }
 
 
+/**
+ *
+ * @param year
+ * @returns {boolean}
+ */
 function isLeapPersian(year) {
   return ((((((year - ((year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
 }
 
 
-//  GREGORIAN_TO_JD  --  Determine Julian day number from Gregorian calendar date
+
+/**
+ * Determine Julian day number from Gregorian calendar date
+ * @param year
+ * @param month
+ * @param day
+ * @returns {number}
+ */
 function gregorianToJd(year, month, day) {
   return (GREGORIAN_EPOCH - 1) + (365 * (year - 1)) + Math.floor((year - 1) / 4) + (-Math.floor((year - 1) / 100)) + Math.floor((year - 1) / 400) + Math.floor((((367 * month) - 362) / 12) + ((month <= 2) ? 0 : (isLeapGregorian(year) ? -1 : -2)
       ) + day);
 }
 
 
-//  JD_TO_GREGORIAN  --  Calculate Gregorian calendar date from Julian day
+/**
+ * Calculate Gregorian calendar date from Julian day
+ * @param jd
+ * @returns {Array}
+ */
 function jdToGregorian(jd) {
   var wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad, yindex, dyindex, year, yearday, leapadj;
   wjd = Math.floor(jd - 0.5) + 0.5;
@@ -53,7 +78,13 @@ function jdToGregorian(jd) {
 }
 
 
-//  PERSIAN_TO_JD  --  Determine Julian day from Persian date
+/**
+ * Determine Julian day from Persian date
+ * @param year
+ * @param month
+ * @param day
+ * @returns {*}
+ */
 function persianToJd(year, month, day) {
   mod = function (a, b) {
     return a - (b * Math.floor(a / b));
@@ -66,7 +97,12 @@ function persianToJd(year, month, day) {
       ) + Math.floor(((epyear * 682) - 110) / 2816) + (epyear - 1) * 365 + Math.floor(epbase / 2820) * 1029983 + (PERSIAN_EPOCH - 1);
 }
 
-//  JD_TO_PERSIAN  --  Calculate Persian date from Julian day
+
+/**
+ * Calculate Persian date from Julian day
+ * @param jd
+ * @returns {Array}
+ */
 function jdToPersian(jd) {
   var year, month, day, depoch, cycle, cyear, ycycle, aux1, aux2, yday;
   jd = Math.floor(jd) + 0.5;
@@ -91,6 +127,13 @@ function jdToPersian(jd) {
 }
 
 
+/**
+ *
+ * @param year
+ * @param month
+ * @param day
+ * @returns {Array}
+ */
 function calcPersian(year, month, day) {
   var date, j;
   var j = persianToJd(year, month, day);
@@ -99,7 +142,13 @@ function calcPersian(year, month, day) {
 }
 
 
-//  calcGregorian  --  Perform calculation starting with a Gregorian date
+/**
+ * Perform calculation starting with a Gregorian date
+ * @param year
+ * @param month
+ * @param day
+ * @returns {Array}
+ */
 function calcGregorian(year, month, day) {
   //  Update Julian day
   var j = gregorianToJd(year, month + 1, day) + (Math.floor(0 + 60 * (0 + 60 * 0) + 0.5) / 86400.0),
@@ -109,7 +158,11 @@ function calcGregorian(year, month, day) {
 }
 
 
-//Converts a gregorian date to Jalali date for different formats
+/**
+ * Converts a gregorian date to Jalali date for different formats
+ * @param gd
+ * @returns {{}}
+ */
 function toPersianDate(gd) {
   var pa = calcGregorian(gd.getFullYear(), gd.getMonth(), gd.getDate());
   var output = {};
@@ -142,6 +195,11 @@ function toPersianDate(gd) {
 }
 
 
+/**
+ *
+ * @param parray
+ * @returns {Date}
+ */
 function persianArrayToGregorianDate(parray) {
   // Howha : javascript Cant Parse this array truly 2011,2,20
   var pd = calcPersian(parray[0] ? parray[0] : 0, parray[1] ? parray[1] : 1, parray[2] ? parray[2] : 1);
@@ -157,6 +215,11 @@ function persianArrayToGregorianDate(parray) {
 }
 
 
+/**
+ *
+ * @param pDate
+ * @returns {*[]}
+ */
 function getPersianArrayFromPDate(pDate) {
   return [pDate.year, pDate.month, pDate.date, pDate.hours, pDate.minutes, pDate.seconds, pDate.milliseconds];
 }

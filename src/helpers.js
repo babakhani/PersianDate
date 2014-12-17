@@ -3,6 +3,7 @@
  * @module helpers
  */
 
+
 /**
  *
  * @param latinDigit
@@ -22,28 +23,61 @@ String.prototype.toPersianDigit = function (latinDigit) {
 };
 
 
+/**
+ *
+ * @param digit
+ * @returns {string|*}
+ */
 function toPersianDigit(digit) {
     return digit.toString().toPersianDigit();
 }
 
+
+/**
+ *
+ * @param input
+ * @returns {boolean}
+ */
 function isArray(input) {
     return Object.prototype.toString.call(input) === '[object Array]';
 }
 
+
+/**
+ *
+ * @param input
+ * @returns {boolean}
+ */
 function isString(input) {
     return typeof input === "string" ? true : false;
 }
 
 
+/**
+ *
+ * @param input
+ * @returns {boolean}
+ */
 function isNumber(input) {
     return typeof input === "number" ? true : false;
 }
 
+
+/**
+ *
+ * @param input
+ * @returns {boolean}
+ */
 function isDate(input) {
     return input instanceof Date;
 }
 
 
+/**
+ *
+ * @param input
+ * @returns {boolean}
+ */
 function isUndefined(input) {
     if (typeof input === "undefined")
         return true;
@@ -52,6 +86,12 @@ function isUndefined(input) {
 }
 
 
+/**
+ *
+ * @param number
+ * @param targetLength
+ * @returns {string}
+ */
 function leftZeroFill(number, targetLength) {
     var output = number + '';
     while (output.length < targetLength) {
@@ -61,6 +101,11 @@ function leftZeroFill(number, targetLength) {
 }
 
 
+/**
+ *
+ * @param number
+ * @returns {number}
+ */
 function absRound(number) {
     if (number < 0) {
         return Math.ceil(number);
@@ -70,7 +115,12 @@ function absRound(number) {
 }
 
 
-
+/**
+ *
+ * @param a
+ * @param b
+ * @returns {number}
+ */
 function mod(a, b) {
     return a - (b * Math.floor(a / b));
 }

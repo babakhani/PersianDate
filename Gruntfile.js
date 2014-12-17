@@ -9,7 +9,7 @@ module.exports = function (grunt) {
     concat: {
       options: {
         stripBanners: true,
-        banner: '/* <%= pkg.name %> - v<%= pkg.version %> */ ( function () {',
+        banner: '/* <%= pkg.name %> - v<%= pkg.version %> */ ( function () {\n',
         footer: '}());'
       },
       dist: {

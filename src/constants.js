@@ -4,8 +4,22 @@
  */
 
 var
+    /**
+     *
+     * @type {number}
+     */
     GREGORIAN_EPOCH = 1721425.5,
+
+    /**
+     *
+     * @type {number}
+     */
     PERSIAN_EPOCH = 1948320.5,
+
+    /**
+     *
+     * @type {{1: {name: {fa: string}, abbr: {fa: string}}, 2: {name: {fa: string}, abbr: {fa: string}}, 3: {name: {fa: string}, abbr: {fa: string}}, 4: {name: {fa: string}, abbr: {fa: string}}, 5: {name: {fa: string}, abbr: {fa: string}}, 6: {name: {fa: string}, abbr: {fa: string}}, 7: {name: {fa: string}, abbr: {fa: string}}, 8: {name: {fa: string}, abbr: {fa: string}}, 9: {name: {fa: string}, abbr: {fa: string}}, 10: {name: {fa: string}, abbr: {fa: string}}, 11: {name: {fa: string}, abbr: {fa: string}}, 12: {name: {fa: string}, abbr: {fa: string}}}}
+     */
     monthRange = {
       1: {
         name: {
@@ -105,6 +119,12 @@ var
         }
       }
     },
+
+
+    /**
+     *
+     * @type {{1: {name: {fa: string}, abbr: {fa: string}}, 2: {name: {fa: string}, abbr: {fa: string}}, 3: {name: {fa: string}, abbr: {fa: string}}, 4: {name: {fa: string}, abbr: {fa: string}}, 5: {name: {fa: string}, abbr: {fa: string}}, 6: {name: {fa: string}, abbr: {fa: string}}, 0: {name: {fa: string}, abbr: {fa: string}}}}
+     */
     weekRange = {
       1: {
         name: {
@@ -163,6 +183,12 @@ var
         }
       }
     },
+
+
+    /**
+     *
+     * @type {string[]}
+     */
     persianDaysName = [
       "اورمزد",
       "بهمن",
