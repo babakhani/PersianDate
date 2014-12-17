@@ -1,0 +1,9 @@
+{
+    "name": "persian-date",
+    "version": "0.1.8",
+    "devDependencies": {
+        "grunt": "0.4.4",
+        "grunt-cli": "0.1.13",
+        "grunt-contrib-concat": "^0.5.0"
+    }
+}

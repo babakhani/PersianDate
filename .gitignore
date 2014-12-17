@@ -6,6 +6,8 @@
 .pydevproject
 .settings
 .settings/org.eclipse.core.resources.prefs
+node_modules
+.idea
 
 
 .idea/*

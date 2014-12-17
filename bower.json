@@ -1,0 +1,9 @@
+{
+    "name": "persian-date",
+    "version": "0.1.8",
+    "main": "dist/persian-date.js",
+    "ignore": [
+        ".jshintrc",
+        "**/*.txt"
+    ]
+}
