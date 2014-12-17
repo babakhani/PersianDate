@@ -1,3 +1,15 @@
+/**
+ * Duration
+ * @module duration
+ */
+
+
+/**
+ * Duration object constructor
+ * @param duration
+ * @class Duration
+ * @constructor
+ */
 Duration = function (duration) {
     var absRound = function (number) {
         if (number < 0) {
@@ -45,3 +57,4 @@ Duration.prototype = {
         return "Must Implement";
     }
 };
+

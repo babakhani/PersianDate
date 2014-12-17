@@ -1,3 +1,7 @@
+/**
+ * Compatibility cares
+ * @module compat
+ */
 
 
 persianDate = PersianDate;
