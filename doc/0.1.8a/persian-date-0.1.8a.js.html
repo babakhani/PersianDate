@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: persian-date-0.1.8a.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: persian-date-0.1.8a.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
 
     _____                             ______
    (, /   )             ,            (, /    )
@@ -278,11 +306,11 @@ var
 String.prototype.toPersianDigit = function (latinDigit) {
     return this.replace(/\d+/g, function (digit) {
         var enDigitArr = [], peDigitArr = [], i, j;
-        for (i = 0; i < digit.length; i += 1) {
+        for (i = 0; i &lt; digit.length; i += 1) {
             enDigitArr.push(digit.charCodeAt(i));
         }
-        for (j = 0; j < enDigitArr.length; j += 1) {
-            peDigitArr.push(String.fromCharCode(enDigitArr[j] + ((!!latinDigit && latinDigit === true) ? 1584 : 1728)));
+        for (j = 0; j &lt; enDigitArr.length; j += 1) {
+            peDigitArr.push(String.fromCharCode(enDigitArr[j] + ((!!latinDigit &amp;&amp; latinDigit === true) ? 1584 : 1728)));
         }
         return peDigitArr.join('');
     });
@@ -360,7 +388,7 @@ function isUndefined(input) {
  */
 function leftZeroFill(number, targetLength) {
     var output = number + '';
-    while (output.length < targetLength) {
+    while (output.length &lt; targetLength) {
         output = '0' + output;
     }
     return output;
@@ -373,7 +401,7 @@ function leftZeroFill(number, targetLength) {
  * @returns {number}
  */
 function absRound(number) {
-    if (number < 0) {
+    if (number &lt; 0) {
         return Math.ceil(number);
     } else {
         return Math.floor(number);
@@ -414,7 +442,7 @@ function jwday(j) {
  * @returns {boolean}
  */
 function isLeapGregorian(year) {
-  return ((year % 4) == 0) && (!(((year % 100) === 0) && ((year % 400) != 0)));
+  return ((year % 4) == 0) &amp;&amp; (!(((year % 100) === 0) &amp;&amp; ((year % 400) != 0)));
 }
 
 
@@ -424,7 +452,7 @@ function isLeapGregorian(year) {
  * @returns {boolean}
  */
 function isLeapPersian(year) {
-  return ((((((year - ((year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
+  return ((((((year - ((year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) &lt; 682;
 }
 
 
@@ -437,7 +465,7 @@ function isLeapPersian(year) {
  * @returns {number}
  */
 function gregorianToJd(year, month, day) {
-  return (GREGORIAN_EPOCH - 1) + (365 * (year - 1)) + Math.floor((year - 1) / 4) + (-Math.floor((year - 1) / 100)) + Math.floor((year - 1) / 400) + Math.floor((((367 * month) - 362) / 12) + ((month <= 2) ? 0 : (isLeapGregorian(year) ? -1 : -2)
+  return (GREGORIAN_EPOCH - 1) + (365 * (year - 1)) + Math.floor((year - 1) / 4) + (-Math.floor((year - 1) / 100)) + Math.floor((year - 1) / 400) + Math.floor((((367 * month) - 362) / 12) + ((month &lt;= 2) ? 0 : (isLeapGregorian(year) ? -1 : -2)
       ) + day);
 }
 
@@ -463,7 +491,7 @@ function jdToGregorian(jd) {
     year++;
   }
   yearday = wjd - gregorianToJd(year, 1, 1);
-  leapadj = ((wjd < gregorianToJd(year, 3, 1)) ? 0 : (isLeapGregorian(year) ? 1 : 2)
+  leapadj = ((wjd &lt; gregorianToJd(year, 3, 1)) ? 0 : (isLeapGregorian(year) ? 1 : 2)
   );
   month = Math.floor((((yearday + leapadj) * 12) + 373) / 367);
   day = (wjd - gregorianToJd(year, month, 1)) + 1;
@@ -486,7 +514,7 @@ function persianToJd(year, month, day) {
   var epbase, epyear;
   epbase = year - ((year >= 0) ? 474 : 473);
   epyear = 474 + mod(epbase, 2820);
-  return day + ((month <= 7) ? ((month - 1) * 31) : (((month - 1) * 30) + 6)
+  return day + ((month &lt;= 7) ? ((month - 1) * 31) : (((month - 1) * 30) + 6)
       ) + Math.floor(((epyear * 682) - 110) / 2816) + (epyear - 1) * 365 + Math.floor(epbase / 2820) * 1029983 + (PERSIAN_EPOCH - 1);
 }
 
@@ -510,11 +538,11 @@ function jdToPersian(jd) {
     ycycle = Math.floor(((2134 * aux1) + (2816 * aux2) + 2815) / 1028522) + aux1 + 1;
   }
   year = ycycle + (2820 * cycle) + 474;
-  if (year <= 0) {
+  if (year &lt;= 0) {
     year -= 1;
   }
   yday = (jd - persianToJd(year, 1, 1)) + 1;
-  month = (yday <= 186) ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
+  month = (yday &lt;= 186) ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
   day = (jd - persianToJd(year, month, 1)) + 1;
   return new Array(year, month, day);
 }
@@ -580,7 +608,7 @@ function toPersianDate(gd) {
   output.day = output.weekDayNumber;
   output.date = pa[2];
   output.hours = gd.getHours();
-  output.minutes = ((gd.getMinutes() < 10) ? ('0' + gd.getMinutes()) : (gd.getMinutes()));
+  output.minutes = ((gd.getMinutes() &lt; 10) ? ('0' + gd.getMinutes()) : (gd.getMinutes()));
   output.seconds = gd.getSeconds();
   output.milliseconds = gd.getMilliseconds();
   output.timeZoneOffset = gd.getTimezoneOffset();
@@ -629,7 +657,7 @@ function getPersianArrayFromPDate(pDate) {
  */
 Duration = function (duration) {
     var absRound = function (number) {
-        if (number < 0) {
+        if (number &lt; 0) {
             return Math.ceil(number);
         } else {
             return Math.floor(number);
@@ -1060,10 +1088,10 @@ PersianDate.prototype = {
           var flag = "+";
           var hours = Math.round(info.timezone / 60);
           var minutes = info.timezone % 60;
-          if (minutes < 0) {
+          if (minutes &lt; 0) {
             minutes *= -1;
           }
-          if (hours < 0) {
+          if (hours &lt; 0) {
             flag = "-";
             hours *= -1;
           }
@@ -1079,10 +1107,10 @@ PersianDate.prototype = {
           var flag = "+";
           var hours = Math.round(info.timezone / 60);
           var minutes = info.timezone % 60;
-          if (minutes < 0) {
+          if (minutes &lt; 0) {
             minutes *= -1;
           }
-          if (hours < 0) {
+          if (hours &lt; 0) {
             flag = "-";
             hours *= -1;
           }
@@ -1219,7 +1247,7 @@ PersianDate.prototype = {
                       val === 'weeks' || val === 'week' ? diff / 6048e5 : // 1000 * 60 * 60 * 24 * 7
                           diff;
     }
-    if (output < 0)
+    if (output &lt; 0)
       output * -1;
     return asFloat ? output : Math.round(output);
   },
@@ -1343,7 +1371,7 @@ PersianDate.prototype = {
       return this;
     } else {
       var offsetMils = this.pDate.timeZoneOffset * 60 * 1000;
-      if (this.pDate.timeZoneOffset < 0) {
+      if (this.pDate.timeZoneOffset &lt; 0) {
         var utcStamp = this.valueOf() - offsetMils;
       } else {
         var utcStamp = this.valueOf() + offsetMils;
@@ -1369,7 +1397,7 @@ PersianDate.prototype = {
       return this;
     } else {
       var offsetMils = this.pDate.timeZoneOffset * 60 * 1000;
-      if (this.pDate.timeZoneOffset < 0) {
+      if (this.pDate.timeZoneOffset &lt; 0) {
         var utcStamp = this.valueOf() + offsetMils;
       } else {
         var utcStamp = this.valueOf() - offsetMils;
@@ -1399,11 +1427,11 @@ PersianDate.prototype = {
   isDST: function () {
     // Just Iran Day light saving time
     var output = false;
-    if (this.month() >= 1 && this.month() <= 6) {
+    if (this.month() >= 1 &amp;&amp; this.month() &lt;= 6) {
       output = true;
       switch (this.month()) {
         case(1):
-          if (this.date() < 2) {
+          if (this.date() &lt; 2) {
             output = false
           }
           ;
@@ -1439,11 +1467,11 @@ PersianDate.prototype = {
   daysInMonth: function (yearInput, monthInput) {
     var year = yearInput ? yearInput : this.year();
     var month = monthInput ? monthInput : this.month();
-    if (month < 1 || month > 12)
+    if (month &lt; 1 || month > 12)
       return 0;
-    if (month < 7)
+    if (month &lt; 7)
       return 31;
-    if (month < 12)
+    if (month &lt; 12)
       return 30;
     if (isLeapPersian(year))
       return 30;
@@ -1756,4 +1784,26 @@ PersianDate.prototype = {
 persianDate = PersianDate;
 pDate = PersianDate;
 persianDate.unix = persianDate.prototype.unix;
-persianDate.utc = persianDate.prototype.utc;
+persianDate.utc = persianDate.prototype.utc;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Algorithms.html">Algorithms</a></li><li><a href="module-compat.html">compat</a></li><li><a href="module-constants.html">constants</a></li><li><a href="module-date.html">date</a></li><li><a href="module-duration.html">duration</a></li><li><a href="module-helpers.html">helpers</a></li></ul><h3>Classes</h3><ul><li><a href="module-constants-Duration.html">Duration</a></li><li><a href="module-constants-PersianDate.html">PersianDate</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha11</a> on Wed Dec 17 2014 21:43:00 GMT+0330 (IRST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
