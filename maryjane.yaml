@@ -21,6 +21,8 @@ PersianDate: !watch
   output: !template ${buildDir}/${version}/persian-date-${version}.js
   minified_output: !template ${buildDir}/${version}/persian-date-${version}.min.js
 
+  head: '/* PersianDate - v${version} */ ( function () {\n'
+  tail: '\n}());'
 
   actions:
 
@@ -30,12 +32,19 @@ PersianDate: !watch
       arguments: !template mkdir -p ${buildDir}/${version}
       shell: true
 
+    - !subprocess
+      arguments: !template echo "${PersianDate.head}" > ${PersianDate.output}
+      shell: true
+
     - !banner
       text: !template " * ${path.split(PersianDate.output)[1]}"
     - !subprocess
-      arguments: !template cat ${' '.join(PersianDate.inputs)} > ${PersianDate.output}
+      arguments: !template cat ${' '.join(PersianDate.inputs)} >> ${PersianDate.output}
       shell: true
 
+    - !subprocess
+      arguments: !template echo "${PersianDate.tail}" >> ${PersianDate.output}
+      shell: true
 
     - !banner
       text: !template " * Generating documents: ${docsDir}/${version}"
