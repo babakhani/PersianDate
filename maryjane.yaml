@@ -1,0 +1,61 @@
+
+Context: !context
+  version: 0.1.8a
+  path: !import os.path
+  sourceDir: !template ${manifest_dir}/src
+  buildDir: !template ${manifest_dir}/dist
+  docsDir: !template ${manifest_dir}/doc
+
+PersianDate: !watch
+  banner: "\nBuilding PersianDate javascripts:"
+
+  inputs:
+    - !template ${sourceDir}/banner.js
+    - !template ${sourceDir}/constants.js
+    - !template ${sourceDir}/helpers.js
+    - !template ${sourceDir}/algorithms.js
+    - !template ${sourceDir}/duration.js
+    - !template ${sourceDir}/date.js
+    - !template ${sourceDir}/compat.js
+
+  output: !template ${buildDir}/${version}/persian-date-${version}.js
+  minified_output: !template ${buildDir}/${version}/persian-date-${version}.min.js
+
+
+  actions:
+
+    - !banner
+      text: !template " * Creating output dir: ${buildDir}/${version}"
+    - !subprocess
+      arguments: !template mkdir -p ${buildDir}/${version}
+      shell: true
+
+    - !banner
+      text: !template " * ${path.split(PersianDate.output)[1]}"
+    - !subprocess
+      arguments: !template cat ${' '.join(PersianDate.inputs)} > ${PersianDate.output}
+      shell: true
+
+
+    - !banner
+      text: !template " * Generating documents: ${docsDir}/${version}"
+    - !subprocess
+      arguments: !template jsdoc ${PersianDate.output} --destination ${docsDir}/${version}
+      shell: true
+
+
+    - !banner
+      text: !template " * ${path.split(PersianDate.output)[1]} > ${path.split(PersianDate.minified_output)[1]}"
+    - !subprocess
+      shell: true
+      arguments: !template yui-compressor --type js ${PersianDate.output} > ${PersianDate.minified_output}
+
+    - !banner
+      text: "done. \n"
+
+
+  watcher: !watcher
+    recursive: true
+    predicate: !eval "lambda fn: fn.endswith('.js')"
+    sources:
+      - !template ${source}
