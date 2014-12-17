@@ -1,25 +1,17 @@
-/*global document */
 (function() {
-    var source = document.getElementsByClassName('prettyprint source linenums');
-    var i = 0;
-    var lineNumber = 0;
-    var lineId;
-    var lines;
-    var totalLines;
-    var anchorHash;
+    var counter = 0;
+    var numbered;
+    var source = document.getElementsByClassName('prettyprint source');
 
     if (source && source[0]) {
-        anchorHash = document.location.hash.substring(1);
-        lines = source[0].getElementsByTagName('li');
-        totalLines = lines.length;
+        source = source[0].getElementsByTagName('code')[0];
 
-        for (; i < totalLines; i++) {
-            lineNumber++;
-            lineId = 'line' + lineNumber;
-            lines[i].id = lineId;
-            if (lineId === anchorHash) {
-                lines[i].className += ' selected';
-            }
-        }
+        numbered = source.innerHTML.split('\n');
+        numbered = numbered.map(function(item) {
+            counter++;
+            return '<span id="line' + counter + '" class="line"></span>' + item;
+        });
+
+        source.innerHTML = numbered.join('\n');
     }
 })();

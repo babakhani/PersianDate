@@ -1,16 +1,4 @@
-/**
-
-    _____                             ______
-   (, /   )             ,            (, /    )
-    _/__ /  _  __  _      _  __        /    / _  _/_  _
-    /     _(/_/ (_/_)__(_(_(_/ (_    _/___ /_(_(_(___(/_
- ) /                               (_/___ /
-(_/
-
-
-*/
-
-
+/* persian-date - v0.1.8a */ ( function () {
 /**
  * Persian Date
  * Written under the GPL version 2.0
@@ -41,10 +29,6 @@
  * |             | 0.1.7 Fix persianDate.unix(input)    |
  * +-------------+--------------------------------------+
  *
- */
-/**
- * Constants
- * @module constants
  */
 
 var
@@ -264,12 +248,7 @@ var
       "زامیاد",
       "مانتره سپند",
       "انارام",
-      "زیادی"];/**
- * Helpers functions
- * @module helpers
- */
-
-
+      "زیادی"];
 /**
  *
  * @param latinDigit
@@ -390,13 +369,6 @@ function absRound(number) {
 function mod(a, b) {
     return a - (b * Math.floor(a / b));
 }
-/**
- * Calendar algorithms implementations
- * @author Reza Babakhani
- * @module Algorithms
- */
-
-
 
 /**
  *
@@ -615,12 +587,7 @@ function persianArrayToGregorianDate(parray) {
  */
 function getPersianArrayFromPDate(pDate) {
   return [pDate.year, pDate.month, pDate.date, pDate.hours, pDate.minutes, pDate.seconds, pDate.milliseconds];
-}/**
- * Duration
- * @module duration
- */
-
-
+}
 /**
  * Duration object constructor
  * @param duration
@@ -697,12 +664,6 @@ Duration.prototype = {
         return "Must Implement";
     }
 };
-
-/**
- * Date objects
- * @author Reza Babakhani
- * @module date
- */
 
 
 /**
@@ -1403,7 +1364,7 @@ PersianDate.prototype = {
       output = true;
       switch (this.month()) {
         case(1):
-          if (this.date() < 2) {
+          if (this.date() <= 2) {
             output = false
           }
           ;
@@ -1747,13 +1708,8 @@ PersianDate.prototype = {
   valueOf: function () {
     return this._valueOf();
   }
-};/**
- * Compatibility cares
- * @module compat
- */
-
-
+};
 persianDate = PersianDate;
 pDate = PersianDate;
 persianDate.unix = persianDate.prototype.unix;
-persianDate.utc = persianDate.prototype.utc;
+persianDate.utc = persianDate.prototype.utc;}());

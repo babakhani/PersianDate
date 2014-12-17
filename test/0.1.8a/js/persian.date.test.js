@@ -1,5 +1,14 @@
+
+
 var globalTextstringFromat = "YYYY-MM-DD HH:mm:ss a";
+
+
 module("Parse");
+
+
+/**
+ *
+ */
 test("Parse", function () {
     // Empty input
     var emptyInput = new persianDate();
@@ -55,6 +64,11 @@ test("Parse", function () {
     var unixInput = new persianDate(todayUnix).format(globalTextstringFromat);
     ok(unixInput, "Today (From Unix) === " + unixInput);
 });
+
+
+/**
+ *
+ */
 test("Format", function () {
     var fString = [
         {
