@@ -10,16 +10,13 @@ PersianDate: !watch
   banner: "\nBuilding PersianDate javascripts:"
 
   inputs:
-    - !template ${sourceDir}/head.js
+    - !template ${sourceDir}/banner.js
     - !template ${sourceDir}/constants.js
     - !template ${sourceDir}/helpers.js
     - !template ${sourceDir}/algorithms.js
     - !template ${sourceDir}/duration.js
     - !template ${sourceDir}/date.js
-    - !template ${sourceDir}/time.js
     - !template ${sourceDir}/compat.js
-    - !template ${sourceDir}/jquery.js
-    - !template ${sourceDir}/tail.js
 
   output: !template ${buildDir}/${version}/persian-date-${version}.js
   minified_output: !template ${buildDir}/${version}/persian-date-${version}.min.js
