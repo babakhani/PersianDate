@@ -1,9 +1,9 @@
-/* persian-date - v0.1.8b */ ( function () {
+/* persian-date - v0.1.8 */ ( function () {
 /**
  * Persian Date
  * Written under the GPL version 2.0
  * @author Reza Babakhani
- * @version 0.1.8a
+ * @version 0.1.8
  *
  *
  * +---------+-----------+

@@ -15,7 +15,7 @@
  * Persian Date
  * Written under the GPL version 2.0
  * @author Reza Babakhani
- * @version 0.1.8b
+ * @version 0.1.8
  *
  *
  * +---------+-----------+
