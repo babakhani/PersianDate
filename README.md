@@ -4,4 +4,4 @@ PersianDate
 http://babakhani.github.io/PersianWebToolkit/persiandate
 
 
-This is Refactored Branch
+javascript date library for parsing, validating, manipulating, and formatting persian dates System.
