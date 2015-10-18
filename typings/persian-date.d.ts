@@ -1,104 +1,297 @@
 declare interface pDate {
-	date: number
-	day: number
-	hours: number
-	milliseconds: number
-	minutes: number
-	month: number
-	monthDayNumber: number
-	seconds: number
-	timeZoneOffset: number
-	weekDayNumber: number
-	year: number
+    /**
+    * Date of the month
+    */
+    date: Number
+    /**
+    * Date of the week
+    */
+    day: Number
+    hours: Number
+    milliseconds: Number
+    minutes: Number
+    month: Number
+    monthDayNumber: Number
+    seconds: Number
+    timeZoneOffset: Number
+    weekDayNumber: Number
+    year: Number
 }
 
-declare class persianDate {
-	constructor();
-	constructor(input: Date);
-	constructor(input: Number);
-	constructor(input: Array<Number>);
-	constructor(input: persianDate);
-	constructor(input: String);
+declare interface PersianDate {
 
-	gDate: Date
-	pDate: pDate
+    gDate: Date
+    pDate: pDate
+    formatPersian: Boolean
 
-	clone(): persianDate;
+    /**
+ 	* Returns a clone of a PersianDate
+ 	*/
+    clone(): PersianDate;
 
-	second(input: Number): persianDate;
-	second(): persianDate;
+    /**
+    * Sets the milliseconds.
+    * Accepts numbers from 0 to 999. If the range is exceeded, it will bubble up to the seconds.
+    */
+    millisecond(input: Number): PersianDate;
 
-	seconds(input: Number): persianDate;
-	seconds(): persianDate;
+    /**
+    * Gets the milliseconds.
+    */
+    millisecond(): Number;
 
-	millisecond(input: Number): persianDate;
-	millisecond(): persianDate;
+    /**
+    * Sets the milliseconds.
+    * Accepts numbers from 0 to 999. If the range is exceeded, it will bubble up to the seconds.
+    */
+    milliseconds(input: Number): PersianDate;
 
-	milliseconds(input: Number): persianDate;
-	milliseconds(): persianDate;
+    /**
+    * Gets the milliseconds.
+    */
+    milliseconds(): Number;
 
-	minute(input: Number): persianDate;
-	minute(): persianDate;
+    /**
+    * Sets the seconds.
+    * Accepts numbers from 0 to 59. If the range is exceeded, it will bubble up to the minutes.
+    */
+    second(input: Number): PersianDate;
 
-	minutes(input: Number): persianDate;
-	minutes(): persianDate;
+    /**
+    * Gets the seconds.
+    */
+    second(): Number;
 
-	hour(input: Number): persianDate;
-	hour(): persianDate;
+    /**
+    * Sets the seconds.
+    * Accepts numbers from 0 to 59. If the range is exceeded, it will bubble up to the minutes.
+    */
+    seconds(input: Number): PersianDate;
 
-	hours(input: Number): persianDate;
-	hours(): persianDate;
+    /**
+    * Gets the seconds.
+    */
+    seconds(): Number;
 
-	date(input: Number): persianDate;
-	date(): persianDate;
+    /**
+    * Sets the minutes.
+    * Accepts numbers from 0 to 59. If the range is exceeded, it will bubble up to the hours.
+    */
+    minute(input: Number): PersianDate;
 
-	dates(input: Number): persianDate;
-	dates(): persianDate;
+    /**
+    * Gets the minutes.
+    */
+    minute(): Number;
 
-	year(input: Number): persianDate;
-	year(): persianDate;
+    /**
+    * Sets the minutes.
+    * Accepts numbers from 0 to 59. If the range is exceeded, it will bubble up to the hours.
+    */
+    minutes(input: Number): PersianDate;
 
-	years(input: Number): persianDate;
-	years(): persianDate;
+    /**
+    * Gets the minutes.
+    */
+    minutes(): Number;
 
-	day(): persianDate;
-	days(): persianDate;
+    /**
+    * Sets the hours.
+    * Accepts numbers from 0 to 23. If the range is exceeded, it will bubble up to the day.
+    */
+    hour(input: Number): PersianDate;
 
-	add(key: String, input: Number): persianDate;
+    /**
+    * Gets the hours.
+    */
+    hour(): Number;
 
-	subtract(key: String, input: Number): persianDate;
+    /**
+    * Sets the hours.
+    * Accepts numbers from 0 to 23. If the range is exceeded, it will bubble up to the day.
+    */
+    hours(input: Number): PersianDate;
 
-	startOf(key: String): persianDate;
+    /**
+    * Gets the hours.
+    */
+    hours(): Number;
 
-	endOf(key: String): persianDate;
+    /**
+    * Sets the day of the month.
+    * Accepts numbers from 0 to 31. If the range is exceeded, it will bubble up to the months.
+    */
+    date(input: Number): PersianDate;
 
-	format(): String;
-	format(inputString: String): String;
+    /**
+    * Gets the day of the month.
+    */
+    date(): Number;
 
-	diff(input: persianDate): Number;
-	diff(input: persianDate, val: String): Number;
-	diff(input: persianDate, val: String, asFloat: Boolean): Number;
+    /**
+    * Sets the day of the month.
+    * Accepts numbers from 0 to 31. If the range is exceeded, it will bubble up to the months.
+    */
+    dates(input: Number): PersianDate;
 
-	valueOf(): Number;
+    /**
+    * Gets the day of the month.
+    */
+    dates(): Number;
 
-	unix(): Number;
+    /**
+    * Sets the year.
+    * Accepts numbers from -270,000 to 270,000.
+    */
+    year(input: Number): PersianDate;
 
-	zone(): Number;
+    /**
+    * Gets the year.
+    */
+    year(): Number;
 
-	daysInMonth(): Number;
+    /**
+    * Sets the year.
+    * Accepts numbers from -270,000 to 270,000.
+    */
+    years(input: Number): PersianDate;
 
-	toDate(): Date;
+    /**
+    * Gets the year.
+    */
+    years(): Number;
 
-	toArray(): Array<Number>;
+    /**
+    * Gets the day of the week
+    */
+    day(): Number;
 
-	isLeapYear(): Boolean;
+    /**
+    * Gets the day of the week
+    */
+    days(): Number;
 
-	isDST(): Boolean;
+    /** 
+    * Mutates the original persianDate by adding time.
+    */
+    add(key: String, input: Number): PersianDate;
 
-	isPersianDate(): Boolean;
-	isPersianDate(obj: any): Boolean;
+    /** 
+    * Mutates the original persianDate by subtracting time.
+    */
+    subtract(key: String, input: Number): PersianDate;
+
+    /**
+    * Mutates the original persianDate by setting it to the start of a unit of time.
+    */
+    startOf(key: String): PersianDate;
+
+    /**
+    * Mutates the original persianDate by setting it to the end of a unit of time.
+    */
+    endOf(key: String): PersianDate;
+
+    /**
+    *  Returns current format.
+    */
+    format(): String;
+
+    /**
+    *  It takes a string of tokens like 'dddd, MMMM DD YYYY, h:mm:ss a' and replaces them with their corresponding values
+    */
+    format(inputString: String): String;
+
+    /**
+    * Returns the difference in milliseconds
+    */
+    diff(input: PersianDate): Number;
+
+    /**
+    * Returns the difference in passed unit of measurement like 'days', 'years' etc.
+    */
+    diff(input: PersianDate, val: String): Number;
+
+    /**
+    * Returns the difference in passed unit of measurement like 'days', 'years' etc.
+    */
+    diff(input: PersianDate, val: String, asFloat: Boolean): Number;
+
+    /**
+    * Returns the number of milliseconds since the Unix Epoch,
+    */
+    valueOf(): Number;
+
+    /**
+    * Returns a Unix timestamp (the of seconds since the Unix Epoch)
+    */
+    unix(): Number;
+
+    /**
+    * Returns the timezone offset in minutes.
+    */
+    zone(): Number;
+
+    /**
+    * Returns the number of days in the current month.
+    */
+    daysInMonth(): Number;
+
+    /**
+    * To get the native Date object that persianDate.js wrap
+    */
+    toDate(): Date;
+
+    /**
+    * Returns an array [year,month,day,hour,minutes,second,milisecond]
+    */
+    toArray(): Array<Number>;
+
+    /**
+    * Returns true if that year is a leap year, and false if it is not.
+    */
+    isLeapYear(): Boolean;
+
+    /**
+    * Returns true if if the current persianDate is in daylight savings time, and false if it is not.
+    */
+    isDST(): Boolean;
+
+    /**
+    * Returns true  if a variable is a persianDate object, and false if it is not.
+    */
+    isPersianDate(obj: any): Boolean;
 }
+
+/**
+ * Get the current date and time
+ */
+declare function persianDate(): PersianDate;
+
+/**
+ * Create a persianDate with a pre-existing native Javascript Date object.
+ */
+declare function persianDate(input: Date): PersianDate;
+
+/**
+ * Creates a persianDate by passing an integer value representing the Number of milliseconds since the Unix Epoch (Jan 1 1970 12AM UTC)
+ */
+declare function persianDate(input: Number): PersianDate;
+
+/**
+ * Creates a persianDate with an array of numbers that mirror the parameters passed to new Date()But As Persian Date Number Like [1393,2,22,11,22,30]
+ */
+declare function persianDate(input: Array<Number>): PersianDate;
+
+/**
+ * Returns a clone of a persianDate
+ */
+declare function persianDate(input: PersianDate): PersianDate;
+
+/**
+ * Returns a persianDate created from strings like /Date(1198908717056)/ 
+ */
+declare function persianDate(input: String): PersianDate;
 
 interface Window {
-	formatPersian: Boolean;
+    formatPersian: Boolean;
 }
