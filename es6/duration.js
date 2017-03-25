@@ -10,7 +10,7 @@
  * @class Duration
  * @constructor
  */
-Duration = function (duration) {
+const Duration = function (duration) {
     var absRound = function (number) {
         if (number < 0) {
             return Math.ceil(number);
