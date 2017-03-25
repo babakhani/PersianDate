@@ -203,9 +203,9 @@ class PersianDateClass {
                 // Minutes
                 case("m"): {
                     if (formatToPersian)
-                        return toPersianDigit(info.minute);
+                        return toPersianDigit(leftZeroFill(info.minute, 2));
                     else
-                        return info.minute;
+                        return leftZeroFill(info.minute, 2);
                 }
                 // Two Digit Minutes
                 case("mm"): {
