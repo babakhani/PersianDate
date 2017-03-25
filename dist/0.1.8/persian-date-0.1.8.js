@@ -576,6 +576,12 @@ function persianArrayToGregorianDate(parray) {
   gDate.setHours(parray[3] ? parray[3] : 0);
   gDate.setMinutes(parray[4] ? parray[4] : 0);
   gDate.setSeconds(parray[5] ? parray[5] : 0);
+
+
+
+  console.log('gDate')
+  console.log(gDate)
+
   return gDate;
 }
 
