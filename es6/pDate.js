@@ -16,15 +16,22 @@ class PersianDateClass {
         else if (isNumber(input)) {
             this.gDate = new Date(input);
         }
+        // instance of pDate
         else if (input instanceof pDate) {
             this.gDate = input.gDate;
-        } else {
-            this.gDate = Date();
         }
         // ASP.NET JSON Date
-        // else if (input.substring(0, 6) === "/Date(") {
-        //     this.gDate = new Date(parseInt(input.substr(6)));
-        // }
+        else if (input.substring(0, 6) === "/Date(") {
+            this.gDate = new Date(parseInt(input.substr(6)));
+        }
+        // Default action
+        else {
+            this.gDate = Date();
+        }
+
+        if (!this.gDate) {
+            this.gDate = new Date();
+        }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
 
         /**
@@ -94,7 +101,7 @@ class PersianDateClass {
      */
     add(key, input) {
         var d = this.duration(input, key).valueOf(), newUnixDate = this.gDate.valueOf() + d;
-        return new pDate(newUnixDate);
+        return new PersianDateClass(newUnixDate);
     }
 
 
@@ -106,7 +113,7 @@ class PersianDateClass {
      */
     subtract(key, input) {
         var d = this.duration(input, key).valueOf(), newUnixDate = this.gDate.valueOf() - d;
-        return new pDate(newUnixDate);
+        return new PersianDateClass(newUnixDate);
     }
 
     /**
@@ -243,7 +250,7 @@ class PersianDateClass {
                 }
                 // Return day Of Year
                 case("DDD"): {
-                    var t = self.startOf("year")
+                    let t = self.startOf("year");
                     if (formatToPersian)
                         return toPersianDigit(self.diff(t, "days"));
                     else
@@ -251,7 +258,7 @@ class PersianDateClass {
                 }
                 // Return Week Day Full Name
                 case("DDDD"): {
-                    var t = self.startOf("year")
+                    let t = self.startOf("year");
                     if (formatToPersian)
                         return leftZeroFill(self.diff(t, "days"), 3);
                     else
@@ -458,7 +465,7 @@ class PersianDateClass {
      * @returns {*}
      */
     diff(input, val, asFloat) {
-        var self = new pDate(this), inputMoment = input,
+        var self = new PersianDateClass(this), inputMoment = input,
             //this._isUTC ? moment(input).utc() : moment(input).local();
             zoneDiff = 0,
             //(this.zone() - inputMoment.zone()) * 6e4;
@@ -491,29 +498,29 @@ class PersianDateClass {
         switch (key) {
             case "years":
             case "year" :
-                return new pDate([this.year(), 1, 1]);
+                return new PersianDateClass([this.year(), 1, 1]);
             case "months":
             case "month":
-                return new pDate([this.year(), this.month(), 1]);
+                return new PersianDateClass([this.year(), this.month(), 1]);
             case "days" :
             case "day" :
-                return new pDate([this.year(), this.month(), this.date(), 0, 0, 0]);
+                return new PersianDateClass([this.year(), this.month(), this.date(), 0, 0, 0]);
             case "hours" :
             case "hour" :
-                return new pDate([this.year(), this.month(), this.date(), this.hours(), 0, 0]);
+                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), 0, 0]);
             case "minutes":
             case "minute":
-                return new pDate([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 0]);
+                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 0]);
             case "seconds":
             case "second":
-                return new pDate([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
+                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
             case "weeks":
             case "week":
                 var weekDayNumber = this.pDate.weekDayNumber;
                 if (weekDayNumber === 0) {
-                    return new pDate([this.year(), this.month(), this.date()]);
+                    return new PersianDateClass([this.year(), this.month(), this.date()]);
                 } else {
-                    return new pDate([this.year(), this.month(), this.date()]).subtract("days", weekDayNumber);
+                    return new PersianDateClass([this.year(), this.month(), this.date()]).subtract("days", weekDayNumber);
                 }
             default:
                 return this;
@@ -532,23 +539,23 @@ class PersianDateClass {
             case "years":
             case "year":
                 var days = this.isLeapYear() ? 30 : 29;
-                return new pDate([this.year(), 12, days, 23, 59, 59]);
+                return new PersianDateClass([this.year(), 12, days, 23, 59, 59]);
             case "months":
             case "month":
                 var monthDays = this.daysInMonth(this.year(), this.month());
-                return new pDate([this.year(), this.month(), monthDays, 23, 59, 59]);
+                return new PersianDateClass([this.year(), this.month(), monthDays, 23, 59, 59]);
             case "days" :
             case "day" :
-                return new pDate([this.year(), this.month(), this.date(), 23, 59, 59]);
+                return new PersianDateClass([this.year(), this.month(), this.date(), 23, 59, 59]);
             case "hours" :
             case "hour" :
-                return new pDate([this.year(), this.month(), this.date(), this.hours(), 59, 59]);
+                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), 59, 59]);
             case "minutes":
             case "minute":
-                return new pDate([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 59]);
+                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 59]);
             case "seconds":
             case "second":
-                return new pDate([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
+                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
             case "weeks":
             case "week":
                 var weekDayNumber = this.pDate.weekDayNumber;
@@ -557,7 +564,7 @@ class PersianDateClass {
                 } else {
                     weekDayNumber = 6 - weekDayNumber;
                 }
-                return new pDate([this.year(), this.month(), this.date()]).add("days", weekDayNumber);
+                return new PersianDateClass([this.year(), this.month(), this.date()]).add("days", weekDayNumber);
             default:
                 return this;
         }
@@ -654,16 +661,12 @@ class PersianDateClass {
      * version 0.0.1
      */
     isDST() {
-        var
-            month = this.month(),
+        let month = this.month(),
             day = this.date();
-
         if (month < 7) {
             return false;
         }
-
-        if ((month == 7 && day >= 2) ||
-            month > 7) {
+        else if (month >= 7) {
             return true;
         }
     }
@@ -713,7 +716,7 @@ class PersianDateClass {
      * @returns {array}
      */
     toArray() {
-        return [this.year(), this.month(), this.day(), this.hour(), this.minute(), this.second(), this.millisecond()];
+        return [this.year(), this.month(), this.date(), this.hour(), this.minute(), this.second(), this.millisecond()];
     }
 
 
@@ -735,9 +738,9 @@ class PersianDateClass {
     unix(timestamp) {
         let output;
         if (timestamp) {
-            return new persianDate(timestamp * 1000);
+            return new PersianDateClass(timestamp * 1000);
         } else {
-            var str = this.gDate.valueOf().toString();
+            let str = this.gDate.valueOf().toString();
             output = str.substring(0, str.length - 3);
         }
         return parseInt(output);
@@ -750,7 +753,7 @@ class PersianDateClass {
      * @returns {boolean}
      */
     isPersianDate(obj) {
-        return obj instanceof pDate;
+        return obj instanceof PersianDateClass;
     }
 
 
@@ -829,7 +832,8 @@ class PersianDateClass {
             this._updatePDate();
             return this;
         } else {
-            return this.pDate.minutes;
+            // TODO: remove this
+            return parseInt(this.pDate.minutes);
         }
     }
 
@@ -877,9 +881,9 @@ class PersianDateClass {
      */
     date(input) {
         if (input | input == 0) {
-            var pDateArray = getPersianArrayFromPDate(this.pDate);
+            var pDateArray = this.algorithms.getPersianArrayFromPDate(this.pDate);
             pDateArray[2] = input;
-            this.gDate = persianArrayToGregorianDate(pDateArray);
+            this.gDate = this.algorithms.persianArrayToGregorianDate(pDateArray);
             this._updatePDate();
             return this;
         } else {
@@ -913,9 +917,9 @@ class PersianDateClass {
      */
     month(input) {
         if (input | input === 0) {
-            var pDateArray = getPersianArrayFromPDate(this.pDate);
+            var pDateArray = this.algorithms.getPersianArrayFromPDate(this.pDate);
             pDateArray[1] = input;
-            this.gDate = persianArrayToGregorianDate(pDateArray);
+            this.gDate = this.algorithms.persianArrayToGregorianDate(pDateArray);
             this._updatePDate();
             return this;
         } else {
@@ -941,9 +945,9 @@ class PersianDateClass {
      */
     year(input) {
         if (input | input === 0) {
-            var pDateArray = getPersianArrayFromPDate(this.pDate);
+            var pDateArray = this.algorithms.getPersianArrayFromPDate(this.pDate);
             pDateArray[0] = input;
-            this.gDate = persianArrayToGregorianDate(pDateArray);
+            this.gDate = this.algorithms.persianArrayToGregorianDate(pDateArray);
             this._updatePDate();
             return this;
         } else {
@@ -958,7 +962,7 @@ class PersianDateClass {
      * @returns {*}
      */
     getFirstWeekDayOfMonth(year, month) {
-        var dateArray = calcPersian(year, month, 1), pdate = calcGregorian(dateArray[0], dateArray[1], dateArray[2]);
+        var dateArray = this.algorithms.calcPersian(year, month, 1), pdate = this.algorithms.calcGregorian(dateArray[0], dateArray[1], dateArray[2]);
         if (pdate[3] + 2 === 8) {
             return 1;
         } else if (pdate[3] + 2 === 7) {
@@ -975,7 +979,7 @@ class PersianDateClass {
      */
     clone() {
         var self = this;
-        return new pDate(self.gDate);
+        return new PersianDateClass(self.gDate);
     }
 
 
@@ -984,7 +988,7 @@ class PersianDateClass {
      * @private
      */
     _updatePDate() {
-        this.pDate = toPersianDate(this.gDate);
+        this.pDate = this.algorithms.toPersianDate(this.gDate);
     }
 
 
@@ -999,8 +1003,8 @@ class PersianDateClass {
 
 (function () {
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-        module.exports = PersianDateClass;
         const pDate = PersianDateClass;
+        module.exports = pDate;
         const Duration = Duration;
     }
     else {

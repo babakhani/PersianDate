@@ -217,6 +217,7 @@ class Algorithms {
         gDate.setHours(parray[3] ? parray[3] : 0);
         gDate.setMinutes(parray[4] ? parray[4] : 0);
         gDate.setSeconds(parray[5] ? parray[5] : 0);
+        gDate.setMilliseconds(parray[6] ? parray[6] : 0);
 
         return gDate;
     }
