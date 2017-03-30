@@ -164,12 +164,6 @@ class Algorithms {
      * @returns {{}}
      */
     toPersianDate(gd) {
-
-        // TODO: mus fix
-        if (typeof gd == 'string') {
-            gd = new Date(gd);
-        }
-
         let pa = this.calcGregorian(gd.getFullYear(), gd.getMonth(), gd.getDate()),
             output = {};
         output.monthDayNumber = pa[2] - 1;

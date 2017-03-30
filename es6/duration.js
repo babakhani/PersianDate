@@ -11,15 +11,6 @@
  * @constructor
  */
 
-// TODO: remove this
-function absRound(number) {
-    if (number < 0) {
-        return Math.ceil(number);
-    } else {
-        return Math.floor(number);
-    }
-}
-
 
 class Duration {
     constructor(key, value) {
@@ -33,13 +24,8 @@ class Duration {
         // console.log(unit)
         // console.log(normalizedUnit.value)
 
-        if (unit) {
-            duration[unit] = normalizedUnit.value;
-            milliseconds = duration.milliseconds || duration.millisecond || duration.ms || 0;
-        }
-        else {
-            milliseconds = normalizedUnit.value;
-        }
+        duration[unit] = normalizedUnit.value;
+        milliseconds = duration.milliseconds || duration.millisecond || duration.ms || 0;
 
         let years = duration.years || duration.year || duration.y || 0,
             months = duration.months || duration.month || duration.M || 0,
@@ -76,9 +62,6 @@ class Duration {
         return this;
     }
 }
-
-
-
 
 
 /**

@@ -100,17 +100,9 @@ function leftZeroFill(number, targetLength) {
     return output;
 }
 
-function log(input) {
-    console.log(input)
-}
-
 function normalizeDuration() {
-    let unit, value, output = {};
-
-    // console.log(arguments[0]);
-    // console.log(arguments[1]);
-
-    if (typeof arguments[0] == 'string') {
+    let unit, value;
+    if (isString(arguments[0])) {
         unit = arguments[0];
         value = arguments[1];
     }

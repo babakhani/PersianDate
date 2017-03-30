@@ -10,47 +10,24 @@ class PersianDateClass {
         }
         else if (isArray(input)) {
             //  Encapsulate Input Array
-            var arrayInput = input.slice();
+            let arrayInput = input.slice();
             this.gDate = this.algorithms.persianArrayToGregorianDate(arrayInput);
         }
         else if (isNumber(input)) {
             this.gDate = new Date(input);
         }
         // instance of pDate
-        else if (input instanceof pDate) {
+        else if (input instanceof PersianDateClass) {
             this.gDate = input.gDate;
         }
         // ASP.NET JSON Date
         else if (input.substring(0, 6) === "/Date(") {
             this.gDate = new Date(parseInt(input.substr(6)));
         }
-        // Default action
-        else {
-            this.gDate = Date();
-        }
-
-        if (!this.gDate) {
-            this.gDate = new Date();
-        }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
-
-        /**
-         * @type {string}
-         */
         this.version = "0.1.8b";
-
-        /**
-         * @type {string}
-         */
         this.formatPersian = "_default";
-
-
-        /**
-         * @type {boolean}
-         */
-        this.utcMode = false;
-
-
+        this._utcMode = false;
         return this;
     }
 
@@ -62,17 +39,7 @@ class PersianDateClass {
      * @returns {Duration}
      */
     duration(input, key) {
-        let isDuration = this.isDuration(input),
-            isNumber = ( typeof input === 'number'),
-            duration = ( isDuration ? input._data : ( isNumber ? {} : input));
-        if (isNumber) {
-            if (key) {
-                duration[key] = input;
-            } else {
-                duration.milliseconds = input;
-            }
-        }
-        return new Duration(duration);
+        return new Duration(input, key);
     }
 
 
@@ -90,9 +57,9 @@ class PersianDateClass {
      *
      * @returns {string}
      */
-    humanize() {
-        return "Must Implement";
-    }
+    // humanize() {
+    //     return "Must Implement";
+    // }
 
 
     /**
@@ -143,7 +110,10 @@ class PersianDateClass {
      * @param input
      * @returns {PersianDate}
      */
-    subtract(key, input) {
+    subtract(key, value) {
+        console.log('key :' + key);
+        console.log('value :' + value);
+
         let duration = new Duration(key, value)._data;
         // log(duration)
         if (duration.years > 0) {
@@ -208,7 +178,7 @@ class PersianDateClass {
             } else if (this.formatPersian === false) {
                 output = false;
             } else {
-                $.error("Invalid Config 'formatPersian' !!")
+                Error("Invalid Config 'formatPersian' !!")
             }
         }
         return output;
@@ -221,19 +191,27 @@ class PersianDateClass {
      * @returns {*}
      */
     format(inputString) {
-        var self = this, formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DD?D?D?|ddddd|dddd?|do?|w[o|w]?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|SS?S?|zz?|ZZ?|X|LT|ll?l?l?|LL?L?L?)/g, info = {
-            year: self.year(),
-            month: self.month(),
-            hour: self.hours(),
-            minute: self.minutes(),
-            second: self.seconds(),
-            date: self.date(),
-            timezone: self.zone(),
-            unix: self.unix()
+        let self = this, formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DD?D?D?|ddddd|dddd?|do?|w[o|w]?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|SS?S?|zz?|ZZ?|X|LT|ll?l?l?|LL?L?L?)/g, info = {
+                year: self.year(),
+                month: self.month(),
+                hour: self.hours(),
+                minute: self.minutes(),
+                second: self.seconds(),
+                date: self.date(),
+                timezone: self.zone(),
+                unix: self.unix()
+            },
+            formatToPersian = self.formatNumber();
+
+        let checkPersian = function (i) {
+            if (formatToPersian) {
+                return toPersianDigit(i);
+            } else {
+                return i;
+            }
         };
 
         function replaceFunction(input) {
-            let formatToPersian = self.formatNumber();
             switch (input) {
                 // AM/PM
                 case("a"): {
@@ -244,94 +222,53 @@ class PersianDateClass {
                 }
                 // Hours (Int)
                 case("H"): {
-                    if (formatToPersian)
-                        return toPersianDigit(info.hour);
-                    else
-                        return info.hour;
+                    return checkPersian(info.hour);
                 }
                 case("HH"): {
-                    if (formatToPersian)
-                        return toPersianDigit(leftZeroFill(info.hour, 2));
-                    else
-                        return leftZeroFill(info.hour, 2);
+                    return checkPersian(leftZeroFill(info.hour, 2));
                 }
                 case("h"): {
-                    var h = info.hour % 12;
-                    if (formatToPersian)
-                        return toPersianDigit(h);
-                    else
-                        return h;
+                    return checkPersian(info.hour % 12);
                 }
                 case("hh"): {
-                    var h = info.hour % 12;
-                    if (formatToPersian)
-                        return toPersianDigit(leftZeroFill(h, 2));
-                    else
-                        return leftZeroFill(h, 2);
+                    return checkPersian(leftZeroFill(info.hour % 12, 2));
                 }
                 // Minutes
                 case("m"): {
-                    if (formatToPersian)
-                        return toPersianDigit(leftZeroFill(info.minute, 2));
-                    else
-                        return leftZeroFill(info.minute, 2);
+                    return checkPersian(leftZeroFill(info.minute, 2));
                 }
                 // Two Digit Minutes
                 case("mm"): {
-                    if (formatToPersian)
-                        return toPersianDigit(leftZeroFill(info.minute, 2));
-                    else
-                        return leftZeroFill(info.minute, 2);
+                    return checkPersian(leftZeroFill(info.minute, 2));
                 }
                 // Second
                 case("s"): {
-                    if (formatToPersian)
-                        return toPersianDigit(info.second);
-                    else
-                        return info.second;
+                    return checkPersian(info.second);
                 }
                 case("ss"): {
-                    if (formatToPersian)
-                        return toPersianDigit(leftZeroFill(info.second, 2));
-                    else
-                        return leftZeroFill(info.second, 2);
+                    return checkPersian(leftZeroFill(info.second, 2));
                 }
                 // Day (Int)
                 case("D"): {
-                    if (formatToPersian)
-                        return toPersianDigit(leftZeroFill(info.date));
-                    else
-                        return leftZeroFill(info.date);
+                    return checkPersian(leftZeroFill(info.date));
                 }
                 // Return Two Digit
                 case("DD"): {
-                    if (formatToPersian)
-                        return toPersianDigit(leftZeroFill(info.date, 2));
-                    else
-                        return leftZeroFill(info.date, 2);
+                    return checkPersian(leftZeroFill(info.date, 2));
                 }
                 // Return day Of Month
                 case("DDD"): {
                     let t = self.startOf("year");
-                    if (formatToPersian)
-                        return toPersianDigit(self.diff(t, "days"));
-                    else
-                        return leftZeroFill(self.diff(t, "days"), 3);
+                    return checkPersian(leftZeroFill(self.diff(t, "days"), 3));
                 }
                 // Return Day of Year
                 case("DDDD"): {
                     let t = self.startOf("year");
-                    if (formatToPersian)
-                        return toPersianDigit(leftZeroFill(self.diff(t, "days"), 3));
-                    else
-                        return leftZeroFill(self.diff(t, "days"), 3);
+                    return checkPersian(leftZeroFill(self.diff(t, "days"), 3));
                 }
                 // Return day Of week
                 case("d"): {
-                    if (formatToPersian)
-                        return toPersianDigit(self.pDate.weekDayNumber);
-                    else
-                        return self.pDate.weekDayNumber;
+                    return checkPersian(self.pDate.weekDayNumber);
                 }
                 // Return week day name abbr
                 case("ddd"): {
@@ -348,33 +285,21 @@ class PersianDateClass {
                 case("w"): {
                     let t = self.startOf("year"),
                         day = parseInt(self.diff(t, "days") / 7) + 1;
-                    if (formatToPersian)
-                        return toPersianDigit(day);
-                    else
-                        return info.month;
+                    return checkPersian(day);
                 }
                 // Return Persian Day Name
                 case("ww"): {
                     let t = self.startOf("year"),
                         day = leftZeroFill(parseInt(self.diff(t, "days") / 7) + 1, 2);
-                    if (formatToPersian)
-                        return toPersianDigit(day);
-                    else
-                        return info.month;
+                    return checkPersian(day);
                 }
                 // Month  (Int)
                 case("M"): {
-                    if (formatToPersian)
-                        return toPersianDigit(info.month);
-                    else
-                        return info.month;
+                    return checkPersian(info.month);
                 }
                 // Two Digit Month (Str)
                 case("MM"): {
-                    if (formatToPersian)
-                        return toPersianDigit(leftZeroFill(info.month, 2));
-                    else
-                        return leftZeroFill(info.month, 2);
+                    return checkPersian(leftZeroFill(info.month, 2));
                 }
                 // Abbr String of Month (Str)
                 case("MMM"): {
@@ -388,17 +313,11 @@ class PersianDateClass {
                 // Two Digit Year (Str)
                 case("YY"): {
                     let yearDigitArray = info.year.toString().split("");
-                    if (formatToPersian)
-                        return toPersianDigit(yearDigitArray[2] + yearDigitArray[3]);
-                    else
-                        return yearDigitArray[2] + yearDigitArray[3];
+                    return checkPersian(yearDigitArray[2] + yearDigitArray[3]);
                 }
                 // Full Year (Int)
                 case("YYYY"): {
-                    if (formatToPersian)
-                        return toPersianDigit(info.year);
-                    else
-                        return info.year;
+                    return checkPersian(info.year);
                 }
                 case("Z"): {
                     let flag = "+",
@@ -414,10 +333,7 @@ class PersianDateClass {
                     }
 
                     let z = flag + leftZeroFill(hours, 2) + ":" + leftZeroFill(minutes, 2);
-                    if (formatToPersian)
-                        return toPersianDigit(z)
-                    else
-                        return z;
+                    return checkPersian(z)
                 }
                 case("ZZ"): {
                     let flag = "+",
@@ -432,10 +348,7 @@ class PersianDateClass {
                         hours *= -1;
                     }
                     let z = flag + leftZeroFill(hours, 2) + "" + leftZeroFill(minutes, 2);
-                    if (formatToPersian)
-                        return toPersianDigit(z)
-                    else
-                        return z;
+                    return checkPersian(z)
                 }
                 case("X"): {
                     return self.unix();
@@ -476,16 +389,13 @@ class PersianDateClass {
                 case("llll"): {
                     return self.format("ddd D MMM YYYY  h:m  a");
                 }
-
-                default:
-                    return info._d;
             }
         }
 
         if (inputString) {
             return inputString.replace(formattingTokens, replaceFunction);
         } else {
-            var inputString = "YYYY-MM-DD HH:mm:ss a"
+            let inputString = "YYYY-MM-DD HH:mm:ss a";
             return inputString.replace(formattingTokens, replaceFunction);
         }
     }
@@ -662,10 +572,8 @@ class PersianDateClass {
         return this.endOf("day");
     }
 
-    // Get the timezone offset in minutes.
-    /**
-     *
-     * @returns {output.timeZoneOffset|*|toPersianDate.timeZoneOffset|c.timeZoneOffset}
+    /** Get the timezone offset in minutes.
+     * @return {*}
      */
     zone() {
         return this.pDate.timeZoneOffset;
@@ -701,7 +609,7 @@ class PersianDateClass {
      */
     utc(input) {
         if (input) {
-            return new persianDate(input).utc();
+            return new PersianDateClass(input).utc();
         }
         if (this._utcMode) {
             return this;

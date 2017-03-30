@@ -11,7 +11,7 @@ const
         day: ['d', 'days', 'day'],
         hour: ['h', 'hours', 'hour'],
         minute: ['m', 'minutes', 'minute'],
-        second: ['s', 'secod', 'seconds'],
+        second: ['s', 'second', 'seconds'],
         millisecond: ['ms', 'milliseconds', 'millisecond'],
         week: ['w', '', 'weeks', 'week'],
     },
