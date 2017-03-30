@@ -178,7 +178,7 @@ class PersianDateClass {
             } else if (this.formatPersian === false) {
                 output = false;
             } else {
-                Error("Invalid Config 'formatPersian' !!")
+                Error("Invalid Config 'formatPersian' !!");
             }
         }
         return output;
@@ -279,7 +279,7 @@ class PersianDateClass {
                 }
                 // Return Persian Day Name
                 case("ddddd"): {
-                    return persianDaysName[self.pDate.monthDayNumber]
+                    return persianDaysName[self.pDate.monthDayNumber];
                 }
                 // Return Persian Day Name
                 case("w"): {
@@ -333,7 +333,7 @@ class PersianDateClass {
                     }
 
                     let z = flag + leftZeroFill(hours, 2) + ":" + leftZeroFill(minutes, 2);
-                    return checkPersian(z)
+                    return checkPersian(z);
                 }
                 case("ZZ"): {
                     let flag = "+",
@@ -348,7 +348,7 @@ class PersianDateClass {
                         hours *= -1;
                     }
                     let z = flag + leftZeroFill(hours, 2) + "" + leftZeroFill(minutes, 2);
-                    return checkPersian(z)
+                    return checkPersian(z);
                 }
                 case("X"): {
                     return self.unix();
@@ -585,14 +585,15 @@ class PersianDateClass {
      * @returns {PersianDate}
      */
     local() {
+        let utcStamp;
         if (!this._utcMode) {
             return this;
         } else {
-            var offsetMils = this.pDate.timeZoneOffset * 60 * 1000;
+            let offsetMils = this.pDate.timeZoneOffset * 60 * 1000;
             if (this.pDate.timeZoneOffset < 0) {
-                var utcStamp = this.valueOf() - offsetMils;
+                utcStamp = this.valueOf() - offsetMils;
             } else {
-                var utcStamp = this.valueOf() + offsetMils;
+                utcStamp = this.valueOf() + offsetMils;
             }
             this.gDate = new Date(utcStamp);
             this._updatePDate();
@@ -608,17 +609,18 @@ class PersianDateClass {
      * @returns {*}
      */
     utc(input) {
+        let utcStamp;
         if (input) {
             return new PersianDateClass(input).utc();
         }
         if (this._utcMode) {
             return this;
         } else {
-            var offsetMils = this.pDate.timeZoneOffset * 60 * 1000;
+            let offsetMils = this.pDate.timeZoneOffset * 60 * 1000;
             if (this.pDate.timeZoneOffset < 0) {
-                var utcStamp = this.valueOf() + offsetMils;
+                utcStamp = this.valueOf() + offsetMils;
             } else {
-                var utcStamp = this.valueOf() - offsetMils;
+                utcStamp = this.valueOf() - offsetMils;
             }
             this.gDate = new Date(utcStamp);
             this._updatePDate();
@@ -746,7 +748,7 @@ class PersianDateClass {
      * Getter Setter
      */
     millisecond(input) {
-        return this.milliseconds(input)
+        return this.milliseconds(input);
     }
 
 
@@ -826,7 +828,7 @@ class PersianDateClass {
      * @returns {*}
      */
     hour(input) {
-        return this.hours(input)
+        return this.hours(input);
     }
 
 
@@ -852,7 +854,7 @@ class PersianDateClass {
      * @returns {*}
      */
     dates(input) {
-        return this.date(input)
+        return this.date(input);
     }
 
 
@@ -862,7 +864,7 @@ class PersianDateClass {
      * @returns {*}
      */
     date(input) {
-        if (input | input == 0) {
+        if (input || input === 0) {
             var pDateArray = this.algorithms.getPersianArrayFromPDate(this.pDate);
             pDateArray[2] = input;
             this.gDate = this.algorithms.persianArrayToGregorianDate(pDateArray);

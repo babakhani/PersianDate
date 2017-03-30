@@ -133,7 +133,7 @@ function normalizeDuration() {
     return {
         unit: unit,
         value: value
-    }
+    };
 }
 
 
