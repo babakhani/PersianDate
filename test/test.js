@@ -387,20 +387,20 @@ describe('duration', function () {
     });
 
 });
-//
-// describe('Add', function () {
-//     it('Year', function () {
-//         let a = new pDate([1391, 1, 1, 1, 1, 1]),
-//             b = a.add('year', 1).toArray();
-//         console.log(b);
-//         assert.deepEqual(b, [1392, 1, 1, 1, 1, 1, 0]);
-//     });
-//     it('Month', function () {
-//         let a = new pDate([1391, 1, 1, 1, 1, 1]),
-//             b = a.add('month', 1).toArray();
-//         assert.deepEqual(b, [1391, 2, 1, 1, 1, 1, 0]);
-//     });
-// });
+
+describe('Add', function () {
+    it('Year', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]),
+            b = a.add('year', 1).toArray();
+        console.log(b);
+        assert.deepEqual(b, [1392, 1, 1, 1, 1, 1, 0]);
+    });
+    it('Month', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]),
+            b = a.add('month', 1).toArray();
+        assert.deepEqual(b, [1391, 2, 1, 1, 1, 1, 0]);
+    });
+});
 
 describe('daysInMonth', function () {
     it('First Month of normal year', function () {
