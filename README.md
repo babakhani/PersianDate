@@ -11,7 +11,6 @@ Inspired by [momentjs](http://momentjs.com/)
 More info at [wikipedia](http://en.wikipedia.org/wiki/Iranian_calendar)
 
 <a class="github-button" href="https://github.com/babakhani/persiandate/archive/master.zip" data-style="mega" aria-label="Download babakhani/persiandate on GitHub">Download</a>
-
 <a class="github-button" href="https://github.com/babakhani" data-style="mega" data-count-href="/babakhani/followers" data-count-api="/users/babakhani#followers" data-count-aria-label="# followers on GitHub" aria-label="Follow @babakhani on GitHub">Follow @babakhani</a>
 <a class="github-button" href="https://github.com/babakhani/persiandate" data-style="mega" data-count-href="/babakhani/persiandate/stargazers" data-count-api="/repos/babakhani/persiandate#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star babakhani/persiandate on GitHub">Star</a>
 <a class="github-button" href="https://github.com/babakhani/persiandate/issues" data-style="mega" data-count-api="/repos/babakhani/persiandate#open_issues_count" data-count-aria-label="# issues on GitHub" aria-label="Issue babakhani/persiandate on GitHub">Issue</a>
@@ -341,43 +340,43 @@ Mutates the original persianDate by subtracting time.
 This is exactly the same as ```persianDate#add``` , only instead of adding time, it subtracts time.
 
 ```javascript
-persianDate().subtract('days', 7);
+new persianDate().subtract('days', 7);
 ```
 
 ## Start of Time
 
 ```javascript
-persianDate().startOf(String);
+new persianDate().startOf(String);
 ```
 
 Mutates the original persianDate by setting it to the start of a unit of time.
 
 ```javascript
-persianDate().startOf('year');   // set to Farvardin 1st, 12:00 am this year
-persianDate().startOf('month');  // set to the first of this month, 12:00 am
-persianDate().startOf('week');   // set to the first day of this week, 12:00 am
-persianDate().startOf('day');    // set to 12:00 am today
-persianDate().startOf('hour');   // set to now, but with 0 mins, 0 secs, and 0 ms
-persianDate().startOf('minute'); // set to now, but with 0 seconds and 0 milliseconds
-persianDate().startOf('second'); // same as persianDate().milliseconds(0);
+new persianDate().startOf('year');   // set to Farvardin 1st, 12:00 am this year
+new persianDate().startOf('month');  // set to the first of this month, 12:00 am
+new persianDate().startOf('week');   // set to the first day of this week, 12:00 am
+new persianDate().startOf('day');    // set to 12:00 am today
+new persianDate().startOf('hour');   // set to now, but with 0 mins, 0 secs, and 0 ms
+new persianDate().startOf('minute'); // set to now, but with 0 seconds and 0 milliseconds
+new persianDate().startOf('second'); // same as persianDate().milliseconds(0);
 ```
 
 These shortcuts are essentially the same as the following.
 
 ```javascript
-persianDate().startOf('year');
-persianDate().month(0).date(1).hours(0).minutes(0).seconds(0).milliseconds(0);
+new persianDate().startOf('year');
+new persianDate().month(0).date(1).hours(0).minutes(0).seconds(0).milliseconds(0);
 ```
 
 ```javascript
-persianDate().startOf('hour');
-persianDate().minutes(0).seconds(0).milliseconds(0)
+new persianDate().startOf('hour');
+new persianDate().minutes(0).seconds(0).milliseconds(0)
 ```
 
 ## End of Time
 
 ```javascript
-persianDate().endOf(String);
+new persianDate().endOf(String);
 ```
 
 Mutates the original persianDate by setting it to the end of a unit of time.
@@ -385,7 +384,7 @@ Mutates the original persianDate by setting it to the end of a unit of time.
 This is the same as ```persianDate#startOf``` , only instead of setting to the start of a unit of time, it sets to the end of a unit of time.
 
 ```javascript
-persianDate().endOf("year"); // set the persianDate to 12-31 11:59:59.999 pm this year
+new persianDate().endOf("year"); // set the persianDate to 12-31 11:59:59.999 pm this year
 ```
 
 ## Display
@@ -396,8 +395,8 @@ Once parsing and manipulation are done, you need some way to display the persian
 ## Format
 
 ```javascript
-persianDate().format();
-persianDate().format(String);
+new persianDate().format();
+new persianDate().format(String);
 ```
 
 This is the most robust display option. It takes a string of tokens and replaces them with their corresponding values.
