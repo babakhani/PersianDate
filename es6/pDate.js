@@ -62,7 +62,9 @@ class PersianDateClass {
      * @returns {Duration}
      */
     duration(input, key) {
-        var isDuration = this.isDuration(input), isNumber = ( typeof input === 'number'), duration = ( isDuration ? input._data : ( isNumber ? {} : input)), ret;
+        let isDuration = this.isDuration(input),
+            isNumber = ( typeof input === 'number'),
+            duration = ( isDuration ? input._data : ( isNumber ? {} : input));
         if (isNumber) {
             if (key) {
                 duration[key] = input;
@@ -100,7 +102,8 @@ class PersianDateClass {
      * @returns {PersianDate}
      */
     add(key, input) {
-        var d = this.duration(input, key).valueOf(), newUnixDate = this.gDate.valueOf() + d;
+        var d = new Duration(input, key).valueOf(),
+            newUnixDate = this.gDate.valueOf() + d;
         return new PersianDateClass(newUnixDate);
     }
 
@@ -112,7 +115,7 @@ class PersianDateClass {
      * @returns {PersianDate}
      */
     subtract(key, input) {
-        var d = this.duration(input, key).valueOf(), newUnixDate = this.gDate.valueOf() - d;
+        var d = new Duration(input, key).valueOf(), newUnixDate = this.gDate.valueOf() - d;
         return new PersianDateClass(newUnixDate);
     }
 
@@ -248,21 +251,21 @@ class PersianDateClass {
                     else
                         return leftZeroFill(info.date, 2);
                 }
-                // Return day Of Year
+                // Return day Of Month
                 case("DDD"): {
                     let t = self.startOf("year");
                     if (formatToPersian)
                         return toPersianDigit(self.diff(t, "days"));
                     else
-                        return self.diff(t, "days");
+                        return leftZeroFill(self.diff(t, "days"), 3);
                 }
-                // Return Week Day Full Name
+                // Return Day of Year
                 case("DDDD"): {
                     let t = self.startOf("year");
                     if (formatToPersian)
-                        return leftZeroFill(self.diff(t, "days"), 3);
-                    else
                         return toPersianDigit(leftZeroFill(self.diff(t, "days"), 3));
+                    else
+                        return leftZeroFill(self.diff(t, "days"), 3);
                 }
                 // Return day Of week
                 case("d"): {
@@ -424,27 +427,27 @@ class PersianDateClass {
      * Humanize
      * @returns {string}
      */
-    from() {
-        return "Must Implement";
-    }
+    // from() {
+    //     return "Must Implement";
+    // }
 
 
     /**
      *
      * @returns {string}
      */
-    fromNow() {
-        return "Must Implement";
-    }
+    // fromNow() {
+    //     return "Must Implement";
+    // }
 
 
     /**
      *
      * @returns {string}
      */
-    humanizeDuration() {
-        return "Must Implement";
-    }
+    // humanizeDuration() {
+    //     return "Must Implement";
+    // }
 
 
     /**
@@ -452,9 +455,9 @@ class PersianDateClass {
      * @returns {Function|PersianDate._d|_d}
      * @private
      */
-    _d() {
-        return this.gDate._d;
-    }
+    // _d() {
+    //     return this.gDate._d;
+    // }
 
 
     /**
@@ -465,11 +468,14 @@ class PersianDateClass {
      * @returns {*}
      */
     diff(input, val, asFloat) {
-        var self = new PersianDateClass(this), inputMoment = input,
-            //this._isUTC ? moment(input).utc() : moment(input).local();
+        let self = this,
+            inputMoment = input,
             zoneDiff = 0,
-            //(this.zone() - inputMoment.zone()) * 6e4;
-            diff = self.gDate - inputMoment.gDate - zoneDiff, year = self.year() - inputMoment.year(), month = self.month() - inputMoment.month(), date = (self.date() - inputMoment.date()) * -1, output;
+            diff = self.gDate - inputMoment.gDate - zoneDiff,
+            year = self.year() - inputMoment.year(),
+            month = self.month() - inputMoment.month(),
+            date = (self.date() - inputMoment.date()) * -1, output;
+
         if (val === 'months' || val === 'month') {
             output = year * 12 + month + date / 30;
         } else if (val === 'years' || val === 'year') {
@@ -538,11 +544,11 @@ class PersianDateClass {
         switch (key) {
             case "years":
             case "year":
-                var days = this.isLeapYear() ? 30 : 29;
+                let days = this.isLeapYear() ? 30 : 29;
                 return new PersianDateClass([this.year(), 12, days, 23, 59, 59]);
             case "months":
             case "month":
-                var monthDays = this.daysInMonth(this.year(), this.month());
+                let monthDays = this.daysInMonth(this.year(), this.month());
                 return new PersianDateClass([this.year(), this.month(), monthDays, 23, 59, 59]);
             case "days" :
             case "day" :
@@ -558,7 +564,7 @@ class PersianDateClass {
                 return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
             case "weeks":
             case "week":
-                var weekDayNumber = this.pDate.weekDayNumber;
+                let weekDayNumber = this.pDate.weekDayNumber;
                 if (weekDayNumber === 6) {
                     weekDayNumber = 7;
                 } else {
@@ -666,7 +672,7 @@ class PersianDateClass {
         if (month < 7) {
             return false;
         }
-        else if (month >= 7) {
+        else if ((month == 7 && day >= 2) || month >= 7) {
             return true;
         }
     }
@@ -1004,8 +1010,10 @@ class PersianDateClass {
 (function () {
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
         const pDate = PersianDateClass;
-        module.exports = pDate;
-        const Duration = Duration;
+        module.exports = {
+            pDate: pDate,
+            Duration: Duration
+        };
     }
     else {
         if (typeof define === 'function' && define.amd) {
