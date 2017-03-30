@@ -9,7 +9,7 @@ node_js:
 after_success: npm run coverage
 
 before_script:
-  - npm install -g grunt
+  - npm install -g grunt, nyc
   - npm install
 
 deploy:

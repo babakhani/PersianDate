@@ -3,6 +3,7 @@ Persian Date
 
 [![npm version](https://badge.fury.io/js/persian-date.svg)](https://github.com/babakhani/pwt.datepicker)
 [![Bower version](https://badge.fury.io/bo/persian-date.svg)](https://github.com/babakhani/pwt.datepicker)
+[![Coverage Status](https://coveralls.io/repos/github/babakhani/PersianDate/badge.svg?branch=master)](https://coveralls.io/github/babakhani/PersianDate?branch=master)
 
 Javascript date library for parsing, validating, manipulating, and formatting persian dates System.
 
