@@ -683,4 +683,49 @@ describe('Add', function () {
 });
 
 
+describe('Subtract', function () {
+    it('Year', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]),
+            b = a.subtract('year', 1).toArray();
+        // console.log(b);
+        assert.deepEqual(b, [1392, 1, 1, 1, 1, 1, 0]);
+    });
+    it('Month', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]),
+            b = a.subtract('month', 1).toArray();
+        assert.deepEqual(b, [1391, 2, 1, 1, 1, 1, 0]);
+    });
+    it('Days', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]),
+            b = a.subtract('day', 10).toArray();
+        assert.deepEqual(b, [1391, 1, 11, 1, 1, 1, 0]);
+    });
+    it('Hours', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]),
+            b = a.subtract('hour', 10).toArray();
+        assert.deepEqual(b, [1391, 1, 1, 11, 1, 1, 0]);
+    });
+    it('Minute', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]),
+            b = a.subtract('minute', 10).toArray();
+        assert.deepEqual(b, [1391, 1, 1, 1, 11, 1, 0]);
+    });
+    it('Second', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]),
+            b = a.subtract('second', 10).toArray();
+        assert.deepEqual(b, [1391, 1, 1, 1, 1, 11, 0]);
+    });
+    it('Millisecond', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]),
+            b = a.subtract('ms', 1000).toArray();
+        assert.deepEqual(b, [1391, 1, 1, 1, 1, 2, 0]);
+    });
+    it('Millisecond', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]),
+            b = a.subtract('ms', 1200).toArray();
+        assert.deepEqual(b, [1391, 1, 1, 1, 1, 2, 200]);
+    });
+});
+
+
 

@@ -144,8 +144,38 @@ class PersianDateClass {
      * @returns {PersianDate}
      */
     subtract(key, input) {
-        var d = new Duration(input, key).valueOf(), newUnixDate = this.gDate.valueOf() - d;
-        return new PersianDateClass(newUnixDate);
+        let duration = new Duration(key, value)._data;
+        // log(duration)
+        if (duration.years > 0) {
+            let newYear = this.year() - duration.years;
+            this.year(newYear);
+        }
+        if (duration.months > 0) {
+            let newMonth = this.month() - duration.months;
+            this.month(newMonth);
+        }
+        if (duration.days > 0) {
+            let newDate = this.date() - duration.days;
+            this.date(newDate);
+        }
+        if (duration.hours > 0) {
+            let newHour = this.hour() - duration.hours;
+            this.hour(newHour);
+        }
+        if (duration.minutes > 0) {
+            let newMinute = this.minute() - duration.minutes;
+            this.minute(newMinute);
+        }
+        if (duration.seconds > 0) {
+            let newSecond = this.second() - duration.seconds;
+            this.second(newSecond);
+        }
+        if (duration.milliseconds > 0) {
+            // log('add millisecond')
+            let newMillisecond = this.milliseconds() - duration.milliseconds;
+            this.milliseconds(newMillisecond);
+        }
+        return new PersianDateClass(this.valueOf());
     }
 
     /**
