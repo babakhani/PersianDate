@@ -3,13 +3,7 @@
  */
 
 var sources = [
-    'src/banner.js',
-    'src/constants.js',
-    'src/helpers.js',
-    'src/algorithms.js',
-    'src/duration.js',
-    'src/date.js',
-    'src/compat.js'
+    '.tmp/persian-date.js'
 ];
 
 module.exports = function (grunt) {
@@ -24,13 +18,13 @@ module.exports = function (grunt) {
             },
             dist: {
                 src: sources,
-                dest: 'dist/<%= pkg.version %>/<%= pkg.name %>-<%= pkg.version %>.js'
+                dest: 'dist/<%= pkg.name %>.js'
             }
         },
         uglify: {
             build: {
-                src: 'dist/<%= pkg.version %>/<%= pkg.name %>-<%= pkg.version %>.js',
-                dest: 'dist/<%= pkg.version %>/<%= pkg.name %>-<%= pkg.version %>.min.js'
+                src: 'dist/<%= pkg.name %>.js',
+                dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.min.js'
             }
         },
         jsdoc: {

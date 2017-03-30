@@ -466,8 +466,9 @@ class PersianDateClass {
                             val === 'weeks' || val === 'week' ? diff / 6048e5 : // 1000 * 60 * 60 * 24 * 7
                                 diff;
         }
-        if (output < 0)
+        if (output < 0) {
             output * -1;
+        }
         return asFloat ? output : Math.round(output);
     }
 
@@ -1000,7 +1001,7 @@ class PersianDateClass {
             });
         }
         else {
-            window.pDate = window.persianDate = window.PersianDate = PersianDateClass;
+            window['pDate'] = window['persianDate'] = window['PersianDate'] = PersianDateClass;
             window.Duration = Duration;
         }
     }

@@ -29,9 +29,9 @@ bower install persian-date
 ## Browser
 
 ```html
-<script src="pwt-date.js"></script>
+<script src="node_modules/persian-date/dist/persian-date.js"></script>
 <script>
-    persianDate().format();
+    new persianDate().format();
 </script>
 ```
 
@@ -65,7 +65,9 @@ Similar to ``` new Date(Number)```, you can create a persianDate by passing an i
 
 
 ```javascript
-var day = persianDate(1318781876406);//"۱۳۹۰-۰۷-۲۴ ۱۹:۴۷:۵۶ ب ظ"
+var day = persianDate(1318781876406);
+
+//"۱۳۹۰-۰۷-۲۴ ۱۹:۴۷:۵۶ ب ظ"
 ```
 
 ## Unix Timestamp (seconds)
