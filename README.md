@@ -85,20 +85,20 @@ var day = persianDate.unix(1318781876);//"۱۳۹۰-۰۷-۲۴ ۱۹:۴۷:۵۶ ب �
 This is implemented as ```persianDate(timestamp * 1000)``` , so partial seconds in the input timestamp are included.
 
 ```javascript
-var day = persianDate.unix(1318781876.721);
+var day = persianDate.unix(1318781876);
 ```
 
 ## Date
 
 ```javascript
-persianDate(new Date());
+new persianDate(new Date());
 ```
 
 You can create a ```persianDate``` with a pre-existing native Javascript ```Date``` object.
 
 ```javascript
 var day = new Date(2011, 9, 16);
-var dayWrapper = persianDate(day);//"۱۳۹۰-۰۷-۲۴ ۰۰:۰۰:۰۰ ق ظ"
+var dayWrapper = new persianDate(day);//"۱۳۹۰-۰۷-۲۴ ۰۰:۰۰:۰۰ ق ظ"
 ```
 This is the fastest way to get a persianDate.js wrapper.
 
@@ -106,7 +106,7 @@ This is the fastest way to get a persianDate.js wrapper.
 ## Array
 
 ```javascript
-persianDate([Number...]);
+new persianDate([Number...]);
 ```
 
 You can create a persianDate with an array of numbers that mirror the parameters passed to new ```Date()``` But As Persian Date Number Like [1393,2,22,11,22,30]
@@ -115,36 +115,36 @@ You can create a persianDate with an array of numbers that mirror the parameters
 
 ```javascript
 [year, month, day, hour, minute, second, millisecond]
-persianDate([1393, 1, 14, 15,25, 50,125]); // "۱۳۹۳-۰۱-۱۴ ۱۵:۲۵:۵۰ ب ظ"
+new persianDate([1393, 1, 14, 15,25, 50,125]); // "۱۳۹۳-۰۱-۱۴ ۱۵:۲۵:۵۰ ب ظ"
 ```
 
 Any value past the year is optional, and will default to the lowest possible number.
 
 ```javascript
-persianDate([1392]); // Farvardin 1st
-persianDate([1392, 6]); // Shahrivar 1st
-persianDate([1392, 6, 10]); // Shahrivar 10th
+new persianDate([1392]); // Farvardin 1st
+new persianDate([1392, 6]); // Shahrivar 1st
+new persianDate([1392, 6, 10]); // Shahrivar 10th
 ```
 
 
 ## PesianDate Clone
 
 ```javascript
-persianDate(persianDate);
+new persianDate(persianDate);
 ```
 
 All persianDate are mutable. If you want a clone of a persianDate, you can do so explicitly or implicitly.
 Calling ```persianDate()``` on a persianDate will clone it.
 
 ```javascript
-var a = persianDate([1392]);
-var b = persianDate(a);
+var a = new persianDate([1392]);
+var b = new persianDate(a);
 a.year(1300);
 b.year(); // 1392
 ```
 
 ```javascript
-var a = persianDate([1392]);
+var a = new persianDate([1392]);
 var b = a.clone();
 a.year(1300);
 b.year(); // 1392
@@ -154,7 +154,7 @@ b.year(); // 1392
 ## ASP.NET JSON Date
 
 ```javascript
-persianDate(String);
+new persianDate(String);
 ```
 
 ASP.NET returns dates in JSON as ```/Date(1198908717056)/``` or ```/Date(1198908717056-0700)/```
@@ -162,7 +162,7 @@ ASP.NET returns dates in JSON as ```/Date(1198908717056)/``` or ```/Date(1198908
 If a string that matches this format is passed in, it will be parsed correctly.
 
 ```javascript
-persianDate("/Date(1198908717056-0700)/"); //"۱۳۸۶-۱۰-۰۸ ۰۹:۴۱:۵۷ ق ظ"
+new persianDate("/Date(1198908717056-0700)/"); //"۱۳۸۶-۱۰-۰۸ ۰۹:۴۱:۵۷ ق ظ"
 ```
 
 ## Get + Set
@@ -174,17 +174,17 @@ Calling these methods without parameters acts as a getter, and calling them with
 These map to the corresponding function on the native ```Date``` object.
 
 ```javascript
-persianDate().seconds(30) === new Date().setSeconds(30);
-persianDate().seconds()   === new Date().getSeconds();
-```
+new persianDate().seconds(30).valueOf() === new Date().setSeconds(30); // true
+new persianDate().seconds() === new Date().getSeconds(); // true
+`
 
 ## Millisecond
 
 ```javascript
-persianDate().millisecond(Number);
-persianDate().millisecond(); // Number
-persianDate().milliseconds(Number);
-persianDate().milliseconds(); // Number
+new persianDate().millisecond(Number);
+new persianDate().millisecond(); // Number
+new persianDate().milliseconds(Number);
+new persianDate().milliseconds(); // Number
 ```
 
 Gets or sets the milliseconds.
@@ -194,10 +194,10 @@ Accepts numbers from 0 to 999. If the range is exceeded, it will bubble up to th
 ## Second
 
 ```javascript
-persianDate().second(Number);
-persianDate().second(); // Number
-persianDate().seconds(Number);
-persianDate().seconds(); // Number
+new persianDate().second(Number);
+new persianDate().second(); // Number
+new persianDate().seconds(Number);
+new persianDate().seconds(); // Number
 ```
 
 Gets or sets the seconds.
@@ -207,10 +207,10 @@ Accepts numbers from 0 to 59. If the range is exceeded, it will bubble up to the
 ## Minute
 
 ```javascript
-persianDate().minute(Number);
-persianDate().minute(); // Number
-persianDate().minutes(Number);
-persianDate().minutes(); // Number
+new persianDate().minute(Number);
+new persianDate().minute(); // Number
+new persianDate().minutes(Number);
+new persianDate().minutes(); // Number
 ```
 
 Gets or sets the minutes.
@@ -220,10 +220,10 @@ Accepts numbers from 0 to 59. If the range is exceeded, it will bubble up to the
 ## Hour
 
 ```javascript
-persianDate().hour(Number);
-persianDate().hour(); // Number
-persianDate().hours(Number);
-persianDate().hours(); // Number
+new persianDate().hour(Number);
+new persianDate().hour(); // Number
+new persianDate().hours(Number);
+new persianDate().hours(); // Number
 ```
 
 Gets or sets the hour.
@@ -233,10 +233,10 @@ Accepts numbers from 0 to 23. If the range is exceeded, it will bubble up to the
 ## Date of Month
 
 ```javascript
-persianDate().date(Number);
-persianDate().date(); // Number
-persianDate().dates(Number);
-persianDate().dates(); // Number
+new persianDate().date(Number);
+new persianDate().date(); // Number
+new persianDate().dates(Number);
+new persianDate().dates(); // Number
 ```
 
 Gets or sets the day of the month.
@@ -248,10 +248,10 @@ Note: persianDate#date is for the date of the month, and persianDate#day is for 
 ## Year
 
 ```javascript
-persianDate().year(Number);
-persianDate().year(); // Number
-persianDate().years(Number);
-persianDate().years(); // Number
+new persianDate().year(Number);
+new persianDate().year(); // Number
+new persianDate().years(Number);
+new persianDate().years(); // Number
 ```
 
 Gets or sets the year.
@@ -261,8 +261,8 @@ Accepts numbers from -270,000 to 270,000.
 ## Day of Week
 
 ```javascript
-persianDate().day(); // Number
-persianDate().days(); // Number
+new persianDate().day(); // Number
+new persianDate().days(); // Number
 ```
 
 Gets the day of the week.
@@ -278,7 +278,7 @@ persianDate.js uses the [fluent interface pattern](http://en.wikipedia.org/wiki/
  also known as [method chaining](https://en.wikipedia.org/wiki/Method_chaining). This allows you to do crazy things like the following.
 
 ```javascript
-persianDate().add('days', 7).subtract('months', 1).year(2009).hours(0).minutes(0).seconds(0);
+new persianDate().add('days', 7).subtract('months', 1).year(2009).hours(0).minutes(0).seconds(0);
 ```
 
 > Note: It should be noted that persianDates are mutable. Calling any of the manipulation methods will change the original persianDate.
@@ -289,7 +289,7 @@ If you want to create a copy and manipulate it, you should use ```persianDate#cl
 ## Add
 
 ```javascript
-persianDate().add(String, Number);
+new persianDate().add(String, Number);
 ```
 
 Mutates the original persianDate by adding time.
@@ -297,13 +297,13 @@ Mutates the original persianDate by adding time.
 This is a pretty robust function for adding time to an existing persianDate. To add time, pass the key of what time you want to add, and the amount you want to add.
 
 ```javascript
-persianDate().add('days', 7);
+new persianDate().add('days', 7);
 ```
 
 There are some shorthand keys as well if you're into that whole brevity thing.
 
 ```javascript
-persianDate().add('d', 7);
+new persianDate().add('d', 7);
 ```
 
 | Key	        | Alternate	    | Shorthand |
@@ -320,20 +320,20 @@ persianDate().add('d', 7);
 If you want to add multiple different keys at the same time, you can pass them in as an object literal.
 
 ```javascript
-persianDate().add('days', 7).add('months', 1); // with chaining
+new persianDate().add('days', 7).add('months', 1); // with chaining
 ```
 
 There are no upper limits for the amounts, so you can overload any of the parameters.
 
 ```javascript
-persianDate().add('milliseconds', 1000000); // a million milliseconds
-persianDate().add('days', 360); // 360 days
+new persianDate().add('milliseconds', 1000000); // a million milliseconds
+new persianDate().add('days', 360); // 360 days
 ```
 
 ## Subtract
 
 ```javascript
-persianDate().subtract(String, Number);
+new persianDate().subtract(String, Number);
 ```
 
 Mutates the original persianDate by subtracting time.
@@ -492,8 +492,7 @@ d.format(); //"۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ"
 ## Difference
 
 ```javascript
-persianDate().diff(PersianDate|String|Boolean);
-persianDate().diff(PersianDate|String|Boolean);
+new persianDate().diff(PersianDate|String|Boolean);
 ```
 
 To get the difference in milliseconds, use ```persianDate#diff``` like you would use ```persianDate#from``` .
@@ -527,29 +526,29 @@ If the persianDate is later than the persianDate you are passing to ```persianDa
 ```javascript
 var a = persianDate();
 var b = persianDate().add('seconds', 1);
-a.diff(b) // -1000
-b.diff(a) // 1000
+a.diff(b); // -1000
+b.diff(a); // 1000
 ```
 
 A easy way to think of this is by replacing ```.diff(``` with a minus operator.
 
 ```javascript
           // a < b
-a.diff(b) // a - b < 0
-b.diff(a) // b - a < 0
+a.diff(b); // a - b < 0
+b.diff(a); // b - a < 0
 ```
 
 ## Unix Offset (milliseconds)
 
 ```javascript
-persianDate().valueOf();
+new persianDate().valueOf();
 ```
 
 ```persianDate#valueOf``` simply outputs the number of milliseconds since the Unix Epoch, just like ```Date#valueOf``` .
 
 ```javascript
-persianDate(1318874398806).valueOf(); // 1318874398806
-persianDate(1318874398806); // "۱۳۹۰-۰۷-۲۵ ۲۱:۲۹:۵۸ ب ظ"
+new persianDate(1318874398806).valueOf(); // 1318874398806
+new persianDate(1318874398806).format(); // "۱۳۹۰-۰۷-۲۵ ۲۱:۲۹:۵۸ ب ظ"
 ```
 
 To get a Unix timestamp (the number of seconds since the epoch) from a ```persianDate``` , use ```persianDate#unix``` .
@@ -557,13 +556,13 @@ To get a Unix timestamp (the number of seconds since the epoch) from a ```persia
 ## Unix Timestamp (seconds)
 
 ```javascript
-persianDate().unix();
+new persianDate().unix();
 ```
 
 ```persianDate#unix``` outputs a Unix timestamp (the of seconds since the Unix Epoch).
 
 ```javascript
-persianDate(1318874398806).unix(); // 1318874398
+new persianDate(1318874398806).unix(); // 1318874398
 ```
 
 This value is floored to the nearest second, and does not include a milliseconds component.
@@ -571,32 +570,32 @@ This value is floored to the nearest second, and does not include a milliseconds
 ## Timezone Offset
 
 ```javascript
-persianDate().zone();
+new persianDate().zone();
 ```
 
 Get the timezone offset in minutes.
 
 ```javascript
-persianDate().zone(); // (60, 120, 240, etc.)
+new persianDate().zone(); // (60, 120, 240, etc.)
 ```
 
 ## Days in Month
 
 ```javascript
-persianDate().daysInMonth();
+new persianDate().daysInMonth();
 ```
 
 Get the number of days in the current month.
 
 ```javascript
-persianDate([1392,01]).daysInMonth() // 29
-persianDate([1392,08]).daysInMonth() // 31
+new persianDate([1392,01]).daysInMonth(); // 29
+new persianDate([1392,08]).daysInMonth(); // 31
 ```
 
 ## As Javascript Date
 
 ```javascript
-persianDate().toDate();
+new persianDate().toDate();
 ```
 
 To get the native ```Date``` object that ```persianDate.js``` wraps, use ```persianDate#toDate``` .
@@ -606,32 +605,32 @@ This will return the ```Date``` that the ```persianDate``` uses, so any changes 
 ## As Array
 
 ```javascript
-persianDate().toArray();
+new persianDate().toArray();
 ```
 
 This returns an array that mirrors the parameters from new ```persianDate()``` .
 
 ```javascript
-persianDate().toArray(); // [1391, 1, 4, 14, 40, 16, 154];
+new persianDate().toArray(); // [1391, 1, 4, 14, 40, 16, 154];
 ```
 
 ## Is Leap Year
 
 ```javascript
-persianDate().isLeapYear();
+new persianDate().isLeapYear();
 ```
 
 ```persianDate#isLeapYear``` returns true if that year is a leap year, and ```false``` if it is not.
 
 ```javascript
-persianDate([1391]).isLeapYear() // true
-persianDate([1392]).isLeapYear() // false
+new persianDate([1391]).isLeapYear() // true
+new persianDate([1392]).isLeapYear() // false
 ```
 
 ## Is Daylight Saving Time
 
 ```javascript
-persianDate().isDST();
+new persianDate().isDST();
 ```
 
 ```persianDate#isDST``` checks if the current persianDate is in daylight savings time.
@@ -639,20 +638,20 @@ persianDate().isDST();
 > Note: [Daylight saving time in Iran](https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D8%B9%D8%AA_%D8%AA%D8%A7%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%DB%8C)
 
 ```javascript
-persianDate([1392, 2, 12]).isDST(); // true
-persianDate([1392, 7, 14]).isDST(); // false
+new persianDate([1392, 2, 12]).isDST(); // true
+new persianDate([1392, 7, 14]).isDST(); // false
 ```
 
 ## Is a PersainDat
 
 ```javascript
-persianDate().isPersianDate(obj);
+new persianDate().isPersianDate(obj);
 ```
 
 To check if a variable is a persianDate object, use ```persianDate().isPersianDate()``` .
 
 ```javascript
-persianDate().isPersianDate() // false
-persianDate().isPersianDate(new Date()) // false
-persianDate().isPersianDate(persianDate()) // true
+new persianDate().isPersianDate() // false
+new persianDate().isPersianDate(new Date()) // false
+new persianDate().isPersianDate(persianDate()) // true
 ```
