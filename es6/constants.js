@@ -4,6 +4,21 @@
  */
 
 const
+
+    durationUnit = {
+        year: ['y', 'years', 'year'],
+        month: ['M', 'months', 'month'],
+        day: ['d', 'days', 'day'],
+        hour: ['h', 'hours', 'hour'],
+        minute: ['m', 'minutes', 'minute'],
+        second: ['s', 'secod', 'seconds'],
+        millisecond: ['ms', 'milliseconds', 'millisecond'],
+        week: ['w', '', 'weeks', 'week'],
+    },
+
+    validateDurationUnit = {},
+
+
     /**
      *
      * @type {number}

@@ -101,10 +101,39 @@ class PersianDateClass {
      * @param input
      * @returns {PersianDate}
      */
-    add(key, input) {
-        var d = new Duration(input, key).valueOf(),
-            newUnixDate = this.gDate.valueOf() + d;
-        return new PersianDateClass(newUnixDate);
+    add(key, value) {
+        let duration = new Duration(key, value)._data;
+        // log(duration)
+        if (duration.years > 0) {
+            let newYear = this.year() + duration.years;
+            this.year(newYear);
+        }
+        if (duration.months > 0) {
+            let newMonth = this.month() + duration.months;
+            this.month(newMonth);
+        }
+        if (duration.days > 0) {
+            let newDate = this.date() + duration.days;
+            this.date(newDate);
+        }
+        if (duration.hours > 0) {
+            let newHour = this.hour() + duration.hours;
+            this.hour(newHour);
+        }
+        if (duration.minutes > 0) {
+            let newMinute = this.minute() + duration.minutes;
+            this.minute(newMinute);
+        }
+        if (duration.seconds > 0) {
+            let newSecond = this.second() + duration.seconds;
+            this.second(newSecond);
+        }
+        if (duration.milliseconds > 0) {
+            // log('add millisecond')
+            let newMillisecond = this.milliseconds() + duration.milliseconds;
+            this.milliseconds(newMillisecond);
+        }
+        return new PersianDateClass(this.valueOf());
     }
 
 
@@ -287,13 +316,21 @@ class PersianDateClass {
                 }
                 // Return Persian Day Name
                 case("w"): {
-                    var t = self.startOf("year")
-                    return parseInt(self.diff(t, "days") / 7) + 1;
+                    let t = self.startOf("year"),
+                        day = parseInt(self.diff(t, "days") / 7) + 1;
+                    if (formatToPersian)
+                        return toPersianDigit(day);
+                    else
+                        return info.month;
                 }
                 // Return Persian Day Name
                 case("ww"): {
-                    var t = self.startOf("year")
-                    return leftZeroFill(parseInt(self.diff(t, "days") / 7) + 1, 2);
+                    let t = self.startOf("year"),
+                        day = leftZeroFill(parseInt(self.diff(t, "days") / 7) + 1, 2);
+                    if (formatToPersian)
+                        return toPersianDigit(day);
+                    else
+                        return info.month;
                 }
                 // Month  (Int)
                 case("M"): {
@@ -320,7 +357,7 @@ class PersianDateClass {
                 // Year
                 // Two Digit Year (Str)
                 case("YY"): {
-                    var yearDigitArray = info.year.toString().split("");
+                    let yearDigitArray = info.year.toString().split("");
                     if (formatToPersian)
                         return toPersianDigit(yearDigitArray[2] + yearDigitArray[3]);
                     else
@@ -334,9 +371,10 @@ class PersianDateClass {
                         return info.year;
                 }
                 case("Z"): {
-                    var flag = "+";
-                    var hours = Math.round(info.timezone / 60);
-                    var minutes = info.timezone % 60;
+                    let flag = "+",
+                        hours = Math.round(info.timezone / 60),
+                        minutes = info.timezone % 60;
+
                     if (minutes < 0) {
                         minutes *= -1;
                     }
@@ -345,16 +383,17 @@ class PersianDateClass {
                         hours *= -1;
                     }
 
-                    var z = flag + leftZeroFill(hours, 2) + ":" + leftZeroFill(minutes, 2);
+                    let z = flag + leftZeroFill(hours, 2) + ":" + leftZeroFill(minutes, 2);
                     if (formatToPersian)
                         return toPersianDigit(z)
                     else
                         return z;
                 }
                 case("ZZ"): {
-                    var flag = "+";
-                    var hours = Math.round(info.timezone / 60);
-                    var minutes = info.timezone % 60;
+                    let flag = "+",
+                        hours = Math.round(info.timezone / 60),
+                        minutes = info.timezone % 60;
+
                     if (minutes < 0) {
                         minutes *= -1;
                     }
@@ -362,8 +401,7 @@ class PersianDateClass {
                         flag = "-";
                         hours *= -1;
                     }
-
-                    var z = flag + leftZeroFill(hours, 2) + "" + leftZeroFill(minutes, 2);
+                    let z = flag + leftZeroFill(hours, 2) + "" + leftZeroFill(minutes, 2);
                     if (formatToPersian)
                         return toPersianDigit(z)
                     else

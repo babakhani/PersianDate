@@ -22,16 +22,23 @@ function absRound(number) {
 
 
 class Duration {
-    constructor(input, unit) {
+    constructor(key, value) {
         let duration = {},
             data = this._data = {},
-            milliseconds = 0;
+            milliseconds = 0,
+            normalizedUnit = normalizeDuration(key, value),
+            unit = normalizedUnit.unit;
+
+
+        // console.log(unit)
+        // console.log(normalizedUnit.value)
+
         if (unit) {
-            duration[unit] = input;
+            duration[unit] = normalizedUnit.value;
             milliseconds = duration.milliseconds || duration.millisecond || duration.ms || 0;
         }
         else {
-            milliseconds = input;
+            milliseconds = normalizedUnit.value;
         }
 
         let years = duration.years || duration.year || duration.y || 0,
@@ -69,6 +76,10 @@ class Duration {
         return this;
     }
 }
+
+
+
+
 
 /**
  * @class Duration
