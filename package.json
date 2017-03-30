@@ -22,13 +22,15 @@
     "jsdoc": "^3.2.0",
     "jshint": "^2.9.4",
     "mocha": "^3.2.0",
-    "mocha-lcov-reporter": "0.0.2"
+    "mocha-lcov-reporter": "0.0.2",
+    "sync-pkg": "^0.7.2"
   },
   "scripts": {
     "test": "nyc --reporter=html --reporter=text mocha",
     "dev": "babel --watch es6 --out-file .tmp/persian-date.js & simple-server 5000 &",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "./node_modules/jshint/bin/jshint es6/*.js"
+    "lint": "./node_modules/jshint/bin/jshint es6/*.js",
+    "sync-pkg": "sync-pkg"
   },
   "dependencies": {
     "babel-cli": "^6.24.0",

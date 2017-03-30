@@ -497,34 +497,34 @@ new persianDate().diff(PersianDate|String|Boolean);
 To get the difference in milliseconds, use ```persianDate#diff``` like you would use ```persianDate#from``` .
 
 ```javascript
-var a = persianDate([1392, 0, 29]);
-var b = persianDate([1392, 0,28]);
+var a = new persianDate([1392, 0, 29]);
+var b = new persianDate([1392, 0,28]);
 a.diff(b) // 86400000
 ```
 
 To get the difference in another unit of measurement, pass that measurement as the second argument.
 
 ```javascript
-var a = persianDate([1392, 0,29]);
-var b = persianDate([1392,0,28]);
+var a = new persianDate([1392, 0,29]);
+var b = new persianDate([1392,0,28]);
 a.diff(b, 'days')// 1
 ```
 
 The supported measurements are years, months, weeks, days, hours, minutes, and seconds. For ease of development, the singular forms are supported .
 
 ```javascript
-var a = persianDate([1391, 0]);
-var b = persianDate([1392, 5]);
-a.diff(b, 'years')       // 1
-a.diff(b, 'years', true) // 1.5
+var a = new persianDate([1391, 0]);
+var b = new persianDate([1392, 5]);
+a.diff(b, 'years');
+a.diff(b, 'years', true);
 ```
 
 
 If the persianDate is later than the persianDate you are passing to ```persianDate.fn.diff``` , the return value will be negative.
 
 ```javascript
-var a = persianDate();
-var b = persianDate().add('seconds', 1);
+var a = new persianDate();
+var b = new persianDate().add('seconds', 1);
 a.diff(b); // -1000
 b.diff(a); // 1000
 ```
@@ -532,9 +532,8 @@ b.diff(a); // 1000
 A easy way to think of this is by replacing ```.diff(``` with a minus operator.
 
 ```javascript
-          // a < b
-a.diff(b); // a - b < 0
-b.diff(a); // b - a < 0
+a.diff(b);
+b.diff(a);
 ```
 
 ## Unix Offset (milliseconds)
@@ -622,8 +621,8 @@ new persianDate().isLeapYear();
 ```persianDate#isLeapYear``` returns true if that year is a leap year, and ```false``` if it is not.
 
 ```javascript
-new persianDate([1391]).isLeapYear() // true
-new persianDate([1392]).isLeapYear() // false
+new persianDate([1391]).isLeapYear(); // true
+new persianDate([1392]).isLeapYear(); // false
 ```
 
 ## Is Daylight Saving Time
@@ -644,13 +643,14 @@ new persianDate([1392, 7, 14]).isDST(); // false
 ## Is a PersainDat
 
 ```javascript
+var obj = new persianDate();
 new persianDate().isPersianDate(obj);
 ```
 
 To check if a variable is a persianDate object, use ```persianDate().isPersianDate()``` .
 
 ```javascript
-new persianDate().isPersianDate() // false
-new persianDate().isPersianDate(new Date()) // false
-new persianDate().isPersianDate(persianDate()) // true
+new persianDate().isPersianDate(); // false
+new persianDate().isPersianDate(new Date()); // false
+new persianDate().isPersianDate(persianDate()); // true
 ```
