@@ -164,7 +164,9 @@ class PersianDateClass {
                     // Default Conf
                     output = true;
                 }
-            } else {
+            }
+            /* istanbul ignore next */
+            else {
                 if (window.formatPersian === false) {
                     output = false;
                 } else {
@@ -994,7 +996,9 @@ class PersianDateClass {
             Duration: Duration
         };
     }
+    /* istanbul ignore next */
     else {
+
         if (typeof define === 'function' && define.amd) {
             define([], function () {
                 return PersianDateClass;

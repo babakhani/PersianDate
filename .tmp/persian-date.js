@@ -941,14 +941,16 @@ var PersianDateClass = function () {
                         // Default Conf
                         output = true;
                     }
-                } else {
-                    if (window.formatPersian === false) {
-                        output = false;
-                    } else {
-                        // Default Conf
-                        output = true;
-                    }
                 }
+                /* istanbul ignore next */
+                else {
+                        if (window.formatPersian === false) {
+                            output = false;
+                        } else {
+                            // Default Conf
+                            output = true;
+                        }
+                    }
             } else {
                 if (this.formatPersian === true) {
                     output = true;
@@ -1881,14 +1883,17 @@ var PersianDateClass = function () {
             pDate: pDate,
             Duration: Duration
         };
-    } else {
-        if (typeof define === 'function' && define.amd) {
-            define([], function () {
-                return PersianDateClass;
-            });
-        } else {
-            window['pDate'] = window['persianDate'] = window['PersianDate'] = PersianDateClass;
-            window.Duration = Duration;
-        }
     }
+    /* istanbul ignore next */
+    else {
+
+            if (typeof define === 'function' && define.amd) {
+                define([], function () {
+                    return PersianDateClass;
+                });
+            } else {
+                window['pDate'] = window['persianDate'] = window['PersianDate'] = PersianDateClass;
+                window.Duration = Duration;
+            }
+        }
 })();

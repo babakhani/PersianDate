@@ -50,8 +50,8 @@ describe('Make Instance', function () {
     });
 
     it('Init from .Net', function () {
-        let a = new pDate("/Date(1198908717056-0700)/").format();
-        assert.deepEqual(a, "۱۳۸۶-۱۰-۰۸ ۰۹:۴۱:۵۷ ق ظ");
+        let a = new pDate("/Date(1198908717056-0700)/").utc().format();
+        assert.deepEqual(a, "۱۳۸۶-۱۰-۰۸ ۰۶:۱۱:۵۷ ق ظ");
     });
 
 
@@ -61,11 +61,6 @@ describe('Make Instance', function () {
         assert.deepEqual(createFromArray.gDate, createFromGdate.gDate);
     });
 
-    // TODO: Must fix
-    // it('.Net', function () {
-    //     let createFromDotNet = new pDate("/Date(1198908717056-0700)/");
-    //     assert.ok(createFromDotNet);
-    // });
 
     it('javascript Date()', function () {
         let gDateObject = new Date(),
@@ -73,29 +68,7 @@ describe('Make Instance', function () {
         assert.ok(createFromDotNet);
     });
 
-    // TODO: Must fix
-    // it('pDate()', function () {
-    //     let pDateObject = new pDate(),
-    //         createFromDotNet = new pDate(pDateObject);
-    //     assert.ok(createFromDotNet);
-    // });
 });
-
-// Done
-describe('zone', function () {
-
-    it('get', function () {
-        let formattedDate = new pDate().zone();
-        assert.deepEqual(formattedDate, new Date().getTimezoneOffset());
-    });
-
-    // TODO: Must fix
-    // it('set', function () {
-    //     let formattedDate = new pDate().zone(-180);
-    //     assert.deepEqual(formattedDate, new Date().setTimezoneOffset(-180).getTimezoneOffset());
-    // });
-});
-
 
 describe('getFirstWeekDayOfMonth', function () {
     it('1391, 12', function () {
@@ -348,16 +321,19 @@ describe('isPersianDate', function () {
     });
 });
 
+
+describe('zone', function () {
+    it('get', function () {
+        let formattedDate = new pDate().zone();
+        assert.deepEqual(formattedDate, new Date().getTimezoneOffset());
+    });
+});
+
+
 describe('timezone', function () {
     it('local', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1]).local().format();
         assert.deepEqual(a, "۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ");
-    });
-    it('utc', function () {
-        let a = new pDate([1391, 1, 1, 1, 1, 1]).utc().format();
-        assert.deepEqual(a, "۱۳۹۰-۱۲-۲۹ ۲۱:۳۱:۰۱ ب ظ");
-        let b = new pDate([1391, 1, 1, 1, 1, 1]).utc().utc().format();
-        assert.deepEqual(b, "۱۳۹۰-۱۲-۲۹ ۲۱:۳۱:۰۱ ب ظ");
     });
     it('isUtc', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1]).utc().isUtc();
@@ -366,14 +342,12 @@ describe('timezone', function () {
         assert.deepEqual(b, false);
     });
     it('utc([1391, 1, 1, 1, 1, 1])', function () {
-        let a = new pDate().utc([1391, 1, 1, 1, 1, 1]).format();
-        assert.deepEqual(a, "۱۳۹۰-۱۲-۲۹ ۲۱:۳۱:۰۱ ب ظ");
+        let a = new pDate().utc([1391, 1, 1, 1, 1, 1]).local().format();
+        assert.deepEqual(a, "۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ");
     });
     it('convert utc date to local', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1]).utc().local().format();
         assert.deepEqual(a, "۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ");
-
-
     });
 });
 
