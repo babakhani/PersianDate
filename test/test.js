@@ -498,8 +498,8 @@ describe('format', function () {
     });
 
     it('format("X")', function () {
-        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-        assert.deepEqual(a.format('X'), 1332192661);
+        let a = new pDate([1391, 1, 1, 1, 1, 1]).utc();
+        assert.deepEqual(a.format('X'), 1332180061);
     });
     it('format("L")', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1]);
