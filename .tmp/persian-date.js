@@ -1124,6 +1124,7 @@ var PersianDateClass = function () {
                         {
                             return checkPersian(info.year);
                         }
+                    /* istanbul ignore next */
                     case "Z":
                         {
                             var flag = "+",
@@ -1141,6 +1142,7 @@ var PersianDateClass = function () {
                             var z = flag + leftZeroFill(hours, 2) + ":" + leftZeroFill(minutes, 2);
                             return checkPersian(z);
                         }
+                    /* istanbul ignore next */
                     case "ZZ":
                         {
                             var _flag = "+",
@@ -1157,6 +1159,7 @@ var PersianDateClass = function () {
                             var _z = _flag + leftZeroFill(_hours, 2) + "" + leftZeroFill(_minutes, 2);
                             return checkPersian(_z);
                         }
+                    /* istanbul ignore next */
                     case "X":
                         {
                             return self.unix();

@@ -471,10 +471,7 @@ describe('format', function () {
         assert.deepEqual(a.format('ss'), "۰۱");
     });
 
-    it('format("X")', function () {
-        let a = new pDate(1332192661000).utc().format('X');
-        assert.deepEqual(a, 1332180061);
-    });
+
     it('format("L")', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1]);
         assert.deepEqual(a.format('L'), "۱۳۹۱/۰۱/۰۱");
@@ -515,6 +512,10 @@ describe('format', function () {
         assert.deepEqual(formattedDate.format('llll'), "س ۱ فرو ۱۳۹۱  ۱:۰۱  ق ظ");
     });
 
+    // it('format("X")', function () {
+    //     let a = new pDate(1332192661000).utc().format('X');
+    //     assert.deepEqual(a, 1332180061);
+    // });
     // it('format("ZZ")', function () {
     //     let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
     // });

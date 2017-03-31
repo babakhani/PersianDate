@@ -321,6 +321,7 @@ class PersianDateClass {
                 case("YYYY"): {
                     return checkPersian(info.year);
                 }
+                /* istanbul ignore next */
                 case("Z"): {
                     let flag = "+",
                         hours = Math.round(info.timezone / 60),
@@ -337,6 +338,7 @@ class PersianDateClass {
                     let z = flag + leftZeroFill(hours, 2) + ":" + leftZeroFill(minutes, 2);
                     return checkPersian(z);
                 }
+                /* istanbul ignore next */
                 case("ZZ"): {
                     let flag = "+",
                         hours = Math.round(info.timezone / 60),
@@ -352,6 +354,7 @@ class PersianDateClass {
                     let z = flag + leftZeroFill(hours, 2) + "" + leftZeroFill(minutes, 2);
                     return checkPersian(z);
                 }
+                /* istanbul ignore next */
                 case("X"): {
                     return self.unix();
                 }
