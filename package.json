@@ -1,6 +1,6 @@
 {
   "name": "persian-date",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "license": "WTFPL",
   "author": "Reza Babakhani <babakhani.reza@gmail.com>",
   "description": "Javascript date library for parsing, validating, manipulating, and formatting persian dates System.",
@@ -30,15 +30,19 @@
     "babel-preset-latest": "^6.24.0",
     "babel-runtime": "^6.22.0",
     "coveralls": "^2.13.0",
-    "grunt": "0.4.4",
-    "grunt-cli": "0.1.13",
-    "grunt-contrib-uglify": "^0.1.2",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-uglify": "^2.2.1",
+    "grunt-contrib-concat": "^1.0.1",
     "grunt-jsdoc": "^0.5.7",
+    "grunt-jsdoc-to-markdown": "^3.0.0",
+    "grunt-string-replace": "^1.3.1",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.2.0",
     "jshint": "^2.9.4",
+    "load-grunt-tasks": "^3.5.2",
     "mocha": "^3.2.0",
-    "mocha-lcov-reporter": "0.0.2",
+    "mocha-lcov-reporter": "^0.0.2",
     "sync-pkg": "^0.7.2"
   },
   "scripts": {
@@ -46,6 +50,7 @@
     "dev": "babel --watch es6 --out-file .tmp/persian-date.js & simple-server 5000 &",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "./node_modules/jshint/bin/jshint es6/*.js",
+    "doc": "grunt --doc",
     "sync-pkg": "sync-pkg"
   }
 }

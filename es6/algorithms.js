@@ -1,13 +1,9 @@
 /**
- * Calendar algorithms implementations
+ * @description Calendar algorithms implementations
  * @author Reza Babakhani
- * @module Algorithms
  */
 
-
 class Algorithms {
-
-
     /**
      * @param j
      * @returns {*}
@@ -194,7 +190,7 @@ class Algorithms {
 
     /**
      *
-     * @param parray
+     * @param parray persian-date array
      * @returns {Date}
      */
     persianArrayToGregorianDate(parray) {

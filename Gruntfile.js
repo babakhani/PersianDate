@@ -1,5 +1,5 @@
 var sources = [
-        '.tmp/persian-date.js'
+        '.tmp/persian-date-version.js'
     ],
     banner =
         '/*\n' +
@@ -10,6 +10,8 @@ var sources = [
         '*/ \n';
 
 module.exports = function (grunt) {
+    require('load-grunt-tasks')(grunt);
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         concat: {
@@ -35,21 +37,38 @@ module.exports = function (grunt) {
                 dest: 'dist/<%= pkg.name %>.min.js'
             }
         },
-        jsdoc: {
-            dist: {
-                src: sources,
+        jsdoc2md: {
+            config: {
                 options: {
-                    destination: 'doc/<%= pkg.version %>'
+                    'no-gfm': true,
+                    'heading-depth': 2,
+                    'example-lang': 'js'
+                },
+                src: 'es6/*.js',
+                dest: 'doc/document.md'
+            }
+        },
+
+        'string-replace': {
+            inline: {
+                files: {
+                    '.tmp/persian-date-version.js': '.tmp/persian-date.js',
+                },
+                options: {
+                    replacements: [
+                        {
+                            pattern: '<!! version >',
+                            replacement: '<%= pkg.version %>'
+                        }
+                    ]
                 }
             }
         }
     });
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-jsdoc');
+
     if (grunt.option("doc") === true) {
-        grunt.registerTask('default', ['concat', 'uglify', 'jsdoc']);
+        grunt.registerTask('default', ['jsdoc2md']);
     } else {
-        grunt.registerTask('default', ['concat', 'uglify']);
+        grunt.registerTask('default', ['string-replace', 'concat', 'uglify', 'jsdoc2md']);
     }
 };

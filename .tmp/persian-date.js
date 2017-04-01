@@ -5,9 +5,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Calendar algorithms implementations
+ * @description Calendar algorithms implementations
  * @author Reza Babakhani
- * @module Algorithms
  */
 
 var Algorithms = function () {
@@ -17,7 +16,6 @@ var Algorithms = function () {
 
     _createClass(Algorithms, [{
         key: 'jwday',
-
 
         /**
          * @param j
@@ -232,7 +230,7 @@ var Algorithms = function () {
 
         /**
          *
-         * @param parray
+         * @param parray persian-date array
          * @returns {Date}
          */
 
@@ -716,7 +714,7 @@ var PersianDateClass = function () {
                     this.gDate = new Date(parseInt(input.substr(6)));
                 }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
-        this.version = "0.1.8b";
+        this.version = "<!! version >";
         this.formatPersian = "_default";
         this._utcMode = false;
         return this;
@@ -1830,16 +1828,19 @@ var PersianDateClass = function () {
     }
     /* istanbul ignore next */
     else {
-
             if (typeof define === 'function' && define.amd) {
                 define([], function () {
-                    return PersianDateClass;
+                    return PersianDateClassWrapper;
                 });
             } else {
-                PersianDateClass.unix = PersianDateClass._unix;
-                PersianDateClass.utc = PersianDateClass._utc;
-                window['pDate'] = window['persianDate'] = PersianDateClass;
-                Duration = Duration;
+
+                var PersianDateClassWrapper = function PersianDateClassWrapper(input) {
+                    return new PersianDateClass(input);
+                };
+                PersianDateClassWrapper.unix = PersianDateClass._unix;
+                PersianDateClassWrapper.utc = PersianDateClass._utc;
+                window['pDate'] = window['persianDate'] = PersianDateClassWrapper;
+                window['Duration'] = Duration;
             }
         }
 })();

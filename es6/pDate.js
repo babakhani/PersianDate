@@ -25,7 +25,7 @@ class PersianDateClass {
             this.gDate = new Date(parseInt(input.substr(6)));
         }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
-        this.version = "0.1.8b";
+        this.version = "<!! version >";
         this.formatPersian = "_default";
         this._utcMode = false;
         return this;
@@ -1001,6 +1001,7 @@ class PersianDateClass {
     }
 }
 
+
 (function () {
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
         const pDate = PersianDateClass;
@@ -1013,19 +1014,20 @@ class PersianDateClass {
     }
     /* istanbul ignore next */
     else {
-
         if (typeof define === 'function' && define.amd) {
             define([], function () {
-                return PersianDateClass;
+                return PersianDateClassWrapper;
             });
         }
         else {
-            PersianDateClass.unix = PersianDateClass._unix;
-            PersianDateClass.utc = PersianDateClass._utc;
-            window['pDate'] = window['persianDate'] = PersianDateClass;
-            Duration = Duration;
+
+            var PersianDateClassWrapper = function (input) {
+                return new PersianDateClass(input);
+            };
+            PersianDateClassWrapper.unix = PersianDateClass._unix;
+            PersianDateClassWrapper.utc = PersianDateClass._utc;
+            window['pDate'] = window['persianDate'] = PersianDateClassWrapper;
+            window['Duration'] = Duration;
         }
     }
 })();
-
-

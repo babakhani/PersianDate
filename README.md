@@ -402,8 +402,8 @@ new persianDate().format(String);
 This is the most robust display option. It takes a string of tokens and replaces them with their corresponding values.
 
 ```javascript
-persianDate().format("dddd, MMMM DD YYYY, h:mm:ss a"); // "شنبه, اردیبهشت ۲۱ ۱۳۹۲, ۰:۴۲:۴۷ ق ظ"
-persianDate().format("dddd, ha"); //"شنبه, ۸ ق ظ"
+persianDate().format("dddd, MMMM DD YYYY, h:mm:ss a"); // "شنبه, فروردین ۱۲ ۱۳۹۶, ۵:۵۴:۱۱ ب ظ"
+persianDate().format("dddd, ha"); // "شنبه, ۵ب ظ"
 ```
 
 There are a couple conventions used with the naming of the
@@ -574,7 +574,7 @@ new persianDate().zone();
 Get the timezone offset in minutes.
 
 ```javascript
-new persianDate().zone(); // (60, 120, 240, etc.)
+new persianDate().zone(); // (60, 120, 240, -270, etc.)
 ```
 
 ### Days in Month
@@ -586,8 +586,10 @@ new persianDate().daysInMonth();
 Get the number of days in the current month.
 
 ```javascript
-new persianDate([1392,1]).daysInMonth(); // 29
-new persianDate([1392,8]).daysInMonth(); // 31
+new persianDate([1392,1]).daysInMonth(); // 31
+new persianDate([1392,8]).daysInMonth(); // 30
+new persianDate([1392,12]).daysInMonth(); // 29
+new persianDate([1391,12]).daysInMonth(); // 30
 ```
 
 ### As Javascript Date
@@ -625,6 +627,10 @@ new persianDate().isLeapYear();
 ```javascript
 new persianDate([1391]).isLeapYear(); // true
 new persianDate([1392]).isLeapYear(); // false
+new persianDate([1393]).isLeapYear(); // false
+new persianDate([1394]).isLeapYear(); // false
+new persianDate([1395]).isLeapYear(); // true
+new persianDate([1396]).isLeapYear(); // false
 ```
 
 ### Is Daylight Saving Time
@@ -638,15 +644,15 @@ new persianDate().isDST();
 > Note: [Daylight saving time in Iran](https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D8%B9%D8%AA_%D8%AA%D8%A7%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%DB%8C)
 
 ```javascript
-new persianDate([1392, 2, 12]).isDST(); // true
-new persianDate([1392, 7, 14]).isDST(); // false
+new persianDate([1396, 2, 12]).isDST(); // false
+new persianDate([1396, 7, 14]).isDST(); // true
 ```
 
 ### Is a PersainDat
 
 ```javascript
 var obj = new persianDate();
-new persianDate().isPersianDate(obj);
+new persianDate().isPersianDate(obj); // true
 ```
 
 To check if a variable is a persianDate object, use ```persianDate().isPersianDate()``` .
