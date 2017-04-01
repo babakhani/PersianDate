@@ -20,7 +20,6 @@ var Algorithms = function () {
 
 
         /**
-         *
          * @param j
          * @returns {*}
          */
@@ -32,7 +31,7 @@ var Algorithms = function () {
         }
 
         /**
-         * Is a given year in the Gregorian calendar a leap year ?
+         * @description Is a given year in the Gregorian calendar a leap year ?
          * @param year
          * @returns {boolean}
          */
@@ -44,7 +43,6 @@ var Algorithms = function () {
         }
 
         /**
-         *
          * @param year
          * @returns {boolean}
          */
@@ -79,23 +77,23 @@ var Algorithms = function () {
         key: 'jdToGregorian',
         value: function jdToGregorian(jd) {
             //let wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad, yindex, dyindex, year, yearday, leapadj;
-            var wjd = Math.floor(jd - 0.5) + 0.5;
-            var depoch = wjd - GREGORIAN_EPOCH;
-            var quadricent = Math.floor(depoch / 146097);
-            var dqc = mod(depoch, 146097);
-            var cent = Math.floor(dqc / 36524);
-            var dcent = mod(dqc, 36524);
-            var quad = Math.floor(dcent / 1461);
-            var dquad = mod(dcent, 1461);
-            var yindex = Math.floor(dquad / 365);
-            var year = quadricent * 400 + cent * 100 + quad * 4 + yindex;
+            var wjd = Math.floor(jd - 0.5) + 0.5,
+                depoch = wjd - GREGORIAN_EPOCH,
+                quadricent = Math.floor(depoch / 146097),
+                dqc = mod(depoch, 146097),
+                cent = Math.floor(dqc / 36524),
+                dcent = mod(dqc, 36524),
+                quad = Math.floor(dcent / 1461),
+                dquad = mod(dcent, 1461),
+                yindex = Math.floor(dquad / 365),
+                year = quadricent * 400 + cent * 100 + quad * 4 + yindex;
             if (!(cent == 4 || yindex == 4)) {
                 year++;
             }
-            var yearday = wjd - this.gregorianToJd(year, 1, 1);
-            var leapadj = wjd < this.gregorianToJd(year, 3, 1) ? 0 : this.isLeapGregorian(year) ? 1 : 2;
-            var month = Math.floor(((yearday + leapadj) * 12 + 373) / 367);
-            var day = wjd - this.gregorianToJd(year, month, 1) + 1;
+            var yearday = wjd - this.gregorianToJd(year, 1, 1),
+                leapadj = wjd < this.gregorianToJd(year, 3, 1) ? 0 : this.isLeapGregorian(year) ? 1 : 2,
+                month = Math.floor(((yearday + leapadj) * 12 + 373) / 367),
+                day = wjd - this.gregorianToJd(year, month, 1) + 1;
             return new Array(year, month, day);
         }
 
@@ -247,12 +245,10 @@ var Algorithms = function () {
             gDate.setYear(pd[0]);
             gDate.setMonth(pd[1]);
             gDate.setDate(pd[2]);
-            // TODO:
             gDate.setHours(parray[3] ? parray[3] : 0);
             gDate.setMinutes(parray[4] ? parray[4] : 0);
             gDate.setSeconds(parray[5] ? parray[5] : 0);
             gDate.setMilliseconds(parray[6] ? parray[6] : 0);
-
             return gDate;
         }
 
@@ -271,54 +267,6 @@ var Algorithms = function () {
 
     return Algorithms;
 }();
-/**
-
-    _____                             ______
-   (, /   )             ,            (, /    )
-    _/__ /  _  __  _      _  __        /    / _  _/_  _
-    /     _(/_/ (_/_)__(_(_(_/ (_    _/___ /_(_(_(___(/_
- ) /                               (_/___ /
-(_/
-
-
-*/
-
-/**
- * Persian Date
- * Written under the wtfpl
- * @author Reza Babakhani
- * @version 0.2.0
- *
- *
- * +---------+-----------+
- * | Browser | Supported |
- * +---------+-----------+
- * | Chrome  | yes       |
- * | Opera   | yes       |
- * | Firefox | yes       |
- * | IE7     | yes       |
- * | IE8     | yes       |
- * | IE9     | yes       |
- * +---------+-----------+
- *
- * * +-------------+--------------------------------------+
- * | Change Log: |                                      |
- * +-------------+--------------------------------------+
- * | 0.2.0       | write by es6
- * +-------------+--------------------------------------+
- * +-------------+--------------------------------------+
- * | Change Log: |                                      |
- * +-------------+--------------------------------------+
- * | 0.1.7       | Fix Format Like Moment.js            |
- * |             | Fix formatPersian Config             |
- * |             | Fix Constructor Without New Keyword\ |
- * |             | 0.1.7 Fix #daysInMonth               |
- * |             | 0.1.7 Add #toArray                   |
- * |             | 0.1.7 Fix persianDate.unix(input)    |
- * +-------------+--------------------------------------+
- *
- */
-"use strict";
 'use strict';
 
 /**
@@ -336,7 +284,6 @@ var durationUnit = {
     millisecond: ['ms', 'milliseconds', 'millisecond'],
     week: ['w', '', 'weeks', 'week']
 },
-    validateDurationUnit = {},
 
 
 /**
@@ -532,17 +479,11 @@ persianDaysName = ["اورمزد", "بهمن", "اوردیبهشت", "شهریو
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Duration
- * @module duration
- */
-
-/**
  * Duration object constructor
  * @param duration
  * @class Duration
  * @constructor
  */
-
 var Duration = function Duration(key, value) {
     _classCallCheck(this, Duration);
 
@@ -551,10 +492,6 @@ var Duration = function Duration(key, value) {
         milliseconds = 0,
         normalizedUnit = normalizeDuration(key, value),
         unit = normalizedUnit.unit;
-
-    // console.log(unit)
-    // console.log(normalizedUnit.value)
-
     duration[unit] = normalizedUnit.value;
     milliseconds = duration.milliseconds || duration.millisecond || duration.ms || 0;
 
@@ -594,16 +531,12 @@ var Duration = function Duration(key, value) {
 };
 
 /**
- * @class Duration
- * @type {{weeks: Function, valueOf: Function, humanize: Function}}
+ *
+ * @type {{valueOf: Duration.valueOf}}
  */
 
 
 Duration.prototype = {
-    /**
-     *
-     * @returns {*}
-     */
     valueOf: function valueOf() {
         return this._milliseconds + this._days * 864e5 + this._months * 2592e6;
     }
@@ -611,12 +544,7 @@ Duration.prototype = {
 'use strict';
 
 /**
- * Helpers functions
- * @module helpers
- */
-
-/**
- *
+ * @description convert latin digit to persian digit by extend string prototype
  * @param latinDigit
  * @returns {string} Persian equivalent unicode character of the given latin digits.
  */
@@ -624,8 +552,8 @@ String.prototype.toPersianDigit = function (latinDigit) {
     return this.replace(/\d+/g, function (digit) {
         var enDigitArr = [],
             peDigitArr = [],
-            i,
-            j;
+            i = void 0,
+            j = void 0;
         for (i = 0; i < digit.length; i += 1) {
             enDigitArr.push(digit.charCodeAt(i));
         }
@@ -637,7 +565,7 @@ String.prototype.toPersianDigit = function (latinDigit) {
 };
 
 /**
- *
+ * @description return converted string to persian digit
  * @param digit
  * @returns {string|*}
  */
@@ -646,7 +574,6 @@ function toPersianDigit(digit) {
 }
 
 /**
- *
  * @param input
  * @returns {boolean}
  */
@@ -655,12 +582,11 @@ function isArray(input) {
 }
 
 /**
- *
  * @param input
  * @returns {boolean}
  */
 function isString(input) {
-    return typeof input === "string" ? true : false;
+    return typeof input === "string";
 }
 
 /**
@@ -669,7 +595,7 @@ function isString(input) {
  * @returns {boolean}
  */
 function isNumber(input) {
-    return typeof input === "number" ? true : false;
+    return typeof input === "number";
 }
 
 /**
@@ -687,11 +613,10 @@ function isDate(input) {
  * @returns {boolean}
  */
 function isUndefined(input) {
-    if (typeof input === "undefined") return true;else return false;
+    return typeof input === "undefined";
 }
 
 /**
- *
  * @param number
  * @param targetLength
  * @returns {string}
@@ -704,6 +629,10 @@ function leftZeroFill(number, targetLength) {
     return output;
 }
 
+/**
+ * @description normalize duration params and return valid param
+ * @return {{unit: *, value: *}}
+ */
 function normalizeDuration() {
     var unit = void 0,
         value = void 0;
@@ -714,7 +643,6 @@ function normalizeDuration() {
         value = arguments[0];
         unit = arguments[1];
     }
-
     if (durationUnit.year.indexOf(unit) > -1) {
         unit = 'year';
     } else if (durationUnit.month.indexOf(unit) > -1) {
@@ -728,7 +656,6 @@ function normalizeDuration() {
     } else if (durationUnit.second.indexOf(unit) > -1) {
         unit = 'second';
     }
-
     return {
         unit: unit,
         value: value
@@ -796,7 +723,7 @@ var PersianDateClass = function () {
     }
 
     /**
-     *
+     * @description return Duration object
      * @param input
      * @param key
      * @returns {Duration}
@@ -810,7 +737,7 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
+         * @description check if passed object is duration
          * @param obj
          * @returns {boolean}
          */
@@ -820,15 +747,6 @@ var PersianDateClass = function () {
         value: function isDuration(obj) {
             return obj instanceof Duration;
         }
-
-        /**
-         *
-         * @returns {string}
-         */
-        // humanize() {
-        //     return "Must Implement";
-        // }
-
 
         /**
          *
@@ -884,9 +802,6 @@ var PersianDateClass = function () {
     }, {
         key: "subtract",
         value: function subtract(key, value) {
-            console.log('key :' + key);
-            console.log('value :' + value);
-
             var duration = new Duration(key, value)._data;
             // log(duration)
             if (duration.years > 0) {
@@ -1438,15 +1353,15 @@ var PersianDateClass = function () {
                 return this;
             }
         }
+    }, {
+        key: "utc",
+
 
         /**
          * Current date/time in UTC mode
          * @param input
          * @returns {*}
          */
-
-    }, {
-        key: "utc",
         value: function utc(input) {
             var utcStamp = void 0;
             if (input) {
@@ -1561,14 +1476,20 @@ var PersianDateClass = function () {
             return this.gDate.valueOf();
         }
 
+        // static unix(timestamp) {
+        //     return this.unix(timestamp);
+        // }
+
+
+    }, {
+        key: "unix",
+
+
         /**
          * Return Unix Timestamp (1318874398)
          * @param timestamp
          * @returns {*}
          */
-
-    }, {
-        key: "unix",
         value: function unix(timestamp) {
             var output = void 0;
             if (timestamp) {
@@ -1874,6 +1795,24 @@ var PersianDateClass = function () {
         value: function valueOf() {
             return this._valueOf();
         }
+    }], [{
+        key: "_utc",
+        value: function _utc(input) {
+            if (input) {
+                return new PersianDateClass(input).utc();
+            } else {
+                return new PersianDateClass().utc();
+            }
+        }
+    }, {
+        key: "_unix",
+        value: function _unix(timestamp) {
+            if (timestamp) {
+                return new PersianDateClass(timestamp * 1000).unix();
+            } else {
+                return new PersianDateClass().unix();
+            }
+        }
     }]);
 
     return PersianDateClass;
@@ -1882,6 +1821,8 @@ var PersianDateClass = function () {
 (function () {
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
         var pDate = PersianDateClass;
+        pDate.unix = PersianDateClass._unix;
+        pDate.utc = PersianDateClass._utc;
         module.exports = {
             pDate: pDate,
             Duration: Duration
@@ -1895,8 +1836,10 @@ var PersianDateClass = function () {
                     return PersianDateClass;
                 });
             } else {
-                window['pDate'] = window['persianDate'] = window['PersianDate'] = PersianDateClass;
-                window.Duration = Duration;
+                PersianDateClass.unix = PersianDateClass._unix;
+                PersianDateClass.utc = PersianDateClass._utc;
+                window['pDate'] = window['persianDate'] = PersianDateClass;
+                Duration = Duration;
             }
         }
 })();

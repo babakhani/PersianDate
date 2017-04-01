@@ -1,6 +1,24 @@
 {
   "name": "persian-date",
   "version": "0.1.8",
+  "license": "WTFPL",
+  "author": "Reza Babakhani <babakhani.reza@gmail.com>",
+  "description": "Javascript date library for parsing, validating, manipulating, and formatting persian dates System.",
+  "keywords": [
+    "jalali-date",
+    "khayyam",
+    "date",
+    "calendar",
+    "persian-date"
+  ],
+  "contributors": [
+    {
+      "name": "Reza Babakhani",
+      "email": "babakhani.reza@gmail.com"
+    }
+  ],
+  "repository": "git@github.com:babakhani/PersianDate.git",
+  "homepage": "http://babakhani.github.io/PersianWebToolkit/docs/persian-date/",
   "devDependencies": {
     "babel-cli": "^6.0.0",
     "babel-core": "^6.22.1",
@@ -11,11 +29,9 @@
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-latest": "^6.24.0",
     "babel-runtime": "^6.22.0",
-    "bootstrap": "^3.3.7",
     "coveralls": "^2.13.0",
     "grunt": "0.4.4",
     "grunt-cli": "0.1.13",
-    "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-uglify": "^0.1.2",
     "grunt-jsdoc": "^0.5.7",
     "istanbul": "^0.4.5",
@@ -31,11 +47,5 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "./node_modules/jshint/bin/jshint es6/*.js",
     "sync-pkg": "sync-pkg"
-  },
-  "dependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-preset-node6": "^11.0.0",
-    "is-coprime": "^1.0.0",
-    "lodash": "^3.10.1"
   }
 }

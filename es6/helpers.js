@@ -1,17 +1,11 @@
 /**
- * Helpers functions
- * @module helpers
- */
-
-
-/**
- *
+ * @description convert latin digit to persian digit by extend string prototype
  * @param latinDigit
  * @returns {string} Persian equivalent unicode character of the given latin digits.
  */
 String.prototype.toPersianDigit = function (latinDigit) {
     return this.replace(/\d+/g, function (digit) {
-        var enDigitArr = [], peDigitArr = [], i, j;
+        let enDigitArr = [], peDigitArr = [], i, j;
         for (i = 0; i < digit.length; i += 1) {
             enDigitArr.push(digit.charCodeAt(i));
         }
@@ -22,9 +16,8 @@ String.prototype.toPersianDigit = function (latinDigit) {
     });
 };
 
-
 /**
- *
+ * @description return converted string to persian digit
  * @param digit
  * @returns {string|*}
  */
@@ -34,7 +27,6 @@ function toPersianDigit(digit) {
 
 
 /**
- *
  * @param input
  * @returns {boolean}
  */
@@ -44,12 +36,11 @@ function isArray(input) {
 
 
 /**
- *
  * @param input
  * @returns {boolean}
  */
 function isString(input) {
-    return typeof input === "string" ? true : false;
+    return typeof input === "string";
 }
 
 
@@ -59,7 +50,7 @@ function isString(input) {
  * @returns {boolean}
  */
 function isNumber(input) {
-    return typeof input === "number" ? true : false;
+    return typeof input === "number";
 }
 
 
@@ -79,27 +70,27 @@ function isDate(input) {
  * @returns {boolean}
  */
 function isUndefined(input) {
-    if (typeof input === "undefined")
-        return true;
-    else
-        return false;
+    return typeof input === "undefined";
 }
 
 
 /**
- *
  * @param number
  * @param targetLength
  * @returns {string}
  */
 function leftZeroFill(number, targetLength) {
-    var output = number + '';
+    let output = number + '';
     while (output.length < targetLength) {
         output = '0' + output;
     }
     return output;
 }
 
+/**
+ * @description normalize duration params and return valid param
+ * @return {{unit: *, value: *}}
+ */
 function normalizeDuration() {
     let unit, value;
     if (isString(arguments[0])) {
@@ -110,7 +101,6 @@ function normalizeDuration() {
         value = arguments[0];
         unit = arguments[1];
     }
-
     if (durationUnit.year.indexOf(unit) > -1) {
         unit = 'year';
     }
@@ -129,7 +119,6 @@ function normalizeDuration() {
     else if (durationUnit.second.indexOf(unit) > -1) {
         unit = 'second';
     }
-
     return {
         unit: unit,
         value: value

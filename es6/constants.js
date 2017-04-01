@@ -16,8 +16,6 @@ const
         week: ['w', '', 'weeks', 'week'],
     },
 
-    validateDurationUnit = {},
-
 
     /**
      *

@@ -33,7 +33,7 @@ class PersianDateClass {
 
 
     /**
-     *
+     * @description return Duration object
      * @param input
      * @param key
      * @returns {Duration}
@@ -44,22 +44,13 @@ class PersianDateClass {
 
 
     /**
-     *
+     * @description check if passed object is duration
      * @param obj
      * @returns {boolean}
      */
     isDuration(obj) {
         return obj instanceof Duration;
     }
-
-
-    /**
-     *
-     * @returns {string}
-     */
-    // humanize() {
-    //     return "Must Implement";
-    // }
 
 
     /**
@@ -111,9 +102,6 @@ class PersianDateClass {
      * @returns {PersianDate}
      */
     subtract(key, value) {
-        console.log('key :' + key);
-        console.log('value :' + value);
-
         let duration = new Duration(key, value)._data;
         // log(duration)
         if (duration.years > 0) {
@@ -609,6 +597,16 @@ class PersianDateClass {
     }
 
 
+    static _utc(input) {
+        if (input) {
+            return new PersianDateClass(input).utc();
+        }
+        else {
+            return new PersianDateClass().utc();
+        }
+    }
+
+
     /**
      * Current date/time in UTC mode
      * @param input
@@ -719,6 +717,18 @@ class PersianDateClass {
         return this.gDate.valueOf();
     }
 
+    // static unix(timestamp) {
+    //     return this.unix(timestamp);
+    // }
+
+
+    static _unix(timestamp) {
+        if (timestamp) {
+            return new PersianDateClass(timestamp * 1000).unix();
+        } else {
+            return new PersianDateClass().unix();
+        }
+    }
 
     /**
      * Return Unix Timestamp (1318874398)
@@ -994,6 +1004,8 @@ class PersianDateClass {
 (function () {
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
         const pDate = PersianDateClass;
+        pDate.unix = PersianDateClass._unix;
+        pDate.utc = PersianDateClass._utc;
         module.exports = {
             pDate: pDate,
             Duration: Duration
@@ -1008,8 +1020,10 @@ class PersianDateClass {
             });
         }
         else {
-            window['pDate'] = window['persianDate'] = window['PersianDate'] = PersianDateClass;
-            window.Duration = Duration;
+            PersianDateClass.unix = PersianDateClass._unix;
+            PersianDateClass.utc = PersianDateClass._utc;
+            window['pDate'] = window['persianDate'] = PersianDateClass;
+            Duration = Duration;
         }
     }
 })();

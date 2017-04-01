@@ -1,17 +1,9 @@
 /**
- * Duration
- * @module duration
- */
-
-
-/**
  * Duration object constructor
  * @param duration
  * @class Duration
  * @constructor
  */
-
-
 class Duration {
     constructor(key, value) {
         let duration = {},
@@ -19,11 +11,6 @@ class Duration {
             milliseconds = 0,
             normalizedUnit = normalizeDuration(key, value),
             unit = normalizedUnit.unit;
-
-
-        // console.log(unit)
-        // console.log(normalizedUnit.value)
-
         duration[unit] = normalizedUnit.value;
         milliseconds = duration.milliseconds || duration.millisecond || duration.ms || 0;
 
@@ -63,16 +50,11 @@ class Duration {
     }
 }
 
-
 /**
- * @class Duration
- * @type {{weeks: Function, valueOf: Function, humanize: Function}}
+ *
+ * @type {{valueOf: Duration.valueOf}}
  */
 Duration.prototype = {
-    /**
-     *
-     * @returns {*}
-     */
     valueOf: function () {
         return this._milliseconds + this._days * (864e5) + this._months * (2592e6);
     }

@@ -9,7 +9,6 @@ class Algorithms {
 
 
     /**
-     *
      * @param j
      * @returns {*}
      */
@@ -22,7 +21,7 @@ class Algorithms {
 
 
     /**
-     * Is a given year in the Gregorian calendar a leap year ?
+     * @description Is a given year in the Gregorian calendar a leap year ?
      * @param year
      * @returns {boolean}
      */
@@ -32,7 +31,6 @@ class Algorithms {
 
 
     /**
-     *
      * @param year
      * @returns {boolean}
      */
@@ -61,24 +59,23 @@ class Algorithms {
      */
     jdToGregorian(jd) {
         //let wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad, yindex, dyindex, year, yearday, leapadj;
-        let wjd = Math.floor(jd - 0.5) + 0.5;
-        let depoch = wjd - GREGORIAN_EPOCH;
-        let quadricent = Math.floor(depoch / 146097);
-        let dqc = mod(depoch, 146097);
-        let cent = Math.floor(dqc / 36524);
-        let dcent = mod(dqc, 36524);
-        let quad = Math.floor(dcent / 1461);
-        let dquad = mod(dcent, 1461);
-        let yindex = Math.floor(dquad / 365);
-        let year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
+        let wjd = Math.floor(jd - 0.5) + 0.5,
+            depoch = wjd - GREGORIAN_EPOCH,
+            quadricent = Math.floor(depoch / 146097),
+            dqc = mod(depoch, 146097),
+            cent = Math.floor(dqc / 36524),
+            dcent = mod(dqc, 36524),
+            quad = Math.floor(dcent / 1461),
+            dquad = mod(dcent, 1461),
+            yindex = Math.floor(dquad / 365),
+            year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
         if (!((cent == 4) || (yindex == 4))) {
             year++;
         }
-        let yearday = wjd - this.gregorianToJd(year, 1, 1);
-        let leapadj = ((wjd < this.gregorianToJd(year, 3, 1)) ? 0 : (this.isLeapGregorian(year) ? 1 : 2)
-        );
-        let month = Math.floor((((yearday + leapadj) * 12) + 373) / 367);
-        let day = (wjd - this.gregorianToJd(year, month, 1)) + 1;
+        let yearday = wjd - this.gregorianToJd(year, 1, 1),
+            leapadj = ((wjd < this.gregorianToJd(year, 3, 1)) ? 0 : (this.isLeapGregorian(year) ? 1 : 2)),
+            month = Math.floor((((yearday + leapadj) * 12) + 373) / 367),
+            day = (wjd - this.gregorianToJd(year, month, 1)) + 1;
         return new Array(year, month, day);
     }
 
@@ -207,12 +204,10 @@ class Algorithms {
         gDate.setYear(pd[0]);
         gDate.setMonth(pd[1]);
         gDate.setDate(pd[2]);
-        // TODO:
         gDate.setHours(parray[3] ? parray[3] : 0);
         gDate.setMinutes(parray[4] ? parray[4] : 0);
         gDate.setSeconds(parray[5] ? parray[5] : 0);
         gDate.setMilliseconds(parray[6] ? parray[6] : 0);
-
         return gDate;
     }
 
