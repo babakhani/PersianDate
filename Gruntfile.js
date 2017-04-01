@@ -1,5 +1,5 @@
 var sources = [
-        '.tmp/persian-date-version.js'
+        '.tmp/temp-version.js'
     ],
     banner =
         '/*\n' +
@@ -48,11 +48,10 @@ module.exports = function (grunt) {
                 dest: 'doc/document.md'
             }
         },
-
         'string-replace': {
             inline: {
                 files: {
-                    '.tmp/persian-date-version.js': '.tmp/persian-date.js',
+                    '.tmp/temp-version.js': '.tmp/temp.js',
                 },
                 options: {
                     replacements: [

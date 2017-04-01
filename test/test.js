@@ -1,6 +1,6 @@
 /*global describe,it*/
 let assert = require('assert');
-let obj = require('../.tmp/persian-date');
+let obj = require('../dist/persian-date.js');
 const pDate = obj.pDate,
     Duration = obj.Duration,
     defaultArray = [1391, 1, 1, 1, 1, 1, 1];

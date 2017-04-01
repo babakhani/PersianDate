@@ -47,7 +47,7 @@
   },
   "scripts": {
     "test": "nyc --reporter=html --reporter=text mocha",
-    "dev": "babel --watch es6 --out-file .tmp/persian-date.js & simple-server 5000 &",
+    "dev": "babel --watch es6 --out-file .tmp/temp.js & simple-server 5000 & grunt",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "./node_modules/jshint/bin/jshint es6/*.js",
     "doc": "grunt --doc",
