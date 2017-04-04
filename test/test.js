@@ -12,7 +12,7 @@ describe('Helpers', function () {
 
 describe('Convert test', function () {
     const startUnix = 1490444803982,
-        endUnix = 1490444803982 + 20000000;
+        endUnix = 1490444803982 + 2000000;
 
     it('Object Create Successfully', function () {
         let indexUnix = startUnix;
@@ -339,10 +339,6 @@ describe('timezone', function () {
     it('static utc method', function () {
         let a = pDate.utc(1491031614047).valueOf();
         assert.deepEqual(a, 1491015414047);
-        let b = new pDate().utc(1491031614047).valueOf();
-        assert.deepEqual(b, 1491015414047);
-        let c = new pDate().utc().utc(1491031614047).valueOf();
-        assert.deepEqual(c, 1491015414047);
         let d = pDate.utc().utc();
         assert.deepEqual(d.valueOf(), d.gDate.valueOf());
     });
