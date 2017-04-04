@@ -12,7 +12,7 @@ describe('Helpers', function () {
 
 describe('Convert test', function () {
     const startUnix = 1490444803982,
-        endUnix = 1490444803982 + 2000000;
+        endUnix = 1490444803982 + 20000000;
 
     it('Object Create Successfully', function () {
         let indexUnix = startUnix;
@@ -331,6 +331,7 @@ describe('zone', function () {
 
 
 describe('timezone', function () {
+    // TODO: write better test
     it('local', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1]).local().format();
         assert.deepEqual(a, "۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ");
@@ -342,14 +343,14 @@ describe('timezone', function () {
         assert.deepEqual(b, 1491015414047);
         let c = new pDate().utc().utc(1491031614047).valueOf();
         assert.deepEqual(c, 1491015414047);
-        let d = pDate.utc().utc().valueOf();
-        assert.deepEqual(d, new pDate.utc().utc().valueOf());
+        let d = pDate.utc().utc();
+        assert.deepEqual(d.valueOf(), d.gDate.valueOf());
     });
     it('static unix method', function () {
         let a = pDate.unix(1491031614047).valueOf();
         assert.deepEqual(a, 1491031614047);
-        let b = pDate.unix().valueOf();
-        assert.deepEqual(b, pDate.unix().valueOf());
+        let b = pDate.unix();
+        assert.ok(b);
     });
     it('isUtc', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1]).utc().isUtc();
