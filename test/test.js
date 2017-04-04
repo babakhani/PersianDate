@@ -338,7 +338,7 @@ describe('timezone', function () {
     });
     it('static utc method', function () {
         let a = pDate.utc(1491031614047).valueOf();
-        assert.deepEqual(a, 1491015414047);
+        assert.deepEqual(a, 1491031614047);
         let d = pDate.utc().utc();
         assert.deepEqual(d.valueOf(), d.gDate.valueOf());
     });
