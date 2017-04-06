@@ -104,6 +104,7 @@ class Algorithms {
         cycle = Math.floor(depoch / 1029983);
         cyear = mod(depoch, 1029983);
         if (cyear === 1029982) {
+            /* istanbul ignore next */
             ycycle = 2820;
         } else {
             aux1 = Math.floor(cyear / 366);

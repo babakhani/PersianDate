@@ -146,6 +146,7 @@ class PersianDateClass {
         // if default conf dosent set follow golbal config
         if (this.formatPersian === "_default") {
             if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+                /* istanbul ignore next */
                 if (self.formatPersian === false) {
                     output = false;
                 } else {
@@ -587,6 +588,7 @@ class PersianDateClass {
             if (this.pDate.timeZoneOffset < 0) {
                 utcStamp = this.valueOf() - offsetMils;
             } else {
+                /* istanbul ignore next */
                 utcStamp = this.valueOf() + offsetMils;
             }
             this.gDate = new Date(utcStamp);
@@ -624,6 +626,7 @@ class PersianDateClass {
             if (this.pDate.timeZoneOffset < 0) {
                 utcStamp = this.valueOf() + offsetMils;
             } else {
+                /* istanbul ignore next */
                 utcStamp = this.valueOf() - offsetMils;
             }
             this.gDate = new Date(utcStamp);

@@ -5,6 +5,8 @@ Persian Date
 [![Bower version](https://badge.fury.io/bo/persian-date.svg)](https://github.com/babakhani/pwt.datepicker)
 [![Coverage Status](https://coveralls.io/repos/github/babakhani/PersianDate/badge.svg?branch=develop)](https://coveralls.io/github/babakhani/PersianDate?branch=develop)
 [![Build Status](https://travis-ci.org/babakhani/PersianDate.svg?branch=develop)](https://travis-ci.org/babakhani/PersianDate)
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/persianwebtoolkit/persiandate)
+
 
 Javascript date library for parsing, validating, manipulating, and formatting persian dates System.
 
@@ -12,8 +14,9 @@ Inspired by [momentjs](http://momentjs.com/)
 
 More info at [wikipedia](http://en.wikipedia.org/wiki/Iranian_calendar)
 
+> [Document](babakhani.github.io/PersianWebToolkit/persiandate)
+
 <a class="github-button" href="https://github.com/babakhani/persiandate/archive/master.zip" data-style="mega" aria-label="Download babakhani/persiandate on GitHub">Download</a>
-<a class="github-button" href="https://github.com/babakhani" data-style="mega" data-count-href="/babakhani/followers" data-count-api="/users/babakhani#followers" data-count-aria-label="# followers on GitHub" aria-label="Follow @babakhani on GitHub">Follow @babakhani</a>
 <a class="github-button" href="https://github.com/babakhani/persiandate" data-style="mega" data-count-href="/babakhani/persiandate/stargazers" data-count-api="/repos/babakhani/persiandate#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star babakhani/persiandate on GitHub">Star</a>
 <a class="github-button" href="https://github.com/babakhani/persiandate/issues" data-style="mega" data-count-api="/repos/babakhani/persiandate#open_issues_count" data-count-aria-label="# issues on GitHub" aria-label="Issue babakhani/persiandate on GitHub">Issue</a>
 <a class="github-button" href="https://github.com/babakhani/persiandate/subscription" data-style="mega" data-count-href="/babakhani/persiandate/watchers" data-count-api="/repos/babakhani/persiandate#subscribers_count" data-count-aria-label="# watchers on GitHub" aria-label="Watch babakhani/persiandate on GitHub">Watch</a>

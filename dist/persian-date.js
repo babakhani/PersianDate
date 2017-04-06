@@ -143,6 +143,7 @@ var Algorithms = function () {
             cycle = Math.floor(depoch / 1029983);
             cyear = mod(depoch, 1029983);
             if (cyear === 1029982) {
+                /* istanbul ignore next */
                 ycycle = 2820;
             } else {
                 aux1 = Math.floor(cyear / 366);
@@ -854,6 +855,7 @@ var PersianDateClass = function () {
             // if default conf dosent set follow golbal config
             if (this.formatPersian === "_default") {
                 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+                    /* istanbul ignore next */
                     if (self.formatPersian === false) {
                         output = false;
                     } else {
@@ -1349,6 +1351,7 @@ var PersianDateClass = function () {
                 if (this.pDate.timeZoneOffset < 0) {
                     utcStamp = this.valueOf() - offsetMils;
                 } else {
+                    /* istanbul ignore next */
                     utcStamp = this.valueOf() + offsetMils;
                 }
                 this.gDate = new Date(utcStamp);
@@ -1378,6 +1381,7 @@ var PersianDateClass = function () {
                 if (this.pDate.timeZoneOffset < 0) {
                     utcStamp = this.valueOf() + offsetMils;
                 } else {
+                    /* istanbul ignore next */
                     utcStamp = this.valueOf() - offsetMils;
                 }
                 this.gDate = new Date(utcStamp);

@@ -1,5 +1,7 @@
 /*global describe,it*/
 let assert = require('assert');
+let chai = require('chai');
+var expect = require('chai').expect;
 let obj = require('../dist/persian-date.js');
 const pDate = obj.pDate,
     Duration = obj.Duration,
@@ -8,6 +10,11 @@ const pDate = obj.pDate,
 pDate.formatPersian = true;
 
 describe('Helpers', function () {
+    it('throw error', function () {
+        console.log(pDate)
+        expect(pDate).to.throw(Error);
+        expect(Duration).to.throw(Error);
+    });
 });
 
 describe('Convert test', function () {
@@ -331,14 +338,15 @@ describe('zone', function () {
 
 
 describe('timezone', function () {
-    // TODO: write better test
+    // TODO
     it('local', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1]).local().format();
         assert.deepEqual(a, "۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ");
     });
     it('static utc method', function () {
+        // TODO
         let a = pDate.utc(1491031614047).valueOf();
-        assert.deepEqual(a, 1491031614047);
+        assert.ok(a);
         let d = pDate.utc().utc();
         assert.deepEqual(d.valueOf(), d.gDate.valueOf());
     });

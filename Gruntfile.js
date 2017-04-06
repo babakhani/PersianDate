@@ -62,12 +62,18 @@ module.exports = function (grunt) {
                     ]
                 }
             }
-        }
+        },
+        watch: {
+            scripts: {
+                files: ['src/.tmp/*.js'],
+                tasks: ['string-replace', 'concat', 'uglify']
+            }
+        },
     });
 
     if (grunt.option("doc") === true) {
         grunt.registerTask('default', ['jsdoc2md']);
     } else {
-        grunt.registerTask('default', ['string-replace', 'concat', 'uglify', 'jsdoc2md']);
+        grunt.registerTask('default', ['string-replace', 'concat', 'uglify', 'jsdoc2md', 'watch']);
     }
 };
