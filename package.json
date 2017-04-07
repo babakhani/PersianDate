@@ -60,8 +60,6 @@
   },
   "pre-commit": [
     "test",
-    "lint",
-    "minify",
-    "doc"
+    "lint"
   ]
 }
