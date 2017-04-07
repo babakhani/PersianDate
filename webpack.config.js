@@ -23,7 +23,7 @@ if (minimize) {
     fileName = pkg.name + ".min.js";
 }
 module.exports = {
-    entry: "./es6/init.js", // string | object | array
+    entry: "./src/init.js", // string | object | array
     output: {
         library: "persianDate",
         libraryTarget: "umd2",
@@ -35,7 +35,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 include: [
-                    path.resolve(__dirname, "./es6")
+                    path.resolve(__dirname, "./src")
                 ],
                 exclude: [
                     path.resolve(__dirname, "./node_module")

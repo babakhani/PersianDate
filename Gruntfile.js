@@ -10,7 +10,7 @@ module.exports = function (grunt) {
                     'heading-depth': 2,
                     'example-lang': 'js'
                 },
-                src: 'es6/*.js',
+                src: 'src/*.js',
                 dest: 'doc/document.md'
             }
         },

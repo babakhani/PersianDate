@@ -54,7 +54,7 @@
     "test": "nyc --reporter=html --reporter=text mocha",
     "dev": "webpack --watch & webpack-dev-server --port 5000 --watch --hot",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "./node_modules/jshint/bin/jshint es6/*.js",
+    "lint": "./node_modules/jshint/bin/jshint src/*.js",
     "doc": "grunt --doc",
     "sync-pkg": "sync-pkg"
   },
