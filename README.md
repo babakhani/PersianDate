@@ -14,8 +14,6 @@ Inspired by [momentjs](http://momentjs.com/)
 
 More info at [wikipedia](http://en.wikipedia.org/wiki/Iranian_calendar)
 
-> [Document](babakhani.github.io/PersianWebToolkit/persiandate)
-
 <a class="github-button" href="https://github.com/babakhani/persiandate/archive/master.zip" data-style="mega" aria-label="Download babakhani/persiandate on GitHub">Download</a>
 <a class="github-button" href="https://github.com/babakhani/persiandate" data-style="mega" data-count-href="/babakhani/persiandate/stargazers" data-count-api="/repos/babakhani/persiandate#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star babakhani/persiandate on GitHub">Star</a>
 <a class="github-button" href="https://github.com/babakhani/persiandate/issues" data-style="mega" data-count-api="/repos/babakhani/persiandate#open_issues_count" data-count-aria-label="# issues on GitHub" aria-label="Issue babakhani/persiandate on GitHub">Issue</a>
