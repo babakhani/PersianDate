@@ -25,7 +25,7 @@ if (minimize) {
 module.exports = {
     entry: "./es6/init.js", // string | object | array
     output: {
-        library: "pDate",
+        library: "persianDate",
         libraryTarget: "umd2",
         path: path.resolve(__dirname, "dist"), // string
         filename: fileName // string

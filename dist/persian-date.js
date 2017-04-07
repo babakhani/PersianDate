@@ -13,9 +13,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["pDate"] = factory();
+		exports["persianDate"] = factory();
 	else
-		root["pDate"] = factory();
+		root["persianDate"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
