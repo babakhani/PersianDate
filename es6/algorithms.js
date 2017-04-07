@@ -1,8 +1,13 @@
+let GREGORIAN_EPOCH = require('./constants').GREGORIAN_EPOCH;
+let PERSIAN_EPOCH = require('./constants').PERSIAN_EPOCH;
+let Helpers = require('./helpers');
+let absRound = new Helpers().absRound;
+let mod = new Helpers().mod;
+
 /**
  * @description Calendar algorithms implementations
  * @author Reza Babakhani
  */
-
 class Algorithms {
     /**
      * @param j
@@ -218,3 +223,5 @@ class Algorithms {
         return [pDate.year, pDate.month, pDate.date, pDate.hours, pDate.minutes, pDate.seconds, pDate.milliseconds];
     }
 }
+
+module.exports = Algorithms;

@@ -1,6 +1,6 @@
 {
   "name": "persian-date",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "main": [
     "dist/<= pkg.version>/persian-date-<= pkg.version>.js"
   ],
@@ -27,28 +27,33 @@
   "devDependencies": {
     "babel-cli": "^6.0.0",
     "babel-core": "^6.22.1",
-    "babel-loader": "^6.2.10",
+    "babel-loader": "^6.4.1",
     "babel-plugin-import": "^1.1.1",
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-polyfill": "^6.22.0",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-latest": "^6.24.0",
     "babel-runtime": "^6.22.0",
-    "bootstrap": "^3.3.7",
+    "chai": "^3.5.0",
     "coveralls": "^2.13.0",
-    "grunt": "0.4.4",
-    "grunt-cli": "0.1.13",
-    "grunt-contrib-concat": "^0.5.0",
-    "grunt-contrib-uglify": "^0.1.2",
-    "grunt-jsdoc": "^0.5.7",
+    "grunt": "^1.0.1",
+    "grunt-babel": "^6.0.0",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-jsdoc-to-markdown": "^3.0.0",
+    "grunt-webpack": "^2.0.1",
+    "grunt-webpack-server": "^0.1.0",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.2.0",
     "jshint": "^2.9.4",
+    "load-grunt-tasks": "^3.5.2",
     "mocha": "^3.2.0",
-    "mocha-lcov-reporter": "0.0.2",
-    "sync-pkg": "^0.7.2"
+    "mocha-lcov-reporter": "^0.0.2",
+    "sync-pkg": "^0.7.2",
+    "unminified-webpack-plugin": "^1.2.0",
+    "webpack": "^2.3.3"
   },
-  "license": "MIT",
+  "license": "WTFPL",
   "protocol": "https:",
   "slashes": true,
   "hostname": "github.com",
@@ -74,7 +79,7 @@
   "pkg": "https://github.com/babakhani/PersianDate/blob/master/package.json",
   "readme": "https://github.com/babakhani/PersianDate/blob/master/README.md",
   "file": "https://github.com/babakhani/PersianDate/blob/master/master",
-  "homepage": "https://github.com/babakhani/persian-date",
+  "homepage": "http://babakhani.github.io/PersianWebToolkit/docs/persian-date/",
   "bugs": {
     "url": "https://github.com/babakhani/persian-date/issues"
   },
@@ -82,7 +87,17 @@
     "dist"
   ],
   "keywords": [
+    "calendar",
     "date",
-    "persian"
+    "jalali-date",
+    "khayyam",
+    "persian-date"
+  ],
+  "description": "Javascript date library for parsing, validating, manipulating, and formatting persian dates System.",
+  "contributors": [
+    "Reza Babakhani <babakhani.reza@gmail.com>"
+  ],
+  "authors": [
+    "Reza Babakhani <babakhani.reza@gmail.com>"
   ]
 }

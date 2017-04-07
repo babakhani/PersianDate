@@ -1,19 +1,29 @@
+let Algorithms = require('./algorithms');
+let Helpers = require('./helpers');
+let Duration = require('./duration');
+let toPersianDigit = new Helpers().toPersianDigit;
+let leftZeroFill = new Helpers().leftZeroFill;
+let weekRange = require('./constants').weekRange;
+let persianDaysName = require('./constants').persianDaysName;
+let monthRange = require('./constants').monthRange;
+
 class PersianDateClass {
     constructor(input) {
         this.algorithms = new Algorithms();
+        const helpers = new Helpers();
         // Convert Any thing to Gregorian Date
-        if (isUndefined(input)) {
+        if (helpers.isUndefined(input)) {
             this.gDate = new Date();
         }
-        else if (isDate(input)) {
+        else if (helpers.isDate(input)) {
             this.gDate = input;
         }
-        else if (isArray(input)) {
+        else if (helpers.isArray(input)) {
             //  Encapsulate Input Array
             let arrayInput = input.slice();
             this.gDate = this.algorithms.persianArrayToGregorianDate(arrayInput);
         }
-        else if (isNumber(input)) {
+        else if (helpers.isNumber(input)) {
             this.gDate = new Date(input);
         }
         // instance of pDate
@@ -25,7 +35,7 @@ class PersianDateClass {
             this.gDate = new Date(parseInt(input.substr(6)));
         }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
-        this.version = "<!! version >";
+        this.version = __VERSION__;
         this.formatPersian = "_default";
         this._utcMode = false;
         return this;
@@ -1004,33 +1014,4 @@ class PersianDateClass {
     }
 }
 
-
-(function () {
-    if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-        const pDate = PersianDateClass;
-        pDate.unix = PersianDateClass._unix;
-        pDate.utc = PersianDateClass._utc;
-        module.exports = {
-            pDate: pDate,
-            Duration: Duration
-        };
-    }
-    /* istanbul ignore next */
-    else {
-        if (typeof define === 'function' && define.amd) {
-            define([], function () {
-                return PersianDateClassWrapper;
-            });
-        }
-        else {
-
-            var PersianDateClassWrapper = function (input) {
-                return new PersianDateClass(input);
-            };
-            PersianDateClassWrapper.unix = PersianDateClass._unix;
-            PersianDateClassWrapper.utc = PersianDateClass._utc;
-            window['pDate'] = window['persianDate'] = PersianDateClassWrapper;
-            window['Duration'] = Duration;
-        }
-    }
-})();
+module.exports = PersianDateClass;

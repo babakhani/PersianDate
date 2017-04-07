@@ -3,9 +3,9 @@
  * @module constants
  */
 
-const
+module.exports = {
 
-    durationUnit = {
+    durationUnit: {
         year: ['y', 'years', 'year'],
         month: ['M', 'months', 'month'],
         day: ['d', 'days', 'day'],
@@ -21,19 +21,19 @@ const
      *
      * @type {number}
      */
-    GREGORIAN_EPOCH = 1721425.5,
+    GREGORIAN_EPOCH: 1721425.5,
 
     /**
      *
      * @type {number}
      */
-    PERSIAN_EPOCH = 1948320.5,
+    PERSIAN_EPOCH: 1948320.5,
 
     /**
      *
      * @type {{}}
      */
-    monthRange = {
+    monthRange: {
         1: {
             name: {
                 fa: "فروردین"
@@ -138,7 +138,7 @@ const
      *
      * @type {{}}
      */
-    weekRange = {
+    weekRange: {
         1: {
             name: {
                 fa: "شنبه"
@@ -202,7 +202,7 @@ const
      *
      * @type {string[]}
      */
-    persianDaysName = [
+    persianDaysName: [
         "اورمزد",
         "بهمن",
         "اوردیبهشت",
@@ -233,4 +233,5 @@ const
         "زامیاد",
         "مانتره سپند",
         "انارام",
-        "زیادی"];
+        "زیادی"]
+}

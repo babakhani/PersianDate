@@ -3,8 +3,8 @@ let assert = require('assert');
 let chai = require('chai');
 var expect = require('chai').expect;
 let obj = require('../dist/persian-date.js');
-const pDate = obj.pDate,
-    Duration = obj.Duration,
+const pDate = obj,
+    Duration = new pDate().duration,
     defaultArray = [1391, 1, 1, 1, 1, 1, 1];
 
 pDate.formatPersian = true;
@@ -13,9 +13,9 @@ describe('Helpers', function () {
     it('throw error', function () {
         console.log(pDate)
         expect(pDate).to.throw(Error);
-        expect(Duration).to.throw(Error);
     });
 });
+
 
 describe('Convert test', function () {
     const startUnix = 1490444803982,
@@ -43,6 +43,7 @@ describe('Make Instance', function () {
         let a = new pDate([-1]).format();
         assert.ok(a, "-۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
     });
+
 
     it('From pDate', function () {
         let a = new pDate(),

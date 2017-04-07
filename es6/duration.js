@@ -1,3 +1,6 @@
+let Helpers = require('./helpers');
+let normalizeDuration = new Helpers().normalizeDuration;
+let absRound = new Helpers().absRound;
 /**
  * Duration object constructor
  * @param duration
@@ -59,3 +62,5 @@ Duration.prototype = {
         return this._milliseconds + this._days * (864e5) + this._months * (2592e6);
     }
 };
+
+module.exports = Duration;
