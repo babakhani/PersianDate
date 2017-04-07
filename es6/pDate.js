@@ -212,6 +212,8 @@ class PersianDateClass {
             }
         };
 
+
+        /* jshint ignore:start */
         function replaceFunction(input) {
             switch (input) {
                 // AM/PM
@@ -396,6 +398,8 @@ class PersianDateClass {
             }
         }
 
+        /* jshint ignore:end */
+
         if (inputString) {
             return inputString.replace(formattingTokens, replaceFunction);
         } else {
@@ -403,43 +407,6 @@ class PersianDateClass {
             return inputString.replace(formattingTokens, replaceFunction);
         }
     }
-
-
-    /**
-     * Humanize
-     * @returns {string}
-     */
-    // from() {
-    //     return "Must Implement";
-    // }
-
-
-    /**
-     *
-     * @returns {string}
-     */
-    // fromNow() {
-    //     return "Must Implement";
-    // }
-
-
-    /**
-     *
-     * @returns {string}
-     */
-    // humanizeDuration() {
-    //     return "Must Implement";
-    // }
-
-
-    /**
-     *
-     * @returns {Function|PersianDate._d|_d}
-     * @private
-     */
-    // _d() {
-    //     return this.gDate._d;
-    // }
 
 
     /**
@@ -471,7 +438,7 @@ class PersianDateClass {
                                 diff;
         }
         if (output < 0) {
-            output * -1;
+            output = output * -1;
         }
         return asFloat ? output : Math.round(output);
     }
@@ -483,7 +450,8 @@ class PersianDateClass {
      * @returns {*}
      */
     startOf(key) {
-        // Simplify this
+        // Simplify this\
+        /* jshint ignore:start */
         switch (key) {
             case "years":
             case "year" :
@@ -514,6 +482,7 @@ class PersianDateClass {
             default:
                 return this;
         }
+        /* jshint ignore:end */
     }
 
 

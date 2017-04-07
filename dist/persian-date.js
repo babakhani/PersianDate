@@ -398,10 +398,8 @@ var Helpers = function () {
     }, {
         key: 'normalizeDuration',
         value: function normalizeDuration() {
-            var self = this,
-                unit = void 0,
+            var unit = void 0,
                 value = void 0;
-            console.log(this);
             if (typeof arguments[0] === "string") {
                 unit = arguments[0];
                 value = arguments[1];
@@ -704,6 +702,7 @@ var PersianDateClass = function () {
                 }
             };
 
+            /* jshint ignore:start */
             function replaceFunction(input) {
                 switch (input) {
                     // AM/PM
@@ -922,6 +921,8 @@ var PersianDateClass = function () {
                 }
             }
 
+            /* jshint ignore:end */
+
             if (inputString) {
                 return inputString.replace(formattingTokens, replaceFunction);
             } else {
@@ -929,43 +930,6 @@ var PersianDateClass = function () {
                 return _inputString.replace(formattingTokens, replaceFunction);
             }
         }
-
-        /**
-         * Humanize
-         * @returns {string}
-         */
-        // from() {
-        //     return "Must Implement";
-        // }
-
-
-        /**
-         *
-         * @returns {string}
-         */
-        // fromNow() {
-        //     return "Must Implement";
-        // }
-
-
-        /**
-         *
-         * @returns {string}
-         */
-        // humanizeDuration() {
-        //     return "Must Implement";
-        // }
-
-
-        /**
-         *
-         * @returns {Function|PersianDate._d|_d}
-         * @private
-         */
-        // _d() {
-        //     return this.gDate._d;
-        // }
-
 
         /**
          *
@@ -1000,7 +964,7 @@ var PersianDateClass = function () {
                 diff;
             }
             if (output < 0) {
-                output * -1;
+                output = output * -1;
             }
             return asFloat ? output : Math.round(output);
         }
@@ -1014,7 +978,8 @@ var PersianDateClass = function () {
     }, {
         key: 'startOf',
         value: function startOf(key) {
-            // Simplify this
+            // Simplify this\
+            /* jshint ignore:start */
             switch (key) {
                 case "years":
                 case "year":
@@ -1045,6 +1010,7 @@ var PersianDateClass = function () {
                 default:
                     return this;
             }
+            /* jshint ignore:end */
         }
 
         /**
@@ -1667,7 +1633,7 @@ var Algorithms = function () {
     }, {
         key: 'isLeapGregorian',
         value: function isLeapGregorian(year) {
-            return year % 4 == 0 && !(year % 100 === 0 && year % 400 != 0);
+            return year % 4 === 0 && !(year % 100 === 0 && year % 400 !== 0);
         }
 
         /**
@@ -1834,17 +1800,17 @@ var Algorithms = function () {
             output.monthDayNumber = pa[2] - 1;
             if (pa[3] == 6) {
                 output.weekDayNumber = 1;
-            } else if (pa[3] == 5) {
+            } else if (pa[3] === 5) {
                 output.weekDayNumber = 0;
-            } else if (pa[3] == 4) {
+            } else if (pa[3] === 4) {
                 output.weekDayNumber = 6;
-            } else if (pa[3] == 3) {
+            } else if (pa[3] === 3) {
                 output.weekDayNumber = 5;
-            } else if (pa[3] == 2) {
+            } else if (pa[3] === 2) {
                 output.weekDayNumber = 4;
-            } else if (pa[3] == 1) {
+            } else if (pa[3] === 1) {
                 output.weekDayNumber = 3;
-            } else if (pa[3] == 0) {
+            } else if (pa[3] === 0) {
                 output.weekDayNumber = 2;
             }
             output.year = pa[0];

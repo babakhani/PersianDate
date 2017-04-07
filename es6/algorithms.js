@@ -27,7 +27,7 @@ class Algorithms {
      * @returns {boolean}
      */
     isLeapGregorian(year) {
-        return ((year % 4) == 0) && (!(((year % 100) === 0) && ((year % 400) != 0)));
+        return ((year % 4) === 0) && (!(((year % 100) === 0) && ((year % 400) !== 0)));
     }
 
 
@@ -168,17 +168,17 @@ class Algorithms {
         output.monthDayNumber = pa[2] - 1;
         if (pa[3] == 6) {
             output.weekDayNumber = 1;
-        } else if (pa[3] == 5) {
+        } else if (pa[3] === 5) {
             output.weekDayNumber = 0;
-        } else if (pa[3] == 4) {
+        } else if (pa[3] === 4) {
             output.weekDayNumber = 6;
-        } else if (pa[3] == 3) {
+        } else if (pa[3] === 3) {
             output.weekDayNumber = 5;
-        } else if (pa[3] == 2) {
+        } else if (pa[3] === 2) {
             output.weekDayNumber = 4;
-        } else if (pa[3] == 1) {
+        } else if (pa[3] === 1) {
             output.weekDayNumber = 3;
-        } else if (pa[3] == 0) {
+        } else if (pa[3] === 0) {
             output.weekDayNumber = 2;
         }
         output.year = pa[0];

@@ -59,6 +59,9 @@
     "sync-pkg": "sync-pkg"
   },
   "pre-commit": [
-    "test"
+    "test",
+    "lint",
+    "minify",
+    "doc"
   ]
 }

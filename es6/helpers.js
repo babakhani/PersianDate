@@ -68,8 +68,7 @@ class Helpers {
      * @return {{unit: *, value: *}}
      */
     normalizeDuration() {
-        let self = this, unit, value;
-        console.log(this)
+        let unit, value;
         if (typeof arguments[0] === "string") {
             unit = arguments[0];
             value = arguments[1];
@@ -127,4 +126,5 @@ class Helpers {
         return a - (b * Math.floor(a / b));
     }
 }
+
 module.exports = Helpers;

@@ -3,23 +3,9 @@
   "node": true,
   "esversion": 6,
   "globals": {
-    "$": false,
     "window": true,
-    "jQuery": false,
-    "ClassSprite": true,
-    "ClassBase": true,
-    "TEMPLATE": true,
-    "persianDate": false,
     "inherit": true,
-    "console": false,
     "clearTimeout": false,
-    "setTimeout": false,
-    "Navigator": true,
-    "Toolbox": true,
-    "Daypicker": true,
-    "MonthGrid": true,
-    "MonthPicker": true,
-    "YearPicker": true,
-    "TimePicker": true
+    "setTimeout": false
   }
 }
