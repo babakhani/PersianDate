@@ -1,23 +1,23 @@
 // https://webpack.js.org/configuration/
-require('webpack');
-let webpack = require('webpack');
-let path = require('path');
-let pkg = require("./package.json");
 const minimize = process.env.MIN ? true : false;
-let banner =
-    '\n' +
-    pkg.name + ' -  ' + pkg.version + '\n' +
-    pkg.author + '\n' +
-    pkg.homepage + '\n' +
-    'Under ' + pkg.license + ' license \n' +
-    '\n';
-let fileName = pkg.name + ".js";
-let plugins = [
-    new webpack.BannerPlugin(banner),
-    new webpack.DefinePlugin({
-        __VERSION__: JSON.stringify(pkg.version)
-    })
-];
+let webpack = require('webpack'),
+    path = require('path'),
+    pkg = require("./package.json"),
+    banner =
+        '\n' +
+        pkg.name + ' -  ' + pkg.version + '\n' +
+        pkg.author + '\n' +
+        pkg.homepage + '\n' +
+        'Under ' + pkg.license + ' license \n' +
+        '\n',
+    fileName = pkg.name + ".js",
+    plugins = [
+        new webpack.BannerPlugin(banner),
+        new webpack.DefinePlugin({
+            __VERSION__: JSON.stringify(pkg.version)
+        })
+    ];
+
 if (minimize) {
     plugins.push(new webpack.optimize.UglifyJsPlugin());
     fileName = pkg.name + ".min.js";
