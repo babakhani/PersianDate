@@ -34,6 +34,9 @@ class PersianDateClass {
         else if (input.substring(0, 6) === "/Date(") {
             this.gDate = new Date(parseInt(input.substr(6)));
         }
+        else{
+            this.gDate = new Date();
+        }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
         this.version = __VERSION__;
         this.formatPersian = "_default";

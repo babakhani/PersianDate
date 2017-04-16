@@ -506,6 +506,8 @@ var PersianDateClass = function () {
             // ASP.NET JSON Date
             else if (input.substring(0, 6) === "/Date(") {
                     this.gDate = new Date(parseInt(input.substr(6)));
+                } else {
+                    this.gDate = new Date();
                 }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
         this.version = "0.2.0";
