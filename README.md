@@ -14,12 +14,11 @@ Inspired by [momentjs](http://momentjs.com/)
 
 More info at [wikipedia](http://en.wikipedia.org/wiki/Iranian_calendar)
 
-<a class="github-button" href="https://github.com/babakhani/persiandate/archive/master.zip" data-style="mega" aria-label="Download babakhani/persiandate on GitHub">Download</a>
-<a class="github-button" href="https://github.com/babakhani/persiandate" data-style="mega" data-count-href="/babakhani/persiandate/stargazers" data-count-api="/repos/babakhani/persiandate#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star babakhani/persiandate on GitHub">Star</a>
-<a class="github-button" href="https://github.com/babakhani/persiandate/issues" data-style="mega" data-count-api="/repos/babakhani/persiandate#open_issues_count" data-count-aria-label="# issues on GitHub" aria-label="Issue babakhani/persiandate on GitHub">Issue</a>
-<a class="github-button" href="https://github.com/babakhani/persiandate/subscription" data-style="mega" data-count-href="/babakhani/persiandate/watchers" data-count-api="/repos/babakhani/persiandate#subscribers_count" data-count-aria-label="# watchers on GitHub" aria-label="Watch babakhani/persiandate on GitHub">Watch</a>
-<a class="github-button" href="https://github.com/babakhani/persiandate/fork" data-style="mega" data-count-href="/babakhani/persiandate/network" data-count-api="/repos/babakhani/persiandate#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork babakhani/persiandate on GitHub">Fork</a>
-
+<a class="github-button" href="https://github.com/babakhani/persiandate/archive/master.zip" data-icon="octicon-cloud-download" data-style="mega" aria-label="Download babakhani/persiandate on GitHub">Download</a>
+<a class="github-button" href="https://github.com/babakhani/persiandate" data-icon="octicon-star" data-style="mega" data-count-href="/babakhani/persiandate/stargazers" data-count-api="/repos/babakhani/persiandate#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star babakhani/persiandate on GitHub">Star</a>
+<a class="github-button" href="https://github.com/babakhani/persiandate/issues" data-icon="octicon-issue-opened" data-style="mega" data-count-api="/repos/babakhani/persiandate#open_issues_count" data-count-aria-label="# issues on GitHub" aria-label="Issue babakhani/persiandate on GitHub">Issue</a>
+<a class="github-button" href="https://github.com/babakhani/persiandate/subscription" data-icon="octicon-eye" data-style="mega" data-count-href="/babakhani/persiandate/watchers" data-count-api="/repos/babakhani/persiandate#subscribers_count" data-count-aria-label="# watchers on GitHub" aria-label="Watch babakhani/persiandate on GitHub">Watch</a>
+<a class="github-button" href="https://github.com/babakhani/persiandate/fork" data-icon="octicon-repo-forked" data-style="mega" data-count-href="/babakhani/persiandate/network" data-count-api="/repos/babakhani/persiandate#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork babakhani/persiandate on GitHub">Fork</a>
 
 ## Install
 
