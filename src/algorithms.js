@@ -12,7 +12,7 @@ class Algorithms {
      * @param j
      * @returns {*}
      */
-    jwday(j) {
+    jwday (j) {
         let mod = function (a, b) {
             return a - (b * Math.floor(a / b));
         };
@@ -25,7 +25,7 @@ class Algorithms {
      * @param year
      * @returns {boolean}
      */
-    isLeapGregorian(year) {
+    isLeapGregorian (year) {
         return ((year % 4) === 0) && (!(((year % 100) === 0) && ((year % 400) !== 0)));
     }
 
@@ -34,8 +34,10 @@ class Algorithms {
      * @param year
      * @returns {boolean}
      */
-    isLeapPersian(year) {
+    isLeapPersian (year) {
         return ((((((year - ((year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
+        // https://fa.wikipedia.org/wiki/%DA%AF%D8%A7%D9%87%E2%80%8C%D8%B4%D9%85%D8%A7%D8%B1%DB%8C_%D9%87%D8%AC%D8%B1%DB%8C_%D8%AE%D9%88%D8%B1%D8%B4%DB%8C%D8%AF%DB%8C_%D8%AD%D8%B3%D8%A7%D8%A8%DB%8C
+        // return parseFloat('0.' + ((year + 2346) * (0.24219858156)).toString().split('.')[1]) < 0.24219858156;
     }
 
 
@@ -46,9 +48,9 @@ class Algorithms {
      * @param day
      * @returns {number}
      */
-    gregorianToJd(year, month, day) {
+    gregorianToJd (year, month, day) {
         return (GREGORIAN_EPOCH - 1) + (365 * (year - 1)) + Math.floor((year - 1) / 4) + (-Math.floor((year - 1) / 100)) + Math.floor((year - 1) / 400) + Math.floor((((367 * month) - 362) / 12) + ((month <= 2) ? 0 : (this.isLeapGregorian(year) ? -1 : -2)
-                ) + day);
+            ) + day);
     }
 
 
@@ -57,25 +59,25 @@ class Algorithms {
      * @param jd
      * @returns {Array}
      */
-    jdToGregorian(jd) {
+    jdToGregorian (jd) {
         //let wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad, yindex, dyindex, year, yearday, leapadj;
         let wjd = Math.floor(jd - 0.5) + 0.5,
-            depoch = wjd - GREGORIAN_EPOCH,
-            quadricent = Math.floor(depoch / 146097),
-            dqc = mod(depoch, 146097),
-            cent = Math.floor(dqc / 36524),
-            dcent = mod(dqc, 36524),
-            quad = Math.floor(dcent / 1461),
-            dquad = mod(dcent, 1461),
-            yindex = Math.floor(dquad / 365),
-            year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
+          depoch = wjd - GREGORIAN_EPOCH,
+          quadricent = Math.floor(depoch / 146097),
+          dqc = mod(depoch, 146097),
+          cent = Math.floor(dqc / 36524),
+          dcent = mod(dqc, 36524),
+          quad = Math.floor(dcent / 1461),
+          dquad = mod(dcent, 1461),
+          yindex = Math.floor(dquad / 365),
+          year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
         if (!((cent == 4) || (yindex == 4))) {
             year++;
         }
         let yearday = wjd - this.gregorianToJd(year, 1, 1),
-            leapadj = ((wjd < this.gregorianToJd(year, 3, 1)) ? 0 : (this.isLeapGregorian(year) ? 1 : 2)),
-            month = Math.floor((((yearday + leapadj) * 12) + 373) / 367),
-            day = (wjd - this.gregorianToJd(year, month, 1)) + 1;
+          leapadj = ((wjd < this.gregorianToJd(year, 3, 1)) ? 0 : (this.isLeapGregorian(year) ? 1 : 2)),
+          month = Math.floor((((yearday + leapadj) * 12) + 373) / 367),
+          day = (wjd - this.gregorianToJd(year, month, 1)) + 1;
         return new Array(year, month, day);
     }
 
@@ -87,12 +89,12 @@ class Algorithms {
      * @param day
      * @returns {*}
      */
-    persianToJd(year, month, day) {
+    persianToJd (year, month, day) {
         let epbase, epyear;
         epbase = year - ((year >= 0) ? 474 : 473);
         epyear = 474 + mod(epbase, 2820);
         return day + ((month <= 7) ? ((month - 1) * 31) : (((month - 1) * 30) + 6)
-            ) + Math.floor(((epyear * 682) - 110) / 2816) + (epyear - 1) * 365 + Math.floor(epbase / 2820) * 1029983 + (PERSIAN_EPOCH - 1);
+          ) + Math.floor(((epyear * 682) - 110) / 2816) + (epyear - 1) * 365 + Math.floor(epbase / 2820) * 1029983 + (PERSIAN_EPOCH - 1);
     }
 
 
@@ -101,7 +103,7 @@ class Algorithms {
      * @param jd
      * @returns {Array}
      */
-    jdToPersian(jd) {
+    jdToPersian (jd) {
         let year, month, day, depoch, cycle, cyear, ycycle, aux1, aux2, yday;
         jd = Math.floor(jd) + 0.5;
         depoch = jd - this.persianToJd(475, 1, 1);
@@ -133,9 +135,9 @@ class Algorithms {
      * @param day
      * @returns {Array}
      */
-    calcPersian(year, month, day) {
+    calcPersian (year, month, day) {
         let j = this.persianToJd(year, month, day),
-            date = this.jdToGregorian(j);
+          date = this.jdToGregorian(j);
         return new Array(date[0], date[1] - 1, date[2]);
     }
 
@@ -147,11 +149,11 @@ class Algorithms {
      * @param day
      * @returns {Array}
      */
-    calcGregorian(year, month, day) {
+    calcGregorian (year, month, day) {
         //  Update Julian day
         let j = this.gregorianToJd(year, month + 1, day) + (Math.floor(0 + 60 * (0 + 60 * 0) + 0.5) / 86400.0),
-            //  Update Persian Calendar
-            perscal = this.jdToPersian(j), weekday = this.jwday(j);
+          //  Update Persian Calendar
+          perscal = this.jdToPersian(j), weekday = this.jwday(j);
         return new Array(perscal[0], perscal[1], perscal[2], weekday);
     }
 
@@ -161,9 +163,9 @@ class Algorithms {
      * @param gd
      * @returns {{}}
      */
-    toPersianDate(gd) {
+    toPersianDate (gd) {
         let pa = this.calcGregorian(gd.getFullYear(), gd.getMonth(), gd.getDate()),
-            output = {};
+          output = {};
         output.monthDayNumber = pa[2] - 1;
         if (pa[3] == 6) {
             output.weekDayNumber = 1;
@@ -198,10 +200,10 @@ class Algorithms {
      * @param parray persian-date array
      * @returns {Date}
      */
-    persianArrayToGregorianDate(parray) {
+    persianArrayToGregorianDate (parray) {
         // Howha : javascript Cant Parse this array truly 2011,2,20
         let pd = this.calcPersian(parray[0] ? parray[0] : 0, parray[1] ? parray[1] : 1, parray[2] ? parray[2] : 1),
-            gDate = new Date(pd[0], pd[1], pd[2]);
+          gDate = new Date(pd[0], pd[1], pd[2]);
         gDate.setYear(pd[0]);
         gDate.setMonth(pd[1]);
         gDate.setDate(pd[2]);
@@ -218,7 +220,7 @@ class Algorithms {
      * @param pDate
      * @returns {array}
      */
-    getPersianArrayFromPDate(pDate) {
+    getPersianArrayFromPDate (pDate) {
         return [pDate.year, pDate.month, pDate.date, pDate.hours, pDate.minutes, pDate.seconds, pDate.milliseconds];
     }
 }
