@@ -1020,51 +1020,46 @@ var PersianDateClass = function () {
          * @param key
          * @returns {*}
          */
+        /* eslint-disable no-case-declarations */
 
     }, {
         key: 'endOf',
         value: function endOf(key) {
             // Simplify this
             switch (key) {
-                case 'years' | 'year':
-                    {
-                        var days = this.isLeapYear() ? 30 : 29;
-                        return new PersianDateClass([this.year(), 12, days, 23, 59, 59]);
+                case 'years':
+                case 'year':
+                    var days = this.isLeapYear() ? 30 : 29;
+                    return new PersianDateClass([this.year(), 12, days, 23, 59, 59]);
+                case 'months':
+                case 'month':
+                    var monthDays = this.daysInMonth(this.year(), this.month());
+                    return new PersianDateClass([this.year(), this.month(), monthDays, 23, 59, 59]);
+                case 'days':
+                case 'day':
+                    return new PersianDateClass([this.year(), this.month(), this.date(), 23, 59, 59]);
+                case 'hours':
+                case 'hour':
+                    return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), 59, 59]);
+                case 'minutes':
+                case 'minute':
+                    return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 59]);
+                case 'seconds':
+                case 'second':
+                    return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
+                case 'weeks':
+                case 'week':
+                    var weekDayNumber = this.pDate.weekDayNumber;
+                    if (weekDayNumber === 6) {
+                        weekDayNumber = 7;
+                    } else {
+                        weekDayNumber = 6 - weekDayNumber;
                     }
-                case 'months' | 'month':
-                    {
-                        var monthDays = this.daysInMonth(this.year(), this.month());
-                        return new PersianDateClass([this.year(), this.month(), monthDays, 23, 59, 59]);
-                    }
-                case 'days' | 'day':
-                    {
-                        return new PersianDateClass([this.year(), this.month(), this.date(), 23, 59, 59]);
-                    }
-                case 'hours' | 'hour':
-                    {
-                        return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), 59, 59]);
-                    }
-                case 'minutes' | 'minute':
-                    {
-                        return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 59]);
-                    }
-                case 'seconds' | 'second':
-                    {
-                        return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
-                    }
-                case 'weeks' | 'week':
-                    {
-                        var weekDayNumber = this.pDate.weekDayNumber;
-                        if (weekDayNumber === 6) {
-                            weekDayNumber = 7;
-                        } else {
-                            weekDayNumber = 6 - weekDayNumber;
-                        }
-                        return new PersianDateClass([this.year(), this.month(), this.date()]).add('days', weekDayNumber);
-                    }
+                    return new PersianDateClass([this.year(), this.month(), this.date()]).add('days', weekDayNumber);
                 default:
                     return this;
             }
+            /* eslint-enable no-case-declarations */
         }
 
         /**

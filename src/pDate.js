@@ -494,30 +494,32 @@ class PersianDateClass {
      * @param key
      * @returns {*}
      */
+    /* eslint-disable no-case-declarations */
     endOf (key) {
         // Simplify this
         switch (key) {
-            case 'years' | 'year': {
+            case 'years':
+            case 'year':
                 let days = this.isLeapYear() ? 30 : 29;
                 return new PersianDateClass([this.year(), 12, days, 23, 59, 59]);
-            }
-            case 'months' | 'month': {
+            case 'months':
+            case 'month':
                 let monthDays = this.daysInMonth(this.year(), this.month());
                 return new PersianDateClass([this.year(), this.month(), monthDays, 23, 59, 59]);
-            }
-            case 'days' | 'day': {
+            case 'days' :
+            case 'day' :
                 return new PersianDateClass([this.year(), this.month(), this.date(), 23, 59, 59]);
-            }
-            case 'hours' | 'hour': {
+            case 'hours' :
+            case 'hour' :
                 return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), 59, 59]);
-            }
-            case 'minutes' | 'minute': {
+            case 'minutes':
+            case 'minute':
                 return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 59]);
-            }
-            case 'seconds' | 'second': {
+            case 'seconds':
+            case 'second':
                 return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
-            }
-            case 'weeks' | 'week': {
+            case 'weeks':
+            case 'week':
                 let weekDayNumber = this.pDate.weekDayNumber;
                 if (weekDayNumber === 6) {
                     weekDayNumber = 7;
@@ -525,10 +527,10 @@ class PersianDateClass {
                     weekDayNumber = 6 - weekDayNumber;
                 }
                 return new PersianDateClass([this.year(), this.month(), this.date()]).add('days', weekDayNumber);
-            }
             default:
                 return this;
         }
+        /* eslint-enable no-case-declarations */
     }
 
 
