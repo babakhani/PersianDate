@@ -12,7 +12,6 @@
         "__VERSION__": true
     },
     "rules": {
-
         "linebreak-style": [
             "error",
             "unix"
