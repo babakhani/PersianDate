@@ -7,7 +7,7 @@ class Helpers {
      * @param digit
      * @returns {string|*}
      */
-    toPersianDigit(digit) {
+    toPersianDigit (digit) {
         return digit.toString().toPersianDigit();
     }
 
@@ -15,7 +15,7 @@ class Helpers {
      * @param input
      * @returns {boolean}
      */
-    isArray(input) {
+    isArray (input) {
         return Object.prototype.toString.call(input) === '[object Array]';
     }
 
@@ -25,8 +25,8 @@ class Helpers {
      * @param input
      * @returns {boolean}
      */
-    isNumber(input) {
-        return typeof input === "number";
+    isNumber (input) {
+        return typeof input === 'number';
     }
 
 
@@ -35,7 +35,7 @@ class Helpers {
      * @param input
      * @returns {boolean}
      */
-    isDate(input) {
+    isDate (input) {
         return input instanceof Date;
     }
 
@@ -45,8 +45,8 @@ class Helpers {
      * @param input
      * @returns {boolean}
      */
-    isUndefined(input) {
-        return typeof input === "undefined";
+    isUndefined (input) {
+        return typeof input === 'undefined';
     }
 
 
@@ -55,7 +55,7 @@ class Helpers {
      * @param targetLength
      * @returns {string}
      */
-    leftZeroFill(number, targetLength) {
+    leftZeroFill (number, targetLength) {
         let output = number + '';
         while (output.length < targetLength) {
             output = '0' + output;
@@ -67,9 +67,9 @@ class Helpers {
      * @description normalize duration params and return valid param
      * @return {{unit: *, value: *}}
      */
-    normalizeDuration() {
+    normalizeDuration () {
         let unit, value;
-        if (typeof arguments[0] === "string") {
+        if (typeof arguments[0] === 'string') {
             unit = arguments[0];
             value = arguments[1];
         }
@@ -107,7 +107,7 @@ class Helpers {
      * @param number
      * @returns {number}
      */
-    absRound(number) {
+    absRound (number) {
         if (number < 0) {
             return Math.ceil(number);
         } else {
@@ -122,7 +122,7 @@ class Helpers {
      * @param b
      * @returns {number}
      */
-    mod(a, b) {
+    mod (a, b) {
         return a - (b * Math.floor(a / b));
     }
 }

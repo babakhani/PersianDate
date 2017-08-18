@@ -129,99 +129,99 @@ module.exports = {
     monthRange: {
         1: {
             name: {
-                fa: "فروردین"
+                fa: 'فروردین'
             },
             abbr: {
-                fa: "فرو"
+                fa: 'فرو'
             }
         },
         2: {
             name: {
-                fa: "اردیبهشت"
+                fa: 'اردیبهشت'
             },
             abbr: {
-                fa: "ارد"
+                fa: 'ارد'
             }
         },
         3: {
             name: {
-                fa: "خرداد"
+                fa: 'خرداد'
             },
             abbr: {
-                fa: "خرد"
+                fa: 'خرد'
             }
         },
         4: {
             name: {
-                fa: "تیر"
+                fa: 'تیر'
             },
             abbr: {
-                fa: "تیر"
+                fa: 'تیر'
             }
         },
         5: {
             name: {
-                fa: "مرداد"
+                fa: 'مرداد'
             },
             abbr: {
-                fa: "مرد"
+                fa: 'مرد'
             }
         },
         6: {
             name: {
-                fa: "شهریور"
+                fa: 'شهریور'
             },
             abbr: {
-                fa: "شهر"
+                fa: 'شهر'
             }
         },
         7: {
             name: {
-                fa: "مهر"
+                fa: 'مهر'
             },
             abbr: {
-                fa: "مهر"
+                fa: 'مهر'
             }
         },
         8: {
             name: {
-                fa: "آبان"
+                fa: 'آبان'
             },
             abbr: {
-                fa: "آبا"
+                fa: 'آبا'
             }
 
         },
         9: {
             name: {
-                fa: "آذر"
+                fa: 'آذر'
             },
             abbr: {
-                fa: "آذر"
+                fa: 'آذر'
             }
         },
         10: {
             name: {
-                fa: "دی"
+                fa: 'دی'
             },
             abbr: {
-                fa: "دی"
+                fa: 'دی'
             }
         },
         11: {
             name: {
-                fa: "بهمن"
+                fa: 'بهمن'
             },
             abbr: {
-                fa: "بهم"
+                fa: 'بهم'
             }
         },
         12: {
             name: {
-                fa: "اسفند"
+                fa: 'اسفند'
             },
             abbr: {
-                fa: "اسف"
+                fa: 'اسف'
             }
         }
     },
@@ -233,58 +233,58 @@ module.exports = {
     weekRange: {
         1: {
             name: {
-                fa: "شنبه"
+                fa: 'شنبه'
             },
             abbr: {
-                fa: "ش"
+                fa: 'ش'
             }
         },
         2: {
             name: {
-                fa: "یکشنبه"
+                fa: 'یکشنبه'
             },
             abbr: {
-                fa: "ی"
+                fa: 'ی'
             }
         },
         3: {
             name: {
-                fa: "دوشنبه"
+                fa: 'دوشنبه'
             },
             abbr: {
-                fa: "د"
+                fa: 'د'
             }
         },
         4: {
             name: {
-                fa: "سه شنبه"
+                fa: 'سه شنبه'
             },
             abbr: {
-                fa: "س"
+                fa: 'س'
             }
         },
         5: {
             name: {
-                fa: "چهار شنبه"
+                fa: 'چهار شنبه'
             },
             abbr: {
-                fa: "چ"
+                fa: 'چ'
             }
         },
         6: {
             name: {
-                fa: "پنج شنبه"
+                fa: 'پنج شنبه'
             },
             abbr: {
-                fa: "پ"
+                fa: 'پ'
             }
         },
         0: {
             name: {
-                fa: "جمعه"
+                fa: 'جمعه'
             },
             abbr: {
-                fa: "ج"
+                fa: 'ج'
             }
         }
     },
@@ -293,7 +293,7 @@ module.exports = {
      *
      * @type {string[]}
      */
-    persianDaysName: ["اورمزد", "بهمن", "اوردیبهشت", "شهریور", "سپندارمذ", "خورداد", "امرداد", "دی به آذز", "آذز", "آبان", "خورشید", "ماه", "تیر", "گوش", "دی به مهر", "مهر", "سروش", "رشن", "فروردین", "بهرام", "رام", "باد", "دی به دین", "دین", "ارد", "اشتاد", "آسمان", "زامیاد", "مانتره سپند", "انارام", "زیادی"]
+    persianDaysName: ['اورمزد', 'بهمن', 'اوردیبهشت', 'شهریور', 'سپندارمذ', 'خورداد', 'امرداد', 'دی به آذز', 'آذز', 'آبان', 'خورشید', 'ماه', 'تیر', 'گوش', 'دی به مهر', 'مهر', 'سروش', 'رشن', 'فروردین', 'بهرام', 'رام', 'باد', 'دی به دین', 'دین', 'ارد', 'اشتاد', 'آسمان', 'زامیاد', 'مانتره سپند', 'انارام', 'زیادی']
 };
 
 /***/ }),
@@ -347,7 +347,7 @@ var Helpers = function () {
     }, {
         key: 'isNumber',
         value: function isNumber(input) {
-            return typeof input === "number";
+            return typeof input === 'number';
         }
 
         /**
@@ -371,7 +371,7 @@ var Helpers = function () {
     }, {
         key: 'isUndefined',
         value: function isUndefined(input) {
-            return typeof input === "undefined";
+            return typeof input === 'undefined';
         }
 
         /**
@@ -400,7 +400,7 @@ var Helpers = function () {
         value: function normalizeDuration() {
             var unit = void 0,
                 value = void 0;
-            if (typeof arguments[0] === "string") {
+            if (typeof arguments[0] === 'string') {
                 unit = arguments[0];
                 value = arguments[1];
             } else {
@@ -504,14 +504,14 @@ var PersianDateClass = function () {
                 this.gDate = input.gDate;
             }
             // ASP.NET JSON Date
-            else if (input.substring(0, 6) === "/Date(") {
+            else if (input.substring(0, 6) === '/Date(') {
                     this.gDate = new Date(parseInt(input.substr(6)));
                 } else {
                     this.gDate = new Date();
                 }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
         this.version = "0.2.0";
-        this.formatPersian = "_default";
+        this.formatPersian = '_default';
         this._utcMode = false;
         return this;
     }
@@ -642,7 +642,7 @@ var PersianDateClass = function () {
                 self = this;
 
             // if default conf dosent set follow golbal config
-            if (this.formatPersian === "_default") {
+            if (this.formatPersian === '_default') {
                 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
                     /* istanbul ignore next */
                     if (self.formatPersian === false) {
@@ -667,7 +667,7 @@ var PersianDateClass = function () {
                 } else if (this.formatPersian === false) {
                     output = false;
                 } else {
-                    Error("Invalid Config 'formatPersian' !!");
+                    Error('Invalid Config "formatPersian" !!');
                 }
             }
             return output;
@@ -683,7 +683,7 @@ var PersianDateClass = function () {
         key: 'format',
         value: function format(inputString) {
             var self = this,
-                formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DD?D?D?|ddddd|dddd?|do?|w[o|w]?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|SS?S?|zz?|ZZ?|X|LT|ll?l?l?|LL?L?L?)/g,
+                formattingTokens = /([[^[]*])|(\\)?(Mo|MM?M?M?|Do|DD?D?D?|ddddd|dddd?|do?|w[o|w]?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|SS?S?|zz?|ZZ?|X|LT|ll?l?l?|LL?L?L?)/g,
                 info = {
                 year: self.year(),
                 month: self.month(),
@@ -708,137 +708,137 @@ var PersianDateClass = function () {
             function replaceFunction(input) {
                 switch (input) {
                     // AM/PM
-                    case "a":
+                    case 'a':
                         {
                             if (formatToPersian) return info.hour >= 12 ? 'ب ظ' : 'ق ظ';else return info.hour >= 12 ? 'PM' : 'AM';
                         }
                     // Hours (Int)
-                    case "H":
+                    case 'H':
                         {
                             return checkPersian(info.hour);
                         }
-                    case "HH":
+                    case 'HH':
                         {
                             return checkPersian(leftZeroFill(info.hour, 2));
                         }
-                    case "h":
+                    case 'h':
                         {
                             return checkPersian(info.hour % 12);
                         }
-                    case "hh":
+                    case 'hh':
                         {
                             return checkPersian(leftZeroFill(info.hour % 12, 2));
                         }
                     // Minutes
-                    case "m":
+                    case 'm':
                         {
                             return checkPersian(leftZeroFill(info.minute, 2));
                         }
                     // Two Digit Minutes
-                    case "mm":
+                    case 'mm':
                         {
                             return checkPersian(leftZeroFill(info.minute, 2));
                         }
                     // Second
-                    case "s":
+                    case 's':
                         {
                             return checkPersian(info.second);
                         }
-                    case "ss":
+                    case 'ss':
                         {
                             return checkPersian(leftZeroFill(info.second, 2));
                         }
                     // Day (Int)
-                    case "D":
+                    case 'D':
                         {
                             return checkPersian(leftZeroFill(info.date));
                         }
                     // Return Two Digit
-                    case "DD":
+                    case 'DD':
                         {
                             return checkPersian(leftZeroFill(info.date, 2));
                         }
                     // Return day Of Month
-                    case "DDD":
+                    case 'DDD':
                         {
-                            var t = self.startOf("year");
-                            return checkPersian(leftZeroFill(self.diff(t, "days"), 3));
+                            var t = self.startOf('year');
+                            return checkPersian(leftZeroFill(self.diff(t, 'days'), 3));
                         }
                     // Return Day of Year
-                    case "DDDD":
+                    case 'DDDD':
                         {
-                            var _t = self.startOf("year");
-                            return checkPersian(leftZeroFill(self.diff(_t, "days"), 3));
+                            var _t = self.startOf('year');
+                            return checkPersian(leftZeroFill(self.diff(_t, 'days'), 3));
                         }
                     // Return day Of week
-                    case "d":
+                    case 'd':
                         {
                             return checkPersian(self.pDate.weekDayNumber);
                         }
                     // Return week day name abbr
-                    case "ddd":
+                    case 'ddd':
                         {
                             return weekRange[self.pDate.weekDayNumber].abbr.fa;
                         }
-                    case "dddd":
+                    case 'dddd':
                         {
                             return weekRange[self.pDate.weekDayNumber].name.fa;
                         }
                     // Return Persian Day Name
-                    case "ddddd":
+                    case 'ddddd':
                         {
                             return persianDaysName[self.pDate.monthDayNumber];
                         }
                     // Return Persian Day Name
-                    case "w":
+                    case 'w':
                         {
-                            var _t2 = self.startOf("year"),
-                                day = parseInt(self.diff(_t2, "days") / 7) + 1;
+                            var _t2 = self.startOf('year'),
+                                day = parseInt(self.diff(_t2, 'days') / 7) + 1;
                             return checkPersian(day);
                         }
                     // Return Persian Day Name
-                    case "ww":
+                    case 'ww':
                         {
-                            var _t3 = self.startOf("year"),
-                                _day = leftZeroFill(parseInt(self.diff(_t3, "days") / 7) + 1, 2);
+                            var _t3 = self.startOf('year'),
+                                _day = leftZeroFill(parseInt(self.diff(_t3, 'days') / 7) + 1, 2);
                             return checkPersian(_day);
                         }
                     // Month  (Int)
-                    case "M":
+                    case 'M':
                         {
                             return checkPersian(info.month);
                         }
                     // Two Digit Month (Str)
-                    case "MM":
+                    case 'MM':
                         {
                             return checkPersian(leftZeroFill(info.month, 2));
                         }
                     // Abbr String of Month (Str)
-                    case "MMM":
+                    case 'MMM':
                         {
                             return monthRange[info.month].abbr.fa;
                         }
                     // Full String name of Month (Str)
-                    case "MMMM":
+                    case 'MMMM':
                         {
                             return monthRange[info.month].name.fa;
                         }
                     // Year
                     // Two Digit Year (Str)
-                    case "YY":
+                    case 'YY':
                         {
-                            var yearDigitArray = info.year.toString().split("");
+                            var yearDigitArray = info.year.toString().split('');
                             return checkPersian(yearDigitArray[2] + yearDigitArray[3]);
                         }
                     // Full Year (Int)
-                    case "YYYY":
+                    case 'YYYY':
                         {
                             return checkPersian(info.year);
                         }
                     /* istanbul ignore next */
-                    case "Z":
+                    case 'Z':
                         {
-                            var flag = "+",
+                            var flag = '+',
                                 hours = Math.round(info.timezone / 60),
                                 minutes = info.timezone % 60;
 
@@ -846,17 +846,17 @@ var PersianDateClass = function () {
                                 minutes *= -1;
                             }
                             if (hours < 0) {
-                                flag = "-";
+                                flag = '-';
                                 hours *= -1;
                             }
 
-                            var z = flag + leftZeroFill(hours, 2) + ":" + leftZeroFill(minutes, 2);
+                            var z = flag + leftZeroFill(hours, 2) + ':' + leftZeroFill(minutes, 2);
                             return checkPersian(z);
                         }
                     /* istanbul ignore next */
-                    case "ZZ":
+                    case 'ZZ':
                         {
-                            var _flag = "+",
+                            var _flag = '+',
                                 _hours = Math.round(info.timezone / 60),
                                 _minutes = info.timezone % 60;
 
@@ -864,61 +864,61 @@ var PersianDateClass = function () {
                                 _minutes *= -1;
                             }
                             if (_hours < 0) {
-                                _flag = "-";
+                                _flag = '-';
                                 _hours *= -1;
                             }
-                            var _z = _flag + leftZeroFill(_hours, 2) + "" + leftZeroFill(_minutes, 2);
+                            var _z = _flag + leftZeroFill(_hours, 2) + '' + leftZeroFill(_minutes, 2);
                             return checkPersian(_z);
                         }
                     /* istanbul ignore next */
-                    case "X":
+                    case 'X':
                         {
                             return self.unix();
                         }
                     // 8:30 PM
-                    case "LT":
+                    case 'LT':
                         {
-                            return self.format("h:m a");
+                            return self.format('h:m a');
                         }
                     // 09/04/1986
-                    case "L":
+                    case 'L':
                         {
-                            return self.format("YYYY/MM/DD");
+                            return self.format('YYYY/MM/DD');
                         }
                     // 9/4/1986
-                    case "l":
+                    case 'l':
                         {
-                            return self.format("YYYY/M/D");
+                            return self.format('YYYY/M/D');
                         }
                     // September 4th 1986
-                    case "LL":
+                    case 'LL':
                         {
-                            return self.format("MMMM DD YYYY");
+                            return self.format('MMMM DD YYYY');
                         }
                     // Sep 4 1986
-                    case "ll":
+                    case 'll':
                         {
-                            return self.format("MMM DD YYYY");
+                            return self.format('MMM DD YYYY');
                         }
                     //September 4th 1986 8:30 PM
-                    case "LLL":
+                    case 'LLL':
                         {
-                            return self.format("MMMM YYYY DD   h:m  a");
+                            return self.format('MMMM YYYY DD   h:m  a');
                         }
                     // Sep 4 1986 8:30 PM
-                    case "lll":
+                    case 'lll':
                         {
-                            return self.format("MMM YYYY DD   h:m  a");
+                            return self.format('MMM YYYY DD   h:m  a');
                         }
                     //Thursday, September 4th 1986 8:30 PM
-                    case "LLLL":
+                    case 'LLLL':
                         {
-                            return self.format("dddd D MMMM YYYY  h:m  a");
+                            return self.format('dddd D MMMM YYYY  h:m  a');
                         }
                     // Thu, Sep 4 1986 8:30 PM
-                    case "llll":
+                    case 'llll':
                         {
-                            return self.format("ddd D MMM YYYY  h:m  a");
+                            return self.format('ddd D MMM YYYY  h:m  a');
                         }
                 }
             }
@@ -928,7 +928,7 @@ var PersianDateClass = function () {
             if (inputString) {
                 return inputString.replace(formattingTokens, replaceFunction);
             } else {
-                var _inputString = "YYYY-MM-DD HH:mm:ss a";
+                var _inputString = 'YYYY-MM-DD HH:mm:ss a';
                 return _inputString.replace(formattingTokens, replaceFunction);
             }
         }
@@ -983,31 +983,31 @@ var PersianDateClass = function () {
             // Simplify this\
             /* jshint ignore:start */
             switch (key) {
-                case "years":
-                case "year":
+                case 'years':
+                case 'year':
                     return new PersianDateClass([this.year(), 1, 1]);
-                case "months":
-                case "month":
+                case 'months':
+                case 'month':
                     return new PersianDateClass([this.year(), this.month(), 1]);
-                case "days":
-                case "day":
+                case 'days':
+                case 'day':
                     return new PersianDateClass([this.year(), this.month(), this.date(), 0, 0, 0]);
-                case "hours":
-                case "hour":
+                case 'hours':
+                case 'hour':
                     return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), 0, 0]);
-                case "minutes":
-                case "minute":
+                case 'minutes':
+                case 'minute':
                     return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 0]);
-                case "seconds":
-                case "second":
+                case 'seconds':
+                case 'second':
                     return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
-                case "weeks":
-                case "week":
+                case 'weeks':
+                case 'week':
                     var weekDayNumber = this.pDate.weekDayNumber;
                     if (weekDayNumber === 0) {
                         return new PersianDateClass([this.year(), this.month(), this.date()]);
                     } else {
-                        return new PersianDateClass([this.year(), this.month(), this.date()]).subtract("days", weekDayNumber);
+                        return new PersianDateClass([this.year(), this.month(), this.date()]).subtract('days', weekDayNumber);
                     }
                 default:
                     return this;
@@ -1026,35 +1026,42 @@ var PersianDateClass = function () {
         value: function endOf(key) {
             // Simplify this
             switch (key) {
-                case "years":
-                case "year":
-                    var days = this.isLeapYear() ? 30 : 29;
-                    return new PersianDateClass([this.year(), 12, days, 23, 59, 59]);
-                case "months":
-                case "month":
-                    var monthDays = this.daysInMonth(this.year(), this.month());
-                    return new PersianDateClass([this.year(), this.month(), monthDays, 23, 59, 59]);
-                case "days":
-                case "day":
-                    return new PersianDateClass([this.year(), this.month(), this.date(), 23, 59, 59]);
-                case "hours":
-                case "hour":
-                    return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), 59, 59]);
-                case "minutes":
-                case "minute":
-                    return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 59]);
-                case "seconds":
-                case "second":
-                    return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
-                case "weeks":
-                case "week":
-                    var weekDayNumber = this.pDate.weekDayNumber;
-                    if (weekDayNumber === 6) {
-                        weekDayNumber = 7;
-                    } else {
-                        weekDayNumber = 6 - weekDayNumber;
+                case 'years' | 'year':
+                    {
+                        var days = this.isLeapYear() ? 30 : 29;
+                        return new PersianDateClass([this.year(), 12, days, 23, 59, 59]);
                     }
-                    return new PersianDateClass([this.year(), this.month(), this.date()]).add("days", weekDayNumber);
+                case 'months' | 'month':
+                    {
+                        var monthDays = this.daysInMonth(this.year(), this.month());
+                        return new PersianDateClass([this.year(), this.month(), monthDays, 23, 59, 59]);
+                    }
+                case 'days' | 'day':
+                    {
+                        return new PersianDateClass([this.year(), this.month(), this.date(), 23, 59, 59]);
+                    }
+                case 'hours' | 'hour':
+                    {
+                        return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), 59, 59]);
+                    }
+                case 'minutes' | 'minute':
+                    {
+                        return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 59]);
+                    }
+                case 'seconds' | 'second':
+                    {
+                        return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
+                    }
+                case 'weeks' | 'week':
+                    {
+                        var weekDayNumber = this.pDate.weekDayNumber;
+                        if (weekDayNumber === 6) {
+                            weekDayNumber = 7;
+                        } else {
+                            weekDayNumber = 6 - weekDayNumber;
+                        }
+                        return new PersianDateClass([this.year(), this.month(), this.date()]).add('days', weekDayNumber);
+                    }
                 default:
                     return this;
             }
@@ -1068,7 +1075,7 @@ var PersianDateClass = function () {
     }, {
         key: 'sod',
         value: function sod() {
-            return this.startOf("day");
+            return this.startOf('day');
         }
 
         /**
@@ -1079,7 +1086,7 @@ var PersianDateClass = function () {
     }, {
         key: 'eod',
         value: function eod() {
-            return this.endOf("day");
+            return this.endOf('day');
         }
 
         /** Get the timezone offset in minutes.
@@ -1599,7 +1606,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var GREGORIAN_EPOCH = __webpack_require__(0).GREGORIAN_EPOCH;
 var PERSIAN_EPOCH = __webpack_require__(0).PERSIAN_EPOCH;
 var Helpers = __webpack_require__(1);
-var absRound = new Helpers().absRound;
 var mod = new Helpers().mod;
 
 /**

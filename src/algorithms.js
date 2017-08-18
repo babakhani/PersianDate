@@ -1,7 +1,6 @@
 let GREGORIAN_EPOCH = require('./constants').GREGORIAN_EPOCH;
 let PERSIAN_EPOCH = require('./constants').PERSIAN_EPOCH;
 let Helpers = require('./helpers');
-let absRound = new Helpers().absRound;
 let mod = new Helpers().mod;
 
 /**
