@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  0.2.0
+ * persian-date -  0.2.3
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -510,7 +510,7 @@ var PersianDateClass = function () {
                     this.gDate = new Date();
                 }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
-        this.version = "0.2.0";
+        this.version = "0.2.3";
         this.formatPersian = '_default';
         this._utcMode = false;
         return this;
@@ -1839,9 +1839,15 @@ var Algorithms = function () {
     }, {
         key: 'persianArrayToGregorianDate',
         value: function persianArrayToGregorianDate(parray) {
+            if (parray[1] === undefined) {
+                parray[1] = 1;
+            }
+            if (parray[2] === undefined) {
+                parray[2] = 1;
+            }
             // Howha : javascript Cant Parse this array truly 2011,2,20
-            var pd = this.calcPersian(parray[0] ? parray[0] : 0, parray[1] ? parray[1] : 1, parray[2] ? parray[2] : 1),
-                gDate = new Date(pd[0], pd[1], pd[2]);
+            var pd = this.calcPersian(parray[0], parray[1], parray[2]),
+                gDate = new Date();
             gDate.setYear(pd[0]);
             gDate.setMonth(pd[1]);
             gDate.setDate(pd[2]);

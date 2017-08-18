@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.2]
+- fix bower 
+
+## [0.2.1]
+- Some dev env fix before release 
+
 ## [0.2.0] 
 - Refactor all code to es6
 - Hello webpack ,babel, mocha, istanbul, coveralls, travis, sync-pg
