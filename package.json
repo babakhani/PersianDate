@@ -50,9 +50,10 @@
     "webpack": "^2.3.3"
   },
   "scripts": {
-    "minify": "MIN=1 webpack",
+    "start": "webpack --watch & webpack-dev-server --port 5000 --watch --hot",
+    "dev": "webpack",
+    "build": " webpack; MIN=1 webpack; npm run test; npm run lint; npm run doc;",
     "test": "nyc --reporter=html --reporter=text mocha",
-    "dev": "webpack --watch & webpack-dev-server --port 5000 --watch --hot",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "./node_modules/jshint/bin/jshint src/*.js",
     "doc": "grunt --doc",
