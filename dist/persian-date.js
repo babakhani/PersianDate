@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  0.2.2
+ * persian-date -  0.2.3
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -510,7 +510,7 @@ var PersianDateClass = function () {
                     this.gDate = new Date();
                 }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
-        this.version = "0.2.2";
+        this.version = "0.2.3";
         this.formatPersian = '_default';
         this._utcMode = false;
         return this;
@@ -1648,6 +1648,8 @@ var Algorithms = function () {
         key: 'isLeapPersian',
         value: function isLeapPersian(year) {
             return ((year - (year > 0 ? 474 : 473)) % 2820 + 474 + 38) * 682 % 2816 < 682;
+            // https://fa.wikipedia.org/wiki/%DA%AF%D8%A7%D9%87%E2%80%8C%D8%B4%D9%85%D8%A7%D8%B1%DB%8C_%D9%87%D8%AC%D8%B1%DB%8C_%D8%AE%D9%88%D8%B1%D8%B4%DB%8C%D8%AF%DB%8C_%D8%AD%D8%B3%D8%A7%D8%A8%DB%8C
+            // return parseFloat('0.' + ((year + 2346) * (0.24219858156)).toString().split('.')[1]) < 0.24219858156;
         }
 
         /**
@@ -1837,9 +1839,15 @@ var Algorithms = function () {
     }, {
         key: 'persianArrayToGregorianDate',
         value: function persianArrayToGregorianDate(parray) {
+            if (parray[1] === undefined) {
+                parray[1] = 1;
+            }
+            if (parray[2] === undefined) {
+                parray[2] = 1;
+            }
             // Howha : javascript Cant Parse this array truly 2011,2,20
-            var pd = this.calcPersian(parray[0] ? parray[0] : 0, parray[1] ? parray[1] : 1, parray[2] ? parray[2] : 1),
-                gDate = new Date(pd[0], pd[1], pd[2]);
+            var pd = this.calcPersian(parray[0], parray[1], parray[2]),
+                gDate = new Date();
             gDate.setYear(pd[0]);
             gDate.setMonth(pd[1]);
             gDate.setDate(pd[2]);

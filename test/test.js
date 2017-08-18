@@ -894,7 +894,7 @@ describe('Subtract', function () {
         assert.deepEqual(a, [1390, 1, 1, 1, 1, 1, 0]);
     });
     it('Month', function () {
-        let a = new pDate([1391, 2, 1, 1, 1, 1]).subtract('month', 2).toArray();
+        let a = new pDate([1391, 2, 1, 1, 1, 1]).subtract('month', 1).toArray();
         assert.deepEqual(a, [1391, 1, 1, 1, 1, 1, 0]);
     });
     it('Days', function () {
