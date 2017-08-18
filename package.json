@@ -55,7 +55,7 @@
     "build": " webpack; MIN=1 webpack; npm run test; npm run lint; npm run doc;",
     "test": "nyc --reporter=html --reporter=text mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "./node_modules/jshint/bin/jshint src/*.js, ./node_modules/eslint/bin/eslint src/",
+    "lint": "./node_modules/jshint/bin/jshint src/*.js; ./node_modules/eslint/bin/eslint.js src/",
     "doc": "grunt --doc",
     "sync-pkg": "sync-pkg",
     "pre-dev": "sudo npm install -g nyc"
