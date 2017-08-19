@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.3]
+- merge bit-foundation-typings .d.ts
+
 ## [0.2.2]
 - fix bower 
 
@@ -15,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Hello webpack ,babel, mocha, istanbul, coveralls, travis, sync-pg
 - Add millisecond as last item of date array [1396, 12, 23, 40, 40, 40, 200]
 - Write mocha test
+- Change licence to WTFPL
 
 ## [0.1.8]
 - Fix some issue
