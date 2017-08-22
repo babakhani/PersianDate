@@ -466,13 +466,13 @@ class PersianDateClass {
         date.month = absFloor(daysToMonths(date.days));
         date.year = absFloor(date.month / 12);
 //        date.days -= absCeil(monthsToDays(date.month));
-//        console.log('year ' + date.year);
-//        console.log('month ' + date.month);
-//        console.log('days ' + date.days);
-//        console.log('hour ' + date.hour);
-//        console.log('minute ' + date.minute);
-//        console.log('second ' + date.second);
-//        console.log('val : ' + val);
+        console.log('year ' + date.year);
+        console.log('month ' + date.month);
+        console.log('days ' + date.days);
+        console.log('hour ' + date.hour);
+        console.log('minute ' + date.minute);
+        console.log('second ' + date.second);
+        console.log('val : ' + val);
 
         if (val == 'second' || val == 'seconds') {
             output = date.second;
@@ -1045,7 +1045,7 @@ class PersianDateClass {
 
     relative (date) {
         var r = new Relative();
-        return r.convertToRelative(date, this);
+        return r.convertToRelative(date, this, PersianDateClass);
     }
 }
 

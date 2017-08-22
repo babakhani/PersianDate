@@ -31,20 +31,6 @@
 <script>
     var t = new persianDate([1395,1,1, 0 ,0 ]);
     var t2 = new persianDate([1396,12,1, 0 , 0]);
-
-    console.log("test- ------------")
-    console.log(t.format())
-    console.log(t.valueOf())
-    console.log(new persianDate(t.valueOf()).valueOf())
-
-
-//    console.log(t2.format())
-    console.log("test- ------------")
-
-    var relationString = t.relative(t2);
-    console.log(relationString)
-    document.getElementById('related').innerHTML = relationString;
-
     t.format();
 </script>
 

@@ -990,13 +990,13 @@ var PersianDateClass = function () {
             date.month = absFloor(daysToMonths(date.days));
             date.year = absFloor(date.month / 12);
             //        date.days -= absCeil(monthsToDays(date.month));
-            //        console.log('year ' + date.year);
-            //        console.log('month ' + date.month);
-            //        console.log('days ' + date.days);
-            //        console.log('hour ' + date.hour);
-            //        console.log('minute ' + date.minute);
-            //        console.log('second ' + date.second);
-            //        console.log('val : ' + val);
+            console.log('year ' + date.year);
+            console.log('month ' + date.month);
+            console.log('days ' + date.days);
+            console.log('hour ' + date.hour);
+            console.log('minute ' + date.minute);
+            console.log('second ' + date.second);
+            console.log('val : ' + val);
 
             if (val == 'second' || val == 'seconds') {
                 output = date.second;
@@ -1616,7 +1616,7 @@ var PersianDateClass = function () {
         key: 'relative',
         value: function relative(date) {
             var r = new Relative();
-            return r.convertToRelative(date, this);
+            return r.convertToRelative(date, this, PersianDateClass);
         }
     }], [{
         key: '_utc',
@@ -2155,7 +2155,7 @@ var Relative = function () {
 
     _createClass(Relative, [{
         key: 'convertToRelative',
-        value: function convertToRelative(date, pDate) {
+        value: function convertToRelative(date, pDate, PersianDateClass) {
             var that = this,
                 relationValue = void 0,
                 output = void 0;
@@ -2167,13 +2167,18 @@ var Relative = function () {
                 for (var _iterator = Object.keys(that.relative)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var key = _step.value;
 
+
+                    if (!date) {
+                        date = new PersianDateClass();
+                    }
+
                     relationValue = date.diff(pDate, key);
                     if (relationValue < 0) {
                         relationValue = relationValue * -1;
                     }
 
                     if (relationValue >= 1 || relationValue <= -1) {
-                        if (date.valueOf() > pDate.valueOf()) {
+                        if (date.valueOf() < pDate.valueOf()) {
                             if (key == 'day' && relationValue == 1) {
                                 output = that.relative[key]['+1'].format(relationValue);
                             } else if (key == 'day' && relationValue == 2) {

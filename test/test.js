@@ -231,17 +231,17 @@ describe('Year', function () {
         assert.deepEqual(formattedDate, 1450);
     });
 });
-//
-//describe('Month', function () {
-//    it('get', function () {
-//        let formattedDate = new pDate([1391, 12, 1, 1, 1, 1]).month();
-//        assert.deepEqual(formattedDate, 12);
-//    });
-//    it('set', function () {
-//        let formattedDate = new pDate().month(11).month();
-//        assert.deepEqual(formattedDate, 11);
-//    });
-//});
+
+describe('Month', function () {
+    it('get', function () {
+        let formattedDate = new pDate([1391, 12, 1, 1, 1, 1]).month();
+        assert.deepEqual(formattedDate, 12);
+    });
+    it('set', function () {
+        let formattedDate = new pDate().month(11).month();
+        assert.deepEqual(formattedDate, 11);
+    });
+});
 
 describe('Date', function () {
     it('get', function () {
@@ -966,109 +966,178 @@ describe('Diff', function () {
 
 
 describe('Relation', function () {
+
+    it('Related from now (month)', function () {
+
+        assert.deepEqual(new pDate().add('month', 1).relative(), '1 ماه بعد');
+        assert.deepEqual(new pDate().add('month', 2).relative(), '2 ماه بعد');
+        assert.deepEqual(new pDate().add('month', 3).relative(), '3 ماه بعد');
+        assert.deepEqual(new pDate().add('month', 4).relative(), '4 ماه بعد');
+        assert.deepEqual(new pDate().add('month', 5).relative(), '5 ماه بعد');
+        assert.deepEqual(new pDate().add('month', 6).relative(), '6 ماه بعد');
+        assert.deepEqual(new pDate().add('month', 7).relative(), '7 ماه بعد');
+        assert.deepEqual(new pDate().add('month', 8).relative(), '8 ماه بعد');
+        assert.deepEqual(new pDate().add('month', 9).relative(), '9 ماه بعد');
+        assert.deepEqual(new pDate().add('month', 10).relative(), '10 ماه بعد');
+    });
+
+    it('Related from now (day)', function () {
+        assert.deepEqual(new pDate().subtract('day', 3).relative(), 'پس پریروز');
+        assert.deepEqual(new pDate().subtract('day', 2).relative(), 'پریروز');
+        assert.deepEqual(new pDate().subtract('day', 1).relative(), 'دیروز');
+        assert.deepEqual(new pDate().add('day', 1).relative(), 'فردا');
+        assert.deepEqual(new pDate().add('day', 2).relative(), 'پس فردا');
+        assert.deepEqual(new pDate().add('day', 1).relative(), 'فردا');
+        assert.deepEqual(new pDate().add('day', 2).relative(), 'پس فردا');
+        assert.deepEqual(new pDate().add('day', 3).relative(), '3 روز بعد');
+        assert.deepEqual(new pDate().add('day', 4).relative(), '4 روز بعد');
+        assert.deepEqual(new pDate().add('day', 5).relative(), '5 روز بعد');
+        assert.deepEqual(new pDate().add('day', 6).relative(), '6 روز بعد');
+        assert.deepEqual(new pDate().add('day', 7).relative(), '7 روز بعد');
+        assert.deepEqual(new pDate().add('day', 30).relative(), '1 ماه بعد');
+    });
+
+    it('Related from now (hour)', function () {
+        assert.deepEqual(new pDate().add('hour', 1).relative(), '1 ساعت بعد');
+        assert.deepEqual(new pDate().add('hour', 2).relative(), '2 ساعت بعد');
+        assert.deepEqual(new pDate().add('hour', 3).relative(), '3 ساعت بعد');
+        assert.deepEqual(new pDate().add('hour', 4).relative(), '4 ساعت بعد');
+        assert.deepEqual(new pDate().add('hour', 5).relative(), '5 ساعت بعد');
+        assert.deepEqual(new pDate().add('hour', 6).relative(), '6 ساعت بعد');
+        assert.deepEqual(new pDate().add('hour', 7).relative(), '7 ساعت بعد');
+        assert.deepEqual(new pDate().add('hour', 8).relative(), '8 ساعت بعد');
+        assert.deepEqual(new pDate().add('hour', 8).relative(), '23 ساعت بعد');
+    });
+
+    it('Related from now (minut)', function () {
+        assert.deepEqual(new pDate().add('minute', 1).relative(), '1 دقیقه بعد');
+        assert.deepEqual(new pDate().add('minute', 2).relative(), '2 دقیقه بعد');
+        assert.deepEqual(new pDate().add('minute', 3).relative(), '3 دقیقه بعد');
+        assert.deepEqual(new pDate().add('minute', 4).relative(), '4 دقیقه بعد');
+        assert.deepEqual(new pDate().add('minute', 5).relative(), '5 دقیقه بعد');
+        assert.deepEqual(new pDate().add('minute', 6).relative(), '6 دقیقه بعد');
+        assert.deepEqual(new pDate().add('minute', 7).relative(), '7 دقیقه بعد');
+        assert.deepEqual(new pDate().add('minute', 8).relative(), '8 دقیقه بعد');
+        assert.deepEqual(new pDate().add('minute', 59).relative(), '59 دقیقه بعد');
+    });
+    it('Related from now (second)', function () {
+        assert.deepEqual(new pDate().add('second', 1).relative(), '1 ثانیه بعد');
+        assert.deepEqual(new pDate().add('second', 2).relative(), '2 ثانیه بعد');
+        assert.deepEqual(new pDate().add('second', 3).relative(), '3 ثانیه بعد');
+        assert.deepEqual(new pDate().add('second', 4).relative(), '4 ثانیه بعد');
+        assert.deepEqual(new pDate().add('second', 5).relative(), '5 ثانیه بعد');
+        assert.deepEqual(new pDate().add('second', 6).relative(), '6 ثانیه بعد');
+        assert.deepEqual(new pDate().add('second', 7).relative(), '7 ثانیه بعد');
+        assert.deepEqual(new pDate().add('second', 8).relative(), '8 ثانیه بعد');
+        assert.deepEqual(new pDate().add('second', 8).relative(), '59 ثانیه بعد');
+
+
+    });
+
     it('Year', function () {
         let a = new pDate([1396, 1, 1]).relative(new pDate([1397, 1, 2]));
         // console.log(b);
-        assert.deepEqual(a, '1 سال بعد');
+        assert.deepEqual(a, '1 سال قبل');
 
         a = new pDate([1396, 1, 1]).relative(new pDate([1397, 1, 1]));
         // console.log(b);
-        assert.deepEqual(a, '11 ماه بعد');
+        assert.deepEqual(a, '11 ماه قبل');
 
         a = new pDate([1396, 1, 1]).relative(new pDate([1400, 1, 2]));
         // console.log(b);
-        assert.deepEqual(a, '4 سال بعد');
+        assert.deepEqual(a, '4 سال قبل');
 
         a = new pDate([1400, 1, 2]).relative(new pDate([1396, 1, 1]));
         // console.log(b);
-        assert.deepEqual(a, '4 سال قبل');
+        assert.deepEqual(a, '4 سال بعد');
     });
 
     it('Month', function () {
         let a = new pDate([1396, 1, 1]).relative(new pDate([1396, 2, 1]));
         // console.log(b);
-        assert.deepEqual(a, '1 ماه بعد');
+        assert.deepEqual(a, '1 ماه قبل');
 
         a = new pDate([1396, 1, 1]).relative(new pDate([1396, 12, 1]));
         // console.log(b);
-        assert.deepEqual(a, '11 ماه بعد');
+        assert.deepEqual(a, '11 ماه قبل');
     });
 
     it('day', function () {
 
         let a = new pDate([1396, 1, 2]).relative(new pDate([1396, 1, 1]));
         // console.log(b);
-        assert.deepEqual(a, 'دیروز');
+        assert.deepEqual(a, 'فردا');
 
         a = new pDate([1396, 1, 3]).relative(new pDate([1396, 1, 1]));
         // console.log(b);
-        assert.deepEqual(a, 'پریروز');
+        assert.deepEqual(a, 'پس فردا');
+
 
         a = new pDate([1396, 1, 1]).relative(new pDate([1396, 1, 2]));
         // console.log(b);
-        assert.deepEqual(a, 'فردا');
+        assert.deepEqual(a, 'دیروز');
 
         a = new pDate([1396, 1, 1]).relative(new pDate([1396, 1, 3]));
         // console.log(b);
-        assert.deepEqual(a, 'پس فردا');
+        assert.deepEqual(a, 'پریروز');
 
         a = new pDate([1396, 1, 1]).relative(new pDate([1396, 1, 30]));
         // console.log(b);
-        assert.deepEqual(a, '29 روز بعد');
+        assert.deepEqual(a, '29 روز قبل');
 
         a = new pDate([1396, 1, 1]).relative(new pDate([1396, 2, 1]));
         // console.log(b);
-        assert.deepEqual(a, '1 ماه بعد');
+        assert.deepEqual(a, '1 ماه قبل');
 
         a = new pDate([1396, 7, 1]).relative(new pDate([1396, 8, 31]));
         // console.log(b);
-        assert.deepEqual(a, '1 ماه بعد');
+        assert.deepEqual(a, '1 ماه قبل');
 
         a = new pDate([1396, 1, 1]).relative(new pDate([1395, 12, 30]));
         // console.log(b);
-        assert.deepEqual(a, 'دیروز');
+        assert.deepEqual(a, 'فردا');
 
         a = new pDate([1396, 1, 1]).relative(new pDate([1396, 12, 1]));
         // console.log(b);
-        assert.deepEqual(a, '11 ماه بعد');
+        assert.deepEqual(a, '11 ماه قبل');
 
         a = new pDate([1396, 12, 1]).relative(new pDate([1396, 1, 1]));
         // console.log(b);
-        assert.deepEqual(a, '11 ماه قبل');
+        assert.deepEqual(a, '11 ماه بعد');
     });
 
     it('Hour', function () {
         let a = new pDate([1396, 1, 1, 22]).relative(new pDate([1396, 1, 1, 23]));
         // console.log(b);
-        assert.deepEqual(a, '1 ساعت بعد');
+        assert.deepEqual(a, '1 ساعت قبل');
 
         a = new pDate([1396, 1, 1]).relative(new pDate([1396, 1, 1, 23]));
         // console.log(b);
-        assert.deepEqual(a, '23 ساعت بعد');
+        assert.deepEqual(a, '23 ساعت قبل');
 
         a = new pDate([1396, 1, 1, 23]).relative(new pDate([1396, 1, 1]));
         // console.log(b);
-        assert.deepEqual(a, '23 ساعت قبل');
+        assert.deepEqual(a, '23 ساعت بعد');
     });
 
     it('Minute', function () {
         let a = new pDate([1396, 1, 1, 22]).relative(new pDate([1396, 1, 1, 22, 30]));
         // console.log(b);
-        assert.deepEqual(a, '30 دقیقه بعد');
+        assert.deepEqual(a, '30 دقیقه قبل');
 
         a = new pDate([1396, 1, 1, 23]).relative(new pDate([1396, 1, 1, 22, 30]));
         // console.log(b);
-        assert.deepEqual(a, '30 دقیقه قبل');
+        assert.deepEqual(a, '30 دقیقه بعد');
     });
 
     it('Second', function () {
         let a = new pDate([1396, 1, 1, 22, 30]).relative(new pDate([1396, 1, 1, 22, 30, 16]));
         // console.log(b);
-        assert.deepEqual(a, '16 ثانیه بعد');
+        assert.deepEqual(a, '16 ثانیه قبل');
 
         a = new pDate([1396, 1, 1, 22, 30, 16]).relative(new pDate([1396, 1, 1, 22, 30]));
         // console.log(b);
-        assert.deepEqual(a, '16 ثانیه قبل');
+        assert.deepEqual(a, '16 ثانیه بعد');
     });
 
 });

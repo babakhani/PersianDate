@@ -98,16 +98,21 @@ class Relative {
         };
     }
 
-    convertToRelative (date, pDate) {
+    convertToRelative (date, pDate, PersianDateClass) {
         let that = this, relationValue, output;
         for (let key of Object.keys(that.relative)) {
+
+            if (!date) {
+                date = new PersianDateClass();
+            }
+
             relationValue = date.diff(pDate, key);
             if (relationValue < 0) {
                 relationValue = (relationValue * -1);
             }
 
             if (relationValue >= 1 || relationValue <= -1) {
-                if (date.valueOf() > pDate.valueOf()) {
+                if (date.valueOf() < pDate.valueOf()) {
                     if (key == 'day' && relationValue == 1) {
                         output = that.relative[key]['+1'].format(relationValue);
                     }
