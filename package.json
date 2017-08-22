@@ -58,7 +58,7 @@
     "lint": "./node_modules/jshint/bin/jshint src/*.js; ./node_modules/eslint/bin/eslint.js src/",
     "doc": "grunt --doc",
     "sync-pkg": "sync-pkg",
-    "pre-dev": "sudo npm install -g nyc"
+    "pre-dev": "sudo npm install -g nyc webpack webpack-dev-server"
   },
   "pre-commit": [
     "test",
