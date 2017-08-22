@@ -6,6 +6,7 @@ let leftZeroFill = new Helpers().leftZeroFill;
 let weekRange = require('./constants').weekRange;
 let persianDaysName = require('./constants').persianDaysName;
 let monthRange = require('./constants').monthRange;
+let Relative = require('./relative');
 
 class PersianDateClass {
     constructor (input) {
@@ -420,30 +421,85 @@ class PersianDateClass {
      * @returns {*}
      */
     diff (input, val, asFloat) {
-        let self = this,
-          inputMoment = input,
-          zoneDiff = 0,
-          diff = self.gDate - inputMoment.gDate - zoneDiff,
-          year = self.year() - inputMoment.year(),
-          month = self.month() - inputMoment.month(),
-          date = (self.date() - inputMoment.date()) * -1, output;
+        const daysToMonths = function (days) {
+              return days * 4800 / 146097;
+          },
+//        monthsToDays = function(months) {
+//            // the reverse of daysToMonths
+//            return months * 146097 / 4800;
+//        },
+          absFloor = function (number) {
+              if (asFloat) {
+                  return number;
+              }
+//            return number;
+              if (number < 0) {
+                  // -0 -> 0
+                  return Math.ceil(number) || 0;
+              } else {
+                  return Math.floor(number);
+              }
+          },
+          absCeil = function (number) {
+              if (number < 0) {
+                  return Math.floor(number);
+              } else {
+                  return Math.ceil(number);
+              }
+          };
 
-        if (val === 'months' || val === 'month') {
-            output = year * 12 + month + date / 30;
-        } else if (val === 'years' || val === 'year') {
-            output = year + (month + date / 30) / 12;
+
+        let self = this,
+          date = {},
+          output,
+          diffMillisecond = input.valueOf() - self.valueOf();
+
+        date.second = absFloor(diffMillisecond / 1000);
+        date.minute = absFloor(date.second / 60);
+        date.hour = absFloor(date.minute / 60);
+        if (date.hour > 24 || date.hour < -24) {
+            date.days = absCeil(date.hour / 24);
         } else {
-            output = val === 'seconds' || val === 'second' ? diff / 1e3 : // 1000
-              val === 'minutes' || val === 'minute' ? diff / 6e4 : // 1000 * 60
-                val === 'hours' || val === 'hour' ? diff / 36e5 : // 1000 * 60 * 60
-                  val === 'days' || val === 'day' ? diff / 864e5 : // 1000 * 60 * 60 * 24
-                    val === 'weeks' || val === 'week' ? diff / 6048e5 : // 1000 * 60 * 60 * 24 * 7
-                      diff;
+            date.days = absFloor(date.hour / 24);
         }
+
+        date.month = absFloor(daysToMonths(date.days));
+        date.year = absFloor(date.month / 12);
+//        date.days -= absCeil(monthsToDays(date.month));
+//        console.log('year ' + date.year);
+//        console.log('month ' + date.month);
+//        console.log('days ' + date.days);
+//        console.log('hour ' + date.hour);
+//        console.log('minute ' + date.minute);
+//        console.log('second ' + date.second);
+//        console.log('val : ' + val);
+
+        if (val == 'second' || val == 'seconds') {
+            output = date.second;
+        }
+        else if (val == 'minute' || val == 'minutes') {
+            output = date.minute;
+        }
+        else if (val == 'hour' || val == 'hours') {
+            output = date.hour;
+        }
+        else if (val == 'days' || val == 'day') {
+            output = date.days;
+        }
+        else if (val == 'month' || val == 'months') {
+            output = date.month;
+        }
+        else if (val == 'year' || val == 'years') {
+            output = date.year;
+        } else {
+            output = diffMillisecond;
+        }
+
+//        console.log('output : ' + output);
         if (output < 0) {
             output = output * -1;
         }
-        return asFloat ? output : Math.round(output);
+        return output;
     }
 
 
@@ -985,6 +1041,11 @@ class PersianDateClass {
      */
     valueOf () {
         return this._valueOf();
+    }
+
+    relative (date) {
+        var r = new Relative();
+        return r.convertToRelative(date, this);
     }
 }
 

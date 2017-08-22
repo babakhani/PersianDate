@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  0.2.3
+ * persian-date -  0.2.4
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -480,6 +480,7 @@ var leftZeroFill = new Helpers().leftZeroFill;
 var weekRange = __webpack_require__(0).weekRange;
 var persianDaysName = __webpack_require__(0).persianDaysName;
 var monthRange = __webpack_require__(0).monthRange;
+var Relative = __webpack_require__(6);
 
 var PersianDateClass = function () {
     function PersianDateClass(input) {
@@ -510,7 +511,7 @@ var PersianDateClass = function () {
                     this.gDate = new Date();
                 }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
-        this.version = "0.2.3";
+        this.version = "0.2.4";
         this.formatPersian = '_default';
         this._utcMode = false;
         return this;
@@ -944,31 +945,80 @@ var PersianDateClass = function () {
     }, {
         key: 'diff',
         value: function diff(input, val, asFloat) {
-            var self = this,
-                inputMoment = input,
-                zoneDiff = 0,
-                diff = self.gDate - inputMoment.gDate - zoneDiff,
-                year = self.year() - inputMoment.year(),
-                month = self.month() - inputMoment.month(),
-                date = (self.date() - inputMoment.date()) * -1,
-                output = void 0;
+            var daysToMonths = function daysToMonths(days) {
+                return days * 4800 / 146097;
+            },
 
-            if (val === 'months' || val === 'month') {
-                output = year * 12 + month + date / 30;
-            } else if (val === 'years' || val === 'year') {
-                output = year + (month + date / 30) / 12;
+            //        monthsToDays = function(months) {
+            //            // the reverse of daysToMonths
+            //            return months * 146097 / 4800;
+            //        },
+            absFloor = function absFloor(number) {
+                if (asFloat) {
+                    return number;
+                }
+                //            return number;
+                if (number < 0) {
+                    // -0 -> 0
+                    return Math.ceil(number) || 0;
+                } else {
+                    return Math.floor(number);
+                }
+            },
+                absCeil = function absCeil(number) {
+                if (number < 0) {
+                    return Math.floor(number);
+                } else {
+                    return Math.ceil(number);
+                }
+            };
+
+            var self = this,
+                date = {},
+                output = void 0,
+                diffMillisecond = input.valueOf() - self.valueOf();
+
+            date.second = absFloor(diffMillisecond / 1000);
+            date.minute = absFloor(date.second / 60);
+            date.hour = absFloor(date.minute / 60);
+            if (date.hour > 24 || date.hour < -24) {
+                date.days = absCeil(date.hour / 24);
             } else {
-                output = val === 'seconds' || val === 'second' ? diff / 1e3 : // 1000
-                val === 'minutes' || val === 'minute' ? diff / 6e4 : // 1000 * 60
-                val === 'hours' || val === 'hour' ? diff / 36e5 : // 1000 * 60 * 60
-                val === 'days' || val === 'day' ? diff / 864e5 : // 1000 * 60 * 60 * 24
-                val === 'weeks' || val === 'week' ? diff / 6048e5 : // 1000 * 60 * 60 * 24 * 7
-                diff;
+                date.days = absFloor(date.hour / 24);
             }
+
+            date.month = absFloor(daysToMonths(date.days));
+            date.year = absFloor(date.month / 12);
+            //        date.days -= absCeil(monthsToDays(date.month));
+            //        console.log('year ' + date.year);
+            //        console.log('month ' + date.month);
+            //        console.log('days ' + date.days);
+            //        console.log('hour ' + date.hour);
+            //        console.log('minute ' + date.minute);
+            //        console.log('second ' + date.second);
+            //        console.log('val : ' + val);
+
+            if (val == 'second' || val == 'seconds') {
+                output = date.second;
+            } else if (val == 'minute' || val == 'minutes') {
+                output = date.minute;
+            } else if (val == 'hour' || val == 'hours') {
+                output = date.hour;
+            } else if (val == 'days' || val == 'day') {
+                output = date.days;
+            } else if (val == 'month' || val == 'months') {
+                output = date.month;
+            } else if (val == 'year' || val == 'years') {
+                output = date.year;
+            } else {
+                output = diffMillisecond;
+            }
+
+            //        console.log('output : ' + output);
             if (output < 0) {
                 output = output * -1;
             }
-            return asFloat ? output : Math.round(output);
+            return output;
         }
 
         /**
@@ -1562,6 +1612,12 @@ var PersianDateClass = function () {
         value: function valueOf() {
             return this._valueOf();
         }
+    }, {
+        key: 'relative',
+        value: function relative(date) {
+            var r = new Relative();
+            return r.convertToRelative(date, this);
+        }
     }], [{
         key: '_utc',
         value: function _utc(input) {
@@ -1982,6 +2038,237 @@ PersianDateClass.unix = PersianDateClass._unix;
 PersianDateClass.utc = PersianDateClass._utc;
 
 module.exports = PersianDateClass;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Relative object constructor
+ * @param duration
+ * @class Duration
+ * @constructor
+ */
+String.prototype.format = function () {
+    var a = this,
+        k = void 0;
+    for (k in arguments) {
+        a = a.replace('{' + k + '}', arguments[k]);
+    }
+    return a;
+};
+
+var Relative = function () {
+    function Relative() {
+        _classCallCheck(this, Relative);
+
+        this.timeModerationStrings = {
+            after: 'بعد',
+            before: 'قبل'
+        };
+
+        this.relative = {
+            'year': {
+                '-n': '{0} سال قبل',
+                '-2': 'پیارسال',
+                '-1': 'پارسال',
+                '0': 'امسال',
+                '+n': '{0} سال بعد',
+                'n': '{0} سال و',
+                'n]': '{0} سال'
+            },
+            'month': {
+                '-n': '{0} ماه قبل',
+                '0': 'این ماه',
+                '+n': '{0} ماه بعد',
+                'n': '{0} ماه و',
+                'n]': '{0} ماه'
+            },
+            'day': {
+                '-n': '{0} روز قبل',
+                '-3': 'پس پریروز',
+                '-2': 'پریروز',
+                '-1': 'دیروز',
+                '0': 'امروز',
+                '+1': 'فردا',
+                '+2': 'پس فردا',
+                '+n': '{0} روز بعد',
+                'n': '{0} روز و',
+                'n]': '{0} روز'
+            },
+            'hour': {
+                '-n': '{0} ساعت قبل',
+                '0': '',
+                '+n': '{0} ساعت بعد',
+                'n': '{0} ساعت و',
+                'n]': '{0} ساعت',
+                // https://en.wikipedia.org/wiki/Afternoon
+                // https://fa.wikipedia.org/wiki/%D8%BA%D8%B1%D9%88%D8%A8
+                'morning': {
+                    text: 'صبح',
+                    start: 6,
+                    end: 12
+                },
+                'noon': {
+                    text: 'ظهر',
+                    start: 12,
+                    end: 18
+                },
+                'afternoon': {
+                    text: 'بعد از ظهر',
+                    start: 18,
+                    end: 20
+                },
+                'night': {
+                    text: 'شب',
+                    start: 20,
+                    end: 12
+                },
+                'midnight': {
+                    text: 'نیمه شب',
+                    start: 12,
+                    end: 6
+                }
+            },
+            'minute': {
+                '-n': '{0} دقیقه قبل',
+                '0': '',
+                '+n': '{0} دقیقه بعد',
+                'n': '{0} دقیقه و',
+                'n]': '{0} دقیقه'
+            },
+            'second': {
+                '-n': '{0} ثانیه قبل',
+                '0': 'الان',
+                '+n': '{0} ثانیه بعد',
+                'n]': '{0} ثانیه'
+            }
+        };
+    }
+
+    _createClass(Relative, [{
+        key: 'convertToRelative',
+        value: function convertToRelative(date, pDate) {
+            var that = this,
+                relationValue = void 0,
+                output = void 0;
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = Object.keys(that.relative)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var key = _step.value;
+
+                    relationValue = date.diff(pDate, key);
+                    if (relationValue < 0) {
+                        relationValue = relationValue * -1;
+                    }
+
+                    if (relationValue >= 1 || relationValue <= -1) {
+                        if (date.valueOf() > pDate.valueOf()) {
+                            if (key == 'day' && relationValue == 1) {
+                                output = that.relative[key]['+1'].format(relationValue);
+                            } else if (key == 'day' && relationValue == 2) {
+                                output = that.relative[key]['+2'].format(relationValue);
+                            } else {
+                                output = that.relative[key]['+n'].format(relationValue);
+                            }
+                        } else {
+
+                            if (key == 'day' && relationValue == 1) {
+                                output = that.relative[key]['-1'].format(relationValue);
+                            } else if (key == 'day' && relationValue == 2) {
+                                output = that.relative[key]['-2'].format(relationValue);
+                            } else if (key == 'day' && relationValue == 3) {
+                                output = that.relative[key]['-3'].format(relationValue);
+                            } else {
+                                output = that.relative[key]['-n'].format(relationValue);
+                            }
+                        }
+                        break;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            return output;
+        }
+    }, {
+        key: 'convertRelative',
+        value: function convertRelative() {}
+    }]);
+
+    return Relative;
+}();
+
+module.exports = Relative;
+
+//
+//
+//person = [
+//    ['reza', 26, '', '', 'man'],
+//    ['reza', 12, [], {}]
+//]
+////
+////true
+////'xasxas'
+////1
+////[]
+////{}
+////''
+//
+//
+//pd = [
+//  'version': '0.2.0',
+//  'now': '2613587621',
+//  'weekDay':'csacsa',
+//   'year': function(a){
+//    }
+//]
+//
+//person = [
+//    {
+//        'name': 'reza',
+//        'old': 30,
+//        'job': '',
+//        'family': 'babakhani',
+//        'gender': 'man',
+//        'newYearInTehran': [1392,1391,1380],
+//        'works':[{},{},{}]
+//        'isMan': true,
+//        'callHim': function(){
+//
+//        },
+//        'sendMessage': function(){
+//        }
+//    }
+//
+//]
+//
+////
+////
+////name=reza,family=babakhani,old=45
+////name=bita,
 
 /***/ })
 /******/ ]);
