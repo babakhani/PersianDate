@@ -1,6 +1,6 @@
 {
   "name": "persian-date",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "main": [
     "dist/<= pkg.version>/persian-date-<= pkg.version>.js"
   ],
