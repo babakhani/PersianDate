@@ -1,7 +1,7 @@
 /*global describe,it*/
 let assert = require('assert');
 let expect = require('chai').expect;
-let obj = require('../dist/persian-date.min.js');
+let obj = require('../dist/persian-date.js');
 const pDate = obj,
     Duration = new pDate().duration,
     defaultArray = [1391, 1, 1, 1, 1, 1, 1];

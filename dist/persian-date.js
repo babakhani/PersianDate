@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  0.2.3
+ * persian-date -  0.2.4
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -510,7 +510,7 @@ var PersianDateClass = function () {
                     this.gDate = new Date();
                 }
         this.pDate = this.algorithms.toPersianDate(this.gDate);
-        this.version = "0.2.3";
+        this.version = "0.2.4";
         this.formatPersian = '_default';
         this._utcMode = false;
         return this;
