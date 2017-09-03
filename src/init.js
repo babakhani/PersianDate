@@ -1,4 +1,4 @@
-let PersianDateClass = require('./pDate');
+let PersianDateClass = require('./pDate-new');
 String.prototype.toPersianDigit = function (latinDigit) {
     return this.replace(/\d+/g, function (digit) {
         let enDigitArr = [], peDigitArr = [], i, j;
