@@ -179,7 +179,7 @@ class Algorithms {
     //  JD_TO_GREGORIAN  --  Calculate Gregorian calendar date from Julian day
     jd_to_gregorian (jd) {
         var wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad,
-          yindex, dyindex, year, yearday, leapadj,month,day;
+          yindex, dyindex, year, yearday, leapadj, month, day;
 
         wjd = Math.floor(jd - 0.5) + 0.5;
         depoch = wjd - this.GREGORIAN_EPOCH;
@@ -810,7 +810,7 @@ class Algorithms {
 
         jd = Math.floor(jd) + 0.5;
         lcount = jd - this.MAYAN_COUNT_EPOCH;
-        return [amod(lcount + 20, 20), amod(lcount + 4, 13)];
+        return [this.ASTRO.amod(lcount + 20, 20), this.ASTRO.amod(lcount + 4, 13)];
     }
 
 
@@ -910,20 +910,15 @@ class Algorithms {
 
         this.ON.julianday = j;
         this.ON.modifiedjulianday = j - this.JMJD;
-//        document.julianday.day.value = j;
-//        document.modifiedjulianday.day.value = j - this.JMJD;
 
         //  Update day of week in Gregorian box
         // ---------------------------------------------------------------------------
-
-        this.ON.gregorian.weekday = this.ASTRO.jwday(j);
-//        weekday = this.ASTRO.jwday(j);
-//        document.gregorian.wday.value = Weekdays[weekday];
+        weekday = this.ASTRO.jwday(j);
+        this.ON.gregorian.weekday = weekday;
 
         //  Update leap year status in Gregorian box
         // ---------------------------------------------------------------------------
         this.ON.gregorian.leap = this.NormLeap[this.leap_gregorian(year) ? 1 : 0];
-//        document.gregorian.leap.value = this.NormLeap[this.leap_gregorian(year) ? 1 : 0];
 
         //  Update Julian Calendar
         // ---------------------------------------------------------------------------
@@ -934,13 +929,8 @@ class Algorithms {
         this.ON.juliancalendar.month = julcal[1] - 1;
         this.ON.juliancalendar.day = julcal[2];
         this.ON.juliancalendar.leap = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
-//        document.juliancalendar.year.value = julcal[0];
-//        document.juliancalendar.month.selectedIndex = julcal[1] - 1;
-//        document.juliancalendar.day.value = julcal[2];
-//        document.juliancalendar.leap.value = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
         weekday = this.ASTRO.jwday(j);
         this.ON.juliancalendar.weekday = this.ASTRO.Weekdays[weekday];
-//        document.juliancalendar.wday.value = Weekdays[weekday];
 
         //  Update Hebrew Calendar
         // ---------------------------------------------------------------------------
@@ -1003,12 +993,6 @@ class Algorithms {
         this.ON.islamic.weekday = "yawm " + this.ISLAMIC_WEEKDAYS[weekday];
         this.ON.islamic.leap = this.NormLeap[this.leap_islamic(islcal[0]) ? 1 : 0];
 
-//        document.islamic.year.value = islcal[0];
-//        document.islamic.month.selectedIndex = islcal[1] - 1;
-//        document.islamic.day.value = islcal[2];
-//        document.islamic.wday.value = "yawm " + this.ISLAMIC_WEEKDAYS[weekday];
-//        document.islamic.leap.value = this.NormLeap[this.leap_islamic(islcal[0]) ? 1 : 0];
-
         //  Update Persian Calendar
         // ---------------------------------------------------------------------------
         perscal = this.jd_to_persian(j);
@@ -1018,12 +1002,6 @@ class Algorithms {
         this.ON.persian.day = perscal[2];
         this.ON.persian.weekday = this.PERSIAN_WEEKDAYS[weekday];
         this.ON.persian.leap = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
-
-//        document.persian.year.value = perscal[0];
-//        document.persian.month.selectedIndex = perscal[1] - 1;
-//        document.persian.day.value = perscal[2];
-//        document.persian.wday.value = this.PERSIAN_WEEKDAYS[weekday];
-//        document.persian.leap.value = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
 
         //  Update Persian Astronomical Calendar
         // ---------------------------------------------------------------------------
@@ -1035,12 +1013,6 @@ class Algorithms {
         this.ON.persianAstro.day = perscal[2];
         this.ON.persianAstro.weekday = this.PERSIAN_WEEKDAYS[weekday];
         this.ON.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
-
-//        document.persiana.year.value = perscal[0];
-//        document.persiana.month.selectedIndex = perscal[1] - 1;
-//        document.persiana.day.value = perscal[2];
-//        document.persiana.wday.value = this.PERSIAN_WEEKDAYS[weekday];
-//        document.persiana.leap.value = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
 
         //  Update Mayan Calendars
         // ---------------------------------------------------------------------------
@@ -1075,16 +1047,13 @@ class Algorithms {
         //  Update Gregorian serial number
         // ---------------------------------------------------------------------------
         if (document.gregserial != null) {
-
             this.ON.gregserial.day = j - this.J0000;
-//            document.gregserial.day.value = j - this.J0000;
         }
 
         //  Update Excel 1900 and 1904 day serial numbers
         // ---------------------------------------------------------------------------
 
         this.ON.excelserial1900.day = (j - this.J1900) + 1 +
-//        document.excelserial1900.day.value = (j - this.J1900) + 1 +
           /*  Microsoft marching morons thought 1900 was a leap year.
            Adjust dates after 1900-02-28 to compensate for their
            idiocy.  */
@@ -1092,14 +1061,12 @@ class Algorithms {
         ;
 
         this.ON.excelserial1904.day = j - this.J1904;
-//        document.excelserial1904.day.value = j - this.J1904;
 
         //  Update Unix time()
         // ---------------------------------------------------------------------------
         utime = (j - this.J1970) * (60 * 60 * 24 * 1000);
 
         this.ON.unixtime = Math.round(utime / 1000);
-//        document.unixtime.time.value = Math.round(utime / 1000);
 
         //  Update ISO Week
         // ---------------------------------------------------------------------------
@@ -1109,18 +1076,12 @@ class Algorithms {
         this.ON.isoweek.week = isoweek[1];
         this.ON.isoweek.day = isoweek[2];
 
-//        document.isoweek.year.value = isoweek[0];
-//        document.isoweek.week.value = isoweek[1];
-//        document.isoweek.day.value = isoweek[2];
-
         //  Update ISO Day
         // ---------------------------------------------------------------------------
         isoday = this.jd_to_iso_day(j);
 
         this.ON.isoday.year = isoday[0];
         this.ON.isoday.day = isoday[1];
-//        document.isoday.year.value = isoday[0];
-//        document.isoday.day.value = isoday[1];
     }
 
 
@@ -1134,20 +1095,30 @@ class Algorithms {
         var j, date, time;
 
         j = new Number(document.julianday.day.value);
-        date = jd_to_gregorian(j);
-        time = jhms(j);
-        document.gregorian.year.value = date[0];
-        document.gregorian.month.selectedIndex = date[1] - 1;
-        document.gregorian.day.value = date[2];
-        document.gregorian.hour.value = pad(time[0], 2, " ");
-        document.gregorian.min.value = pad(time[1], 2, "0");
-        document.gregorian.sec.value = pad(time[2], 2, "0");
+        date = this.jd_to_gregorian(j);
+        time = this.ASTRO.jhms(j);
+
+        this.ON.gregorian.year = date[0];
+        this.ON.gregorian.month = date[1] - 1;
+        this.ON.gregorian.day = date[2];
+        this.ON.gregorian.hour = pad(time[0], 2, " ");
+        this.ON.gregorian.minute = pad(time[1], 2, "0");
+        this.ON.gregorian.second = pad(time[2], 2, "0");
+
+//        document.gregorian.year.value = date[0];
+//        document.gregorian.month.selectedIndex = date[1] - 1;
+//        document.gregorian.day.value = date[2];
+//        document.gregorian.hour.value = pad(time[0], 2, " ");
+//        document.gregorian.min.value = pad(time[1], 2, "0");
+//        document.gregorian.sec.value = pad(time[2], 2, "0");
         this.updateFromGregorian();
     }
 
 //  setJulian  --  Set Julian date and update all calendars
     setJulian (j) {
-        document.julianday.day.value = new Number(j);
+
+        this.ON.julianday.day = new Number(j);
+//        document.julianday.day.value = new Number(j);
         this.calcJulian();
     }
 
@@ -1339,173 +1310,6 @@ class Algorithms {
             second: 0,
             millisecond: 0,
         };
-
-
-//        document.gregorian.year.value = y;
-//        document.gregorian.month.selectedIndex = today.getMonth();
-//        document.gregorian.day.value = today.getDate();
-//        document.gregorian.hour.value =
-//          document.gregorian.min.value =
-//            document.gregorian.sec.value = "00";
-    }
-
-    /*  presetDataToRequest  --  Preset the Gregorian date to the
-     date requested by the URL
-     search field.  */
-    presetDataToRequest (s) {
-        var eq = s.indexOf("=");
-        var set = false;
-        if (eq != -1) {
-            var calendar = s.substring(0, eq),
-              date = decodeURIComponent(s.substring(eq + 1));
-            if (calendar.toLowerCase() == "gregorian") {
-                var d = date.match(/^(\d+)\D(\d+)\D(\d+)(\D\d+)?(\D\d+)?(\D\d+)?/);
-                if (d != null) {
-                    // Sanity check date and time components
-                    if ((d[2] >= 1) && (d[2] <= 12) &&
-                      (d[3] >= 1) && (d[3] <= 31) &&
-                      ((d[4] == undefined) ||
-                      ((d[4].substring(1) >= 0) && (d[4].substring(1) <= 23))) &&
-                      ((d[5] == undefined) ||
-                      ((d[5].substring(1) >= 0) && (d[5].substring(1) <= 59))) &&
-                      ((d[6] == undefined) ||
-                      ((d[6].substring(1) >= 0) && (d[6].substring(1) <= 59)))) {
-                        document.gregorian.year.value = d[1];
-                        document.gregorian.month.selectedIndex = d[2] - 1;
-                        document.gregorian.day.value = Number(d[3]);
-                        document.gregorian.hour.value = d[4] == undefined ? "00" :
-                          d[4].substring(1);
-                        document.gregorian.min.value = d[5] == undefined ? "00" :
-                          d[5].substring(1);
-                        document.gregorian.sec.value = d[6] == undefined ? "00" :
-                          d[6].substring(1);
-                        calcGregorian();
-                        set = true;
-                    } else {
-                        alert("Invalid Gregorian date \"" + date +
-                          "\" in search request");
-                    }
-                } else {
-                    alert("Invalid Gregorian date \"" + date +
-                      "\" in search request");
-                }
-
-            } else if (calendar.toLowerCase() == "julian") {
-                var d = date.match(/^(\d+)\D(\d+)\D(\d+)(\D\d+)?(\D\d+)?(\D\d+)?/);
-                if (d != null) {
-                    // Sanity check date and time components
-                    if ((d[2] >= 1) && (d[2] <= 12) &&
-                      (d[3] >= 1) && (d[3] <= 31) &&
-                      ((d[4] == undefined) ||
-                      ((d[4].substring(1) >= 0) && (d[4].substring(1) <= 23))) &&
-                      ((d[5] == undefined) ||
-                      ((d[5].substring(1) >= 0) && (d[5].substring(1) <= 59))) &&
-                      ((d[6] == undefined) ||
-                      ((d[6].substring(1) >= 0) && (d[6].substring(1) <= 59)))) {
-                        document.juliancalendar.year.value = d[1];
-                        document.juliancalendar.month.selectedIndex = d[2] - 1;
-                        document.juliancalendar.day.value = Number(d[3]);
-                        this.calcJulianCalendar();
-                        document.gregorian.hour.value = d[4] == undefined ? "00" :
-                          d[4].substring(1);
-                        document.gregorian.min.value = d[5] == undefined ? "00" :
-                          d[5].substring(1);
-                        document.gregorian.sec.value = d[6] == undefined ? "00" :
-                          d[6].substring(1);
-                        set = true;
-                    } else {
-                        alert("Invalid Julian calendar date \"" + date +
-                          "\" in search request");
-                    }
-                } else {
-                    alert("Invalid Julian calendar date \"" + date +
-                      "\" in search request");
-                }
-
-            } else if (calendar.toLowerCase() == "jd") {
-                var d = date.match(/^(\-?\d+\.?\d*)/);
-                if (d != null) {
-                    this.setJulian(d[1]);
-                    set = 1;
-                } else {
-                    alert("Invalid Julian day \"" + date +
-                      "\" in search request");
-                }
-
-            } else if (calendar.toLowerCase() == "mjd") {
-                var d = date.match(/^(\-?\d+\.?\d*)/);
-                if (d != null) {
-                    document.modifiedjulianday.day.value = d[1];
-                    this.calcModifiedJulian();
-                    set = 1;
-                } else {
-                    alert("Invalid Modified Julian day \"" + date +
-                      "\" in search request");
-                }
-
-            } else if (calendar.toLowerCase() == "unixtime") {
-                var d = date.match(/^(\-?\d+\.?\d*)/);
-                if (d != null) {
-                    document.unixtime.time.value = d[1];
-                    this.calcUnixTime();
-                    set = 1;
-                } else {
-                    alert("Invalid Modified Julian day \"" + date +
-                      "\" in search request");
-                }
-
-            } else if (calendar.toLowerCase() == "iso") {
-                var d;
-                if ((d = date.match(/^(\-?\d+)\-(\d\d\d)/)) != null) {
-                    document.isoday.year.value = d[1];
-                    document.isoday.day.value = d[2];
-                    this.calcIsoDay();
-                    set = 1;
-                } else if ((d = date.match(/^(\-?\d+)\-?W(\d\d)\-?(\d)/i)) != null) {
-                    document.isoweek.year.value = d[1];
-                    document.isoweek.week.value = d[2];
-                    document.isoweek.day.value = d[3];
-                    this.calcIsoWeek();
-                    set = 1;
-                } else {
-                    alert("Invalid ISO-8601 date \"" + date +
-                      "\" in search request");
-                }
-
-            } else if (calendar.toLowerCase() == "excel") {
-                var d = date.match(/^(\-?\d+\.?\d*)/);
-                if (d != null) {
-                    document.excelserial1900.day.value = d[1];
-                    this.calcExcelSerial1900();
-                    set = 1;
-                } else {
-                    alert("Invalid Excel serial day (1900/PC) \"" + date +
-                      "\" in search request");
-                }
-
-            } else if (calendar.toLowerCase() == "excel1904") {
-                var d = date.match(/^(\-?\d+\.?\d*)/);
-                if (d != null) {
-                    document.excelserial1904.day.value = d[1];
-                    this.calcExcelSerial1904();
-                    set = 1;
-                } else {
-                    alert("Invalid Excel serial day (1904/Mac) \"" + date +
-                      "\" in search request");
-                }
-
-            } else {
-                alert("Invalid calendar \"" + calendar +
-                  "\" in search request");
-            }
-        } else {
-            alert("Invalid search request: " + s);
-        }
-
-        if (!set) {
-            this.setDateToToday();
-            this.calcGregorian();
-        }
     }
 }
 
