@@ -303,7 +303,7 @@ class ASTRO {
 
 //  AMOD  --  Modulus function which returns numerator if modulus is zero
     amod (a, b) {
-        return mod(a - 1, b) + 1;
+        return this.mod(a - 1, b) + 1;
     }
 
     /*  JHMS  --  Convert Julian time to hour, minutes, and seconds,
@@ -322,7 +322,7 @@ class ASTRO {
 
 
     jwday (j) {
-        return mod(Math.floor((j + 1.5)), 7);
+        return this.mod(Math.floor((j + 1.5)), 7);
     }
 
     obliqeq (jd) {

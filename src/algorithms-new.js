@@ -1,11 +1,13 @@
 // Start algorithm class
 let ASTRO = require('./astro');
-
+let ON = require('./on');
 
 class Algorithms {
     constructor () {
 
         this.ASTRO = new ASTRO();
+        this.ON = new ON();
+
 
         /*
          JavaScript functions for the Fourmilab Calendar Converter
@@ -124,23 +126,23 @@ class Algorithms {
      * @return {*}
      */
     nearest_weekday (weekday, jd) {
-        return search_weekday(weekday, jd, 1, 3);
+        return this.search_weekday(weekday, jd, 1, 3);
     }
 
     next_weekday (weekday, jd) {
-        return search_weekday(weekday, jd, 1, 7);
+        return this.search_weekday(weekday, jd, 1, 7);
     }
 
     next_or_current_weekday (weekday, jd) {
-        return search_weekday(weekday, jd, 1, 6);
+        return this.search_weekday(weekday, jd, 1, 6);
     }
 
     previous_weekday (weekday, jd) {
-        return search_weekday(weekday, jd, -1, 1);
+        return this.search_weekday(weekday, jd, -1, 1);
     }
 
     previous_or_current_weekday (weekday, jd) {
-        return search_weekday(weekday, jd, 1, 0);
+        return this.search_weekday(weekday, jd, 1, 0);
     }
 
 
@@ -177,16 +179,16 @@ class Algorithms {
     //  JD_TO_GREGORIAN  --  Calculate Gregorian calendar date from Julian day
     jd_to_gregorian (jd) {
         var wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad,
-          yindex, dyindex, year, yearday, leapadj;
+          yindex, dyindex, year, yearday, leapadj,month,day;
 
         wjd = Math.floor(jd - 0.5) + 0.5;
         depoch = wjd - this.GREGORIAN_EPOCH;
         quadricent = Math.floor(depoch / 146097);
-        dqc = mod(depoch, 146097);
+        dqc = this.ASTRO.mod(depoch, 146097);
         cent = Math.floor(dqc / 36524);
-        dcent = mod(dqc, 36524);
+        dcent = this.ASTRO.mod(dqc, 36524);
         quad = Math.floor(dcent / 1461);
-        dquad = mod(dcent, 1461);
+        dquad = this.ASTRO.mod(dcent, 1461);
         yindex = Math.floor(dquad / 365);
         year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
         if (!((cent == 4) || (yindex == 4))) {
@@ -262,7 +264,7 @@ class Algorithms {
 
 
     leap_julian (year) {
-        return mod(year, 4) == ((year > 0) ? 0 : 3);
+        return this.ASTRO.mod(year, 4) == ((year > 0) ? 0 : 3);
     }
 
     //  JULIAN_TO_JD  --  Determine Julian day number from Julian calendar date
@@ -313,7 +315,7 @@ class Algorithms {
 
     //  Is a given Hebrew year a leap year ?
     hebrew_leap (year) {
-        return mod(((year * 7) + 1), 19) < 7;
+        return this.ASTRO.mod(((year * 7) + 1), 19) < 7;
     }
 
 
@@ -447,13 +449,13 @@ class Algorithms {
         var equJED, equJD, equAPP, equParis, dtParis;
 
         //  September equinox in dynamical time
-        equJED = equinox(year, 2);
+        equJED = this.ASTRO.equinox(year, 2);
 
         //  Correct for delta T to obtain Universal time
-        equJD = equJED - (deltat(year) / (24 * 60 * 60));
+        equJD = equJED - (this.ASTRO.deltat(year) / (24 * 60 * 60));
 
         //  Apply the equation of time to yield the apparent time at Greenwich
-        equAPP = equJD + equationOfTime(equJED);
+        equAPP = equJD + this.ASTRO.equationOfTime(equJED);
 
         /*  Finally, we must correct for the constant difference between
          the Greenwich meridian and that of Paris, 2°20'15" to the
@@ -590,13 +592,13 @@ class Algorithms {
         var equJED, equJD, equAPP, equTehran, dtTehran;
 
         //  March equinox in dynamical time
-        equJED = equinox(year, 0);
+        equJED = this.ASTRO.equinox(year, 0);
 
         //  Correct for delta T to obtain Universal time
-        equJD = equJED - (deltat(year) / (24 * 60 * 60));
+        equJD = equJED - (this.ASTRO.deltat(year) / (24 * 60 * 60));
 
         //  Apply the equation of time to yield the apparent time at Greenwich
-        equAPP = equJD + equationOfTime(equJED);
+        equAPP = equJD + this.ASTRO.equationOfTime(equJED);
 
         /*  Finally, we must correct for the constant difference between
          the Greenwich meridian andthe time zone standard for
@@ -718,7 +720,7 @@ class Algorithms {
         var epbase, epyear;
 
         epbase = year - ((year >= 0) ? 474 : 473);
-        epyear = 474 + mod(epbase, 2820);
+        epyear = 474 + this.ASTRO.mod(epbase, 2820);
 
         return day +
           ((month <= 7) ?
@@ -741,12 +743,12 @@ class Algorithms {
 
         depoch = jd - this.persian_to_jd(475, 1, 1);
         cycle = Math.floor(depoch / 1029983);
-        cyear = mod(depoch, 1029983);
+        cyear = this.ASTRO.mod(depoch, 1029983);
         if (cyear == 1029982) {
             ycycle = 2820;
         } else {
             aux1 = Math.floor(cyear / 366);
-            aux2 = mod(cyear, 366);
+            aux2 = this.ASTRO.mod(cyear, 366);
             ycycle = Math.floor(((2134 * aux1) + (2816 * aux2) + 2815) / 1028522) +
               aux1 + 1;
         }
@@ -778,13 +780,13 @@ class Algorithms {
         jd = Math.floor(jd) + 0.5;
         d = jd - this.MAYAN_COUNT_EPOCH;
         baktun = Math.floor(d / 144000);
-        d = mod(d, 144000);
+        d = this.ASTRO.mod(d, 144000);
         katun = Math.floor(d / 7200);
-        d = mod(d, 7200);
+        d = this.ASTRO.mod(d, 7200);
         tun = Math.floor(d / 360);
-        d = mod(d, 360);
+        d = this.ASTRO.mod(d, 360);
         uinal = Math.floor(d / 20);
-        kin = mod(d, 20);
+        kin = this.ASTRO.mod(d, 20);
 
         return [baktun, katun, tun, uinal, kin];
     }
@@ -796,9 +798,9 @@ class Algorithms {
 
         jd = Math.floor(jd) + 0.5;
         lcount = jd - this.MAYAN_COUNT_EPOCH;
-        day = mod(lcount + 8 + ((18 - 1) * 20), 365);
+        day = this.ASTRO.mod(lcount + 8 + ((18 - 1) * 20), 365);
 
-        return [Math.floor(day / 20) + 1, mod(day, 20)];
+        return [Math.floor(day / 20) + 1, this.ASTRO.mod(day, 20)];
     }
 
 
@@ -886,188 +888,239 @@ class Algorithms {
      already snapped to an integral second, so
      we don't get roundoff errors in other
      calendars.  */
+    // TODO: Modified by me code structure totally changed
     updateFromGregorian () {
         var j, year, mon, mday, hour, min, sec,
           weekday, julcal, hebcal, islcal, hmindex, utime, isoweek,
           may_countcal, mayhaabcal, maytzolkincal, frrcal,
-          indcal, isoday, xgregcal;
+          indcal, isoday, xgregcal, perscal;
 
-        year = new Number(document.gregorian.year.value);
-        mon = document.gregorian.month.selectedIndex;
-        mday = new Number(document.gregorian.day.value);
-        hour = min = sec = 0;
-        hour = new Number(document.gregorian.hour.value);
-        min = new Number(document.gregorian.min.value);
-        sec = new Number(document.gregorian.sec.value);
+
+        year = this.ON.gregorian.year;
+        mon = this.ON.gregorian.month;
+        mday = this.ON.gregorian.day;
+        hour = this.ON.gregorian.hour;
+        min = this.ON.gregorian.minute;
+        sec = this.ON.gregorian.second;
 
         //  Update Julian day
-
-        j = gregorian_to_jd(year, mon + 1, mday) +
+        // ---------------------------------------------------------------------------
+        j = this.gregorian_to_jd(year, mon + 1, mday) +
           (Math.floor(sec + 60 * (min + 60 * hour) + 0.5) / 86400.0);
 
-        document.julianday.day.value = j;
-        document.modifiedjulianday.day.value = j - this.JMJD;
+        this.ON.julianday = j;
+        this.ON.modifiedjulianday = j - this.JMJD;
+//        document.julianday.day.value = j;
+//        document.modifiedjulianday.day.value = j - this.JMJD;
 
         //  Update day of week in Gregorian box
+        // ---------------------------------------------------------------------------
 
-        weekday = this.ASTRO.jwday(j);
-        document.gregorian.wday.value = Weekdays[weekday];
+        this.ON.gregorian.weekday = this.ASTRO.jwday(j);
+//        weekday = this.ASTRO.jwday(j);
+//        document.gregorian.wday.value = Weekdays[weekday];
 
         //  Update leap year status in Gregorian box
-
-        document.gregorian.leap.value = this.NormLeap[this.leap_gregorian(year) ? 1 : 0];
+        // ---------------------------------------------------------------------------
+        this.ON.gregorian.leap = this.NormLeap[this.leap_gregorian(year) ? 1 : 0];
+//        document.gregorian.leap.value = this.NormLeap[this.leap_gregorian(year) ? 1 : 0];
 
         //  Update Julian Calendar
-
+        // ---------------------------------------------------------------------------
         julcal = this.jd_to_julian(j);
-        document.juliancalendar.year.value = julcal[0];
-        document.juliancalendar.month.selectedIndex = julcal[1] - 1;
-        document.juliancalendar.day.value = julcal[2];
-        document.juliancalendar.leap.value = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
+
+
+        this.ON.juliancalendar.year = julcal[0];
+        this.ON.juliancalendar.month = julcal[1] - 1;
+        this.ON.juliancalendar.day = julcal[2];
+        this.ON.juliancalendar.leap = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
+//        document.juliancalendar.year.value = julcal[0];
+//        document.juliancalendar.month.selectedIndex = julcal[1] - 1;
+//        document.juliancalendar.day.value = julcal[2];
+//        document.juliancalendar.leap.value = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
         weekday = this.ASTRO.jwday(j);
-        document.juliancalendar.wday.value = Weekdays[weekday];
+        this.ON.juliancalendar.weekday = this.ASTRO.Weekdays[weekday];
+//        document.juliancalendar.wday.value = Weekdays[weekday];
 
         //  Update Hebrew Calendar
-
-        hebcal = this.jd_to_hebrew(j);
-        if (this.hebrew_leap(hebcal[0])) {
-            document.hebrew.month.options.length = 13;
-            document.hebrew.month.options[11] = new Option("Adar I");
-            document.hebrew.month.options[12] = new Option("Veadar");
-        } else {
-            document.hebrew.month.options.length = 12;
-            document.hebrew.month.options[11] = new Option("Adar");
-        }
-        document.hebrew.year.value = hebcal[0];
-        document.hebrew.month.selectedIndex = hebcal[1] - 1;
-        document.hebrew.day.value = hebcal[2];
-        hmindex = hebcal[1];
-        if (hmindex == 12 && !this.hebrew_leap(hebcal[0])) {
-            hmindex = 14;
-        }
-        document.hebrew.hebmonth.src = "figures/hebrew_month_" +
-          hmindex + ".gif";
-        switch (this.hebrew_year_days(hebcal[0])) {
-            case 353:
-                document.hebrew.leap.value = "Common deficient (353 days)";
-                break;
-
-            case 354:
-                document.hebrew.leap.value = "Common regular (354 days)";
-                break;
-
-            case 355:
-                document.hebrew.leap.value = "Common complete (355 days)";
-                break;
-
-            case 383:
-                document.hebrew.leap.value = "Embolismic deficient (383 days)";
-                break;
-
-            case 384:
-                document.hebrew.leap.value = "Embolismic regular (384 days)";
-                break;
-
-            case 385:
-                document.hebrew.leap.value = "Embolismic complete (385 days)";
-                break;
-
-            default:
-                document.hebrew.leap.value = "Invalid year length: " +
-                  this.hebrew_year_days(hebcal[0]) + " days.";
-                break;
-        }
+        // ---------------------------------------------------------------------------
+//        hebcal = this.jd_to_hebrew(j);
+//        if (this.hebrew_leap(hebcal[0])) {
+//            document.hebrew.month.options.length = 13;
+//            document.hebrew.month.options[11] = new Option("Adar I");
+//            document.hebrew.month.options[12] = new Option("Veadar");
+//        } else {
+//            document.hebrew.month.options.length = 12;
+//            document.hebrew.month.options[11] = new Option("Adar");
+//        }
+//        document.hebrew.year.value = hebcal[0];
+//        document.hebrew.month.selectedIndex = hebcal[1] - 1;
+//        document.hebrew.day.value = hebcal[2];
+//        hmindex = hebcal[1];
+//        if (hmindex == 12 && !this.hebrew_leap(hebcal[0])) {
+//            hmindex = 14;
+//        }
+//        document.hebrew.hebmonth.src = "figures/hebrew_month_" +
+//          hmindex + ".gif";
+//        switch (this.hebrew_year_days(hebcal[0])) {
+//            case 353:
+//                document.hebrew.leap.value = "Common deficient (353 days)";
+//                break;
+//
+//            case 354:
+//                document.hebrew.leap.value = "Common regular (354 days)";
+//                break;
+//
+//            case 355:
+//                document.hebrew.leap.value = "Common complete (355 days)";
+//                break;
+//
+//            case 383:
+//                document.hebrew.leap.value = "Embolismic deficient (383 days)";
+//                break;
+//
+//            case 384:
+//                document.hebrew.leap.value = "Embolismic regular (384 days)";
+//                break;
+//
+//            case 385:
+//                document.hebrew.leap.value = "Embolismic complete (385 days)";
+//                break;
+//
+//            default:
+//                document.hebrew.leap.value = "Invalid year length: " +
+//                  this.hebrew_year_days(hebcal[0]) + " days.";
+//                break;
+//        }
 
         //  Update Islamic Calendar
-
+        // ---------------------------------------------------------------------------
         islcal = this.jd_to_islamic(j);
-        document.islamic.year.value = islcal[0];
-        document.islamic.month.selectedIndex = islcal[1] - 1;
-        document.islamic.day.value = islcal[2];
-        document.islamic.wday.value = "yawm " + this.ISLAMIC_WEEKDAYS[weekday];
-        document.islamic.leap.value = this.NormLeap[this.leap_islamic(islcal[0]) ? 1 : 0];
+
+        this.ON.islamic.year = islcal[0];
+        this.ON.islamic.month = islcal[1] - 1;
+        this.ON.islamic.day = islcal[2];
+        this.ON.islamic.weekday = "yawm " + this.ISLAMIC_WEEKDAYS[weekday];
+        this.ON.islamic.leap = this.NormLeap[this.leap_islamic(islcal[0]) ? 1 : 0];
+
+//        document.islamic.year.value = islcal[0];
+//        document.islamic.month.selectedIndex = islcal[1] - 1;
+//        document.islamic.day.value = islcal[2];
+//        document.islamic.wday.value = "yawm " + this.ISLAMIC_WEEKDAYS[weekday];
+//        document.islamic.leap.value = this.NormLeap[this.leap_islamic(islcal[0]) ? 1 : 0];
 
         //  Update Persian Calendar
-
+        // ---------------------------------------------------------------------------
         perscal = this.jd_to_persian(j);
-        document.persian.year.value = perscal[0];
-        document.persian.month.selectedIndex = perscal[1] - 1;
-        document.persian.day.value = perscal[2];
-        document.persian.wday.value = this.PERSIAN_WEEKDAYS[weekday];
-        document.persian.leap.value = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
+
+        this.ON.persian.year = perscal[0];
+        this.ON.persian.month = perscal[1] - 1;
+        this.ON.persian.day = perscal[2];
+        this.ON.persian.weekday = this.PERSIAN_WEEKDAYS[weekday];
+        this.ON.persian.leap = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
+
+//        document.persian.year.value = perscal[0];
+//        document.persian.month.selectedIndex = perscal[1] - 1;
+//        document.persian.day.value = perscal[2];
+//        document.persian.wday.value = this.PERSIAN_WEEKDAYS[weekday];
+//        document.persian.leap.value = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
 
         //  Update Persian Astronomical Calendar
-
+        // ---------------------------------------------------------------------------
         perscal = this.jd_to_persiana(j);
-        document.persiana.year.value = perscal[0];
-        document.persiana.month.selectedIndex = perscal[1] - 1;
-        document.persiana.day.value = perscal[2];
-        document.persiana.wday.value = this.PERSIAN_WEEKDAYS[weekday];
-        document.persiana.leap.value = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
+
+
+        this.ON.persianAstro.year = perscal[0];
+        this.ON.persianAstro.month = perscal[1] - 1;
+        this.ON.persianAstro.day = perscal[2];
+        this.ON.persianAstro.weekday = this.PERSIAN_WEEKDAYS[weekday];
+        this.ON.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
+
+//        document.persiana.year.value = perscal[0];
+//        document.persiana.month.selectedIndex = perscal[1] - 1;
+//        document.persiana.day.value = perscal[2];
+//        document.persiana.wday.value = this.PERSIAN_WEEKDAYS[weekday];
+//        document.persiana.leap.value = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
 
         //  Update Mayan Calendars
-
-        may_countcal = this.jd_to_mayan_count(j);
-        document.mayancount.baktun.value = may_countcal[0];
-        document.mayancount.katun.value = may_countcal[1];
-        document.mayancount.tun.value = may_countcal[2];
-        document.mayancount.uinal.value = may_countcal[3];
-        document.mayancount.kin.value = may_countcal[4];
-        mayhaabcal = this.jd_to_mayan_haab(j);
-        document.mayancount.haab.value = "" + mayhaabcal[1] + " " + this.MAYAN_HAAB_MONTHS[mayhaabcal[0] - 1];
-        maytzolkincal = this.jd_to_mayan_tzolkin(j);
-        document.mayancount.tzolkin.value = "" + maytzolkincal[1] + " " + this.MAYAN_TZOLKIN_MONTHS[maytzolkincal[0] - 1];
+        // ---------------------------------------------------------------------------
+//        may_countcal = this.jd_to_mayan_count(j);
+//        document.mayancount.baktun.value = may_countcal[0];
+//        document.mayancount.katun.value = may_countcal[1];
+//        document.mayancount.tun.value = may_countcal[2];
+//        document.mayancount.uinal.value = may_countcal[3];
+//        document.mayancount.kin.value = may_countcal[4];
+//        mayhaabcal = this.jd_to_mayan_haab(j);
+//        document.mayancount.haab.value = "" + mayhaabcal[1] + " " + this.MAYAN_HAAB_MONTHS[mayhaabcal[0] - 1];
+//        maytzolkincal = this.jd_to_mayan_tzolkin(j);
+//        document.mayancount.tzolkin.value = "" + maytzolkincal[1] + " " + this.MAYAN_TZOLKIN_MONTHS[maytzolkincal[0] - 1];
 
         //  Update Indian Civil Calendar
-
-        indcal = this.jd_to_indian_civil(j);
-        document.indiancivilcalendar.year.value = indcal[0];
-        document.indiancivilcalendar.month.selectedIndex = indcal[1] - 1;
-        document.indiancivilcalendar.day.value = indcal[2];
-        document.indiancivilcalendar.weekday.value = this.INDIAN_CIVIL_WEEKDAYS[weekday];
-        document.indiancivilcalendar.leap.value = this.NormLeap[this.leap_gregorian(indcal[0] + 78) ? 1 : 0];
+        // ---------------------------------------------------------------------------
+//        indcal = this.jd_to_indian_civil(j);
+//        document.indiancivilcalendar.year.value = indcal[0];
+//        document.indiancivilcalendar.month.selectedIndex = indcal[1] - 1;
+//        document.indiancivilcalendar.day.value = indcal[2];
+//        document.indiancivilcalendar.weekday.value = this.INDIAN_CIVIL_WEEKDAYS[weekday];
+//        document.indiancivilcalendar.leap.value = this.NormLeap[this.leap_gregorian(indcal[0] + 78) ? 1 : 0];
 
         //  Update French Republican Calendar
-
-        frrcal = this.jd_to_french_revolutionary(j);
-        document.french.an.value = frrcal[0];
-        document.french.mois.selectedIndex = frrcal[1] - 1;
-        document.french.decade.selectedIndex = frrcal[2] - 1;
-        document.french.jour.selectedIndex = ((frrcal[1] <= 12) ? frrcal[3] : (frrcal[3] + 11)) - 1;
+        // ---------------------------------------------------------------------------
+//        frrcal = this.jd_to_french_revolutionary(j);
+//        document.french.an.value = frrcal[0];
+//        document.french.mois.selectedIndex = frrcal[1] - 1;
+//        document.french.decade.selectedIndex = frrcal[2] - 1;
+//        document.french.jour.selectedIndex = ((frrcal[1] <= 12) ? frrcal[3] : (frrcal[3] + 11)) - 1;
 
         //  Update Gregorian serial number
-
+        // ---------------------------------------------------------------------------
         if (document.gregserial != null) {
-            document.gregserial.day.value = j - this.J0000;
+
+            this.ON.gregserial.day = j - this.J0000;
+//            document.gregserial.day.value = j - this.J0000;
         }
 
         //  Update Excel 1900 and 1904 day serial numbers
+        // ---------------------------------------------------------------------------
 
-        document.excelserial1900.day.value = (j - this.J1900) + 1 +
+        this.ON.excelserial1900.day = (j - this.J1900) + 1 +
+//        document.excelserial1900.day.value = (j - this.J1900) + 1 +
           /*  Microsoft marching morons thought 1900 was a leap year.
            Adjust dates after 1900-02-28 to compensate for their
            idiocy.  */
           ((j > 2415078.5) ? 1 : 0)
         ;
-        document.excelserial1904.day.value = j - this.J1904;
+
+        this.ON.excelserial1904.day = j - this.J1904;
+//        document.excelserial1904.day.value = j - this.J1904;
 
         //  Update Unix time()
-
+        // ---------------------------------------------------------------------------
         utime = (j - this.J1970) * (60 * 60 * 24 * 1000);
-        document.unixtime.time.value = Math.round(utime / 1000);
+
+        this.ON.unixtime = Math.round(utime / 1000);
+//        document.unixtime.time.value = Math.round(utime / 1000);
 
         //  Update ISO Week
-
+        // ---------------------------------------------------------------------------
         isoweek = this.jd_to_iso(j);
-        document.isoweek.year.value = isoweek[0];
-        document.isoweek.week.value = isoweek[1];
-        document.isoweek.day.value = isoweek[2];
+
+        this.ON.isoweek.year = isoweek[0];
+        this.ON.isoweek.week = isoweek[1];
+        this.ON.isoweek.day = isoweek[2];
+
+//        document.isoweek.year.value = isoweek[0];
+//        document.isoweek.week.value = isoweek[1];
+//        document.isoweek.day.value = isoweek[2];
 
         //  Update ISO Day
-
+        // ---------------------------------------------------------------------------
         isoday = this.jd_to_iso_day(j);
-        document.isoday.year.value = isoday[0];
-        document.isoday.day.value = isoday[1];
+
+        this.ON.isoday.year = isoday[0];
+        this.ON.isoday.day = isoday[1];
+//        document.isoday.year.value = isoday[0];
+//        document.isoday.day.value = isoday[1];
     }
 
 
@@ -1277,12 +1330,23 @@ class Algorithms {
             y += 1900;
         }
 
-        document.gregorian.year.value = y;
-        document.gregorian.month.selectedIndex = today.getMonth();
-        document.gregorian.day.value = today.getDate();
-        document.gregorian.hour.value =
-          document.gregorian.min.value =
-            document.gregorian.sec.value = "00";
+        this.ON.gregorian = {
+            year: y,
+            month: today.getMonth(),
+            day: today.getDate(),
+            hour: 0,
+            minute: 0,
+            second: 0,
+            millisecond: 0,
+        };
+
+
+//        document.gregorian.year.value = y;
+//        document.gregorian.month.selectedIndex = today.getMonth();
+//        document.gregorian.day.value = today.getDate();
+//        document.gregorian.hour.value =
+//          document.gregorian.min.value =
+//            document.gregorian.sec.value = "00";
     }
 
     /*  presetDataToRequest  --  Preset the Gregorian date to the
