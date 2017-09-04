@@ -33,22 +33,10 @@ class Algorithms {
         this.NormLeap = ["Normal year", "Leap year"];
         // TODO END
         this.GREGORIAN_EPOCH = 1721425.5;
-
         this.JULIAN_EPOCH = 1721423.5;
-
         this.HEBREW_EPOCH = 347995.5;
         this.FRENCH_REVOLUTIONARY_EPOCH = 2375839.5;
         this.ISLAMIC_EPOCH = 1948439.5;
-        this.ISLAMIC_WEEKDAYS = [
-            "al-'ahad",
-            "al-'ithnayn",
-            "ath-thalatha'",
-            "al-'arb`a'",
-            "al-khamis",
-            "al-jum`a",
-            "as-sabt"];
-
-
         this.PERSIAN_EPOCH = 1948320.5;
         this.PERSIAN_WEEKDAYS = [
             "Yekshanbeh",
@@ -60,42 +48,52 @@ class Algorithms {
             "Shanbeh"];
 
 
-        this.MAYAN_COUNT_EPOCH = 584282.5;
-        this.MAYAN_HAAB_MONTHS = [
-            "Pop",
-            "Uo",
-            "Zip",
-            "Zotz",
-            "Tzec",
-            "Xul",
-            "Yaxkin",
-            "Mol",
-            "Chen",
-            "Yax",
-            "Zac",
-            "Ceh",
-            "Mac",
-            "Kankin",
-            "Muan",
-            "Pax",
-            "Kayab",
-            "Cumku",
-            "Uayeb"];
+//        this.setDateToToday();
+//        this.calcGregorian();
+
+        this.ISLAMIC_EPOCH = 1948320.5;
+        this.ISLAMIC_WEEKDAYS = [
+            "al-'ahad",
+            "al-'ithnayn",
+            "ath-thalatha'",
+            "al-'arb`a'",
+            "al-khamis",
+            "al-jum`a",
+            "as-sabt"];
+
+//        this.MAYAN_COUNT_EPOCH = 584282.5;
+//        this.MAYAN_HAAB_MONTHS = [
+//            "Pop",
+//            "Uo",
+//            "Zip",
+//            "Zotz",
+//            "Tzec",
+//            "Xul",
+//            "Yaxkin",
+//            "Mol",
+//            "Chen",
+//            "Yax",
+//            "Zac",
+//            "Ceh",
+//            "Mac",
+//            "Kankin",
+//            "Muan",
+//            "Pax",
+//            "Kayab",
+//            "Cumku",
+//            "Uayeb"];
 
 
-        this.MAYAN_TZOLKIN_MONTHS = ["Imix", "Ik", "Akbal", "Kan", "Chicchan",
-            "Cimi", "Manik", "Lamat", "Muluc", "Oc",
-            "Chuen", "Eb", "Ben", "Ix", "Men",
-            "Cib", "Caban", "Etznab", "Cauac", "Ahau"];
+//        this.MAYAN_TZOLKIN_MONTHS = ["Imix", "Ik", "Akbal", "Kan", "Chicchan",
+//            "Cimi", "Manik", "Lamat", "Muluc", "Oc",
+//            "Chuen", "Eb", "Ben", "Ix", "Men",
+//            "Cib", "Caban", "Etznab", "Cauac", "Ahau"];
+//
+//
+//        this.INDIAN_CIVIL_WEEKDAYS = [
+//            "ravivara", "somavara", "mangalavara", "budhavara",
+//            "brahaspativara", "sukravara", "sanivara"];
 
-
-        this.INDIAN_CIVIL_WEEKDAYS = [
-            "ravivara", "somavara", "mangalavara", "budhavara",
-            "brahaspativara", "sukravara", "sanivara"];
-
-
-        this.setDateToToday();
-        this.calcGregorian();
 
     }
 
@@ -899,9 +897,11 @@ class Algorithms {
         year = this.ON.gregorian.year;
         mon = this.ON.gregorian.month;
         mday = this.ON.gregorian.day;
-        hour = this.ON.gregorian.hour;
-        min = this.ON.gregorian.minute;
-        sec = this.ON.gregorian.second;
+        hour = 0;//this.ON.gregorian.hour;
+        min = 0;//this.ON.gregorian.minute;
+        sec = 0;//this.ON.gregorian.second;
+
+        this.ON.gDate = new Date(year, mon, mday, this.ON.gregorian.hour, this.ON.gregorian.minute, this.ON.gregorian.second);
 
         //  Update Julian day
         // ---------------------------------------------------------------------------
@@ -935,6 +935,8 @@ class Algorithms {
         //  Update Hebrew Calendar
         // ---------------------------------------------------------------------------
 //        hebcal = this.jd_to_hebrew(j);
+//
+//
 //        if (this.hebrew_leap(hebcal[0])) {
 //            document.hebrew.month.options.length = 13;
 //            document.hebrew.month.options[11] = new Option("Adar I");
@@ -985,33 +987,30 @@ class Algorithms {
 
         //  Update Islamic Calendar
         // ---------------------------------------------------------------------------
-        islcal = this.jd_to_islamic(j);
-
-        this.ON.islamic.year = islcal[0];
-        this.ON.islamic.month = islcal[1] - 1;
-        this.ON.islamic.day = islcal[2];
-        this.ON.islamic.weekday = "yawm " + this.ISLAMIC_WEEKDAYS[weekday];
-        this.ON.islamic.leap = this.NormLeap[this.leap_islamic(islcal[0]) ? 1 : 0];
+//        islcal = this.jd_to_islamic(j);
+//
+//        this.ON.islamic.year = islcal[0];
+//        this.ON.islamic.month = islcal[1] - 1;
+//        this.ON.islamic.day = islcal[2];
+//        this.ON.islamic.weekday = "yawm " + this.ISLAMIC_WEEKDAYS[weekday];
+//        this.ON.islamic.leap = this.NormLeap[this.leap_islamic(islcal[0]) ? 1 : 0];
 
         //  Update Persian Calendar
         // ---------------------------------------------------------------------------
         perscal = this.jd_to_persian(j);
-
         this.ON.persian.year = perscal[0];
         this.ON.persian.month = perscal[1] - 1;
         this.ON.persian.day = perscal[2];
-        this.ON.persian.weekday = this.PERSIAN_WEEKDAYS[weekday];
+        this.ON.persian.weekday = weekday;
         this.ON.persian.leap = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
 
         //  Update Persian Astronomical Calendar
         // ---------------------------------------------------------------------------
         perscal = this.jd_to_persiana(j);
-
-
         this.ON.persianAstro.year = perscal[0];
         this.ON.persianAstro.month = perscal[1] - 1;
         this.ON.persianAstro.day = perscal[2];
-        this.ON.persianAstro.weekday = this.PERSIAN_WEEKDAYS[weekday];
+        this.ON.persianAstro.weekday = weekday;
         this.ON.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
 
         //  Update Mayan Calendars
@@ -1046,21 +1045,21 @@ class Algorithms {
 
         //  Update Gregorian serial number
         // ---------------------------------------------------------------------------
-        if (document.gregserial != null) {
+        if (this.ON.gregserial.day != null) {
             this.ON.gregserial.day = j - this.J0000;
         }
 
         //  Update Excel 1900 and 1904 day serial numbers
         // ---------------------------------------------------------------------------
 
-        this.ON.excelserial1900.day = (j - this.J1900) + 1 +
-          /*  Microsoft marching morons thought 1900 was a leap year.
-           Adjust dates after 1900-02-28 to compensate for their
-           idiocy.  */
-          ((j > 2415078.5) ? 1 : 0)
-        ;
-
-        this.ON.excelserial1904.day = j - this.J1904;
+//        this.ON.excelserial1900.day = (j - this.J1900) + 1 +
+//          /*  Microsoft marching morons thought 1900 was a leap year.
+//           Adjust dates after 1900-02-28 to compensate for their
+//           idiocy.  */
+//          ((j > 2415078.5) ? 1 : 0)
+//        ;
+//
+//        this.ON.excelserial1904.day = j - this.J1904;
 
         //  Update Unix time()
         // ---------------------------------------------------------------------------
@@ -1086,7 +1085,25 @@ class Algorithms {
 
 
 //  calcGregorian  --  Perform calculation starting with a Gregorian date
-    calcGregorian () {
+    calcGregorian (dateArray) {
+        if (dateArray[0]) {
+            this.ON.gregorian.year = dateArray[0];
+        }
+        if (dateArray[1]) {
+            this.ON.gregorian.month = dateArray[1];
+        }
+        if (dateArray[2]) {
+            this.ON.gregorian.day = dateArray[2];
+        }
+        if (dateArray[3]) {
+            this.ON.gregorian.hour = dateArray[3];
+        }
+        if (dateArray[4]) {
+            this.ON.gregorian.minute = dateArray[4];
+        }
+        if (dateArray[5]) {
+            this.ON.gregorian.second = dateArray[5];
+        }
         this.updateFromGregorian();
     }
 
@@ -1094,168 +1111,91 @@ class Algorithms {
     calcJulian () {
         var j, date, time;
 
-        j = new Number(document.julianday.day.value);
+        j = new Number(this.ON.julianday);
         date = this.jd_to_gregorian(j);
         time = this.ASTRO.jhms(j);
 
         this.ON.gregorian.year = date[0];
         this.ON.gregorian.month = date[1] - 1;
         this.ON.gregorian.day = date[2];
-        this.ON.gregorian.hour = pad(time[0], 2, " ");
-        this.ON.gregorian.minute = pad(time[1], 2, "0");
-        this.ON.gregorian.second = pad(time[2], 2, "0");
-
-//        document.gregorian.year.value = date[0];
-//        document.gregorian.month.selectedIndex = date[1] - 1;
-//        document.gregorian.day.value = date[2];
-//        document.gregorian.hour.value = pad(time[0], 2, " ");
-//        document.gregorian.min.value = pad(time[1], 2, "0");
-//        document.gregorian.sec.value = pad(time[2], 2, "0");
+//        this.ON.gregorian.hour = this.pad(time[0], 2, " ");
+//        this.ON.gregorian.minute = this.pad(time[1], 2, "0");
+//        this.ON.gregorian.second = this.pad(time[2], 2, "0");
         this.updateFromGregorian();
     }
 
 //  setJulian  --  Set Julian date and update all calendars
     setJulian (j) {
-
-        this.ON.julianday.day = new Number(j);
-//        document.julianday.day.value = new Number(j);
+        this.ON.julianday = new Number(j);
         this.calcJulian();
     }
 
-//  calcModifiedJulian  --  Update from Modified Julian day
-    calcModifiedJulian () {
-        this.setJulian((new Number(document.modifiedjulianday.day.value)) + this.JMJD);
-    }
-
-//  calcJulianCalendar  --  Update from Julian calendar
-    calcJulianCalendar () {
-        this.setJulian(this.julian_to_jd((new Number(document.juliancalendar.year.value)),
-          document.juliancalendar.month.selectedIndex + 1,
-          (new Number(document.juliancalendar.day.value))));
-    }
-
-//  calcHebrew  --  Update from Hebrew calendar
-    calcHebrew () {
-        this.setJulian(this.hebrew_to_jd((new Number(document.hebrew.year.value)),
-          document.hebrew.month.selectedIndex + 1,
-          (new Number(document.hebrew.day.value))));
-    }
-
-//  calcIslamic  --  Update from Islamic calendar
-    calcIslamic () {
-        this.setJulian(this.islamic_to_jd((new Number(document.islamic.year.value)),
-          document.islamic.month.selectedIndex + 1,
-          (new Number(document.islamic.day.value))));
-    }
 
 //  calcPersian  --  Update from Persian calendar
-    calcPersian () {
-        this.setJulian(this.persian_to_jd((new Number(document.persian.year.value)),
-          document.persian.month.selectedIndex + 1,
-          (new Number(document.persian.day.value))));
+    calcPersian (dateArray) {
+        if (dateArray[0]) {
+            this.ON.persian.year = dateArray[0];
+        }
+        if (dateArray[1]) {
+            this.ON.persian.month = dateArray[1];
+        }
+        if (dateArray[2]) {
+            this.ON.persian.day = dateArray[2];
+        }
+        if (dateArray[3]) {
+            this.ON.gregorian.hour = dateArray[3];
+        }
+        if (dateArray[4]) {
+            this.ON.gregorian.minute = dateArray[4];
+        }
+        if (dateArray[5]) {
+            this.ON.gregorian.second = dateArray[5];
+        }
+
+        this.setJulian(
+          this.persian_to_jd(
+            this.ON.persian.year,
+            this.ON.persian.month,
+            this.ON.persian.day)
+        );
     }
 
 //  calcPersiana  --  Update from Persian astronomical calendar
-    calcPersiana () {
-        this.setJulian(this.persiana_to_jd((new Number(document.persiana.year.value)),
-            document.persiana.month.selectedIndex + 1,
-            (new Number(document.persiana.day.value))) + 0.5);
-    }
-
-//  calcMayanCount  --  Update from the Mayan Long Count
-    calcMayanCount () {
-        this.setJulian(this.mayan_count_to_jd((new Number(document.mayancount.baktun.value)),
-          (new Number(document.mayancount.katun.value)),
-          (new Number(document.mayancount.tun.value)),
-          (new Number(document.mayancount.uinal.value)),
-          (new Number(document.mayancount.kin.value))));
-    }
-
-//  calcIndianCivilCalendar  --  Update from Indian Civil Calendar
-    calcIndianCivilCalendar () {
-        this.setJulian(this.indian_civil_to_jd(
-          (new Number(document.indiancivilcalendar.year.value)),
-          document.indiancivilcalendar.month.selectedIndex + 1,
-          (new Number(document.indiancivilcalendar.day.value))));
-    }
-
-//  calcFrench  -- Update from French Republican calendar
-    calcFrench () {
-        var decade, j, mois;
-
-        j = document.french.jour.selectedIndex;
-        decade = document.french.decade.selectedIndex;
-        mois = document.french.mois.selectedIndex;
-
-        /*  If the currently selected day is one of the sansculottides,
-         adjust the index to be within that period and force the
-         decade to zero and the month to 12, designating the
-         intercalary interval.  */
-
-        if (j > 9) {
-            j -= 11;
-            decade = 0;
-            mois = 12;
+    calcPersiana (dateArray) {
+        if (dateArray[0]) {
+            this.ON.persianAstro.year = dateArray[0];
+        }
+        if (dateArray[1]) {
+            this.ON.persianAstro.month = dateArray[1];
+        }
+        if (dateArray[2]) {
+            this.ON.persianAstro.day = dateArray[2];
         }
 
-        /*  If the selected month is the pseudo-month of the five or
-         six sansculottides, ensure that the decade is 0 and the day
-         number doesn't exceed six.  To avoid additional overhead, we
-         don't test whether a day number of 6 is valid for this year,
-         but rather simply permit it to wrap into the first day of
-         the following year if this is a 365 day year.  */
+//        if (dateArray[3]) {
+//            this.ON.gregorian.hour = dateArray[3];
+//        }
+//        if (dateArray[4]) {
+//            this.ON.gregorian.minute = dateArray[4];
+//        }
+//        if (dateArray[5]) {
+//            this.ON.gregorian.second = dateArray[5];
+//        }
 
-        if (mois == 12) {
-            decade = 0;
-            if (j > 5) {
-                j = 0;
-            }
-        }
-
-        this.setJulian(this.french_revolutionary_to_jd((new Number(document.french.an.value)),
-          mois + 1,
-          decade + 1,
-          j + 1));
+        this.setJulian(
+          this.persiana_to_jd(
+            this.ON.persianAstro.year,
+            this.ON.persianAstro.month,
+            this.ON.persianAstro.day + 0.5)
+        );
     }
+
 
 //  calcGregSerial  --  Update from Gregorian serial day number
     calcGregSerial () {
         this.setJulian((new Number(document.gregserial.day.value)) + J0000);
     }
 
-//  calcExcelSerial1900  --  Perform calculation starting with an Excel 1900 serial date
-    calcExcelSerial1900 () {
-        var d = new Number(document.excelserial1900.day.value);
-
-        /* Idiot Kode Kiddies didn't twig to the fact
-         (proclaimed in 1582) that 1900 wasn't a leap year,
-         so every Excel day number in every database on Earth
-         which represents a date subsequent to February 28,
-         1900 is off by one.  Note that there is no
-         acknowledgement of this betrayal or warning of its
-         potential consequences in the Excel help file.  Thank
-         you so much Mister Talking Paper Clip.  Some day
-         we're going to celebrate your extinction like it was
-         February 29 ... 1900.  */
-
-        if (d > 60) {
-            d--;
-        }
-
-        this.setJulian((d - 1) + this.J1900);
-    }
-
-//  calcExcelSerial1904  --  Perform calculation starting with an Excel 1904 serial date
-    calcExcelSerial1904 () {
-        this.setJulian((new Number(document.excelserial1904.day.value)) + this.J1904);
-    }
-
-//  calcUnixTime  --  Update from specified Unix time() value
-    calcUnixTime () {
-        var t = new Number(document.unixtime.time.value);
-
-        this.setJulian(this.J1970 + (t / (60 * 60 * 24)));
-    }
 
 //  calcIsoWeek  --  Update from specified ISO year, week, and day
     calcIsoWeek () {
@@ -1275,42 +1215,160 @@ class Algorithms {
     }
 
 
-    /*  setDateToToday  --  Preset the fields in
-     the request form to today's date.  */
-    setDateToToday () {
-        var today = new Date();
+//    /*  setDateToToday  --  Preset the fields in
+//     the request form to today's date.  */
+//    setDateToToday () {
+//        var today = new Date();
+//
+//        /*  The following idiocy is due to bizarre incompatibilities
+//         in the behaviour of getYear() between Netscrape and
+//         Exploder.  The ideal solution is to use getFullYear(),
+//         which returns the actual year number, but that would
+//         break this code on versions of JavaScript prior to
+//         1.2.  So, for the moment we use the following code
+//         which works for all versions of JavaScript and browsers
+//         for all year numbers greater than 1000.  When we're willing
+//         to require JavaScript 1.2, this may be replaced by
+//         the single line:
+//
+//         document.gregorian.year.value = today.getFullYear();
+//
+//         Thanks to Larry Gilbert for pointing out this problem.
+//         */
+//
+//        var y = today.getYear();
+//        if (y < 1000) {
+//            y += 1900;
+//        }
+//
+//        this.ON.gregorian = {
+//            year: y,
+//            month: today.getMonth(),
+//            day: today.getDate(),
+//            hour: 0,
+//            minute: 0,
+//            second: 0,
+//            millisecond: 0,
+//        };
+//    }
+//
 
-        /*  The following idiocy is due to bizarre incompatibilities
-         in the behaviour of getYear() between Netscrape and
-         Exploder.  The ideal solution is to use getFullYear(),
-         which returns the actual year number, but that would
-         break this code on versions of JavaScript prior to
-         1.2.  So, for the moment we use the following code
-         which works for all versions of JavaScript and browsers
-         for all year numbers greater than 1000.  When we're willing
-         to require JavaScript 1.2, this may be replaced by
-         the single line:
+//  calcModifiedJulian  --  Update from Modified Julian day
+//    calcModifiedJulian () {
+//        this.setJulian((new Number(document.modifiedjulianday.day.value)) + this.JMJD);
+//    }
 
-         document.gregorian.year.value = today.getFullYear();
+//  calcJulianCalendar  --  Update from Julian calendar
+//    calcJulianCalendar () {
+//        this.setJulian(this.julian_to_jd((new Number(document.juliancalendar.year.value)),
+//          document.juliancalendar.month.selectedIndex + 1,
+//          (new Number(document.juliancalendar.day.value))));
+//    }
 
-         Thanks to Larry Gilbert for pointing out this problem.
-         */
+//  calcHebrew  --  Update from Hebrew calendar
+//    calcHebrew () {
+//        this.setJulian(this.hebrew_to_jd((new Number(document.hebrew.year.value)),
+//          document.hebrew.month.selectedIndex + 1,
+//          (new Number(document.hebrew.day.value))));
+//    }
 
-        var y = today.getYear();
-        if (y < 1000) {
-            y += 1900;
-        }
+//  calcIslamic  --  Update from Islamic calendar
+//    calcIslamic () {
+//        this.setJulian(this.islamic_to_jd((new Number(document.islamic.year.value)),
+//          document.islamic.month.selectedIndex + 1,
+//          (new Number(document.islamic.day.value))));
+//    }
 
-        this.ON.gregorian = {
-            year: y,
-            month: today.getMonth(),
-            day: today.getDate(),
-            hour: 0,
-            minute: 0,
-            second: 0,
-            millisecond: 0,
-        };
-    }
+//  calcMayanCount  --  Update from the Mayan Long Count
+//    calcMayanCount () {
+//        this.setJulian(this.mayan_count_to_jd((new Number(document.mayancount.baktun.value)),
+//          (new Number(document.mayancount.katun.value)),
+//          (new Number(document.mayancount.tun.value)),
+//          (new Number(document.mayancount.uinal.value)),
+//          (new Number(document.mayancount.kin.value))));
+//    }
+
+//  calcIndianCivilCalendar  --  Update from Indian Civil Calendar
+//    calcIndianCivilCalendar () {
+//        this.setJulian(this.indian_civil_to_jd(
+//          (new Number(document.indiancivilcalendar.year.value)),
+//          document.indiancivilcalendar.month.selectedIndex + 1,
+//          (new Number(document.indiancivilcalendar.day.value))));
+//    }
+
+//  calcFrench  -- Update from French Republican calendar
+//    calcFrench () {
+//        var decade, j, mois;
+//
+//        j = document.french.jour.selectedIndex;
+//        decade = document.french.decade.selectedIndex;
+//        mois = document.french.mois.selectedIndex;
+//
+//        /*  If the currently selected day is one of the sansculottides,
+//         adjust the index to be within that period and force the
+//         decade to zero and the month to 12, designating the
+//         intercalary interval.  */
+//
+//        if (j > 9) {
+//            j -= 11;
+//            decade = 0;
+//            mois = 12;
+//        }
+//
+//        /*  If the selected month is the pseudo-month of the five or
+//         six sansculottides, ensure that the decade is 0 and the day
+//         number doesn't exceed six.  To avoid additional overhead, we
+//         don't test whether a day number of 6 is valid for this year,
+//         but rather simply permit it to wrap into the first day of
+//         the following year if this is a 365 day year.  */
+//
+//        if (mois == 12) {
+//            decade = 0;
+//            if (j > 5) {
+//                j = 0;
+//            }
+//        }
+//
+//        this.setJulian(this.french_revolutionary_to_jd((new Number(document.french.an.value)),
+//          mois + 1,
+//          decade + 1,
+//          j + 1));
+//    }
+
+//  calcExcelSerial1900  --  Perform calculation starting with an Excel 1900 serial date
+//    calcExcelSerial1900 () {
+//        var d = new Number(document.excelserial1900.day.value);
+//
+//        /* Idiot Kode Kiddies didn't twig to the fact
+//         (proclaimed in 1582) that 1900 wasn't a leap year,
+//         so every Excel day number in every database on Earth
+//         which represents a date subsequent to February 28,
+//         1900 is off by one.  Note that there is no
+//         acknowledgement of this betrayal or warning of its
+//         potential consequences in the Excel help file.  Thank
+//         you so much Mister Talking Paper Clip.  Some day
+//         we're going to celebrate your extinction like it was
+//         February 29 ... 1900.  */
+//
+//        if (d > 60) {
+//            d--;
+//        }
+//
+//        this.setJulian((d - 1) + this.J1900);
+//    }
+
+//  calcExcelSerial1904  --  Perform calculation starting with an Excel 1904 serial date
+//    calcExcelSerial1904 () {
+//        this.setJulian((new Number(document.excelserial1904.day.value)) + this.J1904);
+//    }
+
+//  calcUnixTime  --  Update from specified Unix time() value
+//    calcUnixTime () {
+//        var t = new Number(document.unixtime.time.value);
+//
+//        this.setJulian(this.J1970 + (t / (60 * 60 * 24)));
+//    }
+
 }
 
 
