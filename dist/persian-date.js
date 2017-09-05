@@ -595,7 +595,7 @@ var PersianDateClass = function () {
     function PersianDateClass(input) {
         _classCallCheck(this, PersianDateClass);
 
-        this.calendarType = 'persian';
+        this.calendarType = 'persianAstro';
 
         this.algorithms = new Algorithms();
         // Convert Any thing to Gregorian Date
@@ -604,9 +604,9 @@ var PersianDateClass = function () {
         } else if (TypeChecking.isArray(input)) {
             //  Encapsulate Input Array
             if (this.calendarType == 'persianAstro') {
-                this.algorithms.calcPersiana([input[0], input[1], input[2], input[3], input[4], input[5], input[6]]);
+                this.algorithms.calcPersiana([input[0], input[1] ? input[1] : 1, input[2] ? input[2] : 1, input[3], input[4], input[5], input[6]]);
             } else if (this.calendarType == 'persian') {
-                this.algorithms.calcPersian([input[0], input[1], input[2], input[3], input[4], input[5], input[6]]);
+                this.algorithms.calcPersian([input[0], input[1] ? input[1] : 1, input[2] ? input[2] : 1, input[3], input[4], input[5], input[6]]);
             } else if (this.calendarType == 'gregorian') {
                 this.algorithms.calcGregorian([input[0], input[1], input[2], input[3], input[4], input[5], input[6]]);
             }
@@ -1233,8 +1233,19 @@ var PersianDateClass = function () {
 
     }, {
         key: 'isLeapYear',
-        value: function isLeapYear() {
-            return this.calendar().leap;
+        value: function isLeapYear(year) {
+            if (year == undefined) {
+                year = this.year();
+            }
+            if (this.calendarType == 'persian') {
+                return this.algorithms.leap_persian(year);
+            }
+            if (this.calendarType == 'persianAstro') {
+                return this.algorithms.leap_persiana(year);
+            }
+            if (this.calendarType == 'gregorian') {
+                return this.algorithms.leap_gregorian(year);
+            }
         }
 
         /**
@@ -1252,14 +1263,8 @@ var PersianDateClass = function () {
             if (month < 1 || month > 12) return 0;
             if (month < 7) return 31;
             if (month < 12) return 30;
-            if (this.calendarType == 'persian' && this.algorithms.leap_persian(year)) {
-                return 30;
-            }
-            if (this.calendarType == 'persianAstro' && this.algorithms.leap_persiana(year)) {
-                return 30;
-            }
-            // TODO: need fix
-            if (this.calendarType == 'gregorian' && this.algorithms.leap_persiana(year)) {
+            // TODO: need fix in gregorian mode
+            if (this.isLeapYear(yearInput)) {
                 return 30;
             }
             return 29;

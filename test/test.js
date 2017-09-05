@@ -141,7 +141,7 @@ describe('daysInMonth', function () {
         assert.deepEqual(new pDate().daysInMonth(1394, 12), 29);
     });
 
-    it('leap year', function () {
+    it('year', function () {
         assert.deepEqual(new pDate().daysInMonth(1404, 1), 31);
         assert.deepEqual(new pDate().daysInMonth(1404, 2), 31);
         assert.deepEqual(new pDate().daysInMonth(1404, 3), 31);
@@ -153,10 +153,10 @@ describe('daysInMonth', function () {
         assert.deepEqual(new pDate().daysInMonth(1404, 9), 30);
         assert.deepEqual(new pDate().daysInMonth(1404, 10), 30);
         assert.deepEqual(new pDate().daysInMonth(1404, 11), 30);
-        assert.deepEqual(new pDate().daysInMonth(1404, 12), 30);
+        assert.deepEqual(new pDate().daysInMonth(1404, 12), 29);
     });
 
-    it('None leap year', function () {
+    it('leap year', function () {
         assert.deepEqual(new pDate().daysInMonth(1403, 1), 31);
         assert.deepEqual(new pDate().daysInMonth(1403, 2), 31);
         assert.deepEqual(new pDate().daysInMonth(1403, 3), 31);
@@ -168,7 +168,7 @@ describe('daysInMonth', function () {
         assert.deepEqual(new pDate().daysInMonth(1403, 9), 30);
         assert.deepEqual(new pDate().daysInMonth(1403, 10), 30);
         assert.deepEqual(new pDate().daysInMonth(1403, 11), 30);
-        assert.deepEqual(new pDate().daysInMonth(1403, 12), 29);
+        assert.deepEqual(new pDate().daysInMonth(1403, 12), 30);
     });
 
 });
@@ -193,8 +193,8 @@ describe('Leap Year', function () {
 
     it('print next 5 leap year', function () {
         let startYear = 1396,
-            endYear = 1420,
-            indexYear = startYear;
+          endYear = 1420,
+          indexYear = startYear;
         while (indexYear < endYear) {
             let createdDate = new pDate([indexYear]);
             if (createdDate.isLeapYear()) {
@@ -207,14 +207,14 @@ describe('Leap Year', function () {
     });
 });
 
-//describe('toDate', function () {
-//    it('toDate', function () {
-//        let gDateGenerated = new Date();
-//        let formattedDate = new pDate(gDateGenerated);
-//        assert.deepEqual(formattedDate.toDate(), gDateGenerated);
-//    });
-//});
-//
+describe('toDate', function () {
+    it('toDate', function () {
+        let gDateGenerated = new Date();
+        let formattedDate = new pDate(gDateGenerated);
+        assert.deepEqual(formattedDate.toDate(), gDateGenerated);
+    });
+});
+
 //describe('toArray', function () {
 //    it('Convert Array [1391, 1, 1, 1, 1, 1, 1]', function () {
 //        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1, 1]).toArray();
