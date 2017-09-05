@@ -656,8 +656,7 @@ var PersianDateClass = function () {
     }, {
         key: 'clone',
         value: function clone() {
-            var self = this;
-            return new PersianDateClass(self.ON.gregorian.unix);
+            return new PersianDateClass(this.ON.gDate);
         }
     }, {
         key: 'algorithmsCalc',
@@ -784,7 +783,7 @@ var PersianDateClass = function () {
     }, {
         key: 'dates',
         value: function dates(input) {
-            return this.calendar(input);
+            return this.date(input);
         }
 
         /**
@@ -1050,7 +1049,7 @@ var PersianDateClass = function () {
                     return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
                 case 'weeks':
                 case 'week':
-                    var weekDayNumber = this.pDate.weekDayNumber;
+                    var weekDayNumber = this.calendar.weekday;
                     if (weekDayNumber === 0) {
                         return new PersianDateClass([this.year(), this.month(), this.date()]);
                     } else {
@@ -1096,7 +1095,7 @@ var PersianDateClass = function () {
                     return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
                 case 'weeks':
                 case 'week':
-                    var weekDayNumber = this.pDate.weekDayNumber;
+                    var weekDayNumber = this.calendar().weekDayNumber;
                     if (weekDayNumber === 6) {
                         weekDayNumber = 7;
                     } else {
@@ -1160,7 +1159,10 @@ var PersianDateClass = function () {
                     /* istanbul ignore next */
                     utcStamp = this.valueOf() + offsetMils;
                 }
-                this.ON.gDate = new Date(utcStamp);
+
+                var utcDate = new Date(utcStamp),
+                    d = new PersianDateClass(utcDate);
+                this.algorithmsCalc(d);
                 this._utcMode = false;
                 return this;
             }
@@ -1189,8 +1191,8 @@ var PersianDateClass = function () {
                     /* istanbul ignore next */
                     utcStamp = this.valueOf() - offsetMils;
                 }
-                var utcDate = new Date(utcStamp);
-                var d = new PersianDateClass(utcDate);
+                var utcDate = new Date(utcStamp),
+                    d = new PersianDateClass(utcDate);
                 this.algorithmsCalc(d);
                 this._utcMode = true;
                 return this;

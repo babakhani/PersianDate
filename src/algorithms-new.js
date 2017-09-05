@@ -30,7 +30,7 @@ class Algorithms {
         this.JMJD = 2400000.5;                // Epoch of Modified Julian Date system
         this.J1900 = 2415020.5;                // Epoch (day 1) of Excel 1900 date system (PC)
         this.J1904 = 2416480.5;                // Epoch (day 0) of Excel 1904 date system (Mac)
-        this.NormLeap = [ false/*"Normal year"*/, true/*"Leap year"*/];
+        this.NormLeap = [false/*"Normal year"*/, true/*"Leap year"*/];
         // TODO END
         this.GREGORIAN_EPOCH = 1721425.5;
         this.JULIAN_EPOCH = 1721423.5;
