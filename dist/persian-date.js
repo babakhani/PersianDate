@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  0.2.4
+ * persian-date -  0.2.5
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -363,18 +363,6 @@ var Helpers = function () {
         }
 
         /**
-         *
-         * @param input
-         * @returns {boolean}
-         */
-
-    }, {
-        key: 'isUndefined',
-        value: function isUndefined(input) {
-            return typeof input === 'undefined';
-        }
-
-        /**
          * @param number
          * @param targetLength
          * @returns {string}
@@ -628,7 +616,7 @@ var PersianDateClass = function () {
 
         this.ON = this.algorithms.ON;
 
-        this.version = "0.2.4";
+        this.version = "0.2.5";
         this.formatPersian = '_default';
         this._utcMode = false;
         return this;
@@ -2231,73 +2219,71 @@ var Algorithms = function () {
          "sansculottides" are considered a thirteenth
          month in the results of this function.  */
 
-    }, {
-        key: 'jd_to_french_revolutionary',
-        value: function jd_to_french_revolutionary(jd) {
-            var an, mois, decade, jour, adr, equinoxe;
+        //    jd_to_french_revolutionary (jd) {
+        //        var an, mois, decade, jour,
+        //          adr, equinoxe;
+        //
+        //        jd = Math.floor(jd) + 0.5;
+        //        adr = this.annee_da_la_revolution(jd);
+        //        an = adr[0];
+        //        equinoxe = adr[1];
+        //        mois = Math.floor((jd - equinoxe) / 30) + 1;
+        //        jour = (jd - equinoxe) % 30;
+        //        decade = Math.floor(jour / 10) + 1;
+        //        jour = (jour % 10) + 1;
+        //
+        //        return [an, mois, decade, jour];
+        //    }
 
-            jd = Math.floor(jd) + 0.5;
-            adr = this.annee_da_la_revolution(jd);
-            an = adr[0];
-            equinoxe = adr[1];
-            mois = Math.floor((jd - equinoxe) / 30) + 1;
-            jour = (jd - equinoxe) % 30;
-            decade = Math.floor(jour / 10) + 1;
-            jour = jour % 10 + 1;
-
-            return [an, mois, decade, jour];
-        }
 
         /*  FRENCH_REVOLUTIONARY_TO_JD  --  Obtain Julian day from a given French
          Revolutionary calendar date.  */
 
-    }, {
-        key: 'french_revolutionary_to_jd',
-        value: function french_revolutionary_to_jd(an, mois, decade, jour) {
-            var adr, equinoxe, guess, jd;
+        //    french_revolutionary_to_jd (an, mois, decade, jour) {
+        //        var adr, equinoxe, guess, jd;
+        //
+        //        guess = this.FRENCH_REVOLUTIONARY_EPOCH + (this.ASTRO.TropicalYear * ((an - 1) - 1));
+        //        adr = [an - 1, 0];
+        //
+        //        while (adr[0] < an) {
+        //            adr = this.annee_da_la_revolution(guess);
+        //            guess = adr[1] + (this.ASTRO.TropicalYear + 2);
+        //        }
+        //        equinoxe = adr[1];
+        //
+        //        jd = equinoxe + (30 * (mois - 1)) + (10 * (decade - 1)) + (jour - 1);
+        //        return jd;
+        //    }
 
-            guess = this.FRENCH_REVOLUTIONARY_EPOCH + this.ASTRO.TropicalYear * (an - 1 - 1);
-            adr = [an - 1, 0];
-
-            while (adr[0] < an) {
-                adr = this.annee_da_la_revolution(guess);
-                guess = adr[1] + (this.ASTRO.TropicalYear + 2);
-            }
-            equinoxe = adr[1];
-
-            jd = equinoxe + 30 * (mois - 1) + 10 * (decade - 1) + (jour - 1);
-            return jd;
-        }
 
         //  LEAP_ISLAMIC  --  Is a given year a leap year in the Islamic calendar ?
+        //    leap_islamic (year) {
+        //        return (((year * 11) + 14) % 30) < 11;
+        //    }
 
-    }, {
-        key: 'leap_islamic',
-        value: function leap_islamic(year) {
-            return (year * 11 + 14) % 30 < 11;
-        }
 
         //  ISLAMIC_TO_JD  --  Determine Julian day from Islamic date
+        //    islamic_to_jd (year, month, day) {
+        //        return (day +
+        //          Math.ceil(29.5 * (month - 1)) +
+        //          (year - 1) * 354 +
+        //          Math.floor((3 + (11 * year)) / 30) +
+        //          this.ISLAMIC_EPOCH) - 1;
+        //    }
 
-    }, {
-        key: 'islamic_to_jd',
-        value: function islamic_to_jd(year, month, day) {
-            return day + Math.ceil(29.5 * (month - 1)) + (year - 1) * 354 + Math.floor((3 + 11 * year) / 30) + this.ISLAMIC_EPOCH - 1;
-        }
 
         //  JD_TO_ISLAMIC  --  Calculate Islamic date from Julian day
+        //    jd_to_islamic (jd) {
+        //        var year, month, day;
+        //
+        //        jd = Math.floor(jd) + 0.5;
+        //        year = Math.floor(((30 * (jd - this.ISLAMIC_EPOCH)) + 10646) / 10631);
+        //        month = Math.min(12,
+        //          Math.ceil((jd - (29 + this.islamic_to_jd(year, 1, 1))) / 29.5) + 1);
+        //        day = (jd - this.islamic_to_jd(year, month, 1)) + 1;
+        //        return [year, month, day];
+        //    }
 
-    }, {
-        key: 'jd_to_islamic',
-        value: function jd_to_islamic(jd) {
-            var year, month, day;
-
-            jd = Math.floor(jd) + 0.5;
-            year = Math.floor((30 * (jd - this.ISLAMIC_EPOCH) + 10646) / 10631);
-            month = Math.min(12, Math.ceil((jd - (29 + this.islamic_to_jd(year, 1, 1))) / 29.5) + 1);
-            day = jd - this.islamic_to_jd(year, month, 1) + 1;
-            return [year, month, day];
-        }
 
         /*  TEHRAN_EQUINOX  --  Determine Julian day and fraction of the
          March equinox at the Tehran meridian in
@@ -3436,21 +3422,24 @@ var ASTRO = function () {
          The right ascension and declination are returned
          as a two-element Array in that order.  */
 
-    }, {
-        key: "ecliptoeq",
-        value: function ecliptoeq(jd, Lambda, Beta) {
-            var eps, Ra, Dec;
-            /* Obliquity of the ecliptic. */
-            eps = this.dtr(this.obliqeq(jd));
-            log += "Obliquity: " + this.rtd(eps) + "\n";
-
-            Ra = this.rtd(Math.atan2(Math.cos(eps) * Math.sin(this.dtr(Lambda)) - Math.tan(this.dtr(Beta)) * Math.sin(eps), Math.cos(this.dtr(Lambda))));
-            log += "RA = " + Ra + "\n";
-            Ra = this.fixangle(this.rtd(Math.atan2(Math.cos(eps) * Math.sin(this.dtr(Lambda)) - Math.tan(this.dtr(Beta)) * Math.sin(eps), Math.cos(this.dtr(Lambda)))));
-            Dec = this.rtd(Math.asin(Math.sin(eps) * Math.sin(this.dtr(Lambda)) * Math.cos(this.dtr(Beta)) + Math.sin(this.dtr(Beta)) * Math.cos(eps)));
-
-            return new Array(Ra, Dec);
-        }
+        //    ecliptoeq (jd, Lambda, Beta) {
+        //        var eps, Ra, Dec;
+        //        /* Obliquity of the ecliptic. */
+        //        eps = this.dtr(this.obliqeq(jd));
+        //        log += "Obliquity: " + this.rtd(eps) + "\n";
+        //
+        //        Ra = this.rtd(Math.atan2((Math.cos(eps) * Math.sin(this.dtr(Lambda)) -
+        //          (Math.tan(this.dtr(Beta)) * Math.sin(eps))),
+        //          Math.cos(this.dtr(Lambda))));
+        //        log += "RA = " + Ra + "\n";
+        //        Ra = this.fixangle(this.rtd(Math.atan2((Math.cos(eps) * Math.sin(this.dtr(Lambda)) -
+        //          (Math.tan(this.dtr(Beta)) * Math.sin(eps))),
+        //          Math.cos(this.dtr(Lambda)))));
+        //        Dec = this.rtd(Math.asin((Math.sin(eps) * Math.sin(this.dtr(Lambda)) * Math.cos(this.dtr(Beta))) +
+        //          (Math.sin(this.dtr(Beta)) * Math.cos(eps))));
+        //
+        //        return new Array(Ra, Dec);
+        //    }
 
         /*  DELTAT  --  Determine the difference, in seconds, between
          Dynamical time and Universal time.  */
@@ -3785,16 +3774,6 @@ module.exports = {
      */
     isDate: function isDate(input) {
         return input instanceof Date;
-    },
-
-
-    /**
-     *
-     * @param input
-     * @returns {boolean}
-     */
-    isUndefined: function isUndefined(input) {
-        return typeof input === 'undefined';
     }
 };
 

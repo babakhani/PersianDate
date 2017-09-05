@@ -511,70 +511,70 @@ class Algorithms {
      "sansculottides" are considered a thirteenth
      month in the results of this function.  */
 
-    jd_to_french_revolutionary (jd) {
-        var an, mois, decade, jour,
-          adr, equinoxe;
-
-        jd = Math.floor(jd) + 0.5;
-        adr = this.annee_da_la_revolution(jd);
-        an = adr[0];
-        equinoxe = adr[1];
-        mois = Math.floor((jd - equinoxe) / 30) + 1;
-        jour = (jd - equinoxe) % 30;
-        decade = Math.floor(jour / 10) + 1;
-        jour = (jour % 10) + 1;
-
-        return [an, mois, decade, jour];
-    }
+//    jd_to_french_revolutionary (jd) {
+//        var an, mois, decade, jour,
+//          adr, equinoxe;
+//
+//        jd = Math.floor(jd) + 0.5;
+//        adr = this.annee_da_la_revolution(jd);
+//        an = adr[0];
+//        equinoxe = adr[1];
+//        mois = Math.floor((jd - equinoxe) / 30) + 1;
+//        jour = (jd - equinoxe) % 30;
+//        decade = Math.floor(jour / 10) + 1;
+//        jour = (jour % 10) + 1;
+//
+//        return [an, mois, decade, jour];
+//    }
 
 
     /*  FRENCH_REVOLUTIONARY_TO_JD  --  Obtain Julian day from a given French
      Revolutionary calendar date.  */
 
-    french_revolutionary_to_jd (an, mois, decade, jour) {
-        var adr, equinoxe, guess, jd;
-
-        guess = this.FRENCH_REVOLUTIONARY_EPOCH + (this.ASTRO.TropicalYear * ((an - 1) - 1));
-        adr = [an - 1, 0];
-
-        while (adr[0] < an) {
-            adr = this.annee_da_la_revolution(guess);
-            guess = adr[1] + (this.ASTRO.TropicalYear + 2);
-        }
-        equinoxe = adr[1];
-
-        jd = equinoxe + (30 * (mois - 1)) + (10 * (decade - 1)) + (jour - 1);
-        return jd;
-    }
+//    french_revolutionary_to_jd (an, mois, decade, jour) {
+//        var adr, equinoxe, guess, jd;
+//
+//        guess = this.FRENCH_REVOLUTIONARY_EPOCH + (this.ASTRO.TropicalYear * ((an - 1) - 1));
+//        adr = [an - 1, 0];
+//
+//        while (adr[0] < an) {
+//            adr = this.annee_da_la_revolution(guess);
+//            guess = adr[1] + (this.ASTRO.TropicalYear + 2);
+//        }
+//        equinoxe = adr[1];
+//
+//        jd = equinoxe + (30 * (mois - 1)) + (10 * (decade - 1)) + (jour - 1);
+//        return jd;
+//    }
 
 
     //  LEAP_ISLAMIC  --  Is a given year a leap year in the Islamic calendar ?
-    leap_islamic (year) {
-        return (((year * 11) + 14) % 30) < 11;
-    }
+//    leap_islamic (year) {
+//        return (((year * 11) + 14) % 30) < 11;
+//    }
 
 
     //  ISLAMIC_TO_JD  --  Determine Julian day from Islamic date
-    islamic_to_jd (year, month, day) {
-        return (day +
-          Math.ceil(29.5 * (month - 1)) +
-          (year - 1) * 354 +
-          Math.floor((3 + (11 * year)) / 30) +
-          this.ISLAMIC_EPOCH) - 1;
-    }
+//    islamic_to_jd (year, month, day) {
+//        return (day +
+//          Math.ceil(29.5 * (month - 1)) +
+//          (year - 1) * 354 +
+//          Math.floor((3 + (11 * year)) / 30) +
+//          this.ISLAMIC_EPOCH) - 1;
+//    }
 
 
     //  JD_TO_ISLAMIC  --  Calculate Islamic date from Julian day
-    jd_to_islamic (jd) {
-        var year, month, day;
-
-        jd = Math.floor(jd) + 0.5;
-        year = Math.floor(((30 * (jd - this.ISLAMIC_EPOCH)) + 10646) / 10631);
-        month = Math.min(12,
-          Math.ceil((jd - (29 + this.islamic_to_jd(year, 1, 1))) / 29.5) + 1);
-        day = (jd - this.islamic_to_jd(year, month, 1)) + 1;
-        return [year, month, day];
-    }
+//    jd_to_islamic (jd) {
+//        var year, month, day;
+//
+//        jd = Math.floor(jd) + 0.5;
+//        year = Math.floor(((30 * (jd - this.ISLAMIC_EPOCH)) + 10646) / 10631);
+//        month = Math.min(12,
+//          Math.ceil((jd - (29 + this.islamic_to_jd(year, 1, 1))) / 29.5) + 1);
+//        day = (jd - this.islamic_to_jd(year, month, 1)) + 1;
+//        return [year, month, day];
+//    }
 
 
     /*  TEHRAN_EQUINOX  --  Determine Julian day and fraction of the

@@ -408,24 +408,24 @@ class ASTRO {
      The right ascension and declination are returned
      as a two-element Array in that order.  */
 
-    ecliptoeq (jd, Lambda, Beta) {
-        var eps, Ra, Dec;
-        /* Obliquity of the ecliptic. */
-        eps = this.dtr(this.obliqeq(jd));
-        log += "Obliquity: " + this.rtd(eps) + "\n";
-
-        Ra = this.rtd(Math.atan2((Math.cos(eps) * Math.sin(this.dtr(Lambda)) -
-          (Math.tan(this.dtr(Beta)) * Math.sin(eps))),
-          Math.cos(this.dtr(Lambda))));
-        log += "RA = " + Ra + "\n";
-        Ra = this.fixangle(this.rtd(Math.atan2((Math.cos(eps) * Math.sin(this.dtr(Lambda)) -
-          (Math.tan(this.dtr(Beta)) * Math.sin(eps))),
-          Math.cos(this.dtr(Lambda)))));
-        Dec = this.rtd(Math.asin((Math.sin(eps) * Math.sin(this.dtr(Lambda)) * Math.cos(this.dtr(Beta))) +
-          (Math.sin(this.dtr(Beta)) * Math.cos(eps))));
-
-        return new Array(Ra, Dec);
-    }
+//    ecliptoeq (jd, Lambda, Beta) {
+//        var eps, Ra, Dec;
+//        /* Obliquity of the ecliptic. */
+//        eps = this.dtr(this.obliqeq(jd));
+//        log += "Obliquity: " + this.rtd(eps) + "\n";
+//
+//        Ra = this.rtd(Math.atan2((Math.cos(eps) * Math.sin(this.dtr(Lambda)) -
+//          (Math.tan(this.dtr(Beta)) * Math.sin(eps))),
+//          Math.cos(this.dtr(Lambda))));
+//        log += "RA = " + Ra + "\n";
+//        Ra = this.fixangle(this.rtd(Math.atan2((Math.cos(eps) * Math.sin(this.dtr(Lambda)) -
+//          (Math.tan(this.dtr(Beta)) * Math.sin(eps))),
+//          Math.cos(this.dtr(Lambda)))));
+//        Dec = this.rtd(Math.asin((Math.sin(eps) * Math.sin(this.dtr(Lambda)) * Math.cos(this.dtr(Beta))) +
+//          (Math.sin(this.dtr(Beta)) * Math.cos(eps))));
+//
+//        return new Array(Ra, Dec);
+//    }
 
     /*  DELTAT  --  Determine the difference, in seconds, between
      Dynamical time and Universal time.  */
