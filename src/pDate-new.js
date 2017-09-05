@@ -25,18 +25,19 @@ class PersianDateClass {
                   input.getHours(),
                   input.getMinutes(),
                   input.getSeconds(),
+                  input.getMilliseconds()
               ]);
         }
         else if (TypeChecking.isArray(input)) {
             //  Encapsulate Input Array
             if (this.calendarType == 'persianAstro') {
-                this.algorithms.calcPersiana([input[0], input[1], input[2], input[3], input[4], input[5]]);
+                this.algorithms.calcPersiana([input[0], input[1], input[2], input[3], input[4], input[5], input[6]]);
             }
             else if (this.calendarType == 'persian') {
-                this.algorithms.calcPersian([input[0], input[1], input[2], input[3], input[4], input[5]]);
+                this.algorithms.calcPersian([input[0], input[1], input[2], input[3], input[4], input[5], input[6]]);
             }
             else if (this.calendarType == 'gregorian') {
-                this.algorithms.calcGregorian([input[0], input[1], input[2], input[3], input[4], input[5]]);
+                this.algorithms.calcGregorian([input[0], input[1], input[2], input[3], input[4], input[5], input[6]]);
             }
         }
         else if (TypeChecking.isNumber(input)) {
@@ -49,11 +50,20 @@ class PersianDateClass {
                   fromUnix.getHours(),
                   fromUnix.getMinutes(),
                   fromUnix.getSeconds(),
+                  fromUnix.getMilliseconds()
               ]);
         }
         // instance of pDate
         else if (input instanceof PersianDateClass) {
-            this.algorithms.calcPersiana([input.year(), input.month(), input.date(), input.hour(), input.minute(), input.second()]);
+            this.algorithms.calcPersiana([
+                input.year(),
+                input.month(),
+                input.date(),
+                input.hour(),
+                input.minute(),
+                input.second(),
+                input.getMilliseconds()
+            ]);
         }
         // ASP.NET JSON Date
         else if (input && input.substring(0, 6) === '/Date(') {
@@ -66,6 +76,7 @@ class PersianDateClass {
                   fromDotNet.getHours(),
                   fromDotNet.getMinutes(),
                   fromDotNet.getSeconds(),
+                  fromDotNet.getMilliseconds()
               ]);
         }
         else {
@@ -78,6 +89,7 @@ class PersianDateClass {
                   now.getHours(),
                   now.getMinutes(),
                   now.getSeconds(),
+                  now.getMilliseconds()
               ]);
         }
 
@@ -117,7 +129,8 @@ class PersianDateClass {
                 dateArray.getDate(),
                 dateArray.getHours(),
                 dateArray.getMinutes(),
-                dateArray.getSeconds()
+                dateArray.getSeconds(),
+                dateArray.getMilliseconds()
             ]
         }
 
@@ -128,7 +141,8 @@ class PersianDateClass {
                 dateArray.date(),
                 dateArray.hour(),
                 dateArray.minute(),
-                dateArray.second()
+                dateArray.second(),
+                dateArray.getMilliseconds()
             ]
         }
         if (this.calendarType == 'persian') {

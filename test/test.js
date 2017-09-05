@@ -78,29 +78,29 @@ describe('Make Instance', function () {
     });
 
 });
-//
-//describe('getFirstWeekDayOfMonth', function () {
-//    it('1391, 12', function () {
-//        let a = new pDate().getFirstWeekDayOfMonth(1391, 12);
-//        assert.deepEqual(a, 4);
-//    });
-//    it('1391, 11', function () {
-//        let a = new pDate().getFirstWeekDayOfMonth(1391, 11);
-//        assert.deepEqual(a, 2);
-//    });
-//    it('1391, 10', function () {
-//        let a = new pDate().getFirstWeekDayOfMonth(1391, 10);
-//        assert.deepEqual(a, 7);
-//    });
-//    it('1391, 9', function () {
-//        let a = new pDate().getFirstWeekDayOfMonth(1391, 9);
-//        assert.deepEqual(a, 5);
-//    });
-//    it('1391, 8', function () {
-//        let a = new pDate().getFirstWeekDayOfMonth(1391, 7);
-//        assert.deepEqual(a, 1);
-//    });
-//});
+
+describe('getFirstWeekDayOfMonth', function () {
+    it('1391, 12', function () {
+        let a = new pDate().getFirstWeekDayOfMonth(1391, 12);
+        assert.deepEqual(a, 4);
+    });
+    it('1391, 11', function () {
+        let a = new pDate().getFirstWeekDayOfMonth(1391, 11);
+        assert.deepEqual(a, 2);
+    });
+    it('1391, 10', function () {
+        let a = new pDate().getFirstWeekDayOfMonth(1391, 10);
+        assert.deepEqual(a, 7);
+    });
+    it('1391, 9', function () {
+        let a = new pDate().getFirstWeekDayOfMonth(1391, 9);
+        assert.deepEqual(a, 5);
+    });
+    it('1391, 8', function () {
+        let a = new pDate().getFirstWeekDayOfMonth(1391, 7);
+        assert.deepEqual(a, 1);
+    });
+});
 //
 //
 //describe('daysInMonth', function () {

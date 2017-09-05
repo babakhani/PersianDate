@@ -600,31 +600,31 @@ var PersianDateClass = function () {
         this.algorithms = new Algorithms();
         // Convert Any thing to Gregorian Date
         if (TypeChecking.isDate(input)) {
-            this.algorithms.calcGregorian([input.getFullYear(), input.getMonth(), input.getDate(), input.getHours(), input.getMinutes(), input.getSeconds()]);
+            this.algorithms.calcGregorian([input.getFullYear(), input.getMonth(), input.getDate(), input.getHours(), input.getMinutes(), input.getSeconds(), input.getMilliseconds()]);
         } else if (TypeChecking.isArray(input)) {
             //  Encapsulate Input Array
             if (this.calendarType == 'persianAstro') {
-                this.algorithms.calcPersiana([input[0], input[1], input[2], input[3], input[4], input[5]]);
+                this.algorithms.calcPersiana([input[0], input[1], input[2], input[3], input[4], input[5], input[6]]);
             } else if (this.calendarType == 'persian') {
-                this.algorithms.calcPersian([input[0], input[1], input[2], input[3], input[4], input[5]]);
+                this.algorithms.calcPersian([input[0], input[1], input[2], input[3], input[4], input[5], input[6]]);
             } else if (this.calendarType == 'gregorian') {
-                this.algorithms.calcGregorian([input[0], input[1], input[2], input[3], input[4], input[5]]);
+                this.algorithms.calcGregorian([input[0], input[1], input[2], input[3], input[4], input[5], input[6]]);
             }
         } else if (TypeChecking.isNumber(input)) {
             var fromUnix = new Date(input);
-            this.algorithms.calcGregorian([fromUnix.getFullYear(), fromUnix.getMonth(), fromUnix.getDate(), fromUnix.getHours(), fromUnix.getMinutes(), fromUnix.getSeconds()]);
+            this.algorithms.calcGregorian([fromUnix.getFullYear(), fromUnix.getMonth(), fromUnix.getDate(), fromUnix.getHours(), fromUnix.getMinutes(), fromUnix.getSeconds(), fromUnix.getMilliseconds()]);
         }
         // instance of pDate
         else if (input instanceof PersianDateClass) {
-                this.algorithms.calcPersiana([input.year(), input.month(), input.date(), input.hour(), input.minute(), input.second()]);
+                this.algorithms.calcPersiana([input.year(), input.month(), input.date(), input.hour(), input.minute(), input.second(), input.getMilliseconds()]);
             }
             // ASP.NET JSON Date
             else if (input && input.substring(0, 6) === '/Date(') {
                     var fromDotNet = new Date(parseInt(input.substr(6)));
-                    this.algorithms.calcGregorian([fromDotNet.getFullYear(), fromDotNet.getMonth(), fromDotNet.getDate(), fromDotNet.getHours(), fromDotNet.getMinutes(), fromDotNet.getSeconds()]);
+                    this.algorithms.calcGregorian([fromDotNet.getFullYear(), fromDotNet.getMonth(), fromDotNet.getDate(), fromDotNet.getHours(), fromDotNet.getMinutes(), fromDotNet.getSeconds(), fromDotNet.getMilliseconds()]);
                 } else {
                     var now = new Date();
-                    this.algorithms.calcGregorian([now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds()]);
+                    this.algorithms.calcGregorian([now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds()]);
                 }
 
         this.ON = this.algorithms.ON;
@@ -663,11 +663,11 @@ var PersianDateClass = function () {
         key: 'algorithmsCalc',
         value: function algorithmsCalc(dateArray) {
             if (TypeChecking.isDate(dateArray)) {
-                dateArray = [dateArray.getFullYear(), dateArray.getMonth(), dateArray.getDate(), dateArray.getHours(), dateArray.getMinutes(), dateArray.getSeconds()];
+                dateArray = [dateArray.getFullYear(), dateArray.getMonth(), dateArray.getDate(), dateArray.getHours(), dateArray.getMinutes(), dateArray.getSeconds(), dateArray.getMilliseconds()];
             }
 
             if (this.isPersianDate(dateArray)) {
-                dateArray = [dateArray.year(), dateArray.month(), dateArray.date(), dateArray.hour(), dateArray.minute(), dateArray.second()];
+                dateArray = [dateArray.year(), dateArray.month(), dateArray.date(), dateArray.hour(), dateArray.minute(), dateArray.second(), dateArray.getMilliseconds()];
             }
             if (this.calendarType == 'persian') {
                 return this.algorithms.calcPersian(dateArray);
@@ -2640,7 +2640,7 @@ var Algorithms = function () {
             min = 0; //this.ON.gregorian.minute;
             sec = 0; //this.ON.gregorian.second;
 
-            this.ON.gDate = new Date(year, mon, mday, this.ON.gregorian.hour, this.ON.gregorian.minute, this.ON.gregorian.second);
+            this.ON.gDate = new Date(year, mon, mday, this.ON.gregorian.hour, this.ON.gregorian.minute, this.ON.gregorian.second, this.ON.gregorian.millisecond);
 
             //  Update Julian day
             // ---------------------------------------------------------------------------
@@ -2843,6 +2843,9 @@ var Algorithms = function () {
             if (dateArray[5]) {
                 this.ON.gregorian.second = dateArray[5];
             }
+            if (dateArray[6]) {
+                this.ON.gregorian.millisecond = dateArray[6];
+            }
             this.updateFromGregorian();
         }
 
@@ -2898,6 +2901,9 @@ var Algorithms = function () {
             if (dateArray[5]) {
                 this.ON.gregorian.second = dateArray[5];
             }
+            if (dateArray[6]) {
+                this.ON.gregorian.millisecond = dateArray[6];
+            }
 
             this.setJulian(this.persian_to_jd(this.ON.persian.year, this.ON.persian.month, this.ON.persian.day));
         }
@@ -2917,15 +2923,18 @@ var Algorithms = function () {
                 this.ON.persianAstro.day = dateArray[2];
             }
 
-            //        if (dateArray[3]) {
-            //            this.ON.gregorian.hour = dateArray[3];
-            //        }
-            //        if (dateArray[4]) {
-            //            this.ON.gregorian.minute = dateArray[4];
-            //        }
-            //        if (dateArray[5]) {
-            //            this.ON.gregorian.second = dateArray[5];
-            //        }
+            if (dateArray[3]) {
+                this.ON.gregorian.hour = dateArray[3];
+            }
+            if (dateArray[4]) {
+                this.ON.gregorian.minute = dateArray[4];
+            }
+            if (dateArray[5]) {
+                this.ON.gregorian.second = dateArray[5];
+            }
+            if (dateArray[6]) {
+                this.ON.gregorian.millisecond = dateArray[6];
+            }
 
             this.setJulian(this.persiana_to_jd(this.ON.persianAstro.year, this.ON.persianAstro.month, this.ON.persianAstro.day + 0.5));
         }

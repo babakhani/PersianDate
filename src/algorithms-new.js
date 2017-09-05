@@ -901,7 +901,16 @@ class Algorithms {
         min = 0;//this.ON.gregorian.minute;
         sec = 0;//this.ON.gregorian.second;
 
-        this.ON.gDate = new Date(year, mon, mday, this.ON.gregorian.hour, this.ON.gregorian.minute, this.ON.gregorian.second);
+        this.ON.gDate = new Date(
+          year,
+          mon,
+          mday,
+          this.ON.gregorian.hour,
+          this.ON.gregorian.minute,
+          this.ON.gregorian.second,
+          this.ON.gregorian.millisecond
+        );
+
 
         //  Update Julian day
         // ---------------------------------------------------------------------------
@@ -1104,6 +1113,9 @@ class Algorithms {
         if (dateArray[5]) {
             this.ON.gregorian.second = dateArray[5];
         }
+        if (dateArray[6]) {
+            this.ON.gregorian.millisecond = dateArray[6];
+        }
         this.updateFromGregorian();
     }
 
@@ -1151,6 +1163,9 @@ class Algorithms {
         if (dateArray[5]) {
             this.ON.gregorian.second = dateArray[5];
         }
+        if (dateArray[6]) {
+            this.ON.gregorian.millisecond = dateArray[6];
+        }
 
         this.setJulian(
           this.persian_to_jd(
@@ -1172,15 +1187,18 @@ class Algorithms {
             this.ON.persianAstro.day = dateArray[2];
         }
 
-//        if (dateArray[3]) {
-//            this.ON.gregorian.hour = dateArray[3];
-//        }
-//        if (dateArray[4]) {
-//            this.ON.gregorian.minute = dateArray[4];
-//        }
-//        if (dateArray[5]) {
-//            this.ON.gregorian.second = dateArray[5];
-//        }
+        if (dateArray[3]) {
+            this.ON.gregorian.hour = dateArray[3];
+        }
+        if (dateArray[4]) {
+            this.ON.gregorian.minute = dateArray[4];
+        }
+        if (dateArray[5]) {
+            this.ON.gregorian.second = dateArray[5];
+        }
+        if (dateArray[6]) {
+            this.ON.gregorian.millisecond = dateArray[6];
+        }
 
         this.setJulian(
           this.persiana_to_jd(
