@@ -174,39 +174,39 @@ describe('daysInMonth', function () {
 });
 
 
-//describe('Leap Year', function () {
-//
-//    it('[2028]', function () {
-//        let createdDate = new pDate([2028]).isLeapYear();
-//        assert.deepEqual(createdDate, false);
-//    });
-//
-//    it('Is leap year', function () {
-//        let createdDate = new pDate([1391]).isLeapYear();
-//        assert.deepEqual(createdDate, true);
-//    });
-//
-//    it('Not leap year', function () {
-//        let createdDate = new pDate([1392]).isLeapYear();
-//        assert.deepEqual(createdDate, false);
-//    });
-//
-//    it('print next 5 leap year', function () {
-//        let startYear = 1396,
-//            endYear = 1420,
-//            indexYear = startYear;
-//        while (indexYear < endYear) {
-//            let createdDate = new pDate([indexYear]);
-//            if (createdDate.isLeapYear()) {
-//                /* eslint-disable no-console */
-//                console.log(indexYear + ' is leap year!' + createdDate.isLeapYear());
-//                /* eslint-enable no-console */
-//            }
-//            indexYear += 1;
-//        }
-//    });
-//});
-//
+describe('Leap Year', function () {
+
+    it('[2028]', function () {
+        let createdDate = new pDate([2028]).isLeapYear();
+        assert.deepEqual(createdDate, false);
+    });
+
+    it('Is leap year', function () {
+        let createdDate = new pDate([1391]).isLeapYear();
+        assert.deepEqual(createdDate, true);
+    });
+
+    it('Not leap year', function () {
+        let createdDate = new pDate([1392]).isLeapYear();
+        assert.deepEqual(createdDate, false);
+    });
+
+    it('print next 5 leap year', function () {
+        let startYear = 1396,
+            endYear = 1420,
+            indexYear = startYear;
+        while (indexYear < endYear) {
+            let createdDate = new pDate([indexYear]);
+            if (createdDate.isLeapYear()) {
+                /* eslint-disable no-console */
+                console.log(indexYear + ' is leap year!' + createdDate.isLeapYear());
+                /* eslint-enable no-console */
+            }
+            indexYear += 1;
+        }
+    });
+});
+
 //describe('toDate', function () {
 //    it('toDate', function () {
 //        let gDateGenerated = new Date();
