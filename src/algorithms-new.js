@@ -28,24 +28,24 @@ class Algorithms {
         this.J0000 = 1721424.5;                // Julian date of Gregorian epoch: 0000-01-01
         this.J1970 = 2440587.5;                // Julian date at Unix epoch: 1970-01-01
         this.JMJD = 2400000.5;                // Epoch of Modified Julian Date system
-        this.J1900 = 2415020.5;                // Epoch (day 1) of Excel 1900 date system (PC)
-        this.J1904 = 2416480.5;                // Epoch (day 0) of Excel 1904 date system (Mac)
+//        this.J1900 = 2415020.5;                // Epoch (day 1) of Excel 1900 date system (PC)
+//        this.J1904 = 2416480.5;                // Epoch (day 0) of Excel 1904 date system (Mac)
         this.NormLeap = [false/*"Normal year"*/, true/*"Leap year"*/];
         // TODO END
         this.GREGORIAN_EPOCH = 1721425.5;
-        this.JULIAN_EPOCH = 1721423.5;
-        this.HEBREW_EPOCH = 347995.5;
+//        this.JULIAN_EPOCH = 1721423.5;
+//        this.HEBREW_EPOCH = 347995.5;
         this.FRENCH_REVOLUTIONARY_EPOCH = 2375839.5;
         this.ISLAMIC_EPOCH = 1948439.5;
         this.PERSIAN_EPOCH = 1948320.5;
-        this.PERSIAN_WEEKDAYS = [
-            "Yekshanbeh",
-            "Doshanbeh",
-            "Seshhanbeh",
-            "Chaharshanbeh",
-            "Panjshanbeh",
-            "Jomeh",
-            "Shanbeh"];
+//        this.PERSIAN_WEEKDAYS = [
+//            "Yekshanbeh",
+//            "Doshanbeh",
+//            "Seshhanbeh",
+//            "Chaharshanbeh",
+//            "Panjshanbeh",
+//            "Jomeh",
+//            "Shanbeh"];
 
 
 //        this.setDateToToday();
@@ -123,30 +123,25 @@ class Algorithms {
      * @param jd
      * @return {*}
      */
-    nearest_weekday (weekday, jd) {
-        return this.search_weekday(weekday, jd, 1, 3);
-    }
+//    nearest_weekday (weekday, jd) {
+//        return this.search_weekday(weekday, jd, 1, 3);
+//    }
 
     next_weekday (weekday, jd) {
         return this.search_weekday(weekday, jd, 1, 7);
     }
 
-    next_or_current_weekday (weekday, jd) {
-        return this.search_weekday(weekday, jd, 1, 6);
-    }
+//    next_or_current_weekday (weekday, jd) {
+//        return this.search_weekday(weekday, jd, 1, 6);
+//    }
 
     previous_weekday (weekday, jd) {
         return this.search_weekday(weekday, jd, -1, 1);
     }
 
-    previous_or_current_weekday (weekday, jd) {
-        return this.search_weekday(weekday, jd, 1, 0);
-    }
-
-
-    // TODO: must delete
-    TestSomething () {
-    }
+//    previous_or_current_weekday (weekday, jd) {
+//        return this.search_weekday(weekday, jd, 1, 0);
+//    }
 
     /**
      * @desc LEAP_GREGORIAN  --  Is a given year in the Gregorian calendar a leap year ?
@@ -312,107 +307,107 @@ class Algorithms {
 
 
     //  Is a given Hebrew year a leap year ?
-    hebrew_leap (year) {
-        return this.ASTRO.mod(((year * 7) + 1), 19) < 7;
-    }
+//    hebrew_leap (year) {
+//        return this.ASTRO.mod(((year * 7) + 1), 19) < 7;
+//    }
 
 
     //  How many months are there in a Hebrew year (12 = normal, 13 = leap)
-    hebrew_year_months (year) {
-        return this.hebrew_leap(year) ? 13 : 12;
-    }
+//    hebrew_year_months (year) {
+//        return this.hebrew_leap(year) ? 13 : 12;
+//    }
 
 
     //  Test for delay of start of new year and to avoid
     //  Sunday, Wednesday, and Friday as start of the new year.
-    hebrew_delay_1 (year) {
-        var months, days, parts;
-
-        months = Math.floor(((235 * year) - 234) / 19);
-        parts = 12084 + (13753 * months);
-        day = (months * 29) + Math.floor(parts / 25920);
-
-        if (mod((3 * (day + 1)), 7) < 3) {
-            day++;
-        }
-        return day;
-    }
+//    hebrew_delay_1 (year) {
+//        var months, days, parts;
+//
+//        months = Math.floor(((235 * year) - 234) / 19);
+//        parts = 12084 + (13753 * months);
+//        day = (months * 29) + Math.floor(parts / 25920);
+//
+//        if (mod((3 * (day + 1)), 7) < 3) {
+//            day++;
+//        }
+//        return day;
+//    }
 
 //  Check for delay in start of new year due to length of adjacent years
-    hebrew_delay_2 (year) {
-        var last, present, next;
-
-        last = this.hebrew_delay_1(year - 1);
-        present = this.hebrew_delay_1(year);
-        next = this.hebrew_delay_1(year + 1);
-
-        return ((next - present) == 356) ? 2 :
-          (((present - last) == 382) ? 1 : 0);
-    }
+//    hebrew_delay_2 (year) {
+//        var last, present, next;
+//
+//        last = this.hebrew_delay_1(year - 1);
+//        present = this.hebrew_delay_1(year);
+//        next = this.hebrew_delay_1(year + 1);
+//
+//        return ((next - present) == 356) ? 2 :
+//          (((present - last) == 382) ? 1 : 0);
+//    }
 
 
     //  How many days are in a Hebrew year ?
-    hebrew_year_days (year) {
-        return this.hebrew_to_jd(year + 1, 7, 1) - this.hebrew_to_jd(year, 7, 1);
-    }
+//    hebrew_year_days (year) {
+//        return this.hebrew_to_jd(year + 1, 7, 1) - this.hebrew_to_jd(year, 7, 1);
+//    }
 
 
     //  How many days are in a given month of a given year
-    hebrew_month_days (year, month) {
-        //  First of all, dispose of fixed-length 29 day months
-
-        if (month == 2 || month == 4 || month == 6 ||
-          month == 10 || month == 13) {
-            return 29;
-        }
-
-        //  If it's not a leap year, Adar has 29 days
-
-        if (month == 12 && !this.hebrew_leap(year)) {
-            return 29;
-        }
-
-        //  If it's Heshvan, days depend on length of year
-
-        if (month == 8 && !(mod(this.hebrew_year_days(year), 10) == 5)) {
-            return 29;
-        }
-
-        //  Similarly, Kislev varies with the length of year
-
-        if (month == 9 && (mod(this.hebrew_year_days(year), 10) == 3)) {
-            return 29;
-        }
-
-        //  Nope, it's a 30 day month
-
-        return 30;
-    }
+//    hebrew_month_days (year, month) {
+//        //  First of all, dispose of fixed-length 29 day months
+//
+//        if (month == 2 || month == 4 || month == 6 ||
+//          month == 10 || month == 13) {
+//            return 29;
+//        }
+//
+//        //  If it's not a leap year, Adar has 29 days
+//
+//        if (month == 12 && !this.hebrew_leap(year)) {
+//            return 29;
+//        }
+//
+//        //  If it's Heshvan, days depend on length of year
+//
+//        if (month == 8 && !(mod(this.hebrew_year_days(year), 10) == 5)) {
+//            return 29;
+//        }
+//
+//        //  Similarly, Kislev varies with the length of year
+//
+//        if (month == 9 && (mod(this.hebrew_year_days(year), 10) == 3)) {
+//            return 29;
+//        }
+//
+//        //  Nope, it's a 30 day month
+//
+//        return 30;
+//    }
 
     //  HEBREW_TO_JD  --  Determine Julian day from Hebrew date
     //  Finally, wrap it all up into...
-    hebrew_to_jd (year, month, day) {
-        var jd, mon, months;
-
-        months = this.hebrew_year_months(year);
-        jd = this.HEBREW_EPOCH + this.hebrew_delay_1(year) +
-          this.hebrew_delay_2(year) + day + 1;
-
-        if (month < 7) {
-            for (mon = 7; mon <= months; mon++) {
-                jd += this.hebrew_month_days(year, mon);
-            }
-            for (mon = 1; mon < month; mon++) {
-                jd += this.hebrew_month_days(year, mon);
-            }
-        } else {
-            for (mon = 7; mon < month; mon++) {
-                jd += this.hebrew_month_days(year, mon);
-            }
-        }
-
-        return jd;
-    }
+//    hebrew_to_jd (year, month, day) {
+//        var jd, mon, months;
+//
+//        months = this.hebrew_year_months(year);
+//        jd = this.HEBREW_EPOCH + this.hebrew_delay_1(year) +
+//          this.hebrew_delay_2(year) + day + 1;
+//
+//        if (month < 7) {
+//            for (mon = 7; mon <= months; mon++) {
+//                jd += this.hebrew_month_days(year, mon);
+//            }
+//            for (mon = 1; mon < month; mon++) {
+//                jd += this.hebrew_month_days(year, mon);
+//            }
+//        } else {
+//            for (mon = 7; mon < month; mon++) {
+//                jd += this.hebrew_month_days(year, mon);
+//            }
+//        }
+//
+//        return jd;
+//    }
 
 
     /*  JD_TO_HEBREW  --  Convert Julian date to Hebrew date
@@ -420,65 +415,65 @@ class Algorithms {
      the inverse function, and is this very
      slow.  */
 
-    jd_to_hebrew (jd) {
-        var year, month, day, i, count, first;
-
-        jd = Math.floor(jd) + 0.5;
-        count = Math.floor(((jd - this.HEBREW_EPOCH) * 98496.0) / 35975351.0);
-        year = count - 1;
-        for (i = count; jd >= this.hebrew_to_jd(i, 7, 1); i++) {
-            year++;
-        }
-        first = (jd < this.hebrew_to_jd(year, 1, 1)) ? 7 : 1;
-        month = first;
-        for (i = first; jd > this.hebrew_to_jd(year, i, this.hebrew_month_days(year, i)); i++) {
-            month++;
-        }
-        day = (jd - this.hebrew_to_jd(year, month, 1)) + 1;
-        return [year, month, day];
-    }
+//    jd_to_hebrew (jd) {
+//        var year, month, day, i, count, first;
+//
+//        jd = Math.floor(jd) + 0.5;
+//        count = Math.floor(((jd - this.HEBREW_EPOCH) * 98496.0) / 35975351.0);
+//        year = count - 1;
+//        for (i = count; jd >= this.hebrew_to_jd(i, 7, 1); i++) {
+//            year++;
+//        }
+//        first = (jd < this.hebrew_to_jd(year, 1, 1)) ? 7 : 1;
+//        month = first;
+//        for (i = first; jd > this.hebrew_to_jd(year, i, this.hebrew_month_days(year, i)); i++) {
+//            month++;
+//        }
+//        day = (jd - this.hebrew_to_jd(year, month, 1)) + 1;
+//        return [year, month, day];
+//    }
 
 
     /*  EQUINOXE_A_PARIS  --  Determine Julian day and fraction of the
      September equinox at the Paris meridian in
      a given Gregorian year.  */
-
-    equinoxe_a_paris (year) {
-        var equJED, equJD, equAPP, equParis, dtParis;
-
-        //  September equinox in dynamical time
-        equJED = this.ASTRO.equinox(year, 2);
-
-        //  Correct for delta T to obtain Universal time
-        equJD = equJED - (this.ASTRO.deltat(year) / (24 * 60 * 60));
-
-        //  Apply the equation of time to yield the apparent time at Greenwich
-        equAPP = equJD + this.ASTRO.equationOfTime(equJED);
-
-        /*  Finally, we must correct for the constant difference between
-         the Greenwich meridian and that of Paris, 2°20'15" to the
-         East.  */
-
-        dtParis = (2 + (20 / 60.0) + (15 / (60 * 60.0))) / 360;
-        equParis = equAPP + dtParis;
-
-        return equParis;
-    }
+//
+//    equinoxe_a_paris (year) {
+//        var equJED, equJD, equAPP, equParis, dtParis;
+//
+//        //  September equinox in dynamical time
+//        equJED = this.ASTRO.equinox(year, 2);
+//
+//        //  Correct for delta T to obtain Universal time
+//        equJD = equJED - (this.ASTRO.deltat(year) / (24 * 60 * 60));
+//
+//        //  Apply the equation of time to yield the apparent time at Greenwich
+//        equAPP = equJD + this.ASTRO.equationOfTime(equJED);
+//
+//        /*  Finally, we must correct for the constant difference between
+//         the Greenwich meridian and that of Paris, 2°20'15" to the
+//         East.  */
+//
+//        dtParis = (2 + (20 / 60.0) + (15 / (60 * 60.0))) / 360;
+//        equParis = equAPP + dtParis;
+//
+//        return equParis;
+//    }
 
 
     /*  PARIS_EQUINOXE_JD  --  Calculate Julian day during which the
      September equinox, reckoned from the Paris
      meridian, occurred for a given Gregorian
      year.  */
-
-    paris_equinoxe_jd (year) {
-        var ep, epg;
-
-        ep = this.equinoxe_a_paris(year);
-        epg = Math.floor(ep - 0.5) + 0.5;
-
-        return epg;
-    }
+//
+//    paris_equinoxe_jd (year) {
+//        var ep, epg;
+//
+//        ep = this.equinoxe_a_paris(year);
+//        epg = Math.floor(ep - 0.5) + 0.5;
+//
+//        return epg;
+//    }
 
 
     /*  ANNEE_DE_LA_REVOLUTION  --  Determine the year in the French
@@ -490,25 +485,25 @@ class Algorithms {
      [1]  Julian day number containing
      equinox for this year.
      */
-    annee_da_la_revolution (jd) {
-        var guess = this.jd_to_gregorian(jd)[0] - 2,
-          lasteq, nexteq, adr;
-
-        lasteq = this.paris_equinoxe_jd(guess);
-        while (lasteq > jd) {
-            guess--;
-            lasteq = this.paris_equinoxe_jd(guess);
-        }
-        nexteq = lasteq - 1;
-        while (!((lasteq <= jd) && (jd < nexteq))) {
-            lasteq = nexteq;
-            guess++;
-            nexteq = this.paris_equinoxe_jd(guess);
-        }
-        adr = Math.round((lasteq - this.FRENCH_REVOLUTIONARY_EPOCH) / this.ASTRO.TropicalYear) + 1;
-
-        return [adr, lasteq];
-    }
+//    annee_da_la_revolution (jd) {
+//        var guess = this.jd_to_gregorian(jd)[0] - 2,
+//          lasteq, nexteq, adr;
+//
+//        lasteq = this.paris_equinoxe_jd(guess);
+//        while (lasteq > jd) {
+//            guess--;
+//            lasteq = this.paris_equinoxe_jd(guess);
+//        }
+//        nexteq = lasteq - 1;
+//        while (!((lasteq <= jd) && (jd < nexteq))) {
+//            lasteq = nexteq;
+//            guess++;
+//            nexteq = this.paris_equinoxe_jd(guess);
+//        }
+//        adr = Math.round((lasteq - this.FRENCH_REVOLUTIONARY_EPOCH) / this.ASTRO.TropicalYear) + 1;
+//
+//        return [adr, lasteq];
+//    }
 
 
     /*  JD_TO_FRENCH_REVOLUTIONARY  --  Calculate date in the French Revolutionary
@@ -762,122 +757,122 @@ class Algorithms {
 
 
 //  MAYAN_COUNT_TO_JD  --  Determine Julian day from Mayan long count
-    mayan_count_to_jd (baktun, katun, tun, uinal, kin) {
-        return this.MAYAN_COUNT_EPOCH +
-          (baktun * 144000) +
-          (katun * 7200) +
-          (tun * 360) +
-          (uinal * 20) +
-          kin;
-    }
+//    mayan_count_to_jd (baktun, katun, tun, uinal, kin) {
+//        return this.MAYAN_COUNT_EPOCH +
+//          (baktun * 144000) +
+//          (katun * 7200) +
+//          (tun * 360) +
+//          (uinal * 20) +
+//          kin;
+//    }
 
 //  JD_TO_MAYAN_COUNT  --  Calculate Mayan long count from Julian day
-    jd_to_mayan_count (jd) {
-        var d, baktun, katun, tun, uinal, kin;
-
-        jd = Math.floor(jd) + 0.5;
-        d = jd - this.MAYAN_COUNT_EPOCH;
-        baktun = Math.floor(d / 144000);
-        d = this.ASTRO.mod(d, 144000);
-        katun = Math.floor(d / 7200);
-        d = this.ASTRO.mod(d, 7200);
-        tun = Math.floor(d / 360);
-        d = this.ASTRO.mod(d, 360);
-        uinal = Math.floor(d / 20);
-        kin = this.ASTRO.mod(d, 20);
-
-        return [baktun, katun, tun, uinal, kin];
-    }
+//    jd_to_mayan_count (jd) {
+//        var d, baktun, katun, tun, uinal, kin;
+//
+//        jd = Math.floor(jd) + 0.5;
+//        d = jd - this.MAYAN_COUNT_EPOCH;
+//        baktun = Math.floor(d / 144000);
+//        d = this.ASTRO.mod(d, 144000);
+//        katun = Math.floor(d / 7200);
+//        d = this.ASTRO.mod(d, 7200);
+//        tun = Math.floor(d / 360);
+//        d = this.ASTRO.mod(d, 360);
+//        uinal = Math.floor(d / 20);
+//        kin = this.ASTRO.mod(d, 20);
+//
+//        return [baktun, katun, tun, uinal, kin];
+//    }
 
 
 //  JD_TO_MAYAN_HAAB  --  Determine Mayan Haab "month" and day from Julian day
-    jd_to_mayan_haab (jd) {
-        var lcount, day;
-
-        jd = Math.floor(jd) + 0.5;
-        lcount = jd - this.MAYAN_COUNT_EPOCH;
-        day = this.ASTRO.mod(lcount + 8 + ((18 - 1) * 20), 365);
-
-        return [Math.floor(day / 20) + 1, this.ASTRO.mod(day, 20)];
-    }
+//    jd_to_mayan_haab (jd) {
+//        var lcount, day;
+//
+//        jd = Math.floor(jd) + 0.5;
+//        lcount = jd - this.MAYAN_COUNT_EPOCH;
+//        day = this.ASTRO.mod(lcount + 8 + ((18 - 1) * 20), 365);
+//
+//        return [Math.floor(day / 20) + 1, this.ASTRO.mod(day, 20)];
+//    }
 
 
 //  JD_TO_MAYAN_TZOLKIN  --  Determine Mayan Tzolkin "month" and day from Julian day
-    jd_to_mayan_tzolkin (jd) {
-        var lcount;
-
-        jd = Math.floor(jd) + 0.5;
-        lcount = jd - this.MAYAN_COUNT_EPOCH;
-        return [this.ASTRO.amod(lcount + 20, 20), this.ASTRO.amod(lcount + 4, 13)];
-    }
+//    jd_to_mayan_tzolkin (jd) {
+//        var lcount;
+//
+//        jd = Math.floor(jd) + 0.5;
+//        lcount = jd - this.MAYAN_COUNT_EPOCH;
+//        return [this.ASTRO.amod(lcount + 20, 20), this.ASTRO.amod(lcount + 4, 13)];
+//    }
 
 
 //  INDIAN_CIVIL_TO_JD  --  Obtain Julian day for Indian Civil date
-    indian_civil_to_jd (year, month, day) {
-        var Caitra, gyear, leap, start, jd, m;
-
-        gyear = year + 78;
-        leap = this.leap_gregorian(gyear);     // Is this a leap year ?
-        start = this.gregorian_to_jd(gyear, 3, leap ? 21 : 22);
-        Caitra = leap ? 31 : 30;
-
-        if (month == 1) {
-            jd = start + (day - 1);
-        } else {
-            jd = start + Caitra;
-            m = month - 2;
-            m = Math.min(m, 5);
-            jd += m * 31;
-            if (month >= 8) {
-                m = month - 7;
-                jd += m * 30;
-            }
-            jd += day - 1;
-        }
-
-        return jd;
-    }
+//    indian_civil_to_jd (year, month, day) {
+//        var Caitra, gyear, leap, start, jd, m;
+//
+//        gyear = year + 78;
+//        leap = this.leap_gregorian(gyear);     // Is this a leap year ?
+//        start = this.gregorian_to_jd(gyear, 3, leap ? 21 : 22);
+//        Caitra = leap ? 31 : 30;
+//
+//        if (month == 1) {
+//            jd = start + (day - 1);
+//        } else {
+//            jd = start + Caitra;
+//            m = month - 2;
+//            m = Math.min(m, 5);
+//            jd += m * 31;
+//            if (month >= 8) {
+//                m = month - 7;
+//                jd += m * 30;
+//            }
+//            jd += day - 1;
+//        }
+//
+//        return jd;
+//    }
 
 
 //  JD_TO_INDIAN_CIVIL  --  Calculate Indian Civil date from Julian day
-    jd_to_indian_civil (jd) {
-        var Caitra, Saka, greg, greg0, leap, start, year, yday, mday;
-
-        Saka = 79 - 1;                    // Offset in years from Saka era to Gregorian epoch
-        start = 80;                       // Day offset between Saka and Gregorian
-
-        jd = Math.floor(jd) + 0.5;
-        greg = this.jd_to_gregorian(jd);       // Gregorian date for Julian day
-        leap = this.leap_gregorian(greg[0]);   // Is this a leap year?
-        year = greg[0] - Saka;            // Tentative year in Saka era
-        greg0 = this.gregorian_to_jd(greg[0], 1, 1); // JD at start of Gregorian year
-        yday = jd - greg0;                // Day number (0 based) in Gregorian year
-        Caitra = leap ? 31 : 30;          // Days in Caitra this year
-
-        if (yday < start) {
-            //  Day is at the end of the preceding Saka year
-            year--;
-            yday += Caitra + (31 * 5) + (30 * 3) + 10 + start;
-        }
-
-        yday -= start;
-        if (yday < Caitra) {
-            month = 1;
-            day = yday + 1;
-        } else {
-            mday = yday - Caitra;
-            if (mday < (31 * 5)) {
-                month = Math.floor(mday / 31) + 2;
-                day = (mday % 31) + 1;
-            } else {
-                mday -= 31 * 5;
-                month = Math.floor(mday / 30) + 7;
-                day = (mday % 30) + 1;
-            }
-        }
-
-        return [year, month, day];
-    }
+//    jd_to_indian_civil (jd) {
+//        var Caitra, Saka, greg, greg0, leap, start, year, yday, mday;
+//
+//        Saka = 79 - 1;                    // Offset in years from Saka era to Gregorian epoch
+//        start = 80;                       // Day offset between Saka and Gregorian
+//
+//        jd = Math.floor(jd) + 0.5;
+//        greg = this.jd_to_gregorian(jd);       // Gregorian date for Julian day
+//        leap = this.leap_gregorian(greg[0]);   // Is this a leap year?
+//        year = greg[0] - Saka;            // Tentative year in Saka era
+//        greg0 = this.gregorian_to_jd(greg[0], 1, 1); // JD at start of Gregorian year
+//        yday = jd - greg0;                // Day number (0 based) in Gregorian year
+//        Caitra = leap ? 31 : 30;          // Days in Caitra this year
+//
+//        if (yday < start) {
+//            //  Day is at the end of the preceding Saka year
+//            year--;
+//            yday += Caitra + (31 * 5) + (30 * 3) + 10 + start;
+//        }
+//
+//        yday -= start;
+//        if (yday < Caitra) {
+//            month = 1;
+//            day = yday + 1;
+//        } else {
+//            mday = yday - Caitra;
+//            if (mday < (31 * 5)) {
+//                month = Math.floor(mday / 31) + 2;
+//                day = (mday % 31) + 1;
+//            } else {
+//                mday -= 31 * 5;
+//                month = Math.floor(mday / 30) + 7;
+//                day = (mday % 30) + 1;
+//            }
+//        }
+//
+//        return [year, month, day];
+//    }
 
     gWeekDayToPersian (weekday) {
         if (weekday + 2 === 8) {

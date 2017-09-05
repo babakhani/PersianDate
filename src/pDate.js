@@ -583,14 +583,14 @@ class PersianDateClass {
 //    }
 
 
-//    static _utc (input) {
-//        if (input) {
-//            return new PersianDateClass(input).utc();
-//        }
-//        else {
-//            return new PersianDateClass().utc();
-//        }
-//    }
+    static _utc (input) {
+        if (input) {
+            return new PersianDateClass(input).utc();
+        }
+        else {
+            return new PersianDateClass().utc();
+        }
+    }
 
 
     /**
@@ -598,36 +598,36 @@ class PersianDateClass {
      * @param input
      * @returns {*}
      */
-//    utc (input) {
-//        let utcStamp;
-//        if (input) {
-//            return new PersianDateClass(input).utc();
-//        }
-//        if (this._utcMode) {
-//            return this;
-//        } else {
-//            let offsetMils = this.pDate.timeZoneOffset * 60 * 1000;
-//            if (this.pDate.timeZoneOffset < 0) {
-//                utcStamp = this.valueOf() + offsetMils;
-//            } else {
-//                /* istanbul ignore next */
-//                utcStamp = this.valueOf() - offsetMils;
-//            }
-//            this.gDate = new Date(utcStamp);
-//            this._updatePDate();
-//            this._utcMode = true;
-//            return this;
-//        }
-//    }
+    utc (input) {
+        let utcStamp;
+        if (input) {
+            return new PersianDateClass(input).utc();
+        }
+        if (this._utcMode) {
+            return this;
+        } else {
+            let offsetMils = this.pDate.timeZoneOffset * 60 * 1000;
+            if (this.pDate.timeZoneOffset < 0) {
+                utcStamp = this.valueOf() + offsetMils;
+            } else {
+                /* istanbul ignore next */
+                utcStamp = this.valueOf() - offsetMils;
+            }
+            this.gDate = new Date(utcStamp);
+            this._updatePDate();
+            this._utcMode = true;
+            return this;
+        }
+    }
 
 
     /**
      *
      * @returns {boolean}
      */
-//    isUtc () {
-//        return this._utcMode;
-//    }
+    isUtc () {
+        return this._utcMode;
+    }
 
 
     /**
@@ -635,25 +635,25 @@ class PersianDateClass {
      * @returns {boolean}
      * version 0.0.1
      */
-//    isDST () {
-//        let month = this.month(),
-//          day = this.date();
-//        if (month < 7) {
-//            return false;
-//        }
-//        else if ((month == 7 && day >= 2) || month >= 7) {
-//            return true;
-//        }
-//    }
+    isDST () {
+        let month = this.month(),
+          day = this.date();
+        if (month < 7) {
+            return false;
+        }
+        else if ((month == 7 && day >= 2) || month >= 7) {
+            return true;
+        }
+    }
 
 
     /**
      *
      * @returns {boolean}
      */
-//    isLeapYear () {
-//        return this.algorithms.isLeapPersian(this.year());
-//    }
+    isLeapYear () {
+        return this.algorithms.isLeapPersian(this.year());
+    }
 
 
     /**
@@ -662,19 +662,19 @@ class PersianDateClass {
      * @param monthInput
      * @returns {number}
      */
-//    daysInMonth (yearInput, monthInput) {
-//        let year = yearInput ? yearInput : this.year(),
-//          month = monthInput ? monthInput : this.month();
-//        if (month < 1 || month > 12)
-//            return 0;
-//        if (month < 7)
-//            return 31;
-//        if (month < 12)
-//            return 30;
-//        if (this.algorithms.isLeapPersian(year))
-//            return 30;
-//        return 29;
-//    }
+    daysInMonth (yearInput, monthInput) {
+        let year = yearInput ? yearInput : this.year(),
+          month = monthInput ? monthInput : this.month();
+        if (month < 1 || month > 12)
+            return 0;
+        if (month < 7)
+            return 31;
+        if (month < 12)
+            return 30;
+        if (this.algorithms.isLeapPersian(year))
+            return 30;
+        return 29;
+    }
 
 
     /**

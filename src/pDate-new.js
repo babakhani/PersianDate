@@ -31,13 +31,13 @@ class PersianDateClass {
         else if (TypeChecking.isArray(input)) {
             //  Encapsulate Input Array
             if (this.calendarType == 'persianAstro') {
-                this.algorithms.calcPersiana([input[0], (input[1] ? input[1] : 1), (input[2] ? input[2] : 1), input[3], input[4], input[5], input[6]]);
+                this.algorithms.calcPersiana([input[0], (input[1] ? input[1] : 1), (input[2] ? input[2] : 1), input[3], input[4], input[5], (input[6] ? input[6] : 0)]);
             }
             else if (this.calendarType == 'persian') {
-                this.algorithms.calcPersian([input[0], (input[1] ? input[1] : 1), (input[2] ? input[2] : 1), input[3], input[4], input[5], input[6]]);
+                this.algorithms.calcPersian([input[0], (input[1] ? input[1] : 1), (input[2] ? input[2] : 1), input[3], input[4], input[5], (input[6] ? input[6] : 0)]);
             }
             else if (this.calendarType == 'gregorian') {
-                this.algorithms.calcGregorian([input[0], input[1], input[2], input[3], input[4], input[5], input[6]]);
+                this.algorithms.calcGregorian([input[0], input[1], input[2], input[3], input[4], input[5], (input[6] ? input[6] : 0)]);
             }
         }
         else if (TypeChecking.isNumber(input)) {
@@ -195,7 +195,7 @@ class PersianDateClass {
      */
     year (input) {
         if (input | input === 0) {
-            this.algorithmsCalc([input]);
+            this.algorithmsCalc([input, this.month(), this.date(), this.hour(), this.minute(), this.second(), this.millisecond()]);
             return this;
         } else {
             return this.calendar().year;
@@ -253,7 +253,7 @@ class PersianDateClass {
      */
     date (input) {
         if (input || input === 0) {
-            this.algorithmsCalc(['', '', input]);
+            this.algorithmsCalc([this.year(), this.month(), input]);
             return this;
         } else {
             return this.calendar().day;
@@ -277,7 +277,7 @@ class PersianDateClass {
      */
     hours (input) {
         if (input | input === 0) {
-            this.algorithmsCalc(['', '', '', input]);
+            this.algorithmsCalc([this.year(), this.month(), this.date(), input]);
             return this;
         } else {
             return this.ON.gDate.getHours();
@@ -301,7 +301,7 @@ class PersianDateClass {
      */
     minutes (input) {
         if (input | input === 0) {
-            this.algorithmsCalc(['', '', '', '', input]);
+            this.algorithmsCalc([this.year(), this.month(), this.date(), this.hour(), input]);
             return this;
         } else {
             return this.ON.gDate.getMinutes();
@@ -326,7 +326,7 @@ class PersianDateClass {
      */
     seconds (input) {
         if (input | input === 0) {
-            this.algorithmsCalc(['', '', '', '', '', input]);
+            this.algorithmsCalc([this.year(), this.month(), this.date(), this.hour(), this.minute(), input]);
             return this;
         } else {
             return this.ON.gDate.getSeconds();
@@ -352,7 +352,7 @@ class PersianDateClass {
      */
     milliseconds (input) {
         if (input | input === 0) {
-            this.algorithmsCalc(['', '', '', '', '', '', input]);
+            this.algorithmsCalc([this.year(), this.month(), this.date(), this.hour(), this.minute(), this.second(), input]);
             return this;
         } else {
             return this.ON.gregorian.millisecond;
@@ -429,7 +429,7 @@ class PersianDateClass {
         let self = this,
           inputMoment = input,
           zoneDiff = 0,
-          diff = self.ON.gDate - inputMoment.gDate - zoneDiff,
+          diff = self.ON.gDate - inputMoment.toDate() - zoneDiff,
           year = self.year() - inputMoment.year(),
           month = self.month() - inputMoment.month(),
           date = (self.date() - inputMoment.date()) * -1, output;
@@ -459,6 +459,7 @@ class PersianDateClass {
      * @returns {*}
      */
     startOf (key) {
+
         // Simplify this\
         /* jshint ignore:start */
         switch (key) {
@@ -482,12 +483,8 @@ class PersianDateClass {
                 return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
             case 'weeks':
             case 'week':
-                const weekDayNumber = this.calendar.weekday;
-                if (weekDayNumber === 0) {
-                    return new PersianDateClass([this.year(), this.month(), this.date()]);
-                } else {
-                    return new PersianDateClass([this.year(), this.month(), this.date()]).subtract('days', weekDayNumber);
-                }
+                let weekDayNumber = this.calendar().weekday;
+                return new PersianDateClass([this.year(), this.month(), this.date() - (weekDayNumber-1)]);
             default:
                 return this;
         }
@@ -526,13 +523,10 @@ class PersianDateClass {
                 return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
             case 'weeks':
             case 'week':
-                let weekDayNumber = this.calendar().weekDayNumber;
-                if (weekDayNumber === 6) {
-                    weekDayNumber = 7;
-                } else {
-                    weekDayNumber = 6 - weekDayNumber;
-                }
-                return new PersianDateClass([this.year(), this.month(), this.date()]).add('days', weekDayNumber);
+                let weekDayNumber = this.calendar().weekday;
+                console.log('weekDayNumber')
+                console.log(weekDayNumber)
+                return new PersianDateClass([this.year(), this.month(), this.date() + (7 - weekDayNumber)]);
             default:
                 return this;
         }
@@ -772,8 +766,8 @@ class PersianDateClass {
               minute: self.minutes(),
               second: self.seconds(),
               date: self.date(),
-//              timezone: self.zone(),
-//              unix: self.unix()
+              timezone: self.zone(),
+              unix: self.unix()
           },
           formatToPersian = self.formatNumber();
 
@@ -855,7 +849,7 @@ class PersianDateClass {
                 }
               // Return Persian Day Name
                 case('ddddd'): {
-                    return persianDaysName[self.pDate.monthDayNumber];
+                    return persianDaysName[self.calendar().day - 1];
                 }
               // Return Persian Day Name
                 case('w'): {
@@ -897,6 +891,7 @@ class PersianDateClass {
                 }
               /* istanbul ignore next */
                 case('Z'): {
+                    console.log(info.timezone);
                     let flag = '+',
                       hours = Math.round(info.timezone / 60),
                       minutes = info.timezone % 60;
@@ -990,7 +985,7 @@ class PersianDateClass {
      */
     add (key, value) {
         let duration = new Duration(key, value)._data;
-        // log(duration)
+        console.log(duration);
         if (duration.years > 0) {
             let newYear = this.year() + duration.years;
             this.year(newYear);
@@ -1020,6 +1015,8 @@ class PersianDateClass {
             let newMillisecond = this.milliseconds() + duration.milliseconds;
             this.milliseconds(newMillisecond);
         }
+
+
         return new PersianDateClass(this.valueOf());
     }
 
@@ -1032,7 +1029,7 @@ class PersianDateClass {
      */
     subtract (key, value) {
         let duration = new Duration(key, value)._data;
-        // log(duration)
+        console.log(duration)
         if (duration.years > 0) {
             let newYear = this.year() - duration.years;
             this.year(newYear);

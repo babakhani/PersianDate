@@ -13,7 +13,7 @@ class ASTRO {
         this.J2000 = 2451545.0;              // Julian day of J2000 epoch
         this.JulianCentury = 36525.0;                // Days in Julian century
         this.JulianMillennium = (this.JulianCentury * 10);   // Days in Julian millennium
-        this.AstronomicalUnit = 149597870.0;           // Astronomical unit in kilometres
+//        this.AstronomicalUnit = 149597870.0;           // Astronomical unit in kilometres
         this.TropicalYear = 365.24219878;           // Mean solar tropical year
 
 //  JWDAY  --  Calculate day of week from Julian day

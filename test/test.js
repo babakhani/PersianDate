@@ -375,550 +375,542 @@ describe('timezone', function () {
         assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
     });
 });
-//
-//describe('isDST', function () {
-//    it('IS', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).isDST();
-//        assert.deepEqual(a, false);
-//    });
-//    it('Not', function () {
-//        let a = new pDate([1391, 7, 1, 1, 1, 1]).isDST();
-//        assert.deepEqual(a, true);
-//    });
-//});
-//
-//describe('Clone', function () {
-//    it('clone', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1, 0]),
-//          b = a.clone();
-//        assert.deepEqual(b.toArray(), [1391, 1, 1, 1, 1, 1, 0]);
-//    });
-//});
-//
-//describe('daysInMonth', function () {
-//    it('First Month of normal year', function () {
-////        let a = new pDate().daysInMonth(1391, 1);
-//        assert.ok(29);
-//    });
-//    it('Sixth Month of normal year', function () {
-////        let a = new pDate().daysInMonth(1394, 6);
-//        assert.ok(31);
-//    });
-//    it('Sixth Month of normal year', function () {
-////        let a = new pDate().daysInMonth(1394, 7);
-//        assert.ok(30);
-//    });
-//    it('Last Month of leap year', function () {
-////        let a = new pDate().daysInMonth(1394, 12);
-//        assert.ok(29);
-//    });
-//    it('Last Month of normal year', function () {
-////        let a = new pDate().daysInMonth(1391, 12);
-//        assert.ok(29);
-//    });
-//});
-//
-//describe('English Format', function () {
-//    it('a.formatPersian = false', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        a.formatPersian = false;
-//        assert.deepEqual(a.format(), '1391-01-01 01:01:01 AM');
-//    });
-//    it('a.formatPersian = true', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        a.formatPersian = true;
-//        assert.deepEqual(a.format(), '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
-//    });
-//    it('a.formatPersian = true', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        a.formatPersian = 'dsadas';
-//        assert.deepEqual(a.format(), '1391-01-01 01:01:01 AM');
-//    });
-//
-//});
-//
-//
-//describe('format', function () {
-//
-//
-//    it('format()', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format(), '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
-//        a.formatPersian = false;
-//        assert.deepEqual(a.format(), '1391-01-01 01:01:01 AM');
-//    });
-//    it('format("a")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format('a'), 'ق ظ');
-//        a.formatPersian = false;
-//        assert.deepEqual(a.format('a'), 'AM');
-//    });
-//
-//    it('format("H")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format('H'), '۱');
-//        a.formatPersian = false;
-//        assert.deepEqual(a.format('H'), '1');
-//    });
-//
-//    it('format("HH")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format('HH'), '۰۱');
-//    });
-//
-//    it('format("h")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format('h'), '۱');
-//    });
-//
-//    it('format("hh")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format('hh'), '۰۱');
-//    });
-//
-//    it('format("m")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format('m'), '۰۱');
-//    });
-//
-//    it('format("mm")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format('mm'), '۰۱');
-//    });
-//
-//    it('format("s")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format('s'), '۱');
-//    });
-//
-//    it('format("ss")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format('ss'), '۰۱');
-//    });
-//
-//
-//    it('format("L")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format('L'), '۱۳۹۱/۰۱/۰۱');
-//    });
-//
-//    it('format("l")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(a.format('l'), '۱۳۹۱/۱/۱');
-//    });
-//
-//    it('format("LL")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('LL'), 'فروردین ۰۱ ۱۳۹۱');
-//    });
-//
-//    it('format("ll")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('ll'), 'فرو ۰۱ ۱۳۹۱');
-//    });
-//
-//    it('format("LLL")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('LLL'), 'فروردین ۱۳۹۱ ۰۱   ۱:۰۱  ق ظ');
-//    });
-//
-//    it('format("lll")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('lll'), 'فرو ۱۳۹۱ ۰۱   ۱:۰۱  ق ظ');
-//    });
-//
-//    it('format("LLLL")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('LLLL'), 'سه شنبه ۱ فروردین ۱۳۹۱  ۱:۰۱  ق ظ');
-//    });
-//
-//    it('format("llll")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('llll'), 'س ۱ فرو ۱۳۹۱  ۱:۰۱  ق ظ');
-//    });
-//
-//    // it('format("X")', function () {
-//    //     let a = new pDate(1332192661000).utc().format('X');
-//    //     assert.deepEqual(a, 1332180061);
-//    // });
-//    // it('format("ZZ")', function () {
-//    //     let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//    // });
-//    //
-//    // it('format("Z")', function () {
-//    //     let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//    //     assert.deepEqual(formattedDate.format('Z'), "-۰۳:۳۰");
-//    // });
-//
-//    it('format("LT")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('LT'), '۱:۰۱ ق ظ');
-//    });
-//
-//    it('format("YY")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('YY'), '۹۱');
-//    });
-//
-//    it('format("YYYY")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('YYYY'), '۱۳۹۱');
-//    });
-//
-//    it('format("MMMM")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('MMMM'), 'فروردین');
-//    });
-//    it('format("MMM")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('MMM'), 'فرو');
-//    });
-//    it('format("MM")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('MM'), '۰۱');
-//    });
-//    it('format("M")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('M'), '۱');
-//    });
-//    it('format("d")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('d'), '۴');
-//    });
-//    it('format("ddd")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('ddd'), 'س');
-//    });
-//    it('format("dddd")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('dddd'), 'سه شنبه');
-//    });
-//    it('format("ddddd")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('ddddd'), 'اورمزد');
-//    });
-//    it('format("DD")', function () {
-//        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('DD'), '۰۱');
-//    });
-//    it('format("DDD")', function () {
-//        let formattedDate = new pDate([1391, 1, 3, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('DDD'), '۰۰۲');
-//    });
-//    it('format("DDDD")', function () {
-//        let formattedDate = new pDate([1391, 1, 3, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('DDDD'), '۰۰۲');
-//    });
-//    it('format("w")', function () {
-//        let formattedDate = new pDate([1391, 1, 3, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('w'), '۱');
-//    });
-//    it('format("ww")', function () {
-//        let formattedDate = new pDate([1391, 1, 3, 1, 1, 1]);
-//        assert.deepEqual(formattedDate.format('ww'), '۰۱');
-//    });
-//});
-//
-//
-//describe('startOf', function () {
-//    let defaultArray = [1391, 1, 1, 1, 1, 1, 100];
-//
-//    it('startOf("year")', function () {
-//        let a = new pDate(defaultArray).startOf('year').format();
-//        let b = new pDate(defaultArray).startOf('years').format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
-//    });
-//    it('startOf("month")', function () {
-//        let a = new pDate(defaultArray).startOf('month').format();
-//        let b = new pDate(defaultArray).startOf('months').format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
-//    });
-//    it('startOf("days")', function () {
-//        let a = new pDate(defaultArray).startOf('days').format();
-//        let b = new pDate(defaultArray).startOf('day').format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
-//    });
-//    it('sod()', function () {
-//        let a = new pDate(defaultArray).sod().format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
-//    });
-//    it('startOf("hour")', function () {
-//        let a = new pDate(defaultArray).startOf('hour').format();
-//        let b = new pDate(defaultArray).startOf('hours').format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۰:۰۰ ق ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۰:۰۰ ق ظ');
-//    });
-//    it('startOf("minute")', function () {
-//        let a = new pDate(defaultArray).startOf('minute').format();
-//        let b = new pDate(defaultArray).startOf('minutes').format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۰ ق ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۰ ق ظ');
-//    });
-//    it('startOf("second")', function () {
-//        let a = new pDate(defaultArray).startOf('second').format();
-//        let b = new pDate(defaultArray).startOf('seconds').format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
-//    });
-//    it('startOf("week")', function () {
-//        let formattedDate = new pDate(defaultArray).startOf('week').format();
-//        assert.deepEqual(formattedDate, '۱۳۹۰-۱۲-۲۶ ۰۰:۰۰:۰۰ ق ظ');
-//    });
-//    it('startOf("weeks")', function () {
-//        let formattedDate = new pDate(defaultArray).startOf('weeks').format();
-//        assert.deepEqual(formattedDate, '۱۳۹۰-۱۲-۲۶ ۰۰:۰۰:۰۰ ق ظ');
-//    });
-//    it('startOf()', function () {
-//        let formattedDate = new pDate(defaultArray).startOf().format();
-//        assert.deepEqual(formattedDate, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
-//    });
-//    it('startOf()', function () {
-//        let formattedDate = new pDate([1390, 12, 26]).startOf('week').format();
-//        assert.deepEqual(formattedDate, '۱۳۹۰-۱۲-۲۶ ۰۰:۰۰:۰۰ ق ظ');
-//    });
-//});
-//
-//describe('endOf', function () {
-//    let defaultArray = [1391, 1, 1, 1, 1, 1, 100];
-//    it('endOf("year")', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1, 100]).endOf('year').format();
-//        let b = new pDate([1391, 1, 1, 1, 1, 1, 100]).endOf('years').format();
-//        assert.deepEqual(a, '۱۳۹۱-۱۲-۳۰ ۲۳:۵۹:۵۹ ب ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۱۲-۳۰ ۲۳:۵۹:۵۹ ب ظ');
-//    });
-//    it('endOf("month")', function () {
-//        let a = new pDate(defaultArray).endOf('month').format();
-//        let b = new pDate(defaultArray).endOf('months').format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۳۱ ۲۳:۵۹:۵۹ ب ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۰۱-۳۱ ۲۳:۵۹:۵۹ ب ظ');
-//    });
-//    it('endOf("days")', function () {
-//        let a = new pDate(defaultArray).endOf('day').format();
-//        let b = new pDate(defaultArray).endOf('days').format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۲۳:۵۹:۵۹ ب ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۲۳:۵۹:۵۹ ب ظ');
-//    });
-//    it('endOf("hour")', function () {
-//        let a = new pDate(defaultArray).endOf('hour').format();
-//        let b = new pDate(defaultArray).endOf('hours').format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۵۹:۵۹ ق ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۵۹:۵۹ ق ظ');
-//    });
-//    it('endOf("minute")', function () {
-//        let a = new pDate(defaultArray).endOf('minute').format();
-//        let b = new pDate(defaultArray).endOf('minutes').format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۵۹ ق ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۵۹ ق ظ');
-//    });
-//    it('endOf("second")', function () {
-//        let a = new pDate(defaultArray).endOf('second').format();
-//        let b = new pDate(defaultArray).endOf('seconds').format();
-//        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
-//        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
-//    });
-//    it('endOf("week")', function () {
-//        let formattedDate = new pDate(defaultArray).endOf('week').format();
-//        assert.deepEqual(formattedDate, '۱۳۹۱-۰۱-۰۳ ۰۰:۰۰:۰۰ ق ظ');
-//    });
-//    it('endOf("weeks")', function () {
-//        let formattedDate = new pDate(defaultArray).endOf('weeks').format();
-//        assert.deepEqual(formattedDate, '۱۳۹۱-۰۱-۰۳ ۰۰:۰۰:۰۰ ق ظ');
-//    });
-//    it('endOf()', function () {
-//        let formattedDate = new pDate(defaultArray).endOf().format();
-//        assert.deepEqual(formattedDate, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
-//    });
-//    it('endOf("week")', function () {
-//        let formattedDate = new pDate([1391, 1, 3, 1, 1, 1]).endOf('week').format();
-//        assert.deepEqual(formattedDate, '۱۳۹۱-۰۱-۱۰ ۰۰:۰۰:۰۰ ق ظ');
-//    });
-//    it('eod()', function () {
-//        let formattedDate = new pDate(defaultArray).eod().format();
-//        assert.deepEqual(formattedDate, '۱۳۹۱-۰۱-۰۱ ۲۳:۵۹:۵۹ ب ظ');
-//    });
-//});
-//
-//
-//describe('Diff', function () {
-//    it('set', function () {
-//        let a = new pDate([1392, 1, 1]),
-//          b = new pDate([1392, 2, 2]);
-//        assert.ok(a.diff(b));
-//    });
-//    it('set', function () {
-//        let a = new pDate([1392, 1, 1]),
-//          b = new pDate([1391, 1, 1]);
-//        assert.deepEqual(a.diff(b, 'year'), 1);
-//        assert.deepEqual(a.diff(b, 'month'), 12);
-//        assert.deepEqual(a.diff(b, 'day'), 366);
-//        assert.deepEqual(a.diff(b, 'hour'), 8784);
-//        assert.deepEqual(a.diff(b, 'minute'), 527040);
-//        assert.deepEqual(a.diff(b, 'second'), 31622400);
-//        assert.deepEqual(a.diff(b), 31622400000);
-//    });
-//});
-//
-//
-//describe('duration', function () {
-//    it('isDuration', function () {
-//        let a = new pDate().duration(90, 'milliseconds');
-//        assert.deepEqual(a._data.milliseconds, 90);
-//    });
-//    it('isDuration', function () {
-//        let a = new pDate().duration(-90, 'milliseconds');
-//        assert.deepEqual(a._data.milliseconds, -90);
-//    });
-//    it('isDuration', function () {
-//        let a = new pDate().isDuration(new Duration(90, 'milliseconds'));
-//        assert.deepEqual(a, true);
-//    });
-//    it('milliseconds', function () {
-//        let a = new Duration(90, 'milliseconds').valueOf();
-//        assert.deepEqual(a, 90);
-//        let b = new Duration(1, 'day').valueOf();
-//        assert.deepEqual(b, 86400000);
-//    });
-//
-//    it('milliseconds', function () {
-//        let a = new Duration(90, 'milliseconds');
-//        assert.deepEqual(a._data.months, 0);
-//        assert.deepEqual(a._data.years, 0);
-//        assert.deepEqual(a._data.days, 0);
-//        assert.deepEqual(a._data.hours, 0);
-//        assert.deepEqual(a._data.minutes, 0);
-//        assert.deepEqual(a._data.seconds, 0.09);
-//        assert.deepEqual(a._data.milliseconds, 90);
-//    });
-//    it('second', function () {
-//        let a = new Duration(90, 'second');
-//        assert.deepEqual(a._data.months, 0);
-//        assert.deepEqual(a._data.years, 0);
-//        assert.deepEqual(a._data.days, 0);
-//        assert.deepEqual(a._data.hours, 0);
-//        assert.deepEqual(a._data.minutes, 1);
-//        assert.deepEqual(a._data.seconds, 30);
-//    });
-//    it('minutes', function () {
-//        let a = new Duration(90, 'minute');
-//        assert.deepEqual(a._data.months, 0);
-//        assert.deepEqual(a._data.years, 0);
-//        assert.deepEqual(a._data.days, 0);
-//        assert.deepEqual(a._data.hours, 1);
-//        assert.deepEqual(a._data.minutes, 30);
-//        assert.deepEqual(a._data.seconds, 0);
-//        assert.deepEqual(a._data.milliseconds, 0);
-//    });
-//    it('hour', function () {
-//        let a = new Duration(30, 'hour');
-//        assert.deepEqual(a._data.months, 0);
-//        assert.deepEqual(a._data.years, 0);
-//        assert.deepEqual(a._data.days, 1);
-//        assert.deepEqual(a._data.hours, 6);
-//        assert.deepEqual(a._data.minutes, 0);
-//        assert.deepEqual(a._data.seconds, 0);
-//        assert.deepEqual(a._data.milliseconds, 0);
-//    });
-//    it('day', function () {
-//        let a = new Duration(90, 'day');
-//        assert.deepEqual(a._data.months, 3);
-//        assert.deepEqual(a._data.years, 0);
-//        assert.deepEqual(a._data.days, 0);
-//        assert.deepEqual(a._data.hours, 0);
-//        assert.deepEqual(a._data.minutes, 0);
-//        assert.deepEqual(a._data.seconds, 0);
-//    });
-//    it('months', function () {
-//        let a = new Duration(90, 'month');
-//        assert.deepEqual(a._data.months, 6);
-//        assert.deepEqual(a._data.years, 7);
-//        assert.deepEqual(a._data.days, 0);
-//        assert.deepEqual(a._data.hours, 0);
-//        assert.deepEqual(a._data.minutes, 0);
-//        assert.deepEqual(a._data.seconds, 0);
-//    });
-//    it('years', function () {
-//        let a = new Duration(90, 'year');
-//        assert.deepEqual(a._data.months, 0);
-//        assert.deepEqual(a._data.years, 90);
-//        assert.deepEqual(a._data.days, 0);
-//        assert.deepEqual(a._data.hours, 0);
-//        assert.deepEqual(a._data.minutes, 0);
-//        assert.deepEqual(a._data.seconds, 0);
-//    });
-//
-//});
-//
-//describe('Add', function () {
-//    it('Year', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('year', 1).toArray();
-//        assert.deepEqual(a, [1392, 1, 1, 1, 1, 1, 0]);
-//    });
-//    it('Month', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('month', 1).toArray();
-//        assert.deepEqual(a, [1391, 2, 1, 1, 1, 1, 0]);
-//    });
-//    it('Days', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('day', 10).toArray();
-//        assert.deepEqual(a, [1391, 1, 11, 1, 1, 1, 0]);
-//    });
-//    it('Hours', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('hour', 10).toArray();
-//        assert.deepEqual(a, [1391, 1, 1, 11, 1, 1, 0]);
-//    });
-//    it('Minute', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('minute', 10).toArray();
-//        assert.deepEqual(a, [1391, 1, 1, 1, 11, 1, 0]);
-//    });
-//    it('Second', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('second', 10).toArray();
-//        assert.deepEqual(a, [1391, 1, 1, 1, 1, 11, 0]);
-//    });
-//    it('Millisecond', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('ms', 1000).toArray();
-//        assert.deepEqual(a, [1391, 1, 1, 1, 1, 2, 0]);
-//    });
-//    it('Millisecond', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('ms', 1200).toArray();
-//        assert.deepEqual(a, [1391, 1, 1, 1, 1, 2, 200]);
-//    });
-//});
-//
-//
-//describe('Subtract', function () {
-//    it('Year', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).subtract('year', 1).toArray();
-//        // console.log(b);
-//        assert.deepEqual(a, [1390, 1, 1, 1, 1, 1, 0]);
-//    });
-//    it('Month', function () {
-//        let a = new pDate([1391, 2, 1, 1, 1, 1]).subtract('month', 1).toArray();
-//        assert.deepEqual(a, [1391, 1, 1, 1, 1, 1, 0]);
-//    });
-//    it('Days', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).subtract('day', 10).toArray();
-//        assert.deepEqual(a, [1390, 12, 20, 1, 1, 1, 0]);
-//    });
-//    it('Hours', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).subtract('hour', 10).toArray();
-//        assert.deepEqual(a, [1390, 12, 29, 15, 1, 1, 0]);
-//    });
-//    it('Minute', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).subtract('minute', 10).toArray();
-//        assert.deepEqual(a, [1391, 1, 1, 0, 51, 1, 0]);
-//    });
-//    it('Second', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).subtract('second', 10).toArray();
-//        assert.deepEqual(a, [1391, 1, 1, 1, 0, 51, 0]);
-//    });
-//    it('Millisecond', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).subtract('ms', 1000).toArray();
-//        assert.deepEqual(a, [1391, 1, 1, 1, 1, 0, 0]);
-//    });
-//    it('Millisecond', function () {
-//        let a = new pDate([1391, 1, 1, 1, 1, 1]).subtract('ms', 1200).toArray();
-//        assert.deepEqual(a, [1391, 1, 1, 1, 1, 0, 800]);
-//    });
-//});
+
+describe('isDST', function () {
+    it('IS', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]).isDST();
+        assert.deepEqual(a, false);
+    });
+    it('Not', function () {
+        let a = new pDate([1391, 7, 1, 1, 1, 1]).isDST();
+        assert.deepEqual(a, true);
+    });
+});
+
+describe('Clone', function () {
+    it('clone', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1, 0]),
+          b = a.clone();
+        assert.deepEqual(b.toArray(), [1391, 1, 1, 1, 1, 1, 0]);
+    });
+});
+
+describe('daysInMonth', function () {
+    it('First Month of normal year', function () {
+//        let a = new pDate().daysInMonth(1391, 1);
+        assert.ok(29);
+    });
+    it('Sixth Month of normal year', function () {
+//        let a = new pDate().daysInMonth(1394, 6);
+        assert.ok(31);
+    });
+    it('Sixth Month of normal year', function () {
+//        let a = new pDate().daysInMonth(1394, 7);
+        assert.ok(30);
+    });
+    it('Last Month of leap year', function () {
+//        let a = new pDate().daysInMonth(1394, 12);
+        assert.ok(29);
+    });
+    it('Last Month of normal year', function () {
+//        let a = new pDate().daysInMonth(1391, 12);
+        assert.ok(29);
+    });
+});
+
+describe('English Format', function () {
+    it('a.formatPersian = false', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        a.formatPersian = false;
+        assert.deepEqual(a.format(), '1391-01-01 01:01:01 AM');
+    });
+    it('a.formatPersian = true', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        a.formatPersian = true;
+        assert.deepEqual(a.format(), '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
+    });
+    it('a.formatPersian = true', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        a.formatPersian = 'dsadas';
+        assert.deepEqual(a.format(), '1391-01-01 01:01:01 AM');
+    });
+
+});
+
+
+describe('Diff', function () {
+    it('set', function () {
+        let a = new pDate([1392, 1, 1]),
+          b = new pDate([1392, 2, 2]);
+        assert.ok(a.diff(b));
+    });
+    it('set', function () {
+        let a = new pDate([1392, 1, 1]),
+          b = new pDate([1391, 1, 1]);
+        assert.deepEqual(a.diff(b, 'year'), 1);
+        assert.deepEqual(a.diff(b, 'month'), 12);
+        assert.deepEqual(a.diff(b, 'day'), 366);
+        assert.deepEqual(a.diff(b, 'hour'), 8784);
+        assert.deepEqual(a.diff(b, 'minute'), 527040);
+        assert.deepEqual(a.diff(b, 'second'), 31622400);
+        assert.deepEqual(a.diff(b), 31622400000);
+    });
+});
+
+
+describe('format', function () {
+
+
+    it('format()', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format(), '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
+        a.formatPersian = false;
+        assert.deepEqual(a.format(), '1391-01-01 01:01:01 AM');
+    });
+    it('format("a")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format('a'), 'ق ظ');
+        a.formatPersian = false;
+        assert.deepEqual(a.format('a'), 'AM');
+    });
+
+    it('format("H")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format('H'), '۱');
+        a.formatPersian = false;
+        assert.deepEqual(a.format('H'), '1');
+    });
+
+    it('format("HH")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format('HH'), '۰۱');
+    });
+
+    it('format("h")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format('h'), '۱');
+    });
+
+    it('format("hh")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format('hh'), '۰۱');
+    });
+
+    it('format("m")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format('m'), '۰۱');
+    });
+
+    it('format("mm")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format('mm'), '۰۱');
+    });
+
+    it('format("s")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format('s'), '۱');
+    });
+
+    it('format("ss")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format('ss'), '۰۱');
+    });
+
+
+    it('format("L")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format('L'), '۱۳۹۱/۰۱/۰۱');
+    });
+
+    it('format("l")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(a.format('l'), '۱۳۹۱/۱/۱');
+    });
+
+    it('format("LL")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('LL'), 'فروردین ۰۱ ۱۳۹۱');
+    });
+
+    it('format("ll")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('ll'), 'فرو ۰۱ ۱۳۹۱');
+    });
+
+    it('format("LLL")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('LLL'), 'فروردین ۱۳۹۱ ۰۱   ۱:۰۱  ق ظ');
+    });
+
+    it('format("lll")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('lll'), 'فرو ۱۳۹۱ ۰۱   ۱:۰۱  ق ظ');
+    });
+
+    it('format("LLLL")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('LLLL'), 'سه شنبه ۱ فروردین ۱۳۹۱  ۱:۰۱  ق ظ');
+    });
+
+    it('format("llll")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('llll'), 'س ۱ فرو ۱۳۹۱  ۱:۰۱  ق ظ');
+    });
+
+    it('format("X")', function () {
+        let a = new pDate(1332192661000).utc().format('X');
+        assert.deepEqual(a, 1332180061);
+    });
+    it('format("ZZ")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+    });
+
+    it('format("Z")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('Z'), "-۰۳:۳۰");
+    });
+
+    it('format("LT")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('LT'), '۱:۰۱ ق ظ');
+    });
+
+    it('format("YY")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('YY'), '۹۱');
+    });
+
+    it('format("YYYY")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('YYYY'), '۱۳۹۱');
+    });
+
+    it('format("MMMM")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('MMMM'), 'فروردین');
+    });
+    it('format("MMM")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('MMM'), 'فرو');
+    });
+    it('format("MM")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('MM'), '۰۱');
+    });
+    it('format("M")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('M'), '۱');
+    });
+    it('format("d")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('d'), '۴');
+    });
+    it('format("ddd")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('ddd'), 'س');
+    });
+    it('format("dddd")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('dddd'), 'سه شنبه');
+    });
+    it('format("ddddd")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('ddddd'), 'اورمزد');
+    });
+    it('format("DD")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('DD'), '۰۱');
+    });
+    it('format("DDD")', function () {
+        let formattedDate = new pDate([1391, 1, 3, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('DDD'), '۰۰۲');
+    });
+    it('format("DDDD")', function () {
+        let formattedDate = new pDate([1391, 1, 3, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('DDDD'), '۰۰۲');
+    });
+    it('format("w")', function () {
+        let formattedDate = new pDate([1391, 1, 3, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('w'), '۱');
+    });
+    it('format("ww")', function () {
+        let formattedDate = new pDate([1391, 1, 3, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('ww'), '۰۱');
+    });
+});
+
+
+describe('startOf', function () {
+    let defaultArray = [1391, 1, 1, 1, 1, 1, 100];
+
+    it('startOf("year")', function () {
+        let a = new pDate(defaultArray).startOf('year').format();
+        let b = new pDate(defaultArray).startOf('years').format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
+        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
+    });
+    it('startOf("month")', function () {
+        let a = new pDate(defaultArray).startOf('month').format();
+        let b = new pDate(defaultArray).startOf('months').format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
+        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
+    });
+    it('startOf("days")', function () {
+        let a = new pDate(defaultArray).startOf('days').format();
+        let b = new pDate(defaultArray).startOf('day').format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
+        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
+    });
+    it('sod()', function () {
+        let a = new pDate(defaultArray).sod().format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
+    });
+    it('startOf("hour")', function () {
+        let a = new pDate(defaultArray).startOf('hour').format();
+        let b = new pDate(defaultArray).startOf('hours').format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۰:۰۰ ق ظ');
+        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۰:۰۰ ق ظ');
+    });
+    it('startOf("minute")', function () {
+        let a = new pDate(defaultArray).startOf('minute').format();
+        let b = new pDate(defaultArray).startOf('minutes').format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۰ ق ظ');
+        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۰ ق ظ');
+    });
+    it('startOf("second")', function () {
+        let a = new pDate(defaultArray).startOf('second').format();
+        let b = new pDate(defaultArray).startOf('seconds').format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
+        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
+    });
+    it('startOf("week")', function () {
+        let formattedDate = new pDate([1397, 1, 1]).startOf('week').format();
+        assert.deepEqual(formattedDate, "۱۳۹۶-۱۲-۲۶ ۰۰:۰۰:۰۰ ق ظ");
+    });
+    it('startOf("weeks")', function () {
+        let formattedDate = new pDate([1397, 1, 30]).startOf('weeks').format();
+        assert.deepEqual(formattedDate, "۱۳۹۷-۰۱-۲۵ ۰۰:۰۰:۰۰ ق ظ");
+    });
+    it('startOf()', function () {
+        let formattedDate = new pDate(defaultArray).startOf().format();
+        assert.deepEqual(formattedDate, new pDate(defaultArray).format());
+    });
+});
+
+describe('endOf', function () {
+    let defaultArray = [1391, 1, 1, 1, 1, 1, 100];
+    it('endOf("year")', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1, 100]).endOf('year').format();
+        let b = new pDate([1391, 1, 1, 1, 1, 1, 100]).endOf('years').format();
+        assert.deepEqual(a, '۱۳۹۱-۱۲-۳۰ ۲۳:۵۹:۵۹ ب ظ');
+        assert.deepEqual(b, '۱۳۹۱-۱۲-۳۰ ۲۳:۵۹:۵۹ ب ظ');
+    });
+    it('endOf("month")', function () {
+        let a = new pDate(defaultArray).endOf('month').format();
+        let b = new pDate(defaultArray).endOf('months').format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۳۱ ۲۳:۵۹:۵۹ ب ظ');
+        assert.deepEqual(b, '۱۳۹۱-۰۱-۳۱ ۲۳:۵۹:۵۹ ب ظ');
+    });
+    it('endOf("days")', function () {
+        let a = new pDate(defaultArray).endOf('day').format();
+        let b = new pDate(defaultArray).endOf('days').format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۲۳:۵۹:۵۹ ب ظ');
+        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۲۳:۵۹:۵۹ ب ظ');
+    });
+    it('endOf("hour")', function () {
+        let a = new pDate(defaultArray).endOf('hour').format();
+        let b = new pDate(defaultArray).endOf('hours').format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۵۹:۵۹ ق ظ');
+        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۵۹:۵۹ ق ظ');
+    });
+    it('endOf("minute")', function () {
+        let a = new pDate(defaultArray).endOf('minute').format();
+        let b = new pDate(defaultArray).endOf('minutes').format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۵۹ ق ظ');
+        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۵۹ ق ظ');
+    });
+    it('endOf("second")', function () {
+        let a = new pDate(defaultArray).endOf('second').format();
+        let b = new pDate(defaultArray).endOf('seconds').format();
+        assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
+        assert.deepEqual(b, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
+    });
+    it('endOf("week")', function () {
+        let formattedDate = new pDate([1397, 1, 7]).endOf('week').format();
+        assert.deepEqual(formattedDate, "۱۳۹۷-۰۱-۱۰ ۰۰:۰۰:۰۰ ق ظ");
+    });
+    it('endOf("weeks")', function () {
+        let formattedDate = new pDate([1397, 1, 7]).endOf('weeks').format();
+        assert.deepEqual(formattedDate, "۱۳۹۷-۰۱-۱۰ ۰۰:۰۰:۰۰ ق ظ");
+    });
+    it('endOf()', function () {
+        let formattedDate = new pDate([1397, 1, 7]).endOf().format();
+        assert.deepEqual(formattedDate, "۱۳۹۷-۰۱-۰۷ ۰۰:۰۰:۰۰ ق ظ");
+    });
+    it('eod()', function () {
+        let formattedDate = new pDate(defaultArray).eod().format();
+        assert.deepEqual(formattedDate, '۱۳۹۱-۰۱-۰۱ ۲۳:۵۹:۵۹ ب ظ');
+    });
+});
+
+
+describe('duration', function () {
+    it('isDuration', function () {
+        let a = new pDate().duration(90, 'milliseconds');
+        assert.deepEqual(a._data.milliseconds, 90);
+    });
+    it('isDuration', function () {
+        let a = new pDate().duration(-90, 'milliseconds');
+        assert.deepEqual(a._data.milliseconds, -90);
+    });
+    it('isDuration', function () {
+        let a = new pDate().isDuration(new Duration(90, 'milliseconds'));
+        assert.deepEqual(a, true);
+    });
+    it('milliseconds', function () {
+        let a = new Duration(90, 'milliseconds').valueOf();
+        assert.deepEqual(a, 90);
+        let b = new Duration(1, 'day').valueOf();
+        assert.deepEqual(b, 86400000);
+    });
+
+    it('milliseconds', function () {
+        let a = new Duration(90, 'milliseconds');
+        assert.deepEqual(a._data.months, 0);
+        assert.deepEqual(a._data.years, 0);
+        assert.deepEqual(a._data.days, 0);
+        assert.deepEqual(a._data.hours, 0);
+        assert.deepEqual(a._data.minutes, 0);
+        assert.deepEqual(a._data.seconds, 0.09);
+        assert.deepEqual(a._data.milliseconds, 90);
+    });
+    it('second', function () {
+        let a = new Duration(90, 'second');
+        assert.deepEqual(a._data.months, 0);
+        assert.deepEqual(a._data.years, 0);
+        assert.deepEqual(a._data.days, 0);
+        assert.deepEqual(a._data.hours, 0);
+        assert.deepEqual(a._data.minutes, 1);
+        assert.deepEqual(a._data.seconds, 30);
+    });
+    it('minutes', function () {
+        let a = new Duration(90, 'minute');
+        assert.deepEqual(a._data.months, 0);
+        assert.deepEqual(a._data.years, 0);
+        assert.deepEqual(a._data.days, 0);
+        assert.deepEqual(a._data.hours, 1);
+        assert.deepEqual(a._data.minutes, 30);
+        assert.deepEqual(a._data.seconds, 0);
+        assert.deepEqual(a._data.milliseconds, 0);
+    });
+    it('hour', function () {
+        let a = new Duration(30, 'hour');
+        assert.deepEqual(a._data.months, 0);
+        assert.deepEqual(a._data.years, 0);
+        assert.deepEqual(a._data.days, 1);
+        assert.deepEqual(a._data.hours, 6);
+        assert.deepEqual(a._data.minutes, 0);
+        assert.deepEqual(a._data.seconds, 0);
+        assert.deepEqual(a._data.milliseconds, 0);
+    });
+    it('day', function () {
+        let a = new Duration(90, 'day');
+        assert.deepEqual(a._data.months, 3);
+        assert.deepEqual(a._data.years, 0);
+        assert.deepEqual(a._data.days, 0);
+        assert.deepEqual(a._data.hours, 0);
+        assert.deepEqual(a._data.minutes, 0);
+        assert.deepEqual(a._data.seconds, 0);
+    });
+    it('months', function () {
+        let a = new Duration(90, 'month');
+        assert.deepEqual(a._data.months, 6);
+        assert.deepEqual(a._data.years, 7);
+        assert.deepEqual(a._data.days, 0);
+        assert.deepEqual(a._data.hours, 0);
+        assert.deepEqual(a._data.minutes, 0);
+        assert.deepEqual(a._data.seconds, 0);
+    });
+    it('years', function () {
+        let a = new Duration(90, 'year');
+        assert.deepEqual(a._data.months, 0);
+        assert.deepEqual(a._data.years, 90);
+        assert.deepEqual(a._data.days, 0);
+        assert.deepEqual(a._data.hours, 0);
+        assert.deepEqual(a._data.minutes, 0);
+        assert.deepEqual(a._data.seconds, 0);
+    });
+
+});
+
+describe('Add', function () {
+    it('Year', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('year', 1).toArray();
+        assert.deepEqual(a, [1392, 1, 1, 1, 1, 1, 0]);
+    });
+    it('Month', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('month', 1).toArray();
+        assert.deepEqual(a, [1391, 2, 1, 1, 1, 1, 0]);
+    });
+    it('Days', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('day', 10).toArray();
+        assert.deepEqual(a, [1391, 1, 11, 1, 1, 1, 0]);
+    });
+    it('Hours', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('hour', 10).toArray();
+        assert.deepEqual(a, [1391, 1, 1, 11, 1, 1, 0]);
+    });
+    it('Minute', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('minute', 10).toArray();
+        assert.deepEqual(a, [1391, 1, 1, 1, 11, 1, 0]);
+    });
+    it('Second', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('second', 10).toArray();
+        assert.deepEqual(a, [1391, 1, 1, 1, 1, 11, 0]);
+    });
+    it('Millisecond', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('ms', 1000).toArray();
+        assert.deepEqual(a, [1391, 1, 1, 1, 1, 2, 0]);
+    });
+    it('Millisecond', function () {
+        let a = new pDate([1391, 1, 1, 1, 1, 1]).add('ms', 1200).toArray();
+        assert.deepEqual(a, [1391, 1, 1, 1, 1, 2, 200]);
+    });
+});
+
+
+describe('Subtract', function () {
+    it('Year', function () {
+        let a = new pDate([1397, 1, 1, 1, 1, 1]).subtract('year', 1).toArray();
+        // console.log(b);
+        assert.deepEqual(a, [1396, 1, 1, 1, 1, 1, 0]);
+    });
+    it('Month', function () {
+        let a = new pDate([1397, 2, 1, 1, 1, 1]).subtract('month', 1).toArray();
+        assert.deepEqual(a, [1397, 1, 1, 1, 1, 1, 0]);
+    });
+    it('Days', function () {
+        let a = new pDate([1397, 1, 1, 1, 1, 1]).subtract('day', 10).toArray();
+        assert.deepEqual(a, [1396, 12, 20, 1, 1, 1, 0]);
+    });
+    it('Hours', function () {
+        let a = new pDate([1397, 1, 1, 1, 1, 1]).subtract('hour', 10).toArray();
+        assert.deepEqual(a, [1396, 12, 29, 15, 1, 1, 0]);
+    });
+    it('Minute', function () {
+        let a = new pDate([1397, 1, 1, 1, 1, 1]).subtract('minute', 10).toArray();
+        assert.deepEqual(a, [1397, 1, 1, 0, 51, 1, 0]);
+    });
+    it('Second', function () {
+        let a = new pDate([1397, 1, 1, 1, 1, 1]).subtract('second', 10).toArray();
+        assert.deepEqual(a, [1397, 1, 1, 1, 0, 51, 0]);
+    });
+    it('Millisecond', function () {
+        let a = new pDate([1397, 1, 1, 0, 0, 0]).subtract('ms', 1000).toArray();
+        assert.deepEqual(a, [1397, 1, 1, 1, 1, 0, 0]);
+    });
+    it('Millisecond', function () {
+        let a = new pDate([1397, 1, 1, 1, 1, 1]).subtract('ms', 1200).toArray();
+        assert.deepEqual(a, [1397, 1, 1, 1, 1, 0, 800]);
+    });
+});
