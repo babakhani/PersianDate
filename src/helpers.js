@@ -39,17 +39,6 @@ class Helpers {
         return input instanceof Date;
     }
 
-
-    /**
-     *
-     * @param input
-     * @returns {boolean}
-     */
-    isUndefined (input) {
-        return typeof input === 'undefined';
-    }
-
-
     /**
      * @param number
      * @param targetLength
