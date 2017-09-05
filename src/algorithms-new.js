@@ -30,7 +30,7 @@ class Algorithms {
         this.JMJD = 2400000.5;                // Epoch of Modified Julian Date system
         this.J1900 = 2415020.5;                // Epoch (day 1) of Excel 1900 date system (PC)
         this.J1904 = 2416480.5;                // Epoch (day 0) of Excel 1904 date system (Mac)
-        this.NormLeap = ["Normal year", "Leap year"];
+        this.NormLeap = [ false/*"Normal year"*/, true/*"Leap year"*/];
         // TODO END
         this.GREGORIAN_EPOCH = 1721425.5;
         this.JULIAN_EPOCH = 1721423.5;
@@ -879,6 +879,17 @@ class Algorithms {
         return [year, month, day];
     }
 
+    gWeekDayToPersian (weekday) {
+        if (weekday + 2 === 8) {
+            return 1;
+        } else if (weekday + 2 === 7) {
+            return 7;
+        } else {
+            return weekday + 2;
+        }
+
+    }
+
 
     /*  updateFromGregorian  --  Update all calendars from Gregorian.
      "Why not Julian date?" you ask.  Because
@@ -1010,7 +1021,7 @@ class Algorithms {
         this.ON.persian.year = perscal[0];
         this.ON.persian.month = perscal[1] - 1;
         this.ON.persian.day = perscal[2];
-        this.ON.persian.weekday = weekday;
+        this.ON.persian.weekday = this.gWeekDayToPersian(weekday);
         this.ON.persian.leap = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
 
         //  Update Persian Astronomical Calendar
@@ -1019,7 +1030,7 @@ class Algorithms {
         this.ON.persianAstro.year = perscal[0];
         this.ON.persianAstro.month = perscal[1] - 1;
         this.ON.persianAstro.day = perscal[2];
-        this.ON.persianAstro.weekday = weekday;
+        this.ON.persianAstro.weekday = this.gWeekDayToPersian(weekday);
         this.ON.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
 
         //  Update Mayan Calendars

@@ -616,7 +616,7 @@ var PersianDateClass = function () {
         }
         // instance of pDate
         else if (input instanceof PersianDateClass) {
-                this.algorithms.calcPersiana([input.year(), input.month(), input.date(), input.hour(), input.minute(), input.second(), input.getMilliseconds()]);
+                this.algorithms.calcPersiana([input.year(), input.month(), input.date(), input.hour(), input.minute(), input.second(), input.millisecond()]);
             }
             // ASP.NET JSON Date
             else if (input && input.substring(0, 6) === '/Date(') {
@@ -665,13 +665,12 @@ var PersianDateClass = function () {
             if (TypeChecking.isDate(dateArray)) {
                 dateArray = [dateArray.getFullYear(), dateArray.getMonth(), dateArray.getDate(), dateArray.getHours(), dateArray.getMinutes(), dateArray.getSeconds(), dateArray.getMilliseconds()];
             }
-
             if (this.isPersianDate(dateArray)) {
-                dateArray = [dateArray.year(), dateArray.month(), dateArray.date(), dateArray.hour(), dateArray.minute(), dateArray.second(), dateArray.getMilliseconds()];
+                dateArray = [dateArray.year(), dateArray.month(), dateArray.date(), dateArray.hour(), dateArray.minute(), dateArray.second(), dateArray.millisecond()];
             }
             if (this.calendarType == 'persian') {
                 return this.algorithms.calcPersian(dateArray);
-            } else if (this.calendarType == 'persianA') {
+            } else if (this.calendarType == 'persianAstro') {
                 return this.algorithms.calcPersiana(dateArray);
             } else if (this.calendarType == 'persian') {
                 return this.algorithms.calcGregorian(dateArray);
@@ -975,18 +974,11 @@ var PersianDateClass = function () {
 
     }, {
         key: 'getFirstWeekDayOfMonth',
-        value: function getFirstWeekDayOfMonth(year, month) {}
-        // TODO: must implement
-        //        var dateArray = this.algorithms.calcPersian(year, month, 1),
-        //          pdate = this.algorithms.calcGregorian(dateArray[0], dateArray[1], dateArray[2]);
-        //        if (pdate[3] + 2 === 8) {
-        //            return 1;
-        //        } else if (pdate[3] + 2 === 7) {
-        //            return 7;
-        //        } else {
-        //            return pdate[3] + 2;
-        //        }
-
+        value: function getFirstWeekDayOfMonth(year, month) {
+            var pdate = new PersianDateClass([year, month, 1]);
+            console.log(pdate.day());
+            return pdate.day();
+        }
 
         /**
          *
@@ -1242,7 +1234,7 @@ var PersianDateClass = function () {
     }, {
         key: 'isLeapYear',
         value: function isLeapYear() {
-            return this.algorithms.isLeapPersian(this.year());
+            return this.calendar().leap;
         }
 
         /**
@@ -1260,7 +1252,16 @@ var PersianDateClass = function () {
             if (month < 1 || month > 12) return 0;
             if (month < 7) return 31;
             if (month < 12) return 30;
-            if (this.algorithms.isLeapPersian(year)) return 30;
+            if (this.calendarType == 'persian' && this.algorithms.leap_persian(year)) {
+                return 30;
+            }
+            if (this.calendarType == 'persianAstro' && this.algorithms.leap_persiana(year)) {
+                return 30;
+            }
+            // TODO: need fix
+            if (this.calendarType == 'gregorian' && this.algorithms.leap_persiana(year)) {
+                return 30;
+            }
             return 29;
         }
 
@@ -1740,7 +1741,7 @@ var Algorithms = function () {
         this.JMJD = 2400000.5; // Epoch of Modified Julian Date system
         this.J1900 = 2415020.5; // Epoch (day 1) of Excel 1900 date system (PC)
         this.J1904 = 2416480.5; // Epoch (day 0) of Excel 1904 date system (Mac)
-        this.NormLeap = ["Normal year", "Leap year"];
+        this.NormLeap = [false /*"Normal year"*/, true /*"Leap year"*/];
         // TODO END
         this.GREGORIAN_EPOCH = 1721425.5;
         this.JULIAN_EPOCH = 1721423.5;
@@ -2619,6 +2620,17 @@ var Algorithms = function () {
 
             return [year, month, day];
         }
+    }, {
+        key: 'gWeekDayToPersian',
+        value: function gWeekDayToPersian(weekday) {
+            if (weekday + 2 === 8) {
+                return 1;
+            } else if (weekday + 2 === 7) {
+                return 7;
+            } else {
+                return weekday + 2;
+            }
+        }
 
         /*  updateFromGregorian  --  Update all calendars from Gregorian.
          "Why not Julian date?" you ask.  Because
@@ -2738,7 +2750,7 @@ var Algorithms = function () {
             this.ON.persian.year = perscal[0];
             this.ON.persian.month = perscal[1] - 1;
             this.ON.persian.day = perscal[2];
-            this.ON.persian.weekday = weekday;
+            this.ON.persian.weekday = this.gWeekDayToPersian(weekday);
             this.ON.persian.leap = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
 
             //  Update Persian Astronomical Calendar
@@ -2747,7 +2759,7 @@ var Algorithms = function () {
             this.ON.persianAstro.year = perscal[0];
             this.ON.persianAstro.month = perscal[1] - 1;
             this.ON.persianAstro.day = perscal[2];
-            this.ON.persianAstro.weekday = weekday;
+            this.ON.persianAstro.weekday = this.gWeekDayToPersian(weekday);
             this.ON.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
 
             //  Update Mayan Calendars

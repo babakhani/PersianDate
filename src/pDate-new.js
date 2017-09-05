@@ -62,7 +62,7 @@ class PersianDateClass {
                 input.hour(),
                 input.minute(),
                 input.second(),
-                input.getMilliseconds()
+                input.millisecond()
             ]);
         }
         // ASP.NET JSON Date
@@ -133,7 +133,6 @@ class PersianDateClass {
                 dateArray.getMilliseconds()
             ]
         }
-
         if (this.isPersianDate(dateArray)) {
             dateArray = [
                 dateArray.year(),
@@ -142,13 +141,13 @@ class PersianDateClass {
                 dateArray.hour(),
                 dateArray.minute(),
                 dateArray.second(),
-                dateArray.getMilliseconds()
+                dateArray.millisecond()
             ]
         }
         if (this.calendarType == 'persian') {
             return this.algorithms.calcPersian(dateArray);
         }
-        else if (this.calendarType == 'persianA') {
+        else if (this.calendarType == 'persianAstro') {
             return this.algorithms.calcPersiana(dateArray);
         }
         else if (this.calendarType == 'persian') {
@@ -414,16 +413,9 @@ class PersianDateClass {
      * @returns {*}
      */
     getFirstWeekDayOfMonth (year, month) {
-        // TODO: must implement
-//        var dateArray = this.algorithms.calcPersian(year, month, 1),
-//          pdate = this.algorithms.calcGregorian(dateArray[0], dateArray[1], dateArray[2]);
-//        if (pdate[3] + 2 === 8) {
-//            return 1;
-//        } else if (pdate[3] + 2 === 7) {
-//            return 7;
-//        } else {
-//            return pdate[3] + 2;
-//        }
+        var pdate = new PersianDateClass([year, month, 1]);
+        console.log(pdate.day());
+        return pdate.day();
     }
 
 
@@ -667,7 +659,7 @@ class PersianDateClass {
      * @returns {boolean}
      */
     isLeapYear () {
-        return this.algorithms.isLeapPersian(this.year());
+        return this.calendar().leap;
     }
 
 
@@ -686,8 +678,16 @@ class PersianDateClass {
             return 31;
         if (month < 12)
             return 30;
-        if (this.algorithms.isLeapPersian(year))
+        if (this.calendarType == 'persian' && this.algorithms.leap_persian(year)) {
             return 30;
+        }
+        if (this.calendarType == 'persianAstro' && this.algorithms.leap_persiana(year)) {
+            return 30;
+        }
+        // TODO: need fix
+        if (this.calendarType == 'gregorian' && this.algorithms.leap_persiana(year)) {
+            return 30;
+        }
         return 29;
     }
 

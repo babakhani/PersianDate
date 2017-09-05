@@ -79,6 +79,7 @@ describe('Make Instance', function () {
 
 });
 
+
 describe('getFirstWeekDayOfMonth', function () {
     it('1391, 12', function () {
         let a = new pDate().getFirstWeekDayOfMonth(1391, 12);
@@ -101,47 +102,78 @@ describe('getFirstWeekDayOfMonth', function () {
         assert.deepEqual(a, 1);
     });
 });
-//
-//
-//describe('daysInMonth', function () {
-//
-//    it('Negative month', function () {
-//        assert.deepEqual(new pDate().daysInMonth(1391, -1), 0);
-//        assert.deepEqual(new pDate([1391, 1, 1, 1, 1, 1]).daysInMonth(), 31);
-//    });
-//
-//    it('None leap year', function () {
-//        assert.deepEqual(new pDate().daysInMonth(1391, 1), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1391, 2), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1391, 3), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1391, 4), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1391, 5), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1391, 6), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1391, 7), 30);
-//        assert.deepEqual(new pDate().daysInMonth(1391, 8), 30);
-//        assert.deepEqual(new pDate().daysInMonth(1391, 9), 30);
-//        assert.deepEqual(new pDate().daysInMonth(1391, 10), 30);
-//        assert.deepEqual(new pDate().daysInMonth(1391, 11), 30);
-//        assert.deepEqual(new pDate().daysInMonth(1391, 12), 30);
-//    });
-//
-//    it('None leap year', function () {
-//        assert.deepEqual(new pDate().daysInMonth(1394, 1), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1394, 2), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1394, 3), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1394, 4), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1394, 5), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1394, 6), 31);
-//        assert.deepEqual(new pDate().daysInMonth(1394, 7), 30);
-//        assert.deepEqual(new pDate().daysInMonth(1394, 8), 30);
-//        assert.deepEqual(new pDate().daysInMonth(1394, 9), 30);
-//        assert.deepEqual(new pDate().daysInMonth(1394, 10), 30);
-//        assert.deepEqual(new pDate().daysInMonth(1394, 11), 30);
-//        assert.deepEqual(new pDate().daysInMonth(1394, 12), 29);
-//    });
-//});
-//
-//
+
+
+describe('daysInMonth', function () {
+
+    it('Negative month', function () {
+        assert.deepEqual(new pDate().daysInMonth(1391, -1), 0);
+        assert.deepEqual(new pDate([1391, 1, 1, 1, 1, 1]).daysInMonth(), 31);
+    });
+
+    it('leap year', function () {
+        assert.deepEqual(new pDate().daysInMonth(1404, 1), 31);
+        assert.deepEqual(new pDate().daysInMonth(1391, 2), 31);
+        assert.deepEqual(new pDate().daysInMonth(1391, 3), 31);
+        assert.deepEqual(new pDate().daysInMonth(1391, 4), 31);
+        assert.deepEqual(new pDate().daysInMonth(1391, 5), 31);
+        assert.deepEqual(new pDate().daysInMonth(1391, 6), 31);
+        assert.deepEqual(new pDate().daysInMonth(1391, 7), 30);
+        assert.deepEqual(new pDate().daysInMonth(1391, 8), 30);
+        assert.deepEqual(new pDate().daysInMonth(1391, 9), 30);
+        assert.deepEqual(new pDate().daysInMonth(1391, 10), 30);
+        assert.deepEqual(new pDate().daysInMonth(1391, 11), 30);
+        assert.deepEqual(new pDate().daysInMonth(1391, 12), 30);
+    });
+
+    it('None leap year', function () {
+        assert.deepEqual(new pDate().daysInMonth(1394, 1), 31);
+        assert.deepEqual(new pDate().daysInMonth(1394, 2), 31);
+        assert.deepEqual(new pDate().daysInMonth(1394, 3), 31);
+        assert.deepEqual(new pDate().daysInMonth(1394, 4), 31);
+        assert.deepEqual(new pDate().daysInMonth(1394, 5), 31);
+        assert.deepEqual(new pDate().daysInMonth(1394, 6), 31);
+        assert.deepEqual(new pDate().daysInMonth(1394, 7), 30);
+        assert.deepEqual(new pDate().daysInMonth(1394, 8), 30);
+        assert.deepEqual(new pDate().daysInMonth(1394, 9), 30);
+        assert.deepEqual(new pDate().daysInMonth(1394, 10), 30);
+        assert.deepEqual(new pDate().daysInMonth(1394, 11), 30);
+        assert.deepEqual(new pDate().daysInMonth(1394, 12), 29);
+    });
+
+    it('leap year', function () {
+        assert.deepEqual(new pDate().daysInMonth(1404, 1), 31);
+        assert.deepEqual(new pDate().daysInMonth(1404, 2), 31);
+        assert.deepEqual(new pDate().daysInMonth(1404, 3), 31);
+        assert.deepEqual(new pDate().daysInMonth(1404, 4), 31);
+        assert.deepEqual(new pDate().daysInMonth(1404, 5), 31);
+        assert.deepEqual(new pDate().daysInMonth(1404, 6), 31);
+        assert.deepEqual(new pDate().daysInMonth(1404, 7), 30);
+        assert.deepEqual(new pDate().daysInMonth(1404, 8), 30);
+        assert.deepEqual(new pDate().daysInMonth(1404, 9), 30);
+        assert.deepEqual(new pDate().daysInMonth(1404, 10), 30);
+        assert.deepEqual(new pDate().daysInMonth(1404, 11), 30);
+        assert.deepEqual(new pDate().daysInMonth(1404, 12), 30);
+    });
+
+    it('None leap year', function () {
+        assert.deepEqual(new pDate().daysInMonth(1403, 1), 31);
+        assert.deepEqual(new pDate().daysInMonth(1403, 2), 31);
+        assert.deepEqual(new pDate().daysInMonth(1403, 3), 31);
+        assert.deepEqual(new pDate().daysInMonth(1403, 4), 31);
+        assert.deepEqual(new pDate().daysInMonth(1403, 5), 31);
+        assert.deepEqual(new pDate().daysInMonth(1403, 6), 31);
+        assert.deepEqual(new pDate().daysInMonth(1403, 7), 30);
+        assert.deepEqual(new pDate().daysInMonth(1403, 8), 30);
+        assert.deepEqual(new pDate().daysInMonth(1403, 9), 30);
+        assert.deepEqual(new pDate().daysInMonth(1403, 10), 30);
+        assert.deepEqual(new pDate().daysInMonth(1403, 11), 30);
+        assert.deepEqual(new pDate().daysInMonth(1403, 12), 29);
+    });
+
+});
+
+
 //describe('Leap Year', function () {
 //
 //    it('[2028]', function () {
