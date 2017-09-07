@@ -12,12 +12,12 @@ pDate.formatPersian = true;
 describe('Helpers', function () {
     it('throw error', function () {
         /* eslint-disable no-console */
-        console.log(pDate);
+//        console.log(pDate);
         /* eslint-enable no-console */
         expect(pDate).to.throw(Error);
+        expect(require('../dist/persian-date.js')).to.throw(Error);
     });
 });
-
 
 describe('Convert test', function () {
     const startUnix = 1490444803982,
@@ -34,8 +34,6 @@ describe('Convert test', function () {
 });
 
 describe('Make Instance', function () {
-
-
     it('Create persian algorithmic instance', function () {
         pDate.calendarType = 'persianAlgo';
         let a = new pDate([1404, 1, 1, 1, 1, 1, 900]).format();
@@ -110,6 +108,60 @@ describe('Make Instance', function () {
     });
 
 });
+
+
+describe('locale global', function () {
+    it('[1404,1,1] locale global en', function () {
+        pDate.localType = 'en';
+        let a = new pDate([1404, 1, 1]).format();
+        assert.deepEqual(a, "1404-01-01 00:00:00 AM");
+        let b = new pDate([1404, 1, 1]).format('dddd');
+        assert.deepEqual(b, "Friday");
+        pDate.localType = 'fa';
+    });
+    it('[1404,1,1] gregorian fa', function () {
+        let a = new pDate([1404, 1, 1]).format();
+        assert.deepEqual(a, "۱۴۰۴-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
+        let b = new pDate([1404, 1, 1]).format('dddd');
+        assert.deepEqual(b, "جمعه");
+    });
+});
+
+describe('toCalendar gregorian', function () {
+    it('[1404,1,1] gregorian en', function () {
+        let a = new pDate([1404, 1, 1]).toCalendar('gregorian').locale('en').format();
+        assert.deepEqual(a, "2025-03-21 00:00:00 AM");
+    });
+    it('[1404,1,1] gregorian fa format("llll")', function () {
+        let a = new pDate([1404, 1, 1]).toCalendar('gregorian').locale('fa').format('llll');
+        assert.deepEqual(a, "جمعه ۲۱ مارس ۲۰۲۵  ۰:۰۰  ق ظ");
+    });
+    it('[1403,1,1] gregorian fa format("dddd")', function () {
+        let persainAlgo = new pDate([1404, 1, 1]).toCalendar('persianAlgo').locale('en').format('dddd');
+        let persianAstroWeekday = new pDate([1404, 1, 1]).toCalendar('persianAstro').locale('en').format('dddd');
+        let gregorianWeekday = new pDate([1404, 1, 1]).toCalendar('gregorian').locale('en').format('dddd');
+        assert.deepEqual(gregorianWeekday, "Friday");
+        assert.deepEqual(persianAstroWeekday, "Friday");
+        assert.deepEqual(persainAlgo, "Friday");
+    });
+});
+
+describe('toCalendar persianAlgo', function () {
+    const defArray = [1403, 12, 30];
+    it('[1403,1,1] persianAlgo en', function () {
+        let a = new pDate(defArray).toCalendar('persianAlgo').locale('fa').format();
+        assert.deepEqual(a, "۱۴۰۴-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
+    });
+    it('[1403,1,1] persianAlgo fa format("dddd")', function () {
+        let persainAlgoWeekday = new pDate(defArray).toCalendar('persianAlgo').locale('fa').format('dddd');
+        let persianAstroWeekday = new pDate(defArray).toCalendar('persianAstro').locale('fa').format('dddd');
+        let gregorianWeekday = new pDate(defArray).toCalendar('gregorian').locale('fa').format('dddd');
+        assert.deepEqual(gregorianWeekday, 'پنج‌شنبه');
+        assert.deepEqual(persianAstroWeekday, 'پنج‌شنبه');
+        assert.deepEqual(persainAlgoWeekday, 'پنج‌شنبه');
+    });
+});
+
 
 describe('getFirstWeekDayOfMonth', function () {
     it('1391, 12', function () {
@@ -527,13 +579,18 @@ describe('Diff', function () {
 
 describe('format', function () {
 
-
     it('format()', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1]);
         assert.deepEqual(a.format(), '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
         a.formatPersian = false;
         assert.deepEqual(a.format(), '1391-01-01 01:01:01 AM');
     });
+
+    it('format("YYYY/MM/DD a Z HH:mm:ss ddddd dddd ddd d MMM MMMM LT X w ww")', function () {
+        const a = new pDate([1404, 1, 1]).toCalendar('persianAstro').locale('fa').format('YYYY/MM/DD a Z HH:mm:ss ddddd dddd ddd d MMM MMMM LT X w ww');
+        assert.deepEqual(a, "۱۴۰۴/۰۱/۰۱ ق ظ -۰۳:۳۰ ۰۰:۰۰:۰۰ اورمزد جمعه ج ۷ فرو فروردین ۰:۰۰ ق ظ 1742502600 ۱ ۰۱");
+    });
+
     it('format("a")', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1]);
         assert.deepEqual(a.format('a'), 'ق ظ');
@@ -683,6 +740,10 @@ describe('format', function () {
     it('format("ddddd")', function () {
         let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
         assert.deepEqual(formattedDate.format('ddddd'), 'اورمزد');
+    });
+    it('format("dddddd")', function () {
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        assert.deepEqual(formattedDate.format('dddddd'), 'س');
     });
     it('format("DD")', function () {
         let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);

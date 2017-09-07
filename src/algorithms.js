@@ -929,7 +929,8 @@ class Algorithms {
         //  Update day of week in Gregorian box
         // ---------------------------------------------------------------------------
         weekday = this.ASTRO.jwday(j);
-        this.ON.gregorian.weekday = weekday;
+        // Move to 1 indexed number
+        this.ON.gregorian.weekday = weekday + 1;
 
         //  Update leap year status in Gregorian box
         // ---------------------------------------------------------------------------

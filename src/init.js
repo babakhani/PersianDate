@@ -15,6 +15,6 @@ String.prototype.toPersianDigit = function (latinDigit) {
 PersianDateClass.unix = PersianDateClass._unix;
 PersianDateClass.utc = PersianDateClass._utc;
 PersianDateClass.calendarType = 'persianAstro';
-
+PersianDateClass.localType = 'fa';
 module.exports = PersianDateClass;
 

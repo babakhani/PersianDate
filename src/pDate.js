@@ -4,16 +4,26 @@ let Helpers = require('./helpers');
 let Duration = require('./duration');
 let toPersianDigit = new Helpers().toPersianDigit;
 let leftZeroFill = new Helpers().leftZeroFill;
-let weekRange = require('./constants').weekRange;
-let persianDaysName = require('./constants').persianDaysName;
-let monthRange = require('./constants').monthRange;
+let fa = require('./fa');
+let en = require('./en');
 
 class PersianDateClass {
 
 //    static calendarType : 'persianAstro';
     constructor (input) {
         this.calendarType = PersianDateClass.calendarType;
+        this.localType = PersianDateClass.localType;
         this.algorithms = new Algorithms();
+        this.version = __VERSION__;
+
+        if (this.localType !== 'fa') {
+            this.formatPersian = false;
+        } else {
+            this.formatPersian = '_default';
+        }
+
+        this._utcMode = false;
+
         // Convert Any thing to Gregorian Date
         if (TypeChecking.isDate(input)) {
             this.algorithms.calcGregorian(
@@ -85,10 +95,67 @@ class PersianDateClass {
 
         this.ON = this.algorithms.ON;
 
-        this.version = __VERSION__;
-        this.formatPersian = '_default';
-        this._utcMode = false;
         return this;
+    }
+
+    _locale () {
+        if (this.localType == 'fa') {
+            if (this.calendarType == 'persianAlgo' | this.calendarType == 'persianAstro') {
+                return fa.persian;
+            }
+            else {
+                return fa.gregorian;
+            }
+        } else {
+            if (this.calendarType == 'persianAlgo' | this.calendarType == 'persianAstro') {
+                return en.persian;
+            }
+            else {
+                return en.gregorian;
+            }
+        }
+    }
+
+    toCalendar (input) {
+        this.calendarType = input;
+        return this;
+    }
+
+    locale (input) {
+        this.localType = input;
+
+        if (this.localType !== 'fa') {
+            this.formatPersian = false;
+        } else {
+            this.formatPersian = '_default';
+        }
+
+        return this;
+    }
+
+    _weekName (input) {
+        return this._locale().weekdays[input - 1];
+    }
+
+    _weekNameShort (input) {
+        return this._locale().weekdaysShort[input - 1];
+    }
+
+    _weekNameMin (input) {
+        return this._locale().weekdaysMin[input - 1];
+    }
+
+    _dayName (input) {
+        return this._locale().persianDaysName[input - 1];
+    }
+
+
+    _monthName (input) {
+        return this._locale().months[input - 1];
+    }
+
+    _monthNameShort (input) {
+        return this._locale().monthsShort[input - 1];
     }
 
 
@@ -375,8 +442,6 @@ class PersianDateClass {
      * @returns {*}
      */
     unix (timestamp) {
-
-        console.log('unix (timestamp) {')
         let output;
         if (timestamp) {
             return new PersianDateClass(timestamp * 1000);
@@ -404,7 +469,6 @@ class PersianDateClass {
      */
     getFirstWeekDayOfMonth (year, month) {
         var pdate = new PersianDateClass([year, month, 1]);
-        console.log(pdate.day());
         return pdate.day();
     }
 
@@ -515,7 +579,6 @@ class PersianDateClass {
             case 'weeks':
             case 'week':
                 let weekDayNumber = this.calendar().weekday;
-                console.log('weekDayNumber')
                 console.log(weekDayNumber)
                 return new PersianDateClass([this.year(), this.month(), this.date() + (7 - weekDayNumber)]);
             default:
@@ -749,7 +812,7 @@ class PersianDateClass {
      */
     format (inputString) {
         let self = this,
-          formattingTokens = /([[^[]*])|(\\)?(Mo|MM?M?M?|Do|DD?D?D?|ddddd|dddd?|do?|w[o|w]?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|SS?S?|zz?|ZZ?|X|LT|ll?l?l?|LL?L?L?)/g,
+          formattingTokens = /([[^[]*])|(\\)?(Mo|MM?M?M?|Do|DD?D?D?|dddddd?|ddddd?|dddd?|do?|w[o|w]?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|SS?S?|zz?|ZZ?|X|LT|ll?l?l?|LL?L?L?)/g,
           info = {
               year: self.year(),
               month: self.month(),
@@ -833,14 +896,18 @@ class PersianDateClass {
                 }
               // Return week day name abbr
                 case('ddd'): {
-                    return weekRange[self.calendar().weekday].abbr.fa;
+                    return self._weekNameShort(self.calendar().weekday);
                 }
                 case('dddd'): {
-                    return weekRange[self.calendar().weekday].name.fa;
+                    return self._weekName(self.calendar().weekday);
                 }
               // Return Persian Day Name
                 case('ddddd'): {
-                    return persianDaysName[self.calendar().day - 1];
+                    return self._dayName(self.calendar().day);
+                }
+              // Return Persian Day Name
+                case('dddddd'): {
+                    return self._weekNameMin(self.calendar().weekday);
                 }
               // Return Persian Day Name
                 case('w'): {
@@ -864,11 +931,11 @@ class PersianDateClass {
                 }
               // Abbr String of Month (Str)
                 case('MMM'): {
-                    return monthRange[info.month].abbr.fa;
+                    return self._monthNameShort(info.month);
                 }
               // Full String name of Month (Str)
                 case('MMMM'): {
-                    return monthRange[info.month].name.fa;
+                    return self._monthName(info.month);
                 }
               // Year
               // Two Digit Year (Str)
@@ -882,7 +949,6 @@ class PersianDateClass {
                 }
               /* istanbul ignore next */
                 case('Z'): {
-                    console.log(info.timezone);
                     let flag = '+',
                       hours = Math.round(info.timezone / 60),
                       minutes = info.timezone % 60;
@@ -1020,7 +1086,6 @@ class PersianDateClass {
      */
     subtract (key, value) {
         let duration = new Duration(key, value)._data;
-        console.log(duration)
         if (duration.years > 0) {
             let newYear = this.year() - duration.years;
             this.year(newYear);
