@@ -20,6 +20,7 @@
   "repository": "git@github.com:babakhani/PersianDate.git",
   "homepage": "http://babakhani.github.io/PersianWebToolkit/docs/persian-date/",
   "devDependencies": {
+    "amd-loader": "0.0.8",
     "babel-cli": "^6.0.0",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.4.1",

@@ -328,41 +328,6 @@ var Helpers = function () {
         }
 
         /**
-         * @param input
-         * @returns {boolean}
-         */
-
-    }, {
-        key: 'isArray',
-        value: function isArray(input) {
-            return Object.prototype.toString.call(input) === '[object Array]';
-        }
-
-        /**
-         *
-         * @param input
-         * @returns {boolean}
-         */
-
-    }, {
-        key: 'isNumber',
-        value: function isNumber(input) {
-            return typeof input === 'number';
-        }
-
-        /**
-         *
-         * @param input
-         * @returns {boolean}
-         */
-
-    }, {
-        key: 'isDate',
-        value: function isDate(input) {
-            return input instanceof Date;
-        }
-
-        /**
          * @param number
          * @param targetLength
          * @returns {string}
@@ -428,19 +393,6 @@ var Helpers = function () {
             } else {
                 return Math.floor(number);
             }
-        }
-
-        /**
-         *
-         * @param a
-         * @param b
-         * @returns {number}
-         */
-
-    }, {
-        key: 'mod',
-        value: function mod(a, b) {
-            return a - b * Math.floor(a / b);
         }
     }]);
 
@@ -555,6 +507,8 @@ String.prototype.toPersianDigit = function (latinDigit) {
 };
 PersianDateClass.unix = PersianDateClass._unix;
 PersianDateClass.utc = PersianDateClass._utc;
+PersianDateClass.calendarType = 'persianAstro';
+
 module.exports = PersianDateClass;
 
 /***/ }),
@@ -579,31 +533,25 @@ var persianDaysName = __webpack_require__(0).persianDaysName;
 var monthRange = __webpack_require__(0).monthRange;
 
 var PersianDateClass = function () {
+
+    //    static calendarType : 'persianAstro';
     function PersianDateClass(input) {
         _classCallCheck(this, PersianDateClass);
 
-        this.calendarType = 'persianAstro';
-
+        this.calendarType = PersianDateClass.calendarType;
         this.algorithms = new Algorithms();
         // Convert Any thing to Gregorian Date
         if (TypeChecking.isDate(input)) {
             this.algorithms.calcGregorian([input.getFullYear(), input.getMonth(), input.getDate(), input.getHours(), input.getMinutes(), input.getSeconds(), input.getMilliseconds()]);
         } else if (TypeChecking.isArray(input)) {
-            //  Encapsulate Input Array
-            if (this.calendarType == 'persianAstro') {
-                this.algorithms.calcPersiana([input[0], input[1] ? input[1] : 1, input[2] ? input[2] : 1, input[3], input[4], input[5], input[6] ? input[6] : 0]);
-            } else if (this.calendarType == 'persian') {
-                this.algorithms.calcPersian([input[0], input[1] ? input[1] : 1, input[2] ? input[2] : 1, input[3], input[4], input[5], input[6] ? input[6] : 0]);
-            } else if (this.calendarType == 'gregorian') {
-                this.algorithms.calcGregorian([input[0], input[1], input[2], input[3], input[4], input[5], input[6] ? input[6] : 0]);
-            }
+            this.algorithmsCalc([input[0], input[1] ? input[1] : 1, input[2] ? input[2] : 1, input[3], input[4], input[5], input[6] ? input[6] : 0]);
         } else if (TypeChecking.isNumber(input)) {
             var fromUnix = new Date(input);
             this.algorithms.calcGregorian([fromUnix.getFullYear(), fromUnix.getMonth(), fromUnix.getDate(), fromUnix.getHours(), fromUnix.getMinutes(), fromUnix.getSeconds(), fromUnix.getMilliseconds()]);
         }
         // instance of pDate
         else if (input instanceof PersianDateClass) {
-                this.algorithms.calcPersiana([input.year(), input.month(), input.date(), input.hour(), input.minute(), input.second(), input.millisecond()]);
+                this.algorithmsCalc([input.year(), input.month(), input.date(), input.hour(), input.minute(), input.second(), input.millisecond()]);
             }
             // ASP.NET JSON Date
             else if (input && input.substring(0, 6) === '/Date(') {
@@ -648,17 +596,26 @@ var PersianDateClass = function () {
     }, {
         key: 'algorithmsCalc',
         value: function algorithmsCalc(dateArray) {
-            if (TypeChecking.isDate(dateArray)) {
-                dateArray = [dateArray.getFullYear(), dateArray.getMonth(), dateArray.getDate(), dateArray.getHours(), dateArray.getMinutes(), dateArray.getSeconds(), dateArray.getMilliseconds()];
-            }
+            // TODO: Coverage say delete this
+            //        if (TypeChecking.isDate(dateArray)) {
+            //            dateArray = [
+            //                dateArray.getFullYear(),
+            //                dateArray.getMonth(),
+            //                dateArray.getDate(),
+            //                dateArray.getHours(),
+            //                dateArray.getMinutes(),
+            //                dateArray.getSeconds(),
+            //                dateArray.getMilliseconds()
+            //            ]
+            //        }
             if (this.isPersianDate(dateArray)) {
                 dateArray = [dateArray.year(), dateArray.month(), dateArray.date(), dateArray.hour(), dateArray.minute(), dateArray.second(), dateArray.millisecond()];
             }
-            if (this.calendarType == 'persian') {
+            if (this.calendarType == 'persianAlgo') {
                 return this.algorithms.calcPersian(dateArray);
             } else if (this.calendarType == 'persianAstro') {
                 return this.algorithms.calcPersiana(dateArray);
-            } else if (this.calendarType == 'persian') {
+            } else if (this.calendarType == 'gregorian') {
                 return this.algorithms.calcGregorian(dateArray);
             }
         }
@@ -912,12 +869,11 @@ var PersianDateClass = function () {
          * @returns {*}
          * @private
          */
+        //    _valueOf () {
+        //        return this.ON.gDate.valueOf();
+        //    }
 
-    }, {
-        key: '_valueOf',
-        value: function _valueOf() {
-            return this.ON.gDate.valueOf();
-        }
+
     }, {
         key: 'unix',
 
@@ -1220,7 +1176,7 @@ var PersianDateClass = function () {
             if (year == undefined) {
                 year = this.year();
             }
-            if (this.calendarType == 'persian') {
+            if (this.calendarType == 'persianAlgo') {
                 return this.algorithms.leap_persian(year);
             }
             if (this.calendarType == 'persianAstro') {
@@ -1794,64 +1750,56 @@ var Algorithms = function () {
 
     /*  WEEKDAY_BEFORE  --  Return Julian date of given weekday (0 = Sunday)
      in the seven days ending on jd.  */
+    //    weekday_before (weekday, jd) {
+    //        return jd - this.ASTRO.jwday(jd - weekday);
+    //    }
+
+
+    /*  SEARCH_WEEKDAY  --  Determine the Julian date for:
+      weekday      Day of week desired, 0 = Sunday
+     jd           Julian date to begin search
+     direction    1 = next weekday, -1 = last weekday
+     offset       Offset from jd to begin search
+     */
+
+    //    search_weekday (weekday, jd, direction, offset) {
+    //        return this.weekday_before(weekday, jd + (direction * offset));
+    //    }
+
+    /**
+     * @desc Utility weekday functions, just wrappers for search_weekday
+     * @param weekday
+     * @param jd
+     * @return {*}
+     */
+    //    nearest_weekday (weekday, jd) {
+    //        return this.search_weekday(weekday, jd, 1, 3);
+    //    }
+
+    //    next_weekday (weekday, jd) {
+    //        return this.search_weekday(weekday, jd, 1, 7);
+    //    }
+
+    //    next_or_current_weekday (weekday, jd) {
+    //        return this.search_weekday(weekday, jd, 1, 6);
+    //    }
+
+    //    previous_weekday (weekday, jd) {
+    //        return this.search_weekday(weekday, jd, -1, 1);
+    //    }
+
+    //    previous_or_current_weekday (weekday, jd) {
+    //        return this.search_weekday(weekday, jd, 1, 0);
+    //    }
+
+    /**
+     * @desc LEAP_GREGORIAN  --  Is a given year in the Gregorian calendar a leap year ?
+     * @param year
+     * @return {boolean}
+     */
 
 
     _createClass(Algorithms, [{
-        key: 'weekday_before',
-        value: function weekday_before(weekday, jd) {
-            return jd - this.ASTRO.jwday(jd - weekday);
-        }
-
-        /*  SEARCH_WEEKDAY  --  Determine the Julian date for:
-          weekday      Day of week desired, 0 = Sunday
-         jd           Julian date to begin search
-         direction    1 = next weekday, -1 = last weekday
-         offset       Offset from jd to begin search
-         */
-
-    }, {
-        key: 'search_weekday',
-        value: function search_weekday(weekday, jd, direction, offset) {
-            return this.weekday_before(weekday, jd + direction * offset);
-        }
-
-        /**
-         * @desc Utility weekday functions, just wrappers for search_weekday
-         * @param weekday
-         * @param jd
-         * @return {*}
-         */
-        //    nearest_weekday (weekday, jd) {
-        //        return this.search_weekday(weekday, jd, 1, 3);
-        //    }
-
-    }, {
-        key: 'next_weekday',
-        value: function next_weekday(weekday, jd) {
-            return this.search_weekday(weekday, jd, 1, 7);
-        }
-
-        //    next_or_current_weekday (weekday, jd) {
-        //        return this.search_weekday(weekday, jd, 1, 6);
-        //    }
-
-    }, {
-        key: 'previous_weekday',
-        value: function previous_weekday(weekday, jd) {
-            return this.search_weekday(weekday, jd, -1, 1);
-        }
-
-        //    previous_or_current_weekday (weekday, jd) {
-        //        return this.search_weekday(weekday, jd, 1, 0);
-        //    }
-
-        /**
-         * @desc LEAP_GREGORIAN  --  Is a given year in the Gregorian calendar a leap year ?
-         * @param year
-         * @return {boolean}
-         */
-
-    }, {
         key: 'leap_gregorian',
         value: function leap_gregorian(year) {
             return year % 4 == 0 && !(year % 100 == 0 && year % 400 != 0);
@@ -1893,74 +1841,64 @@ var Algorithms = function () {
             return [year, month, day];
         }
 
-        //  ISO_TO_JULIAN  --  Return Julian day of given ISO year, week, and day
+        //
+        //    //  ISO_TO_JULIAN  --  Return Julian day of given ISO year, week, and day
+        //    n_weeks (weekday, jd, nthweek) {
+        //        var j = 7 * nthweek;
+        //        if (nthweek > 0) {
+        //            j += this.previous_weekday(weekday, jd);
+        //        } else {
+        //            j += this.next_weekday(weekday, jd);
+        //        }
+        //        return j;
+        //    }
+        //
+        //    iso_to_julian (year, week, day) {
+        //        return day + this.n_weeks(0, this.gregorian_to_jd(year - 1, 12, 28), week);
+        //    }
+        //
+        //    //  JD_TO_ISO  --  Return array of ISO (year, week, day) for Julian day
+        //    jd_to_iso (jd) {
+        //        var year, week, day;
+        //        year = this.jd_to_gregorian(jd - 3)[0];
+        //        if (jd >= this.iso_to_julian(year + 1, 1, 1)) {
+        //            year++;
+        //        }
+        //        week = Math.floor((jd - this.iso_to_julian(year, 1, 1)) / 7) + 1;
+        //        day = this.ASTRO.jwday(jd);
+        //        if (day == 0) {
+        //            day = 7;
+        //        }
+        //        return [year, week, day];
+        //    }
 
-    }, {
-        key: 'n_weeks',
-        value: function n_weeks(weekday, jd, nthweek) {
-            var j = 7 * nthweek;
-            if (nthweek > 0) {
-                j += this.previous_weekday(weekday, jd);
-            } else {
-                j += this.next_weekday(weekday, jd);
-            }
-            return j;
-        }
-    }, {
-        key: 'iso_to_julian',
-        value: function iso_to_julian(year, week, day) {
-            return day + this.n_weeks(0, this.gregorian_to_jd(year - 1, 12, 28), week);
-        }
-
-        //  JD_TO_ISO  --  Return array of ISO (year, week, day) for Julian day
-
-    }, {
-        key: 'jd_to_iso',
-        value: function jd_to_iso(jd) {
-            var year, week, day;
-            year = this.jd_to_gregorian(jd - 3)[0];
-            if (jd >= this.iso_to_julian(year + 1, 1, 1)) {
-                year++;
-            }
-            week = Math.floor((jd - this.iso_to_julian(year, 1, 1)) / 7) + 1;
-            day = this.ASTRO.jwday(jd);
-            if (day == 0) {
-                day = 7;
-            }
-            return [year, week, day];
-        }
 
         //  ISO_DAY_TO_JULIAN  --  Return Julian day of given ISO year, and day of year
+        //    iso_day_to_julian (year, day) {
+        //        return (day - 1) + this.gregorian_to_jd(year, 1, 1);
+        //    }
 
-    }, {
-        key: 'iso_day_to_julian',
-        value: function iso_day_to_julian(year, day) {
-            return day - 1 + this.gregorian_to_jd(year, 1, 1);
-        }
 
         //  JD_TO_ISO_DAY  --  Return array of ISO (year, day_of_year) for Julian day
+        //    jd_to_iso_day (jd) {
+        //        var year, day;
+        //
+        //        year = this.jd_to_gregorian(jd)[0];
+        //        day = Math.floor(jd - this.gregorian_to_jd(year, 1, 1)) + 1;
+        //        return [year, day];
+        //    }
 
-    }, {
-        key: 'jd_to_iso_day',
-        value: function jd_to_iso_day(jd) {
-            var year, day;
-
-            year = this.jd_to_gregorian(jd)[0];
-            day = Math.floor(jd - this.gregorian_to_jd(year, 1, 1)) + 1;
-            return [year, day];
-        }
 
         /*  PAD  --  Pad a string to a given length with a given fill character.  */
+        //    pad (str, howlong, padwith) {
+        //        var s = str.toString();
+        //        while (s.length < howlong) {
+        //            s = padwith + s;
+        //        }
+        //        return s;
+        //    }
 
-    }, {
-        key: 'pad',
-        value: function pad(str, howlong, padwith) {
-            var s = str.toString();
-            while (s.length < howlong) {
-                s = padwith + s;
-            }
-            return s;
-        }
+
     }, {
         key: 'leap_julian',
         value: function leap_julian(year) {
@@ -2779,18 +2717,18 @@ var Algorithms = function () {
 
             //  Update ISO Week
             // ---------------------------------------------------------------------------
-            isoweek = this.jd_to_iso(j);
+            //        isoweek = this.jd_to_iso(j);
 
-            this.ON.isoweek.year = isoweek[0];
-            this.ON.isoweek.week = isoweek[1];
-            this.ON.isoweek.day = isoweek[2];
+            //        this.ON.isoweek.year = isoweek[0];
+            //        this.ON.isoweek.week = isoweek[1];
+            //        this.ON.isoweek.day = isoweek[2];
 
             //  Update ISO Day
             // ---------------------------------------------------------------------------
-            isoday = this.jd_to_iso_day(j);
+            //        isoday = this.jd_to_iso_day(j);
 
-            this.ON.isoday.year = isoday[0];
-            this.ON.isoday.day = isoday[1];
+            //        this.ON.isoday.year = isoday[0];
+            //        this.ON.isoday.day = isoday[1];
         }
 
         //  calcGregorian  --  Perform calculation starting with a Gregorian date
@@ -2913,35 +2851,28 @@ var Algorithms = function () {
         }
 
         //  calcGregSerial  --  Update from Gregorian serial day number
+        //    calcGregSerial () {
+        //        this.setJulian((new Number(document.gregserial.day.value)) + J0000);
+        //    }
 
-    }, {
-        key: 'calcGregSerial',
-        value: function calcGregSerial() {
-            this.setJulian(new Number(document.gregserial.day.value) + J0000);
-        }
 
         //  calcIsoWeek  --  Update from specified ISO year, week, and day
-
-    }, {
-        key: 'calcIsoWeek',
-        value: function calcIsoWeek() {
-            var year = new Number(document.isoweek.year.value),
-                week = new Number(document.isoweek.week.value),
-                day = new Number(document.isoweek.day.value);
-
-            this.setJulian(this.iso_to_julian(year, week, day));
-        }
+        //    calcIsoWeek () {
+        //        var year = new Number(document.isoweek.year.value),
+        //          week = new Number(document.isoweek.week.value),
+        //          day = new Number(document.isoweek.day.value);
+        //
+        //        this.setJulian(this.iso_to_julian(year, week, day));
+        //    }
 
         //  calcIsoDay  --  Update from specified ISO year and day of year
+        //    calcIsoDay () {
+        //        var year = new Number(document.isoday.year.value),
+        //          day = new Number(document.isoday.day.value);
+        //
+        //        this.setJulian(this.iso_day_to_julian(year, day));
+        //    }
 
-    }, {
-        key: 'calcIsoDay',
-        value: function calcIsoDay() {
-            var year = new Number(document.isoday.year.value),
-                day = new Number(document.isoday.day.value);
-
-            this.setJulian(this.iso_day_to_julian(year, day));
-        }
 
         //    /*  setDateToToday  --  Preset the fields in
         //     the request form to today's date.  */
@@ -3246,17 +3177,14 @@ var ASTRO = function () {
     }
 
     /*  ASTOR  --  Arc-seconds to radians.  */
+    //    astor (a) {
+    //        return a * (Math.PI / (180.0 * 3600.0));
+    //    }
+
+    /*  DTR  --  Degrees to radians.  */
 
 
     _createClass(ASTRO, [{
-        key: "astor",
-        value: function astor(a) {
-            return a * (Math.PI / (180.0 * 3600.0));
-        }
-
-        /*  DTR  --  Degrees to radians.  */
-
-    }, {
         key: "dtr",
         value: function dtr(d) {
             return d * Math.PI / 180.0;
@@ -3311,12 +3239,9 @@ var ASTRO = function () {
         }
 
         //  AMOD  --  Modulus function which returns numerator if modulus is zero
-
-    }, {
-        key: "amod",
-        value: function amod(a, b) {
-            return this.mod(a - 1, b) + 1;
-        }
+        //    amod (a, b) {
+        //        return this.mod(a - 1, b) + 1;
+        //    }
 
         /*  JHMS  --  Convert Julian time to hour, minutes, and seconds,
          returned as a three-element array.  */
@@ -3696,7 +3621,7 @@ var Container = function Container() {
      *
      * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
      */
-    this.persian = {
+    this.persianAlgo = this.persian = {
         year: 0,
         month: 0,
         day: 0,

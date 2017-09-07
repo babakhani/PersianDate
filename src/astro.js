@@ -262,9 +262,9 @@ class ASTRO {
 
 
     /*  ASTOR  --  Arc-seconds to radians.  */
-    astor (a) {
-        return a * (Math.PI / (180.0 * 3600.0));
-    }
+//    astor (a) {
+//        return a * (Math.PI / (180.0 * 3600.0));
+//    }
 
     /*  DTR  --  Degrees to radians.  */
     dtr (d) {
@@ -302,9 +302,9 @@ class ASTRO {
     }
 
 //  AMOD  --  Modulus function which returns numerator if modulus is zero
-    amod (a, b) {
-        return this.mod(a - 1, b) + 1;
-    }
+//    amod (a, b) {
+//        return this.mod(a - 1, b) + 1;
+//    }
 
     /*  JHMS  --  Convert Julian time to hour, minutes, and seconds,
      returned as a three-element array.  */

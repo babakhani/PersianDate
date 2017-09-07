@@ -12,34 +12,6 @@ class Helpers {
     }
 
     /**
-     * @param input
-     * @returns {boolean}
-     */
-    isArray (input) {
-        return Object.prototype.toString.call(input) === '[object Array]';
-    }
-
-
-    /**
-     *
-     * @param input
-     * @returns {boolean}
-     */
-    isNumber (input) {
-        return typeof input === 'number';
-    }
-
-
-    /**
-     *
-     * @param input
-     * @returns {boolean}
-     */
-    isDate (input) {
-        return input instanceof Date;
-    }
-
-    /**
      * @param number
      * @param targetLength
      * @returns {string}
@@ -105,15 +77,6 @@ class Helpers {
     }
 
 
-    /**
-     *
-     * @param a
-     * @param b
-     * @returns {number}
-     */
-    mod (a, b) {
-        return a - (b * Math.floor(a / b));
-    }
 }
 
 module.exports = Helpers;

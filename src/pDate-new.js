@@ -9,11 +9,10 @@ let persianDaysName = require('./constants').persianDaysName;
 let monthRange = require('./constants').monthRange;
 
 class PersianDateClass {
+
+//    static calendarType : 'persianAstro';
     constructor (input) {
-
-
-        this.calendarType = 'persianAstro';
-
+        this.calendarType = PersianDateClass.calendarType;
         this.algorithms = new Algorithms();
         // Convert Any thing to Gregorian Date
         if (TypeChecking.isDate(input)) {
@@ -29,16 +28,7 @@ class PersianDateClass {
               ]);
         }
         else if (TypeChecking.isArray(input)) {
-            //  Encapsulate Input Array
-            if (this.calendarType == 'persianAstro') {
-                this.algorithms.calcPersiana([input[0], (input[1] ? input[1] : 1), (input[2] ? input[2] : 1), input[3], input[4], input[5], (input[6] ? input[6] : 0)]);
-            }
-            else if (this.calendarType == 'persian') {
-                this.algorithms.calcPersian([input[0], (input[1] ? input[1] : 1), (input[2] ? input[2] : 1), input[3], input[4], input[5], (input[6] ? input[6] : 0)]);
-            }
-            else if (this.calendarType == 'gregorian') {
-                this.algorithms.calcGregorian([input[0], input[1], input[2], input[3], input[4], input[5], (input[6] ? input[6] : 0)]);
-            }
+            this.algorithmsCalc([input[0], (input[1] ? input[1] : 1), (input[2] ? input[2] : 1), input[3], input[4], input[5], (input[6] ? input[6] : 0)]);
         }
         else if (TypeChecking.isNumber(input)) {
             const fromUnix = new Date(input);
@@ -55,7 +45,7 @@ class PersianDateClass {
         }
         // instance of pDate
         else if (input instanceof PersianDateClass) {
-            this.algorithms.calcPersiana([
+            this.algorithmsCalc([
                 input.year(),
                 input.month(),
                 input.date(),
@@ -121,17 +111,18 @@ class PersianDateClass {
 
 
     algorithmsCalc (dateArray) {
-        if (TypeChecking.isDate(dateArray)) {
-            dateArray = [
-                dateArray.getFullYear(),
-                dateArray.getMonth(),
-                dateArray.getDate(),
-                dateArray.getHours(),
-                dateArray.getMinutes(),
-                dateArray.getSeconds(),
-                dateArray.getMilliseconds()
-            ]
-        }
+        // TODO: Coverage say delete this
+//        if (TypeChecking.isDate(dateArray)) {
+//            dateArray = [
+//                dateArray.getFullYear(),
+//                dateArray.getMonth(),
+//                dateArray.getDate(),
+//                dateArray.getHours(),
+//                dateArray.getMinutes(),
+//                dateArray.getSeconds(),
+//                dateArray.getMilliseconds()
+//            ]
+//        }
         if (this.isPersianDate(dateArray)) {
             dateArray = [
                 dateArray.year(),
@@ -143,13 +134,13 @@ class PersianDateClass {
                 dateArray.millisecond()
             ]
         }
-        if (this.calendarType == 'persian') {
+        if (this.calendarType == 'persianAlgo') {
             return this.algorithms.calcPersian(dateArray);
         }
         else if (this.calendarType == 'persianAstro') {
             return this.algorithms.calcPersiana(dateArray);
         }
-        else if (this.calendarType == 'persian') {
+        else if (this.calendarType == 'gregorian') {
             return this.algorithms.calcGregorian(dateArray);
         }
     }
@@ -365,9 +356,9 @@ class PersianDateClass {
      * @returns {*}
      * @private
      */
-    _valueOf () {
-        return this.ON.gDate.valueOf();
-    }
+//    _valueOf () {
+//        return this.ON.gDate.valueOf();
+//    }
 
 
     static _unix (timestamp) {
@@ -484,7 +475,7 @@ class PersianDateClass {
             case 'weeks':
             case 'week':
                 let weekDayNumber = this.calendar().weekday;
-                return new PersianDateClass([this.year(), this.month(), this.date() - (weekDayNumber-1)]);
+                return new PersianDateClass([this.year(), this.month(), this.date() - (weekDayNumber - 1)]);
             default:
                 return this;
         }
@@ -658,7 +649,7 @@ class PersianDateClass {
         if (year == undefined) {
             year = this.year()
         }
-        if (this.calendarType == 'persian') {
+        if (this.calendarType == 'persianAlgo') {
             return this.algorithms.leap_persian(year)
         }
         if (this.calendarType == 'persianAstro') {

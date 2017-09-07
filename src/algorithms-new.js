@@ -100,9 +100,9 @@ class Algorithms {
 
     /*  WEEKDAY_BEFORE  --  Return Julian date of given weekday (0 = Sunday)
      in the seven days ending on jd.  */
-    weekday_before (weekday, jd) {
-        return jd - this.ASTRO.jwday(jd - weekday);
-    }
+//    weekday_before (weekday, jd) {
+//        return jd - this.ASTRO.jwday(jd - weekday);
+//    }
 
 
     /*  SEARCH_WEEKDAY  --  Determine the Julian date for:
@@ -113,9 +113,9 @@ class Algorithms {
      offset       Offset from jd to begin search
      */
 
-    search_weekday (weekday, jd, direction, offset) {
-        return this.weekday_before(weekday, jd + (direction * offset));
-    }
+//    search_weekday (weekday, jd, direction, offset) {
+//        return this.weekday_before(weekday, jd + (direction * offset));
+//    }
 
     /**
      * @desc Utility weekday functions, just wrappers for search_weekday
@@ -127,17 +127,17 @@ class Algorithms {
 //        return this.search_weekday(weekday, jd, 1, 3);
 //    }
 
-    next_weekday (weekday, jd) {
-        return this.search_weekday(weekday, jd, 1, 7);
-    }
+//    next_weekday (weekday, jd) {
+//        return this.search_weekday(weekday, jd, 1, 7);
+//    }
 
 //    next_or_current_weekday (weekday, jd) {
 //        return this.search_weekday(weekday, jd, 1, 6);
 //    }
 
-    previous_weekday (weekday, jd) {
-        return this.search_weekday(weekday, jd, -1, 1);
-    }
+//    previous_weekday (weekday, jd) {
+//        return this.search_weekday(weekday, jd, -1, 1);
+//    }
 
 //    previous_or_current_weekday (weekday, jd) {
 //        return this.search_weekday(weekday, jd, 1, 0);
@@ -198,62 +198,62 @@ class Algorithms {
         return [year, month, day];
     }
 
-
-    //  ISO_TO_JULIAN  --  Return Julian day of given ISO year, week, and day
-    n_weeks (weekday, jd, nthweek) {
-        var j = 7 * nthweek;
-        if (nthweek > 0) {
-            j += this.previous_weekday(weekday, jd);
-        } else {
-            j += this.next_weekday(weekday, jd);
-        }
-        return j;
-    }
-
-    iso_to_julian (year, week, day) {
-        return day + this.n_weeks(0, this.gregorian_to_jd(year - 1, 12, 28), week);
-    }
-
-    //  JD_TO_ISO  --  Return array of ISO (year, week, day) for Julian day
-    jd_to_iso (jd) {
-        var year, week, day;
-        year = this.jd_to_gregorian(jd - 3)[0];
-        if (jd >= this.iso_to_julian(year + 1, 1, 1)) {
-            year++;
-        }
-        week = Math.floor((jd - this.iso_to_julian(year, 1, 1)) / 7) + 1;
-        day = this.ASTRO.jwday(jd);
-        if (day == 0) {
-            day = 7;
-        }
-        return [year, week, day];
-    }
+//
+//    //  ISO_TO_JULIAN  --  Return Julian day of given ISO year, week, and day
+//    n_weeks (weekday, jd, nthweek) {
+//        var j = 7 * nthweek;
+//        if (nthweek > 0) {
+//            j += this.previous_weekday(weekday, jd);
+//        } else {
+//            j += this.next_weekday(weekday, jd);
+//        }
+//        return j;
+//    }
+//
+//    iso_to_julian (year, week, day) {
+//        return day + this.n_weeks(0, this.gregorian_to_jd(year - 1, 12, 28), week);
+//    }
+//
+//    //  JD_TO_ISO  --  Return array of ISO (year, week, day) for Julian day
+//    jd_to_iso (jd) {
+//        var year, week, day;
+//        year = this.jd_to_gregorian(jd - 3)[0];
+//        if (jd >= this.iso_to_julian(year + 1, 1, 1)) {
+//            year++;
+//        }
+//        week = Math.floor((jd - this.iso_to_julian(year, 1, 1)) / 7) + 1;
+//        day = this.ASTRO.jwday(jd);
+//        if (day == 0) {
+//            day = 7;
+//        }
+//        return [year, week, day];
+//    }
 
 
 //  ISO_DAY_TO_JULIAN  --  Return Julian day of given ISO year, and day of year
-    iso_day_to_julian (year, day) {
-        return (day - 1) + this.gregorian_to_jd(year, 1, 1);
-    }
+//    iso_day_to_julian (year, day) {
+//        return (day - 1) + this.gregorian_to_jd(year, 1, 1);
+//    }
 
 
 //  JD_TO_ISO_DAY  --  Return array of ISO (year, day_of_year) for Julian day
-    jd_to_iso_day (jd) {
-        var year, day;
-
-        year = this.jd_to_gregorian(jd)[0];
-        day = Math.floor(jd - this.gregorian_to_jd(year, 1, 1)) + 1;
-        return [year, day];
-    }
+//    jd_to_iso_day (jd) {
+//        var year, day;
+//
+//        year = this.jd_to_gregorian(jd)[0];
+//        day = Math.floor(jd - this.gregorian_to_jd(year, 1, 1)) + 1;
+//        return [year, day];
+//    }
 
 
     /*  PAD  --  Pad a string to a given length with a given fill character.  */
-    pad (str, howlong, padwith) {
-        var s = str.toString();
-        while (s.length < howlong) {
-            s = padwith + s;
-        }
-        return s;
-    }
+//    pad (str, howlong, padwith) {
+//        var s = str.toString();
+//        while (s.length < howlong) {
+//            s = padwith + s;
+//        }
+//        return s;
+//    }
 
 
     leap_julian (year) {
@@ -1084,18 +1084,18 @@ class Algorithms {
 
         //  Update ISO Week
         // ---------------------------------------------------------------------------
-        isoweek = this.jd_to_iso(j);
+//        isoweek = this.jd_to_iso(j);
 
-        this.ON.isoweek.year = isoweek[0];
-        this.ON.isoweek.week = isoweek[1];
-        this.ON.isoweek.day = isoweek[2];
+//        this.ON.isoweek.year = isoweek[0];
+//        this.ON.isoweek.week = isoweek[1];
+//        this.ON.isoweek.day = isoweek[2];
 
         //  Update ISO Day
         // ---------------------------------------------------------------------------
-        isoday = this.jd_to_iso_day(j);
+//        isoday = this.jd_to_iso_day(j);
 
-        this.ON.isoday.year = isoday[0];
-        this.ON.isoday.day = isoday[1];
+//        this.ON.isoday.year = isoday[0];
+//        this.ON.isoday.day = isoday[1];
     }
 
 
@@ -1216,27 +1216,27 @@ class Algorithms {
 
 
 //  calcGregSerial  --  Update from Gregorian serial day number
-    calcGregSerial () {
-        this.setJulian((new Number(document.gregserial.day.value)) + J0000);
-    }
+//    calcGregSerial () {
+//        this.setJulian((new Number(document.gregserial.day.value)) + J0000);
+//    }
 
 
 //  calcIsoWeek  --  Update from specified ISO year, week, and day
-    calcIsoWeek () {
-        var year = new Number(document.isoweek.year.value),
-          week = new Number(document.isoweek.week.value),
-          day = new Number(document.isoweek.day.value);
-
-        this.setJulian(this.iso_to_julian(year, week, day));
-    }
+//    calcIsoWeek () {
+//        var year = new Number(document.isoweek.year.value),
+//          week = new Number(document.isoweek.week.value),
+//          day = new Number(document.isoweek.day.value);
+//
+//        this.setJulian(this.iso_to_julian(year, week, day));
+//    }
 
 //  calcIsoDay  --  Update from specified ISO year and day of year
-    calcIsoDay () {
-        var year = new Number(document.isoday.year.value),
-          day = new Number(document.isoday.day.value);
-
-        this.setJulian(this.iso_day_to_julian(year, day));
-    }
+//    calcIsoDay () {
+//        var year = new Number(document.isoday.year.value),
+//          day = new Number(document.isoday.day.value);
+//
+//        this.setJulian(this.iso_day_to_julian(year, day));
+//    }
 
 
 //    /*  setDateToToday  --  Preset the fields in

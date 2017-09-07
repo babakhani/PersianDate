@@ -1,5 +1,6 @@
 /*global describe,it*/
 let assert = require('assert');
+require("amd-loader");
 let expect = require('chai').expect;
 let obj = require('../dist/persian-date.js');
 const pDate = obj,
@@ -21,7 +22,6 @@ describe('Helpers', function () {
 describe('Convert test', function () {
     const startUnix = 1490444803982,
       endUnix = 1490444803982 + 2000000;
-
     it('Object Create Successfully', function () {
         let indexUnix = startUnix;
         while (indexUnix < endUnix) {
@@ -35,6 +35,19 @@ describe('Convert test', function () {
 
 describe('Make Instance', function () {
 
+
+    it('Create persian algorithmic instance', function () {
+        pDate.calendarType = 'persianAlgo';
+        let a = new pDate([1404, 1, 1, 1, 1, 1, 900]).format();
+        assert.deepEqual(a, '۱۴۰۴-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
+        pDate.calendarType = 'persianAstro';
+    });
+
+    it('Test Amd Module', function () {
+        let obj = require('../dist/persian-date.js');
+        assert.ok(obj);
+    });
+
     it('Init without any parameters', function () {
         let emptyInput = new pDate();
         assert.ok(emptyInput);
@@ -43,6 +56,26 @@ describe('Make Instance', function () {
     it('Negative year', function () {
         let a = new pDate([-1]).format();
         assert.ok(a, '-۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
+        let b = new pDate([-2000]).format();
+        // TODO: must complete
+        assert.ok(b);
+    });
+
+
+    it('Negative year', function () {
+        let a = new pDate([10000]).format();
+        // TODO: must complete
+        assert.deepEqual(a,"۱۰۰۰۰-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
+    });
+
+
+
+    it('check deltat between 1621 2000', function () {
+        pDate.calendarType = 'gregorian';
+        let a = new pDate([1641]).format();
+        // TODO: must complete
+        assert.ok(a);
+        pDate.calendarType = 'persianAstro';
     });
 
 
@@ -143,6 +176,41 @@ describe('daysInMonth', function () {
 
 
 describe('Leap Year', function () {
+
+    it('[2020] when calendarType = gregorian', function () {
+        pDate.calendarType = 'gregorian';
+        let createdDate = new pDate([2020]);
+        assert.deepEqual(createdDate.year(), 2020);
+        assert.deepEqual(createdDate.isLeapYear(), true);
+        pDate.calendarType = 'persianAstro';
+    });
+
+
+    it('[1404] when calendarType = persianAlgo', function () {
+        pDate.calendarType = 'persianAlgo';
+        let createdDate = new pDate([1403]);
+        assert.deepEqual(createdDate.year(), 1403);
+        assert.deepEqual(createdDate.isLeapYear(), false);
+        pDate.calendarType = 'persianAstro';
+    });
+
+    it('[1404] when calendarType = persianAlgo', function () {
+        pDate.calendarType = 'persianAlgo';
+        let createdDate = new pDate([1404]).isLeapYear();
+        assert.deepEqual(createdDate, true);
+        pDate.calendarType = 'persianAstro';
+    });
+
+    it('[1404] when calendarType = persianAstro', function () {
+        let createdDate = new pDate([1404]).isLeapYear();
+        assert.deepEqual(createdDate, false);
+    });
+
+    it('[1404] when calendarType = persianAstro', function () {
+        let createdDate = new pDate([1403]).isLeapYear();
+        assert.deepEqual(createdDate, true);
+    });
+
 
     it('[2028]', function () {
         let createdDate = new pDate([2028]).isLeapYear();
