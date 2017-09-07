@@ -112,18 +112,6 @@ module.exports = {
 
     /**
      *
-     * @type {number}
-     */
-    GREGORIAN_EPOCH: 1721425.5,
-
-    /**
-     *
-     * @type {number}
-     */
-    PERSIAN_EPOCH: 1948320.5,
-
-    /**
-     *
      * @type {{}}
      */
     monthRange: {
@@ -1906,21 +1894,21 @@ var Algorithms = function () {
         }
 
         //  JULIAN_TO_JD  --  Determine Julian day number from Julian calendar date
+        //    julian_to_jd (year, month, day) {
+        //        /* Adjust negative common era years to the zero-based notation we use.  */
+        //        if (year < 1) {
+        //            year++;
+        //        }
+        //        /* Algorithm as given in Meeus, Astronomical Algorithms, Chapter 7, page 61 */
+        //        if (month <= 2) {
+        //            year--;
+        //            month += 12;
+        //        }
+        //        return ((Math.floor((365.25 * (year + 4716))) +
+        //        Math.floor((30.6001 * (month + 1))) +
+        //        day) - 1524.5);
+        //    }
 
-    }, {
-        key: 'julian_to_jd',
-        value: function julian_to_jd(year, month, day) {
-            /* Adjust negative common era years to the zero-based notation we use.  */
-            if (year < 1) {
-                year++;
-            }
-            /* Algorithm as given in Meeus, Astronomical Algorithms, Chapter 7, page 61 */
-            if (month <= 2) {
-                year--;
-                month += 12;
-            }
-            return Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day - 1524.5;
-        }
 
         //  JD_TO_JULIAN  --  Calculate Julian calendar date from Julian day
 

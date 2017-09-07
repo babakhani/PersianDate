@@ -261,20 +261,20 @@ class Algorithms {
     }
 
     //  JULIAN_TO_JD  --  Determine Julian day number from Julian calendar date
-    julian_to_jd (year, month, day) {
-        /* Adjust negative common era years to the zero-based notation we use.  */
-        if (year < 1) {
-            year++;
-        }
-        /* Algorithm as given in Meeus, Astronomical Algorithms, Chapter 7, page 61 */
-        if (month <= 2) {
-            year--;
-            month += 12;
-        }
-        return ((Math.floor((365.25 * (year + 4716))) +
-        Math.floor((30.6001 * (month + 1))) +
-        day) - 1524.5);
-    }
+//    julian_to_jd (year, month, day) {
+//        /* Adjust negative common era years to the zero-based notation we use.  */
+//        if (year < 1) {
+//            year++;
+//        }
+//        /* Algorithm as given in Meeus, Astronomical Algorithms, Chapter 7, page 61 */
+//        if (month <= 2) {
+//            year--;
+//            month += 12;
+//        }
+//        return ((Math.floor((365.25 * (year + 4716))) +
+//        Math.floor((30.6001 * (month + 1))) +
+//        day) - 1524.5);
+//    }
 
 
     //  JD_TO_JULIAN  --  Calculate Julian calendar date from Julian day

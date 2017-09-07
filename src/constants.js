@@ -16,19 +16,6 @@ module.exports = {
         week: ['w', '', 'weeks', 'week'],
     },
 
-
-    /**
-     *
-     * @type {number}
-     */
-    GREGORIAN_EPOCH: 1721425.5,
-
-    /**
-     *
-     * @type {number}
-     */
-    PERSIAN_EPOCH: 1948320.5,
-
     /**
      *
      * @type {{}}

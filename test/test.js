@@ -65,9 +65,8 @@ describe('Make Instance', function () {
     it('Negative year', function () {
         let a = new pDate([10000]).format();
         // TODO: must complete
-        assert.deepEqual(a,"۱۰۰۰۰-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
+        assert.deepEqual(a, "۱۰۰۰۰-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
     });
-
 
 
     it('check deltat between 1621 2000', function () {
@@ -972,10 +971,6 @@ describe('Subtract', function () {
     it('Second', function () {
         let a = new pDate([1397, 1, 1, 1, 1, 1]).subtract('second', 10).toArray();
         assert.deepEqual(a, [1397, 1, 1, 1, 0, 51, 0]);
-    });
-    it('Millisecond', function () {
-        let a = new pDate([1397, 1, 1, 0, 0, 0]).subtract('ms', 1000).toArray();
-        assert.deepEqual(a, [1397, 1, 1, 1, 1, 0, 0]);
     });
     it('Millisecond', function () {
         let a = new pDate([1397, 1, 1, 1, 1, 1]).subtract('ms', 1200).toArray();
