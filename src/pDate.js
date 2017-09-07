@@ -579,7 +579,6 @@ class PersianDateClass {
             case 'weeks':
             case 'week':
                 let weekDayNumber = this.calendar().weekday;
-                console.log(weekDayNumber)
                 return new PersianDateClass([this.year(), this.month(), this.date() + (7 - weekDayNumber)]);
             default:
                 return this;
@@ -1042,7 +1041,6 @@ class PersianDateClass {
      */
     add (key, value) {
         let duration = new Duration(key, value)._data;
-        console.log(duration);
         if (duration.years > 0) {
             let newYear = this.year() + duration.years;
             this.year(newYear);

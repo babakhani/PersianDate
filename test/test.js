@@ -34,6 +34,8 @@ describe('Convert test', function () {
 });
 
 describe('Make Instance', function () {
+
+
     it('Create persian algorithmic instance', function () {
         pDate.calendarType = 'persianAlgo';
         let a = new pDate([1404, 1, 1, 1, 1, 1, 900]).format();
@@ -115,15 +117,41 @@ describe('locale global', function () {
         pDate.localType = 'en';
         let a = new pDate([1404, 1, 1]).format();
         assert.deepEqual(a, "1404-01-01 00:00:00 AM");
-        let b = new pDate([1404, 1, 1]).format('dddd');
+        b = new pDate([1404, 1, 1]).format('dddd');
         assert.deepEqual(b, "Friday");
+        c = new pDate([1404, 1, 2]).format('dddd');
+        assert.deepEqual(c, "Saturday");
+        d = new pDate([1404, 1, 3]).format('dddd');
+        assert.deepEqual(d, "Sunday");
+        e = new pDate([1404, 1, 4]).format('dddd');
+        assert.deepEqual(e, "Monday");
+        f = new pDate([1404, 1, 5]).format('dddd');
+        assert.deepEqual(f, "Tuesday");
+        g = new pDate([1404, 1, 6]).format('dddd');
+        assert.deepEqual(g, "Wednesday");
+        h = new pDate([1404, 1, 7]).format('dddd');
+        assert.deepEqual(h, "Thursday");
         pDate.localType = 'fa';
     });
+
     it('[1404,1,1] gregorian fa', function () {
         let a = new pDate([1404, 1, 1]).format();
         assert.deepEqual(a, "۱۴۰۴-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
         let b = new pDate([1404, 1, 1]).format('dddd');
         assert.deepEqual(b, "جمعه");
+        c = new pDate([1404, 1, 2]).format('dddd');
+        assert.deepEqual(c, "شنبه");
+        d = new pDate([1404, 1, 3]).format('dddd');
+        assert.deepEqual(d, "یکشنبه");
+        e = new pDate([1404, 1, 4]).format('dddd');
+        assert.deepEqual(e, "دوشنبه");
+        f = new pDate([1404, 1, 5]).format('dddd');
+        assert.deepEqual(f, 'سه شنبه');
+        g = new pDate([1404, 1, 6]).format('dddd');
+        assert.deepEqual(g, 'چهار شنبه');
+        h = new pDate([1404, 1, 7]).format('dddd');
+        assert.deepEqual(h, 'پنج\u200cشنبه');
+        pDate.localType = 'fa';
     });
 });
 
