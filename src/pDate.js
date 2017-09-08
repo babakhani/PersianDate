@@ -441,7 +441,7 @@ class PersianDateClass {
     //    }
 
 
-    static _unix (timestamp) {
+    static unix (timestamp) {
         if (timestamp) {
             return new PersianDateClass(timestamp * 1000).unix();
         } else {
@@ -659,7 +659,7 @@ class PersianDateClass {
     }
 
 
-    static _utc (input) {
+    static utc (input) {
         if (input) {
             return new PersianDateClass(input).utc();
         }

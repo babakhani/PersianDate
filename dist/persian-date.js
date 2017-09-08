@@ -1468,8 +1468,8 @@ var PersianDateClass = function () {
             return obj instanceof Duration;
         }
     }, {
-        key: '_unix',
-        value: function _unix(timestamp) {
+        key: 'unix',
+        value: function unix(timestamp) {
             if (timestamp) {
                 return new PersianDateClass(timestamp * 1000).unix();
             } else {
@@ -1482,8 +1482,8 @@ var PersianDateClass = function () {
             return new PersianDateClass([year, month, 1]).day();
         }
     }, {
-        key: '_utc',
-        value: function _utc(input) {
+        key: 'utc',
+        value: function utc(input) {
             if (input) {
                 return new PersianDateClass(input).utc();
             } else {
@@ -2934,8 +2934,6 @@ String.prototype.toPersianDigit = function (latinDigit) {
         return peDigitArr.join('');
     });
 };
-PersianDateClass.unix = PersianDateClass._unix;
-PersianDateClass.utc = PersianDateClass._utc;
 PersianDateClass.calendarType = 'persianAstro';
 PersianDateClass.localType = 'fa';
 module.exports = PersianDateClass;
