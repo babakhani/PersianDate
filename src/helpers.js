@@ -7,8 +7,17 @@ class Helpers {
      * @param digit
      * @returns {string|*}
      */
-    toPersianDigit (digit) {
-        return digit.toString().toPersianDigit();
+    toPersianDigit (digit, latinDigit = false) {
+        return digit.toString().replace(/\d+/g, function (digit) {
+            let enDigitArr = [], peDigitArr = [], i, j;
+            for (i = 0; i < digit.length; i += 1) {
+                enDigitArr.push(digit.charCodeAt(i));
+            }
+            for (j = 0; j < enDigitArr.length; j += 1) {
+                peDigitArr.push(String.fromCharCode(enDigitArr[j] + ((!!latinDigit && latinDigit === true) ? 1584 : 1728)));
+            }
+            return peDigitArr.join('');
+        });
     }
 
     /**
@@ -80,7 +89,7 @@ class Helpers {
     }
 
 
-     absFloor(number) {
+    absFloor (number) {
         if (number < 0) {
             // -0 -> 0
             return Math.ceil(number) || 0;

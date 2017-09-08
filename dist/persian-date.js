@@ -138,7 +138,21 @@ var Helpers = function () {
          * @returns {string|*}
          */
         value: function toPersianDigit(digit) {
-            return digit.toString().toPersianDigit();
+            var latinDigit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            return digit.toString().replace(/\d+/g, function (digit) {
+                var enDigitArr = [],
+                    peDigitArr = [],
+                    i = void 0,
+                    j = void 0;
+                for (i = 0; i < digit.length; i += 1) {
+                    enDigitArr.push(digit.charCodeAt(i));
+                }
+                for (j = 0; j < enDigitArr.length; j += 1) {
+                    peDigitArr.push(String.fromCharCode(enDigitArr[j] + (!!latinDigit && latinDigit === true ? 1584 : 1728)));
+                }
+                return peDigitArr.join('');
+            });
         }
 
         /**
@@ -2919,23 +2933,10 @@ module.exports = {
 
 
 var PersianDateClass = __webpack_require__(2);
-String.prototype.toPersianDigit = function (latinDigit) {
-    return this.replace(/\d+/g, function (digit) {
-        var enDigitArr = [],
-            peDigitArr = [],
-            i = void 0,
-            j = void 0;
-        for (i = 0; i < digit.length; i += 1) {
-            enDigitArr.push(digit.charCodeAt(i));
-        }
-        for (j = 0; j < enDigitArr.length; j += 1) {
-            peDigitArr.push(String.fromCharCode(enDigitArr[j] + (!!latinDigit && latinDigit === true ? 1584 : 1728)));
-        }
-        return peDigitArr.join('');
-    });
-};
+
 PersianDateClass.calendarType = 'persianAstro';
 PersianDateClass.localType = 'fa';
+
 module.exports = PersianDateClass;
 
 /***/ }),
