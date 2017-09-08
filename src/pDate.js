@@ -93,13 +93,29 @@ class PersianDateClass {
                   now.getMilliseconds()
               ]);
         }
-
         this.ON = this.algorithms.ON;
-
         return this;
     }
 
-    static rangeNames () {
+    static rangeName () {
+        if (PersianDateClass.localType === 'fa') {
+            if (PersianDateClass.calendarType === 'persianAlgo' || PersianDateClass.calendarType === 'persianAstro') {
+                return fa.persian;
+            }
+            else {
+                return fa.gregorian;
+            }
+        } else {
+            if (PersianDateClass.calendarType === 'persianAlgo' || PersianDateClass.calendarType === 'persianAstro') {
+                return en.persian;
+            }
+            else {
+                return en.gregorian;
+            }
+        }
+    }
+
+    rangeName () {
         if (this.localType === 'fa') {
             if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
                 return fa.persian;
@@ -115,10 +131,6 @@ class PersianDateClass {
                 return en.gregorian;
             }
         }
-    }
-
-    rangeNames () {
-        return this.rangeNames();
     }
 
     _locale () {
@@ -144,9 +156,25 @@ class PersianDateClass {
         return this;
     }
 
+    static toCalendar (input) {
+        PersianDateClass.calendarType = input;
+        return this;
+    }
+
+
+    static locale (input) {
+        PersianDateClass.localType = input;
+        if (PersianDateClass.localType !== 'fa') {
+            PersianDateClass.formatPersian = false;
+        } else {
+            PersianDateClass.formatPersian = '_default';
+        }
+        return PersianDateClass;
+    }
+
+
     locale (input) {
         this.localType = input;
-
         if (this.localType !== 'fa') {
             this.formatPersian = false;
         } else {
@@ -223,6 +251,7 @@ class PersianDateClass {
             return this.algorithms.calcPersiana(dateArray);
         }
         else if (this.calendarType === 'gregorian') {
+            dateArray[1] = dateArray[1]-1;
             return this.algorithms.calcGregorian(dateArray);
         }
     }
@@ -1186,7 +1215,45 @@ class PersianDateClass {
         return new PersianDateClass(this.valueOf());
     }
 
+    /**
+     * check if a date is same as b
+     * @param dateA
+     * @param dateB
+     * @return {boolean}
+     * @static
+     */
+    static isSameDay (dateA, dateB) {
+        return dateA && dateB && dateA.date() == dateB.date() && dateA.year() == dateB.year() && dateA.month() == dateB.month();
+    }
 
+    /**
+     * @param dateB
+     * @return {PersianDateClass|*|boolean}
+     */
+    isSameDay (dateB) {
+        return this && dateB && this.date() == dateB.date() && this.year() == dateB.year() && this.month() == dateB.month();
+    }
+
+    /**
+     * @desc check if a month is same as b
+     * @param {Date} dateA
+     * @param {Date} dateB
+     * @return {boolean}
+     * @static
+     */
+    static isSameMonth (dateA, dateB) {
+        return dateA && dateB && dateA.year() == dateB.year() && dateA.month() == dateB.month();
+    }
+
+    /**
+     *
+     * @param dateA
+     * @param dateB
+     * @return {*|boolean}
+     */
+    isSameMonth (dateB) {
+        return this && dateB && this.year() == this.year() && this.month() == dateB.month();
+    }
 }
 
 module.exports = PersianDateClass;

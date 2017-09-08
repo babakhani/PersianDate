@@ -4,8 +4,8 @@ require("amd-loader");
 let expect = require('chai').expect;
 let obj = require('../dist/persian-date.js');
 const pDate = obj,
-    Duration = new pDate().duration,
-    defaultArray = [1391, 1, 1, 1, 1, 1, 1];
+  Duration = new pDate().duration,
+  defaultArray = [1391, 1, 1, 1, 1, 1, 1];
 
 pDate.formatPersian = true;
 
@@ -21,12 +21,12 @@ describe('Helpers', function () {
 
 describe('Convert test', function () {
     const startUnix = 1490444803982,
-        endUnix = 1490444803982 + 2000000;
+      endUnix = 1490444803982 + 2000000;
     it('Object Create Successfully', function () {
         let indexUnix = startUnix;
         while (indexUnix < endUnix) {
             let pdArray = new pDate(indexUnix).toArray(),
-                returnedFromArrayUnix = new pDate(pdArray).valueOf();
+              returnedFromArrayUnix = new pDate(pdArray).valueOf();
             assert.deepEqual(returnedFromArrayUnix, indexUnix);
             indexUnix += 10000;
         }
@@ -41,7 +41,7 @@ describe('Check static methods', function () {
     });
 
     it('isDuration', function () {
-        let a = new pDate.duration('days',10);
+        let a = new pDate.duration('days', 10);
         assert.deepEqual(pDate.isDuration(a), true);
     });
 
@@ -99,7 +99,7 @@ describe('Make Instance', function () {
 
     it('From pDate', function () {
         let a = new pDate(),
-            b = new pDate(a);
+          b = new pDate(a);
         assert.ok(b);
     });
 
@@ -124,14 +124,60 @@ describe('Make Instance', function () {
 
     it('javascript Date()', function () {
         let gDateObject = new Date(),
-            createFromDotNet = new pDate(gDateObject);
+          createFromDotNet = new pDate(gDateObject);
         assert.ok(createFromDotNet);
     });
 
 });
 
+describe('locale just in object', function () {
+    it('[1404,1,1] locale global en', function () {
+        let a = new pDate([1404, 1, 1]).locale('en').format();
+        assert.deepEqual(a, "1404-01-01 00:00:00 AM");
+        b = new pDate([1404, 1, 1]).locale('en').format('dddd');
+        assert.deepEqual(b, "Friday");
+        c = new pDate([1404, 1, 2]).locale('en').format('dddd');
+        assert.deepEqual(c, "Saturday");
+        d = new pDate([1404, 1, 3]).locale('en').format('dddd');
+        assert.deepEqual(d, "Sunday");
+        e = new pDate([1404, 1, 4]).locale('en').format('dddd');
+        assert.deepEqual(e, "Monday");
+        f = new pDate([1404, 1, 5]).locale('en').format('dddd');
+        assert.deepEqual(f, "Tuesday");
+        g = new pDate([1404, 1, 6]).locale('en').format('dddd');
+        assert.deepEqual(g, "Wednesday");
+        h = new pDate([1404, 1, 7]).locale('en').format('dddd');
+        assert.deepEqual(h, "Thursday");
+        pDate.localType = 'fa';
+    });
+});
+
 
 describe('locale global', function () {
+
+
+    it('[1404,1,1] locale global en', function () {
+        pDate.locale('en');
+        let a = new pDate([1404, 1, 1]).format();
+        assert.deepEqual(a, "1404-01-01 00:00:00 AM");
+        b = new pDate([1404, 1, 1]).format('dddd');
+        assert.deepEqual(b, "Friday");
+        c = new pDate([1404, 1, 2]).format('dddd');
+        assert.deepEqual(c, "Saturday");
+        d = new pDate([1404, 1, 3]).format('dddd');
+        assert.deepEqual(d, "Sunday");
+        e = new pDate([1404, 1, 4]).format('dddd');
+        assert.deepEqual(e, "Monday");
+        f = new pDate([1404, 1, 5]).format('dddd');
+        assert.deepEqual(f, "Tuesday");
+        g = new pDate([1404, 1, 6]).format('dddd');
+        assert.deepEqual(g, "Wednesday");
+        h = new pDate([1404, 1, 7]).format('dddd');
+        assert.deepEqual(h, "Thursday");
+        pDate.locale('fa');
+    });
+
+
     it('[1404,1,1] locale global en', function () {
         pDate.localType = 'en';
         let a = new pDate([1404, 1, 1]).format();
@@ -193,6 +239,17 @@ describe('toCalendar gregorian', function () {
     });
 });
 
+
+describe('toCalendar ', function () {
+    const defArray = [1403, 12, 30];
+    it('[1403,1,1] persianAlgo en', function () {
+        pDate.toCalendar('persianAlgo');
+        let a = new pDate(defArray).locale('fa').format();
+        assert.deepEqual(a, "۱۴۰۴-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
+        pDate.toCalendar('persianAstro');
+    });
+});
+
 describe('toCalendar persianAlgo', function () {
     const defArray = [1403, 12, 30];
     it('[1403,1,1] persianAlgo en', function () {
@@ -207,6 +264,70 @@ describe('toCalendar persianAlgo', function () {
         assert.deepEqual(persianAstroWeekday, 'پنج‌شنبه');
         assert.deepEqual(persainAlgoWeekday, 'پنج‌شنبه');
     });
+});
+
+
+describe('rangeName', function () {
+    it('weekdats gregorian en', function () {
+        pDate.toCalendar('gregorian').locale('en');
+        assert.deepEqual(pDate.rangeName().weekdays, ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
+    });
+    it('weekdats gregorian fa', function () {
+        pDate.toCalendar('gregorian').locale('fa');
+        assert.deepEqual(pDate.rangeName().weekdays, 'یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_جمعه_شنبه'.split('_'));
+    });
+
+    it('weekdats persianAstro fa', function () {
+        pDate.toCalendar('persianAstro').locale('fa');
+        assert.deepEqual(pDate.rangeName().weekdays, ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهار شنبه", "پنج‌شنبه", "جمعه"]);
+    });
+
+    it('weekdats persianAstro en', function () {
+        pDate.toCalendar('persianAstro').locale('en');
+        assert.deepEqual(pDate.rangeName().weekdays, ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
+    });
+
+    it('weekdats persianAstro fa', function () {
+        pDate.toCalendar('persianAstro').locale('fa');
+        assert.deepEqual(pDate.rangeName().weekdaysShort, ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج']);
+    });
+
+    it('weekdats persianAstro fa', function () {
+        pDate.toCalendar('persianAstro').locale('fa');
+        assert.deepEqual(pDate.rangeName().months, ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']);
+    });
+
+
+    it('weekdats gregorian en', function () {
+        pDate.toCalendar('gregorian').locale('en');
+        assert.deepEqual(new pDate().rangeName().weekdays, ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
+    });
+    it('weekdats gregorian fa', function () {
+        pDate.toCalendar('gregorian').locale('fa');
+        assert.deepEqual(new pDate().rangeName().weekdays, 'یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_جمعه_شنبه'.split('_'));
+    });
+
+    it('weekdats persianAstro fa', function () {
+        pDate.toCalendar('persianAstro').locale('fa');
+        assert.deepEqual(new pDate().rangeName().weekdays, ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهار شنبه", "پنج‌شنبه", "جمعه"]);
+    });
+
+    it('weekdats persianAstro en', function () {
+        pDate.toCalendar('persianAstro').locale('en');
+        assert.deepEqual(new pDate().rangeName().weekdays, ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
+    });
+
+    it('weekdats persianAstro fa', function () {
+        pDate.toCalendar('persianAstro').locale('fa');
+        assert.deepEqual(new pDate().rangeName().weekdaysShort, ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج']);
+    });
+
+    it('weekdats persianAstro fa', function () {
+        pDate.toCalendar('persianAstro').locale('fa');
+        assert.deepEqual(new pDate().rangeName().months, ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']);
+    });
+
+    pDate.toCalendar('persianAstro').locale('fa');
 });
 
 
@@ -326,8 +447,8 @@ describe('Leap Year', function () {
 
     it('print next 5 leap year', function () {
         let startYear = 1396,
-            endYear = 1420,
-            indexYear = startYear;
+          endYear = 1420,
+          indexYear = startYear;
         while (indexYear < endYear) {
             let createdDate = new pDate([indexYear]);
             if (createdDate.isLeapYear()) {
@@ -366,7 +487,7 @@ describe('toArray', function () {
 
     it('Convert new pDate().toArray()', function () {
         let generatedArray = new pDate().toArray(),
-            formattedDate = new pDate(generatedArray).toArray();
+          formattedDate = new pDate(generatedArray).toArray();
         assert.deepEqual(formattedDate, generatedArray);
     });
 });
@@ -374,12 +495,12 @@ describe('toArray', function () {
 describe('valueOf', function () {
     it('from 1332192661000', function () {
         let defaultUnixtime = 1332192661000,
-            formattedDate = new pDate(defaultUnixtime).valueOf();
+          formattedDate = new pDate(defaultUnixtime).valueOf();
         assert.deepEqual(formattedDate, defaultUnixtime);
     });
     it('from new pDate().valueOf()', function () {
         let defaultUnixtime = new pDate().valueOf(),
-            formattedDate = new pDate(defaultUnixtime).valueOf();
+          formattedDate = new pDate(defaultUnixtime).valueOf();
         assert.deepEqual(formattedDate, defaultUnixtime);
     });
 });
@@ -555,7 +676,7 @@ describe('isDST', function () {
 describe('Clone', function () {
     it('clone', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1, 0]),
-            b = a.clone();
+          b = a.clone();
         assert.deepEqual(b.toArray(), [1391, 1, 1, 1, 1, 1, 0]);
     });
 });
@@ -606,12 +727,12 @@ describe('English Format', function () {
 describe('Diff', function () {
     it('set', function () {
         let a = new pDate([1392, 1, 1]),
-            b = new pDate([1392, 2, 2]);
+          b = new pDate([1392, 2, 2]);
         assert.ok(a.diff(b));
     });
     it('set', function () {
         let a = new pDate([1392, 1, 1]),
-            b = new pDate([1391, 1, 1]);
+          b = new pDate([1391, 1, 1]);
         assert.deepEqual(a.diff(b, 'year'), 1);
         assert.deepEqual(a.diff(b, 'month'), 12);
         assert.deepEqual(a.diff(b, 'day'), 366);
@@ -1164,5 +1285,35 @@ describe('Subtract', function () {
     it('Millisecond', function () {
         let a = new pDate([1397, 1, 1, 1, 1, 1]).subtract('ms', 1200).toArray();
         assert.deepEqual(a, [1397, 1, 1, 1, 0, 59, 800]);
+    });
+});
+
+
+describe('isSameDay', function () {
+    it('pDate.isaSameDay()', function () {
+        let a = new pDate([1404, 1, 1]);
+        let b = new pDate([1404, 1, 1]);
+        assert.deepEqual(pDate.isSameDay(a, b), true);
+    });
+
+    it('new pDate().isaSameDay()', function () {
+        let a = new pDate([1404, 1, 1]);
+        let b = new pDate([1404, 1, 1]);
+        assert.deepEqual(a.isSameDay(b), true);
+    });
+});
+
+
+describe('isSameMonth', function () {
+    it('pDate.isSameMonth()', function () {
+        let a = new pDate([1404, 1, 10]);
+        let b = new pDate([1404, 1, 10]);
+        assert.deepEqual(pDate.isSameMonth(a, b), true);
+    });
+
+    it('new pDate().isSameMonth()', function () {
+        let a = new pDate([1404, 1, 12]);
+        let b = new pDate([1404, 1, 12]);
+        assert.deepEqual(a.isSameMonth(b), true);
     });
 });

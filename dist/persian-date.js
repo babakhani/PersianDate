@@ -312,16 +312,26 @@ var PersianDateClass = function () {
                     var now = new Date();
                     this.algorithms.calcGregorian([now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds()]);
                 }
-
         this.ON = this.algorithms.ON;
-
         return this;
     }
 
     _createClass(PersianDateClass, [{
-        key: 'rangeNames',
-        value: function rangeNames() {
-            return this.rangeNames();
+        key: 'rangeName',
+        value: function rangeName() {
+            if (this.localType === 'fa') {
+                if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+                    return fa.persian;
+                } else {
+                    return fa.gregorian;
+                }
+            } else {
+                if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+                    return en.persian;
+                } else {
+                    return en.gregorian;
+                }
+            }
         }
     }, {
         key: '_locale',
@@ -350,7 +360,6 @@ var PersianDateClass = function () {
         key: 'locale',
         value: function locale(input) {
             this.localType = input;
-
             if (this.localType !== 'fa') {
                 this.formatPersian = false;
             } else {
@@ -423,6 +432,7 @@ var PersianDateClass = function () {
             } else if (this.calendarType === 'persianAstro') {
                 return this.algorithms.calcPersiana(dateArray);
             } else if (this.calendarType === 'gregorian') {
+                dateArray[1] = dateArray[1] - 1;
                 return this.algorithms.calcGregorian(dateArray);
             }
         }
@@ -1476,22 +1486,81 @@ var PersianDateClass = function () {
             }
             return new PersianDateClass(this.valueOf());
         }
+
+        /**
+         * check if a date is same as b
+         * @param dateA
+         * @param dateB
+         * @return {boolean}
+         * @static
+         */
+
+    }, {
+        key: 'isSameDay',
+
+
+        /**
+         * @param dateB
+         * @return {PersianDateClass|*|boolean}
+         */
+        value: function isSameDay(dateB) {
+            return this && dateB && this.date() == dateB.date() && this.year() == dateB.year() && this.month() == dateB.month();
+        }
+
+        /**
+         * @desc check if a month is same as b
+         * @param {Date} dateA
+         * @param {Date} dateB
+         * @return {boolean}
+         * @static
+         */
+
+    }, {
+        key: 'isSameMonth',
+
+
+        /**
+         *
+         * @param dateA
+         * @param dateB
+         * @return {*|boolean}
+         */
+        value: function isSameMonth(dateB) {
+            return this && dateB && this.year() == this.year() && this.month() == dateB.month();
+        }
     }], [{
-        key: 'rangeNames',
-        value: function rangeNames() {
-            if (this.localType === 'fa') {
-                if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+        key: 'rangeName',
+        value: function rangeName() {
+            if (PersianDateClass.localType === 'fa') {
+                if (PersianDateClass.calendarType === 'persianAlgo' || PersianDateClass.calendarType === 'persianAstro') {
                     return fa.persian;
                 } else {
                     return fa.gregorian;
                 }
             } else {
-                if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+                if (PersianDateClass.calendarType === 'persianAlgo' || PersianDateClass.calendarType === 'persianAstro') {
                     return en.persian;
                 } else {
                     return en.gregorian;
                 }
             }
+        }
+    }, {
+        key: 'toCalendar',
+        value: function toCalendar(input) {
+            PersianDateClass.calendarType = input;
+            return this;
+        }
+    }, {
+        key: 'locale',
+        value: function locale(input) {
+            PersianDateClass.localType = input;
+            if (PersianDateClass.localType !== 'fa') {
+                PersianDateClass.formatPersian = false;
+            } else {
+                PersianDateClass.formatPersian = '_default';
+            }
+            return PersianDateClass;
         }
     }, {
         key: 'isPersianDate',
@@ -1530,6 +1599,16 @@ var PersianDateClass = function () {
             } else {
                 return new PersianDateClass().utc();
             }
+        }
+    }, {
+        key: 'isSameDay',
+        value: function isSameDay(dateA, dateB) {
+            return dateA && dateB && dateA.date() == dateB.date() && dateA.year() == dateB.year() && dateA.month() == dateB.month();
+        }
+    }, {
+        key: 'isSameMonth',
+        value: function isSameMonth(dateA, dateB) {
+            return dateA && dateB && dateA.year() == dateB.year() && dateA.month() == dateB.month();
         }
     }]);
 
@@ -1976,6 +2055,11 @@ var Algorithms = function () {
             sec = 0; //this.ON.gregorian.second;
 
             this.ON.gDate = new Date(year, mon, mday, this.ON.gregorian.hour, this.ON.gregorian.minute, this.ON.gregorian.second, this.ON.gregorian.millisecond);
+
+            // Added for this algorithms cant parse 2016,13,32 successfully
+            this.ON.gregorian.year = this.ON.gDate.getFullYear();
+            this.ON.gregorian.month = this.ON.gDate.getMonth();
+            this.ON.gregorian.day = this.ON.gDate.getDate();
 
             //  Update Julian day
             // ---------------------------------------------------------------------------
@@ -2962,21 +3046,19 @@ module.exports = {
 
 
 var PersianDateClass = __webpack_require__(2);
-String.prototype.toPersianDigit = function (latinDigit) {
-    return this.replace(/\d+/g, function (digit) {
-        var enDigitArr = [],
-            peDigitArr = [],
-            i = void 0,
-            j = void 0;
-        for (i = 0; i < digit.length; i += 1) {
-            enDigitArr.push(digit.charCodeAt(i));
-        }
-        for (j = 0; j < enDigitArr.length; j += 1) {
-            peDigitArr.push(String.fromCharCode(enDigitArr[j] + (!!latinDigit && latinDigit === true ? 1584 : 1728)));
-        }
-        return peDigitArr.join('');
-    });
-};
+//String.prototype.toPersianDigit = function (latinDigit) {
+//    return this.replace(/\d+/g, function (digit) {
+//        let enDigitArr = [], peDigitArr = [], i, j;
+//        for (i = 0; i < digit.length; i += 1) {
+//            enDigitArr.push(digit.charCodeAt(i));
+//        }
+//        for (j = 0; j < enDigitArr.length; j += 1) {
+//            peDigitArr.push(String.fromCharCode(enDigitArr[j] + ((!!latinDigit && latinDigit === true) ? 1584 : 1728)));
+//        }
+//        return peDigitArr.join('');
+//    });
+//
+//};
 PersianDateClass.calendarType = 'persianAstro';
 PersianDateClass.localType = 'fa';
 

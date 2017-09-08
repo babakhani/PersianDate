@@ -359,8 +359,7 @@ class Algorithms {
      */
     updateFromGregorian () {
         let j, year, mon, mday, hour, min, sec,
-          weekday, julcal, utime,perscal;
-
+          weekday, julcal, utime, perscal;
 
         year = this.ON.gregorian.year;
         mon = this.ON.gregorian.month;
@@ -379,6 +378,10 @@ class Algorithms {
           this.ON.gregorian.millisecond
         );
 
+        // Added for this algorithms cant parse 2016,13,32 successfully
+        this.ON.gregorian.year = this.ON.gDate.getFullYear();
+        this.ON.gregorian.month = this.ON.gDate.getMonth();
+        this.ON.gregorian.day = this.ON.gDate.getDate();
 
         //  Update Julian day
         // ---------------------------------------------------------------------------
@@ -401,7 +404,6 @@ class Algorithms {
         //  Update Julian Calendar
         // ---------------------------------------------------------------------------
         julcal = this.jd_to_julian(j);
-
 
         this.ON.juliancalendar.year = julcal[0];
         this.ON.juliancalendar.month = julcal[1] - 1;
