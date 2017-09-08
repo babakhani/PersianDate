@@ -99,6 +99,28 @@ class PersianDateClass {
         return this;
     }
 
+    static rangeNames () {
+        if (this.localType === 'fa') {
+            if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+                return fa.persian;
+            }
+            else {
+                return fa.gregorian;
+            }
+        } else {
+            if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+                return en.persian;
+            }
+            else {
+                return en.gregorian;
+            }
+        }
+    }
+
+    rangeNames () {
+        return this.rangeNames();
+    }
+
     _locale () {
         if (this.localType === 'fa') {
             if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
