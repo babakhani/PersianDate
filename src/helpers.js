@@ -56,6 +56,9 @@ class Helpers {
         else if (durationUnit.second.indexOf(unit) > -1) {
             unit = 'second';
         }
+        else if (durationUnit.millisecond.indexOf(unit) > -1) {
+            unit = 'millisecond';
+        }
         return {
             unit: unit,
             value: value
@@ -75,6 +78,24 @@ class Helpers {
             return Math.floor(number);
         }
     }
+
+
+     absFloor(number) {
+        if (number < 0) {
+            // -0 -> 0
+            return Math.ceil(number) || 0;
+        } else {
+            return Math.floor(number);
+        }
+    }
+
+    // absCeil(number) {
+    //     if (number < 0) {
+    //         return Math.floor(number);
+    //     } else {
+    //         return Math.ceil(number);
+    //     }
+    // }
 
 
 }

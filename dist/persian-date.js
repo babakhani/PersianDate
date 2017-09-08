@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  0.2.4
+ * persian-date -  0.2.5
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -186,6 +186,8 @@ var Helpers = function () {
                 unit = 'minute';
             } else if (durationUnit.second.indexOf(unit) > -1) {
                 unit = 'second';
+            } else if (durationUnit.millisecond.indexOf(unit) > -1) {
+                unit = 'millisecond';
             }
             return {
                 unit: unit,
@@ -208,6 +210,26 @@ var Helpers = function () {
                 return Math.floor(number);
             }
         }
+    }, {
+        key: 'absFloor',
+        value: function absFloor(number) {
+            if (number < 0) {
+                // -0 -> 0
+                return Math.ceil(number) || 0;
+            } else {
+                return Math.floor(number);
+            }
+        }
+
+        // absCeil(number) {
+        //     if (number < 0) {
+        //         return Math.floor(number);
+        //     } else {
+        //         return Math.ceil(number);
+        //     }
+        // }
+
+
     }]);
 
     return Helpers;
@@ -226,14 +248,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var TypeChecking = __webpack_require__(11);
+var TypeChecking = __webpack_require__(10);
 var Algorithms = __webpack_require__(3);
 var Helpers = __webpack_require__(1);
-var Duration = __webpack_require__(4);
+var Duration = __webpack_require__(5);
 var toPersianDigit = new Helpers().toPersianDigit;
 var leftZeroFill = new Helpers().leftZeroFill;
-var fa = __webpack_require__(12);
-var en = __webpack_require__(13);
+var normalizeDuration = new Helpers().normalizeDuration;
+var fa = __webpack_require__(7);
+var en = __webpack_require__(6);
 
 var PersianDateClass = function () {
 
@@ -244,7 +267,7 @@ var PersianDateClass = function () {
         this.calendarType = PersianDateClass.calendarType;
         this.localType = PersianDateClass.localType;
         this.algorithms = new Algorithms();
-        this.version = "0.2.4";
+        this.version = "0.2.5";
 
         if (this.localType !== 'fa') {
             this.formatPersian = false;
@@ -411,6 +434,14 @@ var PersianDateClass = function () {
 
     }, {
         key: 'duration',
+
+
+        /**
+         * @description return Duration object
+         * @param input
+         * @param key
+         * @returns {Duration}
+         */
         value: function duration(input, key) {
             return new Duration(input, key);
         }
@@ -466,7 +497,7 @@ var PersianDateClass = function () {
         key: 'month',
         value: function month(input) {
             if (input | input === 0) {
-                this.algorithmsCalc(['', input]);
+                this.algorithmsCalc([this.year(), input, this.date()]);
                 return this;
             } else {
                 return this.calendar().month + 1;
@@ -1322,36 +1353,47 @@ var PersianDateClass = function () {
         key: 'add',
         value: function add(key, value) {
             var duration = new Duration(key, value)._data;
-            if (duration.years > 0) {
-                var newYear = this.year() + duration.years;
-                this.year(newYear);
-            }
-            if (duration.months > 0) {
-                var newMonth = this.month() + duration.months;
-                this.month(newMonth);
-            }
-            if (duration.days > 0) {
-                var newDate = this.date() + duration.days;
-                this.date(newDate);
-            }
-            if (duration.hours > 0) {
-                var newHour = this.hour() + duration.hours;
-                this.hour(newHour);
-            }
-            if (duration.minutes > 0) {
-                var newMinute = this.minute() + duration.minutes;
-                this.minute(newMinute);
-            }
-            if (duration.seconds > 0) {
-                var newSecond = this.second() + duration.seconds;
-                this.second(newSecond);
-            }
-            if (duration.milliseconds > 0) {
-                // log('add millisecond')
-                var newMillisecond = this.milliseconds() + duration.milliseconds;
-                this.milliseconds(newMillisecond);
-            }
+            var unit = normalizeDuration(key, value).unit;
+            value = normalizeDuration(key, value).value;
 
+            if (unit == 'year' || unit == 'month') {
+                if (duration.years > 0) {
+                    var newYear = this.year() + duration.years;
+                    this.year(newYear);
+                }
+                if (duration.months > 0) {
+                    var oldDate = this.date();
+                    var newMonth = this.month() + duration.months;
+                    var thisMonthDaysCount = this.daysInMonth(this.year(), newMonth);
+                    if (oldDate >= thisMonthDaysCount) {
+                        oldDate = thisMonthDaysCount;
+                    }
+                    this.date(oldDate);
+                    this.month(newMonth);
+                }
+            }
+            if (unit == 'day') {
+                var oldHour = this.hour();
+                var newDate = this.valueOf() + value * 24 * 60 * 60 * 1000;
+                return this.unix(newDate / 1000).hour(oldHour);
+            }
+            if (unit == 'hour') {
+                var _newDate = this.valueOf() + value * 60 * 60 * 1000;
+                return this.unix(_newDate / 1000);
+            }
+            if (unit == 'minute') {
+                var _newDate2 = this.valueOf() + value * 60 * 1000;
+                return this.unix(_newDate2 / 1000);
+            }
+            if (unit == 'second') {
+                var _newDate3 = this.valueOf() + value * 1000;
+                return this.unix(_newDate3 / 1000);
+            }
+            if (unit == 'millisecond') {
+                // log('add millisecond')
+                var newMillisecond = this.valueOf() + value;
+                return this.unix(newMillisecond / 1000);
+            }
             return new PersianDateClass(this.valueOf());
         }
 
@@ -1366,38 +1408,55 @@ var PersianDateClass = function () {
         key: 'subtract',
         value: function subtract(key, value) {
             var duration = new Duration(key, value)._data;
-            if (duration.years > 0) {
-                var newYear = this.year() - duration.years;
-                this.year(newYear);
+            var unit = normalizeDuration(key, value).unit;
+            value = normalizeDuration(key, value).value;
+
+            if (unit == 'year' || unit == 'month') {
+                if (duration.years > 0) {
+                    var newYear = this.year() - duration.years;
+                    this.year(newYear);
+                }
+                if (duration.months > 0) {
+                    var oldDate = this.date();
+                    var newMonth = this.month() - duration.months;
+                    this.month(newMonth);
+                    var thisMonthDaysCount = this.daysInMonth(this.year(), this.month());
+                    if (oldDate > thisMonthDaysCount) {
+                        oldDate = thisMonthDaysCount;
+                    }
+                    this.date(oldDate);
+                }
             }
-            if (duration.months > 0) {
-                var newMonth = this.month() - duration.months;
-                this.month(newMonth);
+            if (unit == 'day') {
+                var oldHour = this.hour();
+                var newDate = this.valueOf() - value * 24 * 60 * 60 * 1000;
+                return this.unix(newDate / 1000).hour(oldHour);
             }
-            if (duration.days > 0) {
-                var newDate = this.date() - duration.days;
-                this.date(newDate);
+            if (unit == 'hour') {
+                var _newDate4 = this.valueOf() - value * 60 * 60 * 1000;
+                return this.unix(_newDate4 / 1000);
             }
-            if (duration.hours > 0) {
-                var newHour = this.hour() - duration.hours;
-                this.hour(newHour);
+            if (unit == 'minute') {
+                var _newDate5 = this.valueOf() - value * 60 * 1000;
+                return this.unix(_newDate5 / 1000);
             }
-            if (duration.minutes > 0) {
-                var newMinute = this.minute() - duration.minutes;
-                this.minute(newMinute);
+            if (unit == 'second') {
+                var _newDate6 = this.valueOf() - value * 1000;
+                return this.unix(_newDate6 / 1000);
             }
-            if (duration.seconds > 0) {
-                var newSecond = this.second() - duration.seconds;
-                this.second(newSecond);
-            }
-            if (duration.milliseconds > 0) {
+            if (unit == 'millisecond') {
                 // log('add millisecond')
-                var newMillisecond = this.milliseconds() - duration.milliseconds;
-                this.milliseconds(newMillisecond);
+                var newMillisecond = this.valueOf() - value;
+                return this.unix(newMillisecond / 1000);
             }
             return new PersianDateClass(this.valueOf());
         }
     }], [{
+        key: 'duration',
+        value: function duration(input, key) {
+            return new Duration(input, key);
+        }
+    }, {
         key: '_unix',
         value: function _unix(timestamp) {
             if (timestamp) {
@@ -1434,8 +1493,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // Start algorithm class
-var ASTRO = __webpack_require__(8);
-var ON = __webpack_require__(10);
+var ASTRO = __webpack_require__(4);
+var ON = __webpack_require__(9);
 
 var Algorithms = function () {
     function Algorithms() {
@@ -2817,116 +2876,6 @@ module.exports = Algorithms;
 "use strict";
 
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Helpers = __webpack_require__(1);
-var normalizeDuration = new Helpers().normalizeDuration;
-var absRound = new Helpers().absRound;
-/**
- * Duration object constructor
- * @param duration
- * @class Duration
- * @constructor
- */
-
-var Duration = function Duration(key, value) {
-    _classCallCheck(this, Duration);
-
-    var duration = {},
-        data = this._data = {},
-        milliseconds = 0,
-        normalizedUnit = normalizeDuration(key, value),
-        unit = normalizedUnit.unit;
-    duration[unit] = normalizedUnit.value;
-    milliseconds = duration.milliseconds || duration.millisecond || duration.ms || 0;
-
-    var years = duration.years || duration.year || duration.y || 0,
-        months = duration.months || duration.month || duration.M || 0,
-        weeks = duration.weeks || duration.w || duration.week || 0,
-        days = duration.days || duration.d || duration.day || 0,
-        hours = duration.hours || duration.hour || duration.h || 0,
-        minutes = duration.minutes || duration.minute || duration.m || 0,
-        seconds = duration.seconds || duration.second || duration.s || 0;
-    // representation for dateAddRemove
-    this._milliseconds = milliseconds + seconds * 1e3 + minutes * 6e4 + hours * 36e5;
-    // Because of dateAddRemove treats 24 hours as different from a
-    // day when working around DST, we need to store them separately
-    this._days = days + weeks * 7;
-    // It is impossible translate months into days without knowing
-    // which months you are are talking about, so we have to store
-    // it separately.
-    this._months = months + years * 12;
-    // The following code bubbles up values, see the tests for
-    // examples of what that means.
-    data.milliseconds = milliseconds % 1000;
-    seconds += milliseconds / 1000;
-    data.seconds = seconds % 60;
-    minutes += absRound(seconds / 60);
-    data.minutes = minutes % 60;
-    hours += absRound(minutes / 60);
-    data.hours = hours % 24;
-    days += absRound(hours / 24);
-    days += weeks * 7;
-    data.days = days % 30;
-    months += absRound(days / 30);
-    data.months = months % 12;
-    years += absRound(months / 12);
-    data.years = years;
-    return this;
-};
-
-/**
- *
- * @type {{valueOf: Duration.valueOf}}
- */
-
-
-Duration.prototype = {
-    valueOf: function valueOf() {
-        return this._milliseconds + this._days * 864e5 + this._months * 2592e6;
-    }
-};
-
-module.exports = Duration;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var PersianDateClass = __webpack_require__(2);
-String.prototype.toPersianDigit = function (latinDigit) {
-    return this.replace(/\d+/g, function (digit) {
-        var enDigitArr = [],
-            peDigitArr = [],
-            i = void 0,
-            j = void 0;
-        for (i = 0; i < digit.length; i += 1) {
-            enDigitArr.push(digit.charCodeAt(i));
-        }
-        for (j = 0; j < enDigitArr.length; j += 1) {
-            peDigitArr.push(String.fromCharCode(enDigitArr[j] + (!!latinDigit && latinDigit === true ? 1584 : 1728)));
-        }
-        return peDigitArr.join('');
-    });
-};
-PersianDateClass.unix = PersianDateClass._unix;
-PersianDateClass.utc = PersianDateClass._utc;
-PersianDateClass.calendarType = 'persianAstro';
-PersianDateClass.localType = 'fa';
-module.exports = PersianDateClass;
-
-/***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3428,8 +3377,312 @@ var ASTRO = function () {
 module.exports = ASTRO;
 
 /***/ }),
-/* 9 */,
-/* 10 */
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Helpers = __webpack_require__(1);
+var normalizeDuration = new Helpers().normalizeDuration;
+var absRound = new Helpers().absRound;
+var absFloor = new Helpers().absFloor;
+/**
+ * Duration object constructor
+ * @param duration
+ * @class Duration
+ * @constructor
+ */
+
+var Duration = function () {
+    function Duration(key, value) {
+        _classCallCheck(this, Duration);
+
+        var duration = {},
+            data = this._data = {},
+            milliseconds = 0,
+            normalizedUnit = normalizeDuration(key, value),
+            unit = normalizedUnit.unit;
+        duration[unit] = normalizedUnit.value;
+        milliseconds = duration.milliseconds || duration.millisecond || duration.ms || 0;
+
+        var years = duration.years || duration.year || duration.y || 0,
+            months = duration.months || duration.month || duration.M || 0,
+            weeks = duration.weeks || duration.w || duration.week || 0,
+            days = duration.days || duration.d || duration.day || 0,
+            hours = duration.hours || duration.hour || duration.h || 0,
+            minutes = duration.minutes || duration.minute || duration.m || 0,
+            seconds = duration.seconds || duration.second || duration.s || 0;
+        // representation for dateAddRemove
+        this._milliseconds = milliseconds + seconds * 1e3 + minutes * 6e4 + hours * 36e5;
+        // Because of dateAddRemove treats 24 hours as different from a
+        // day when working around DST, we need to store them separately
+        this._days = days + weeks * 7;
+        // It is impossible translate months into days without knowing
+        // which months you are are talking about, so we have to store
+        // it separately.
+        this._months = months + years * 12;
+        // The following code bubbles up values, see the tests for
+        // examples of what that means.
+        data.milliseconds = milliseconds % 1000;
+        seconds += absFloor(milliseconds / 1000);
+        data.seconds = seconds % 60;
+        minutes += absRound(seconds / 60);
+        data.minutes = minutes % 60;
+        hours += absRound(minutes / 60);
+        data.hours = hours % 24;
+        days += absRound(hours / 24);
+        days += weeks * 7;
+        data.days = days % 30;
+        months += absRound(days / 30);
+        data.months = months % 12;
+        years += absRound(months / 12);
+        data.years = years;
+        return this;
+    }
+
+    _createClass(Duration, [{
+        key: 'valueOf',
+        value: function valueOf() {
+            return this._milliseconds + this._days * 864e5 + this._months * 2592e6;
+        }
+    }]);
+
+    return Duration;
+}();
+
+module.exports = Duration;
+
+// let Helpers = require('./helpers');
+// let normalizeDuration = new Helpers().normalizeDuration;
+// let absRound = new Helpers().absRound;
+// /**
+//  * Duration object constructor
+//  * @param duration
+//  * @class Duration
+//  * @constructor
+//  */
+// class Duration {
+//     constructor(key, value) {
+//         let duration = {},
+//             normalizedUnit = normalizeDuration(key, value),
+//             unit = normalizedUnit.unit;
+//             duration[unit] = normalizedUnit.value;
+//         let years = duration.years || duration.year || duration.y || 0,
+//             quarters = duration.quarter || duration.quarter || 0,
+//             months = duration.months || duration.month || duration.M || 0,
+//             weeks = duration.weeks || duration.w || duration.week || 0,
+//             days = duration.days || duration.d || duration.day || 0,
+//             hours = duration.hours || duration.hour || duration.h || 0,
+//             minutes = duration.minutes || duration.minute || duration.m || 0,
+//             seconds = duration.seconds || duration.second || duration.s || 0,
+//             milliseconds = duration.milliseconds || duration.milli || duration.millisecond || duration.ms || 0;
+
+
+//         // TODO: must implement
+//         // this._isValid = isDurationValid(normalizedInput);
+
+//         // representation for dateAddRemove
+//         this._milliseconds = +milliseconds +
+//             seconds * 1e3 + // 1000
+//             minutes * 6e4 + // 1000 * 60
+//             hours * 1000 * 60 * 60; //using 1000 * 60 * 60 instead of 36e5 to avoid floating point rounding errors https://github.com/moment/moment/issues/2978
+//         // Because of dateAddRemove treats 24 hours as different from a
+//         // day when working around DST, we need to store them separately
+//         this._days = +days +
+//             weeks * 7;
+//         // It is impossible to translate months into days without knowing
+//         // which months you are are talking about, so we have to store
+//         // it separately.
+//         this._months = +months +
+//             quarters * 3 +
+//             years * 12;
+
+//         this._data = {};
+//         this.bubble();
+
+//     }
+
+//     absFloor(number) {
+//         if (number < 0) {
+//             // -0 -> 0
+//             return Math.ceil(number) || 0;
+//         } else {
+//             return Math.floor(number);
+//         }
+//     }
+
+//     absCeil(number) {
+//         if (number < 0) {
+//             return Math.floor(number);
+//         } else {
+//             return Math.ceil(number);
+//         }
+//     }
+
+//     bubble() {
+//         var milliseconds = this._milliseconds;
+//         var days = this._days;
+//         var months = this._months;
+//         var data = this._data;
+//         var seconds, minutes, hours, years, monthsFromDays;
+
+//         // if we have a mix of positive and negative values, bubble down first
+//         // check: https://github.com/moment/moment/issues/2166
+//         if (!((milliseconds >= 0 && days >= 0 && months >= 0) ||
+//             (milliseconds <= 0 && days <= 0 && months <= 0))) {
+//             milliseconds += this.absCeil(monthsToDays(months) + days) * 864e5;
+//             days = 0;
+//             months = 0;
+//         }
+
+//         // The following code bubbles up values, see the tests for
+//         // examples of what that means.
+//         data.milliseconds = milliseconds % 1000;
+
+//         seconds = this.absFloor(milliseconds / 1000);
+//         data.seconds = seconds % 60;
+
+//         minutes = this.absFloor(seconds / 60);
+//         data.minutes = minutes % 60;
+
+//         hours = this.absFloor(minutes / 60);
+//         data.hours = hours % 24;
+
+//         days += this.absFloor(hours / 24);
+
+//         // convert days to months
+//         // Remember: I change this from absFloor to absCeil
+//         monthsFromDays = this.absFloor(this.daysToMonths(days));
+//         months += monthsFromDays;
+
+//         // Remember: I commnet this Line
+//         days -= this.absCeil(this.monthsToDays(monthsFromDays));
+
+//         // 12 months -> 1 year
+//         years = this.absFloor(months / 12);
+//         months %= 12;
+
+//         data.days = days;
+//         data.months = months;
+//         data.years = years;
+//         return this;
+//     }
+
+//     daysToMonths(days) {
+//         // 400 years have 146097 days (taking into account leap year rules)
+//         // 400 years have 12 months === 4800
+//         return days * 4800 / 146097;
+//     }
+
+//     monthsToDays(months) {
+//         // the reverse of daysToMonths
+//         return months * 146097 / 4800;
+//     }
+
+//     valueOf() {
+//         return this._milliseconds + this._days * (864e5) + this._months * (2592e6);
+//     }
+
+//     static valueOf() {
+//         return this._milliseconds + this._days * (864e5) + this._months * (2592e6);
+//     }
+// }
+
+// module.exports = Duration;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Constants
+ * @module constants
+ */
+
+module.exports = {
+    gregorian: {
+        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    },
+    persian: {
+        months: ['Farvardin', 'Ordibehesht', 'Khordad', 'Tir', 'Mordad', 'Shahrivar', 'Mehr', 'Aban', 'Azar', 'Dey', 'Bahman', 'Esfand'],
+        monthsShort: ['Far', 'Ord', 'Kho', 'Tir', 'Mor', 'Sha', 'Meh', 'Aba', 'Aza', 'Dey', 'Bah', 'Esf'],
+        weekdays: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    }
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Constants
+ * @module constants
+ */
+
+module.exports = {
+    gregorian: {
+        months: 'ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر'.split('_'),
+        monthsShort: 'ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر'.split('_'),
+        weekdays: '\u06CC\u06A9\u200C\u0634\u0646\u0628\u0647_\u062F\u0648\u0634\u0646\u0628\u0647_\u0633\u0647\u200C\u0634\u0646\u0628\u0647_\u0686\u0647\u0627\u0631\u0634\u0646\u0628\u0647_\u067E\u0646\u062C\u200C\u0634\u0646\u0628\u0647_\u062C\u0645\u0639\u0647_\u0634\u0646\u0628\u0647'.split('_'),
+        weekdaysShort: '\u06CC\u06A9\u200C\u0634\u0646\u0628\u0647_\u062F\u0648\u0634\u0646\u0628\u0647_\u0633\u0647\u200C\u0634\u0646\u0628\u0647_\u0686\u0647\u0627\u0631\u0634\u0646\u0628\u0647_\u067E\u0646\u062C\u200C\u0634\u0646\u0628\u0647_\u062C\u0645\u0639\u0647_\u0634\u0646\u0628\u0647'.split('_'),
+        weekdaysMin: 'ی_د_س_چ_پ_ج_ش'.split('_')
+    },
+    persian: {
+        months: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+        monthsShort: ['فرو', 'ارد', 'خرد', 'تیر', 'مرد', 'شهر', 'مهر', 'آبا', 'آذر', 'دی', 'بهم', 'اسف'],
+        weekdays: ['شنبه', 'یکشنبه', 'دوشنبه', 'سه شنبه', 'چهار شنبه', '\u067E\u0646\u062C\u200C\u0634\u0646\u0628\u0647', 'جمعه'],
+        weekdaysShort: ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'],
+        weekdaysMin: ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'],
+        persianDaysName: ['اورمزد', 'بهمن', 'اوردیبهشت', 'شهریور', 'سپندارمذ', 'خورداد', 'امرداد', 'دی به آذز', 'آذز', 'آبان', 'خورشید', 'ماه', 'تیر', 'گوش', 'دی به مهر', 'مهر', 'سروش', 'رشن', 'فروردین', 'بهرام', 'رام', 'باد', 'دی به دین', 'دین', 'ارد', 'اشتاد', 'آسمان', 'زامیاد', 'مانتره سپند', 'انارام', 'زیادی']
+    }
+};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var PersianDateClass = __webpack_require__(2);
+String.prototype.toPersianDigit = function (latinDigit) {
+    return this.replace(/\d+/g, function (digit) {
+        var enDigitArr = [],
+            peDigitArr = [],
+            i = void 0,
+            j = void 0;
+        for (i = 0; i < digit.length; i += 1) {
+            enDigitArr.push(digit.charCodeAt(i));
+        }
+        for (j = 0; j < enDigitArr.length; j += 1) {
+            peDigitArr.push(String.fromCharCode(enDigitArr[j] + (!!latinDigit && latinDigit === true ? 1584 : 1728)));
+        }
+        return peDigitArr.join('');
+    });
+};
+PersianDateClass.unix = PersianDateClass._unix;
+PersianDateClass.utc = PersianDateClass._utc;
+PersianDateClass.calendarType = 'persianAstro';
+PersianDateClass.localType = 'fa';
+module.exports = PersianDateClass;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3549,7 +3802,7 @@ var Container = function Container() {
 module.exports = Container;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3584,63 +3837,6 @@ module.exports = {
      */
     isDate: function isDate(input) {
         return input instanceof Date;
-    }
-};
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Constants
- * @module constants
- */
-
-module.exports = {
-    gregorian: {
-        months: 'ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر'.split('_'),
-        monthsShort: 'ژانویه_فوریه_مارس_آوریل_مه_ژوئن_ژوئیه_اوت_سپتامبر_اکتبر_نوامبر_دسامبر'.split('_'),
-        weekdays: '\u06CC\u06A9\u200C\u0634\u0646\u0628\u0647_\u062F\u0648\u0634\u0646\u0628\u0647_\u0633\u0647\u200C\u0634\u0646\u0628\u0647_\u0686\u0647\u0627\u0631\u0634\u0646\u0628\u0647_\u067E\u0646\u062C\u200C\u0634\u0646\u0628\u0647_\u062C\u0645\u0639\u0647_\u0634\u0646\u0628\u0647'.split('_'),
-        weekdaysShort: '\u06CC\u06A9\u200C\u0634\u0646\u0628\u0647_\u062F\u0648\u0634\u0646\u0628\u0647_\u0633\u0647\u200C\u0634\u0646\u0628\u0647_\u0686\u0647\u0627\u0631\u0634\u0646\u0628\u0647_\u067E\u0646\u062C\u200C\u0634\u0646\u0628\u0647_\u062C\u0645\u0639\u0647_\u0634\u0646\u0628\u0647'.split('_'),
-        weekdaysMin: 'ی_د_س_چ_پ_ج_ش'.split('_')
-    },
-    persian: {
-        months: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
-        monthsShort: ['فرو', 'ارد', 'خرد', 'تیر', 'مرد', 'شهر', 'مهر', 'آبا', 'آذر', 'دی', 'بهم', 'اسف'],
-        weekdays: ['شنبه', 'یکشنبه', 'دوشنبه', 'سه شنبه', 'چهار شنبه', '\u067E\u0646\u062C\u200C\u0634\u0646\u0628\u0647', 'جمعه'],
-        weekdaysShort: ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'],
-        weekdaysMin: ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'],
-        persianDaysName: ['اورمزد', 'بهمن', 'اوردیبهشت', 'شهریور', 'سپندارمذ', 'خورداد', 'امرداد', 'دی به آذز', 'آذز', 'آبان', 'خورشید', 'ماه', 'تیر', 'گوش', 'دی به مهر', 'مهر', 'سروش', 'رشن', 'فروردین', 'بهرام', 'رام', 'باد', 'دی به دین', 'دین', 'ارد', 'اشتاد', 'آسمان', 'زامیاد', 'مانتره سپند', 'انارام', 'زیادی']
-    }
-};
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Constants
- * @module constants
- */
-
-module.exports = {
-    gregorian: {
-        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    },
-    persian: {
-        months: ['Farvardin', 'Ordibehesht', 'Khordad', 'Tir', 'Mordad', 'Shahrivar', 'Mehr', 'Aban', 'Azar', 'Dey', 'Bahman', 'Esfand'],
-        monthsShort: ['Far', 'Ord', 'Kho', 'Tir', 'Mor', 'Sha', 'Meh', 'Aba', 'Aza', 'Dey', 'Bah', 'Esf'],
-        weekdays: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     }
 };
 
