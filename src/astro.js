@@ -181,7 +181,7 @@ class ASTRO {
 
         /**
          * @desc Table of observed Delta T values at the beginning of even numbered years from 1620 through 2002.
-         * @type {[*]}
+         * @type Array
          */
         this.deltaTtab = [
             121, 112, 103, 95, 88, 82, 77, 72, 68, 63, 60, 56, 53, 51, 48, 46,
@@ -213,7 +213,7 @@ class ASTRO {
          */
         /**
          * @desc Periodic terms to obtain true time
-         * @type {[*]}
+         * @type Array
          */
         this.EquinoxpTerms = [
             485, 324.96, 1934.136,
@@ -364,7 +364,7 @@ class ASTRO {
      jd.  Results are returned as a two element Array
      giving (deltaPsi, deltaEpsilon) in degrees.
      * @param jd
-     * @return {[*,*]}
+     * @return Object
      */
     nutation (jd) {
         var deltaPsi, deltaEpsilon,
@@ -496,7 +496,7 @@ class ASTRO {
      intermediate values because they are useful in a
      variety of other contexts.
      * @param jd
-     * @return {[*,*,*,*,*,*,*,*,*,*,*,*]}
+     * @return Object
      */
     sunpos (jd) {
         let T, T2, L0, M, e, C, sunLong, sunAnomaly, sunR,

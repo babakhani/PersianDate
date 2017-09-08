@@ -92,36 +92,11 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 
 
-/**
- * Constants
- * @module constants
- */
-
-module.exports = {
-    durationUnit: {
-        year: ['y', 'years', 'year'],
-        month: ['M', 'months', 'month'],
-        day: ['d', 'days', 'day'],
-        hour: ['h', 'hours', 'hour'],
-        minute: ['m', 'minutes', 'minute'],
-        second: ['s', 'second', 'seconds'],
-        millisecond: ['ms', 'milliseconds', 'millisecond'],
-        week: ['w', '', 'weeks', 'week']
-    }
-};
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var durationUnit = __webpack_require__(0).durationUnit;
+var durationUnit = __webpack_require__(4).durationUnit;
 
 var Helpers = function () {
     function Helpers() {
@@ -252,7 +227,7 @@ var Helpers = function () {
 module.exports = Helpers;
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -263,8 +238,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var TypeChecking = __webpack_require__(10);
-var Algorithms = __webpack_require__(3);
-var Helpers = __webpack_require__(1);
+var Algorithms = __webpack_require__(2);
+var Helpers = __webpack_require__(0);
 var Duration = __webpack_require__(5);
 var toPersianDigit = new Helpers().toPersianDigit;
 var leftZeroFill = new Helpers().leftZeroFill;
@@ -1618,7 +1593,7 @@ var PersianDateClass = function () {
 module.exports = PersianDateClass;
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1629,7 +1604,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // Start algorithm class
-var ASTRO = __webpack_require__(4);
+var ASTRO = __webpack_require__(3);
 var ON = __webpack_require__(9);
 
 var Algorithms = function () {
@@ -2257,7 +2232,7 @@ var Algorithms = function () {
 module.exports = Algorithms;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2373,7 +2348,7 @@ var ASTRO = function () {
 
         /**
          * @desc Table of observed Delta T values at the beginning of even numbered years from 1620 through 2002.
-         * @type {[*]}
+         * @type Array
          */
         this.deltaTtab = [121, 112, 103, 95, 88, 82, 77, 72, 68, 63, 60, 56, 53, 51, 48, 46, 44, 42, 40, 38, 35, 33, 31, 29, 26, 24, 22, 20, 18, 16, 14, 12, 11, 10, 9, 8, 7, 7, 7, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 14, 13, 13.1, 12.5, 12.2, 12, 12, 12, 12, 12, 12, 11.9, 11.6, 11, 10.2, 9.2, 8.2, 7.1, 6.2, 5.6, 5.4, 5.3, 5.4, 5.6, 5.9, 6.2, 6.5, 6.8, 7.1, 7.3, 7.5, 7.6, 7.7, 7.3, 6.2, 5.2, 2.7, 1.4, -1.2, -2.8, -3.8, -4.8, -5.5, -5.3, -5.6, -5.7, -5.9, -6, -6.3, -6.5, -6.2, -4.7, -2.8, -0.1, 2.6, 5.3, 7.7, 10.4, 13.3, 16, 18.2, 20.2, 21.1, 22.4, 23.5, 23.8, 24.3, 24, 23.9, 23.9, 23.7, 24, 24.3, 25.3, 26.2, 27.3, 28.2, 29.1, 30, 30.7, 31.4, 32.2, 33.1, 34, 35, 36.5, 38.3, 40.2, 42.2, 44.5, 46.5, 48.5, 50.5, 52.2, 53.8, 54.9, 55.8, 56.9, 58.3, 60, 61.6, 63, 65, 66.6];
 
@@ -2387,7 +2362,7 @@ var ASTRO = function () {
           */
         /**
          * @desc Periodic terms to obtain true time
-         * @type {[*]}
+         * @type Array
          */
         this.EquinoxpTerms = [485, 324.96, 1934.136, 203, 337.23, 32964.467, 199, 342.08, 20.186, 182, 27.85, 445267.112, 156, 73.14, 45036.886, 136, 171.52, 22518.443, 77, 222.54, 65928.934, 74, 296.72, 3034.906, 70, 243.58, 9037.513, 58, 119.81, 33718.147, 52, 297.17, 150.678, 50, 21.02, 2281.226, 45, 247.54, 29929.562, 44, 325.15, 31555.956, 29, 60.93, 4443.417, 18, 155.12, 67555.328, 17, 288.79, 4562.452, 16, 198.04, 62894.029, 14, 199.76, 31436.921, 12, 95.39, 14577.848, 12, 287.11, 31931.756, 12, 320.81, 34777.259, 9, 227.73, 1222.114, 8, 15.45, 16859.074];
 
@@ -2522,7 +2497,7 @@ var ASTRO = function () {
          jd.  Results are returned as a two element Array
          giving (deltaPsi, deltaEpsilon) in degrees.
          * @param jd
-         * @return {[*,*]}
+         * @return Object
          */
 
     }, {
@@ -2665,7 +2640,7 @@ var ASTRO = function () {
          intermediate values because they are useful in a
          variety of other contexts.
          * @param jd
-         * @return {[*,*,*,*,*,*,*,*,*,*,*,*]}
+         * @return Object
          */
 
     }, {
@@ -2761,6 +2736,31 @@ var ASTRO = function () {
 module.exports = ASTRO;
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Constants
+ * @module constants
+ */
+
+module.exports = {
+    durationUnit: {
+        year: ['y', 'years', 'year'],
+        month: ['M', 'months', 'month'],
+        day: ['d', 'days', 'day'],
+        hour: ['h', 'hours', 'hour'],
+        minute: ['m', 'minutes', 'minute'],
+        second: ['s', 'second', 'seconds'],
+        millisecond: ['ms', 'milliseconds', 'millisecond'],
+        week: ['w', '', 'weeks', 'week']
+    }
+};
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2771,7 +2771,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Helpers = __webpack_require__(1);
+var Helpers = __webpack_require__(0);
 var normalizeDuration = new Helpers().normalizeDuration;
 var absRound = new Helpers().absRound;
 var absFloor = new Helpers().absFloor;
@@ -3045,7 +3045,7 @@ module.exports = {
 "use strict";
 
 
-var PersianDateClass = __webpack_require__(2);
+var PersianDateClass = __webpack_require__(1);
 //String.prototype.toPersianDigit = function (latinDigit) {
 //    return this.replace(/\d+/g, function (digit) {
 //        let enDigitArr = [], peDigitArr = [], i, j;
