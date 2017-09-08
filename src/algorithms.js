@@ -149,8 +149,8 @@ class Algorithms {
      * @return {boolean}
      */
     leap_gregorian (year) {
-        return ((year % 4) == 0) &&
-          (!(((year % 100) == 0) && ((year % 400) != 0)));
+        return ((year % 4) === 0) &&
+          (!(((year % 100) === 0) && ((year % 400) != 0)));
     }
 
 
@@ -184,7 +184,7 @@ class Algorithms {
         dquad = this.ASTRO.mod(dcent, 1461);
         yindex = Math.floor(dquad / 365);
         year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
-        if (!((cent == 4) || (yindex == 4))) {
+        if (!((cent === 4) || (yindex === 4))) {
             year++;
         }
         yearday = wjd - this.gregorian_to_jd(year, 1, 1);
@@ -257,7 +257,7 @@ class Algorithms {
 
 
     leap_julian (year) {
-        return this.ASTRO.mod(year, 4) == ((year > 0) ? 0 : 3);
+        return this.ASTRO.mod(year, 4) === ((year > 0) ? 0 : 3);
     }
 
     //  JULIAN_TO_JD  --  Determine Julian day number from Julian calendar date
@@ -737,7 +737,7 @@ class Algorithms {
         depoch = jd - this.persian_to_jd(475, 1, 1);
         cycle = Math.floor(depoch / 1029983);
         cyear = this.ASTRO.mod(depoch, 1029983);
-        if (cyear == 1029982) {
+        if (cyear === 1029982) {
             ycycle = 2820;
         } else {
             aux1 = Math.floor(cyear / 366);

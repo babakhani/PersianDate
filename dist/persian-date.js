@@ -307,14 +307,14 @@ var PersianDateClass = function () {
     _createClass(PersianDateClass, [{
         key: '_locale',
         value: function _locale() {
-            if (this.localType == 'fa') {
-                if (this.calendarType == 'persianAlgo' | this.calendarType == 'persianAstro') {
+            if (this.localType === 'fa') {
+                if (this.calendarType === 'persianAlgo' | this.calendarType === 'persianAstro') {
                     return fa.persian;
                 } else {
                     return fa.gregorian;
                 }
             } else {
-                if (this.calendarType == 'persianAlgo' | this.calendarType == 'persianAstro') {
+                if (this.calendarType === 'persianAlgo' | this.calendarType === 'persianAstro') {
                     return en.persian;
                 } else {
                     return en.gregorian;
@@ -411,11 +411,11 @@ var PersianDateClass = function () {
             if (this.isPersianDate(dateArray)) {
                 dateArray = [dateArray.year(), dateArray.month(), dateArray.date(), dateArray.hour(), dateArray.minute(), dateArray.second(), dateArray.millisecond()];
             }
-            if (this.calendarType == 'persianAlgo') {
+            if (this.calendarType === 'persianAlgo') {
                 return this.algorithms.calcPersian(dateArray);
-            } else if (this.calendarType == 'persianAstro') {
+            } else if (this.calendarType === 'persianAstro') {
                 return this.algorithms.calcPersiana(dateArray);
-            } else if (this.calendarType == 'gregorian') {
+            } else if (this.calendarType === 'gregorian') {
                 return this.algorithms.calcGregorian(dateArray);
             }
         }
@@ -963,7 +963,7 @@ var PersianDateClass = function () {
                 day = this.date();
             if (month < 7) {
                 return false;
-            } else if (month == 7 && day >= 2 || month >= 7) {
+            } else if (month === 7 && day >= 2 || month >= 7) {
                 return true;
             }
         }
@@ -976,16 +976,16 @@ var PersianDateClass = function () {
     }, {
         key: 'isLeapYear',
         value: function isLeapYear(year) {
-            if (year == undefined) {
+            if (year === undefined) {
                 year = this.year();
             }
-            if (this.calendarType == 'persianAlgo') {
+            if (this.calendarType === 'persianAlgo') {
                 return this.algorithms.leap_persian(year);
             }
-            if (this.calendarType == 'persianAstro') {
+            if (this.calendarType === 'persianAstro') {
                 return this.algorithms.leap_persiana(year);
             }
-            if (this.calendarType == 'gregorian') {
+            if (this.calendarType === 'gregorian') {
                 return this.algorithms.leap_gregorian(year);
             }
         }
@@ -1356,7 +1356,7 @@ var PersianDateClass = function () {
             var unit = normalizeDuration(key, value).unit;
             value = normalizeDuration(key, value).value;
 
-            if (unit == 'year' || unit == 'month') {
+            if (unit === 'year' || unit === 'month') {
                 if (duration.years > 0) {
                     var newYear = this.year() + duration.years;
                     this.year(newYear);
@@ -1372,24 +1372,24 @@ var PersianDateClass = function () {
                     this.month(newMonth);
                 }
             }
-            if (unit == 'day') {
+            if (unit === 'day') {
                 var oldHour = this.hour();
                 var newDate = this.valueOf() + value * 24 * 60 * 60 * 1000;
                 return this.unix(newDate / 1000).hour(oldHour);
             }
-            if (unit == 'hour') {
+            if (unit === 'hour') {
                 var _newDate = this.valueOf() + value * 60 * 60 * 1000;
                 return this.unix(_newDate / 1000);
             }
-            if (unit == 'minute') {
+            if (unit === 'minute') {
                 var _newDate2 = this.valueOf() + value * 60 * 1000;
                 return this.unix(_newDate2 / 1000);
             }
-            if (unit == 'second') {
+            if (unit === 'second') {
                 var _newDate3 = this.valueOf() + value * 1000;
                 return this.unix(_newDate3 / 1000);
             }
-            if (unit == 'millisecond') {
+            if (unit === 'millisecond') {
                 // log('add millisecond')
                 var newMillisecond = this.valueOf() + value;
                 return this.unix(newMillisecond / 1000);
@@ -1411,7 +1411,7 @@ var PersianDateClass = function () {
             var unit = normalizeDuration(key, value).unit;
             value = normalizeDuration(key, value).value;
 
-            if (unit == 'year' || unit == 'month') {
+            if (unit === 'year' || unit === 'month') {
                 if (duration.years > 0) {
                     var newYear = this.year() - duration.years;
                     this.year(newYear);
@@ -1427,24 +1427,24 @@ var PersianDateClass = function () {
                     this.date(oldDate);
                 }
             }
-            if (unit == 'day') {
+            if (unit === 'day') {
                 var oldHour = this.hour();
                 var newDate = this.valueOf() - value * 24 * 60 * 60 * 1000;
                 return this.unix(newDate / 1000).hour(oldHour);
             }
-            if (unit == 'hour') {
+            if (unit === 'hour') {
                 var _newDate4 = this.valueOf() - value * 60 * 60 * 1000;
                 return this.unix(_newDate4 / 1000);
             }
-            if (unit == 'minute') {
+            if (unit === 'minute') {
                 var _newDate5 = this.valueOf() - value * 60 * 1000;
                 return this.unix(_newDate5 / 1000);
             }
-            if (unit == 'second') {
+            if (unit === 'second') {
                 var _newDate6 = this.valueOf() - value * 1000;
                 return this.unix(_newDate6 / 1000);
             }
-            if (unit == 'millisecond') {
+            if (unit === 'millisecond') {
                 // log('add millisecond')
                 var newMillisecond = this.valueOf() - value;
                 return this.unix(newMillisecond / 1000);
@@ -1635,7 +1635,7 @@ var Algorithms = function () {
     _createClass(Algorithms, [{
         key: 'leap_gregorian',
         value: function leap_gregorian(year) {
-            return year % 4 == 0 && !(year % 100 == 0 && year % 400 != 0);
+            return year % 4 === 0 && !(year % 100 === 0 && year % 400 != 0);
         }
 
         //  GREGORIAN_TO_JD  --  Determine Julian day number from Gregorian calendar date
@@ -1663,7 +1663,7 @@ var Algorithms = function () {
             dquad = this.ASTRO.mod(dcent, 1461);
             yindex = Math.floor(dquad / 365);
             year = quadricent * 400 + cent * 100 + quad * 4 + yindex;
-            if (!(cent == 4 || yindex == 4)) {
+            if (!(cent === 4 || yindex === 4)) {
                 year++;
             }
             yearday = wjd - this.gregorian_to_jd(year, 1, 1);
@@ -1735,7 +1735,7 @@ var Algorithms = function () {
     }, {
         key: 'leap_julian',
         value: function leap_julian(year) {
-            return this.ASTRO.mod(year, 4) == (year > 0 ? 0 : 3);
+            return this.ASTRO.mod(year, 4) === (year > 0 ? 0 : 3);
         }
 
         //  JULIAN_TO_JD  --  Determine Julian day number from Julian calendar date
@@ -2217,7 +2217,7 @@ var Algorithms = function () {
             depoch = jd - this.persian_to_jd(475, 1, 1);
             cycle = Math.floor(depoch / 1029983);
             cyear = this.ASTRO.mod(depoch, 1029983);
-            if (cyear == 1029982) {
+            if (cyear === 1029982) {
                 ycycle = 2820;
             } else {
                 aux1 = Math.floor(cyear / 366);
