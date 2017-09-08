@@ -33,6 +33,25 @@ describe('Convert test', function () {
     });
 });
 
+
+describe('Check static methods', function () {
+    it('isPersianDate', function () {
+        let a = new pDate();
+        assert.deepEqual(pDate.isPersianDate(a), true);
+    });
+
+    it('isDuration', function () {
+        let a = new pDate.duration('days',10);
+        assert.deepEqual(pDate.isDuration(a), true);
+    });
+
+    it('getFirstWeekDayOfMonth', function () {
+        assert.deepEqual(pDate.getFirstWeekDayOfMonth(1391, 12), 4);
+    });
+
+});
+
+
 describe('Make Instance', function () {
 
 
@@ -263,7 +282,6 @@ describe('Leap Year', function () {
         assert.deepEqual(createdDate.isLeapYear(), true);
         pDate.calendarType = 'persianAstro';
     });
-
 
     it('[1404] when calendarType = persianAlgo', function () {
         pDate.calendarType = 'persianAlgo';
