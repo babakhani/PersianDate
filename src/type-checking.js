@@ -1,6 +1,3 @@
-let durationUnit = require('./constants').durationUnit;
-
-
 module.exports = {
     /**
      * @param input
@@ -29,5 +26,4 @@ module.exports = {
     isDate (input) {
         return input instanceof Date;
     }
-}
-
+};

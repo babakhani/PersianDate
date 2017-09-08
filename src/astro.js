@@ -17,8 +17,8 @@ class ASTRO {
         this.TropicalYear = 365.24219878;           // Mean solar tropical year
 
 //  JWDAY  --  Calculate day of week from Julian day
-        this.Weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday",
-            "Thursday", "Friday", "Saturday"];
+        this.Weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+            'Thursday', 'Friday', 'Saturday'];
 
 
         /*  OBLIQEQ  --  Calculate the obliquity of the ecliptic for a given
@@ -348,7 +348,7 @@ class ASTRO {
         var deltaPsi, deltaEpsilon,
           i, j,
           t = (jd - 2451545.0) / 36525.0, t2, t3, to10,
-          ta = new Array,
+          ta = [],
           dp = 0, de = 0, ang;
 
         t3 = t * (t2 = t * t);
@@ -382,7 +382,7 @@ class ASTRO {
         for (i = 0; i < 63; i++) {
             ang = 0;
             for (j = 0; j < 5; j++) {
-                if (this.nutArgMult[(i * 5) + j] != 0) {
+                if (this.nutArgMult[(i * 5) + j] !== 0) {
                     ang += this.nutArgMult[(i * 5) + j] * ta[j];
                 }
             }
@@ -573,7 +573,7 @@ class ASTRO {
      Returns the equation of time as a fraction of
      a day.  */
     equationOfTime (jd) {
-        var alpha, deltaPsi, E, epsilon, L0, tau
+        var alpha, deltaPsi, E, epsilon, L0, tau;
 
         tau = (jd - this.J2000) / this.JulianMillennium;
 //document.debug.log.value += "equationOfTime.  tau = " + tau + "\n";
