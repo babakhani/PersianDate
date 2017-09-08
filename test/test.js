@@ -73,26 +73,29 @@ describe('Make Instance', function () {
     });
 
     it('Negative year', function () {
-        let a = new pDate([-1]).format();
-        assert.ok(a, '-۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ');
-        let b = new pDate([-2000]).format();
-        // TODO: must complete
-        assert.ok(b);
+        let a = new pDate([0, 0, 0]).format();
+        assert.deepEqual(a, "۰-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
+        let b = new pDate([-1]).format();
+        assert.deepEqual(b, "-۱-۰۱-۰۱ ۰۱:۰۰:۰۰ ق ظ");
+        let c = new pDate([-2000]).format();
+        assert.deepEqual(c, "-۲۰۰۰-۰۱-۰۱ ۰۱:۰۰:۰۰ ق ظ");
     });
 
 
-    it('Negative year', function () {
+    it('After long long long', function () {
         let a = new pDate([10000]).format();
-        // TODO: must complete
         assert.deepEqual(a, "۱۰۰۰۰-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
+        a = new pDate([10000, 1, 1]).isLeapYear();
+        assert.deepEqual(a, false);
+        a = new pDate([10003, 1, 1]).isLeapYear();
+        assert.deepEqual(a, true);
     });
 
 
     it('check deltat between 1621 2000', function () {
         pDate.calendarType = 'gregorian';
-        let a = new pDate([1641]).format();
-        // TODO: must complete
-        assert.ok(a);
+        let a = new pDate([1641]).toArray();
+        assert.deepEqual(a, [1641, 1, 1, 0, 0, 0, 0]);
         pDate.calendarType = 'persianAstro';
     });
 
@@ -604,7 +607,6 @@ describe('unix', function () {
         let formattedDate = new pDate(1332192661000).unix();
         assert.deepEqual(formattedDate, 1332192661);
     });
-    // TODO: Must fix
     it('set', function () {
         let formattedDate = new pDate(1552192661000).unix(1552192661).unix();
         assert.deepEqual(formattedDate, 1552192661);
@@ -628,13 +630,11 @@ describe('zone', function () {
 
 
 describe('timezone', function () {
-    // TODO
     it('local', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1]).local().format();
         assert.deepEqual(a, '۱۳۹۱-۰۱-۰۱ ۰۱:۰۱:۰۱ ق ظ');
     });
     it('static utc method', function () {
-        // TODO
         let a = pDate.utc(1491031614047).valueOf();
         assert.ok(a);
         let d = pDate.utc().utc();
