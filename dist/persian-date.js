@@ -1017,14 +1017,19 @@ var PersianDateClass = function () {
         value: function daysInMonth(yearInput, monthInput) {
             var year = yearInput ? yearInput : this.year(),
                 month = monthInput ? monthInput : this.month();
-            if (month < 1 || month > 12) return 0;
-            if (month < 7) return 31;
-            if (month < 12) return 30;
-            // TODO: need fix in gregorian mode
-            if (this.isLeapYear(year)) {
-                return 30;
+            if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+                if (month < 1 || month > 12) return 0;
+                if (month < 7) return 31;
+                if (month < 12) return 30;
+                // TODO: need fix in gregorian mode
+                if (this.isLeapYear(year)) {
+                    return 30;
+                }
+                return 29;
             }
-            return 29;
+            if (this.calendarType === 'gregorian') {
+                return new Date(year, month, 0).getDate();
+            }
         }
 
         /**
@@ -2933,7 +2938,21 @@ module.exports = {
 
 
 var PersianDateClass = __webpack_require__(2);
-
+String.prototype.toPersianDigit = function (latinDigit) {
+    return this.replace(/\d+/g, function (digit) {
+        var enDigitArr = [],
+            peDigitArr = [],
+            i = void 0,
+            j = void 0;
+        for (i = 0; i < digit.length; i += 1) {
+            enDigitArr.push(digit.charCodeAt(i));
+        }
+        for (j = 0; j < enDigitArr.length; j += 1) {
+            peDigitArr.push(String.fromCharCode(enDigitArr[j] + (!!latinDigit && latinDigit === true ? 1584 : 1728)));
+        }
+        return peDigitArr.join('');
+    });
+};
 PersianDateClass.calendarType = 'persianAstro';
 PersianDateClass.localType = 'fa';
 

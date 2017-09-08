@@ -753,17 +753,22 @@ class PersianDateClass {
     daysInMonth (yearInput, monthInput) {
         let year = yearInput ? yearInput : this.year(),
           month = monthInput ? monthInput : this.month();
-        if (month < 1 || month > 12)
-            return 0;
-        if (month < 7)
-            return 31;
-        if (month < 12)
-            return 30;
-        // TODO: need fix in gregorian mode
-        if (this.isLeapYear(year)) {
-            return 30;
+        if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+            if (month < 1 || month > 12)
+                return 0;
+            if (month < 7)
+                return 31;
+            if (month < 12)
+                return 30;
+            // TODO: need fix in gregorian mode
+            if (this.isLeapYear(year)) {
+                return 30;
+            }
+            return 29;
         }
-        return 29;
+        if (this.calendarType === 'gregorian') {
+            return new Date(year, month, 0).getDate();
+        }
     }
 
 
