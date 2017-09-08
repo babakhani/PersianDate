@@ -10,7 +10,6 @@ String.prototype.toPersianDigit = function (latinDigit) {
         }
         return peDigitArr.join('');
     });
-
 };
 PersianDateClass.calendarType = 'persianAstro';
 PersianDateClass.localType = 'fa';
