@@ -129,6 +129,9 @@ describe('Make Instance', function () {
         let gDateObject = new Date(),
           createFromDotNet = new pDate(gDateObject);
         assert.ok(createFromDotNet);
+
+        createFromDotNet = new pDate(new Date());
+        assert.ok(createFromDotNet);
     });
 
 });

@@ -269,7 +269,9 @@ class Algorithms {
 
     /**
      * @desc Is a given year a leap year in the Persian calendar ?
+     * also nasa use this algorithm https://eclipse.gsfc.nasa.gov/SKYCAL/algorithm.js search for 'getLastDayOfPersianMonth' and you can find it
      * @param {*} year
+     *
      */
     leap_persian (year) {
         return ((((((year - ((year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
