@@ -16,11 +16,6 @@ class ASTRO {
         //        this.AstronomicalUnit = 149597870.0;           // Astronomical unit in kilometres
         this.TropicalYear = 365.24219878;           // Mean solar tropical year
 
-        //  JWDAY  --  Calculate day of week from Julian day
-        this.Weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
-            'Thursday', 'Friday', 'Saturday'];
-
-
         /*  OBLIQEQ  --  Calculate the obliquity of the ecliptic for a given
          Julian date.  This uses Laskar's tenth-degree
          polynomial fit (J. Laskar, Astronomy and

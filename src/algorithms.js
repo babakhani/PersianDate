@@ -410,7 +410,7 @@ class Algorithms {
         this.ON.juliancalendar.day = julcal[2];
         this.ON.juliancalendar.leap = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
         weekday = this.ASTRO.jwday(j);
-        this.ON.juliancalendar.weekday = this.ASTRO.Weekdays[weekday];
+        this.ON.juliancalendar.weekday = weekday;
 
         //  Update Persian Calendar
         // ---------------------------------------------------------------------------

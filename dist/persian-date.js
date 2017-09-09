@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  0.2.5
+ * persian-date -  0.3.0
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -92,36 +92,11 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 
 
-/**
- * Constants
- * @module constants
- */
-
-module.exports = {
-    durationUnit: {
-        year: ['y', 'years', 'year'],
-        month: ['M', 'months', 'month'],
-        day: ['d', 'days', 'day'],
-        hour: ['h', 'hours', 'hour'],
-        minute: ['m', 'minutes', 'minute'],
-        second: ['s', 'second', 'seconds'],
-        millisecond: ['ms', 'milliseconds', 'millisecond'],
-        week: ['w', '', 'weeks', 'week']
-    }
-};
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var durationUnit = __webpack_require__(0).durationUnit;
+var durationUnit = __webpack_require__(4).durationUnit;
 
 var Helpers = function () {
     function Helpers() {
@@ -252,7 +227,7 @@ var Helpers = function () {
 module.exports = Helpers;
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -263,8 +238,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var TypeChecking = __webpack_require__(10);
-var Algorithms = __webpack_require__(3);
-var Helpers = __webpack_require__(1);
+var Algorithms = __webpack_require__(2);
+var Helpers = __webpack_require__(0);
 var Duration = __webpack_require__(5);
 var toPersianDigit = new Helpers().toPersianDigit;
 var leftZeroFill = new Helpers().leftZeroFill;
@@ -281,7 +256,7 @@ var PersianDateClass = function () {
         this.calendarType = PersianDateClass.calendarType;
         this.localType = PersianDateClass.localType;
         this.algorithms = new Algorithms();
-        this.version = "0.2.5";
+        this.version = "0.3.0";
         this._utcMode = false;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
@@ -1625,7 +1600,7 @@ var PersianDateClass = function () {
 module.exports = PersianDateClass;
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1636,7 +1611,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // Start algorithm class
-var ASTRO = __webpack_require__(4);
+var ASTRO = __webpack_require__(3);
 var ON = __webpack_require__(9);
 
 var Algorithms = function () {
@@ -2094,7 +2069,7 @@ var Algorithms = function () {
             this.ON.juliancalendar.day = julcal[2];
             this.ON.juliancalendar.leap = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
             weekday = this.ASTRO.jwday(j);
-            this.ON.juliancalendar.weekday = this.ASTRO.Weekdays[weekday];
+            this.ON.juliancalendar.weekday = weekday;
 
             //  Update Persian Calendar
             // ---------------------------------------------------------------------------
@@ -2264,7 +2239,7 @@ var Algorithms = function () {
 module.exports = Algorithms;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2293,9 +2268,6 @@ var ASTRO = function () {
         this.JulianMillennium = this.JulianCentury * 10; // Days in Julian millennium
         //        this.AstronomicalUnit = 149597870.0;           // Astronomical unit in kilometres
         this.TropicalYear = 365.24219878; // Mean solar tropical year
-
-        //  JWDAY  --  Calculate day of week from Julian day
-        this.Weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
         /*  OBLIQEQ  --  Calculate the obliquity of the ecliptic for a given
          Julian date.  This uses Laskar's tenth-degree
@@ -2411,7 +2383,7 @@ var ASTRO = function () {
 
 
     _createClass(ASTRO, [{
-        key: 'dtr',
+        key: "dtr",
         value: function dtr(d) {
             return d * Math.PI / 180.0;
         }
@@ -2423,7 +2395,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'rtd',
+        key: "rtd",
         value: function rtd(r) {
             return r * 180.0 / Math.PI;
         }
@@ -2435,7 +2407,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'fixangle',
+        key: "fixangle",
         value: function fixangle(a) {
             return a - 360.0 * Math.floor(a / 360.0);
         }
@@ -2447,7 +2419,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'fixangr',
+        key: "fixangr",
         value: function fixangr(a) {
             return a - 2 * Math.PI * Math.floor(a / (2 * Math.PI));
         }
@@ -2459,7 +2431,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'dsin',
+        key: "dsin",
         value: function dsin(d) {
             return Math.sin(this.dtr(d));
         }
@@ -2471,7 +2443,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'dcos',
+        key: "dcos",
         value: function dcos(d) {
             return Math.cos(this.dtr(d));
         }
@@ -2484,7 +2456,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'mod',
+        key: "mod",
         value: function mod(a, b) {
             return a - b * Math.floor(a / b);
         }
@@ -2496,7 +2468,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'jwday',
+        key: "jwday",
         value: function jwday(j) {
             return this.mod(Math.floor(j + 1.5), 7);
         }
@@ -2508,7 +2480,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'obliqeq',
+        key: "obliqeq",
         value: function obliqeq(jd) {
             var eps, u, v, i;
             v = u = (jd - this.J2000) / (this.JulianCentury * 100);
@@ -2533,7 +2505,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'nutation',
+        key: "nutation",
         value: function nutation(jd) {
             var deltaPsi,
                 deltaEpsilon,
@@ -2597,7 +2569,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'deltat',
+        key: "deltat",
         value: function deltat(year) {
             var dt, f, i, t;
 
@@ -2628,7 +2600,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'equinox',
+        key: "equinox",
         value: function equinox(year, which) {
             var deltaL = void 0,
                 i = void 0,
@@ -2676,7 +2648,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'sunpos',
+        key: "sunpos",
         value: function sunpos(jd) {
             var T = void 0,
                 T2 = void 0,
@@ -2741,7 +2713,7 @@ var ASTRO = function () {
          */
 
     }, {
-        key: 'equationOfTime',
+        key: "equationOfTime",
         value: function equationOfTime(jd) {
             var alpha = void 0,
                 deltaPsi = void 0,
@@ -2768,6 +2740,31 @@ var ASTRO = function () {
 module.exports = ASTRO;
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Constants
+ * @module constants
+ */
+
+module.exports = {
+    durationUnit: {
+        year: ['y', 'years', 'year'],
+        month: ['M', 'months', 'month'],
+        day: ['d', 'days', 'day'],
+        hour: ['h', 'hours', 'hour'],
+        minute: ['m', 'minutes', 'minute'],
+        second: ['s', 'second', 'seconds'],
+        millisecond: ['ms', 'milliseconds', 'millisecond'],
+        week: ['w', '', 'weeks', 'week']
+    }
+};
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2778,7 +2775,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Helpers = __webpack_require__(1);
+var Helpers = __webpack_require__(0);
 var normalizeDuration = new Helpers().normalizeDuration;
 var absRound = new Helpers().absRound;
 var absFloor = new Helpers().absFloor;
@@ -3052,7 +3049,7 @@ module.exports = {
 "use strict";
 
 
-var PersianDateClass = __webpack_require__(2);
+var PersianDateClass = __webpack_require__(1);
 //String.prototype.toPersianDigit = function (latinDigit) {
 //    return this.replace(/\d+/g, function (digit) {
 //        let enDigitArr = [], peDigitArr = [], i, j;
