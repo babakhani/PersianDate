@@ -92,11 +92,36 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 
 
+/**
+ * Constants
+ * @module constants
+ */
+
+module.exports = {
+    durationUnit: {
+        year: ['y', 'years', 'year'],
+        month: ['M', 'months', 'month'],
+        day: ['d', 'days', 'day'],
+        hour: ['h', 'hours', 'hour'],
+        minute: ['m', 'minutes', 'minute'],
+        second: ['s', 'second', 'seconds'],
+        millisecond: ['ms', 'milliseconds', 'millisecond'],
+        week: ['w', '', 'weeks', 'week']
+    }
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var durationUnit = __webpack_require__(4).durationUnit;
+var durationUnit = __webpack_require__(0).durationUnit;
 
 var Helpers = function () {
     function Helpers() {
@@ -227,7 +252,7 @@ var Helpers = function () {
 module.exports = Helpers;
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -238,8 +263,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var TypeChecking = __webpack_require__(10);
-var Algorithms = __webpack_require__(2);
-var Helpers = __webpack_require__(0);
+var Algorithms = __webpack_require__(3);
+var Helpers = __webpack_require__(1);
 var Duration = __webpack_require__(5);
 var toPersianDigit = new Helpers().toPersianDigit;
 var leftZeroFill = new Helpers().leftZeroFill;
@@ -257,23 +282,21 @@ var PersianDateClass = function () {
         this.localType = PersianDateClass.localType;
         this.algorithms = new Algorithms();
         this.version = "0.2.5";
-
+        this._utcMode = false;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
         } else {
             this.formatPersian = '_default';
         }
 
-        this._utcMode = false;
-
         // Convert Any thing to Gregorian Date
         if (TypeChecking.isDate(input)) {
-            this.algorithms.calcGregorian([input.getFullYear(), input.getMonth(), input.getDate(), input.getHours(), input.getMinutes(), input.getSeconds(), input.getMilliseconds()]);
+            this._gDateToCalculators(input);
         } else if (TypeChecking.isArray(input)) {
             this.algorithmsCalc([input[0], input[1] ? input[1] : 1, input[2] ? input[2] : 1, input[3], input[4], input[5], input[6] ? input[6] : 0]);
         } else if (TypeChecking.isNumber(input)) {
             var fromUnix = new Date(input);
-            this.algorithms.calcGregorian([fromUnix.getFullYear(), fromUnix.getMonth(), fromUnix.getDate(), fromUnix.getHours(), fromUnix.getMinutes(), fromUnix.getSeconds(), fromUnix.getMilliseconds()]);
+            this._gDateToCalculators(fromUnix);
         }
         // instance of pDate
         else if (input instanceof PersianDateClass) {
@@ -282,43 +305,32 @@ var PersianDateClass = function () {
             // ASP.NET JSON Date
             else if (input && input.substring(0, 6) === '/Date(') {
                     var fromDotNet = new Date(parseInt(input.substr(6)));
-                    this.algorithms.calcGregorian([fromDotNet.getFullYear(), fromDotNet.getMonth(), fromDotNet.getDate(), fromDotNet.getHours(), fromDotNet.getMinutes(), fromDotNet.getSeconds(), fromDotNet.getMilliseconds()]);
+                    this._gDateToCalculators(fromDotNet);
                 } else {
                     var now = new Date();
-                    this.algorithms.calcGregorian([now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds()]);
+                    this._gDateToCalculators(now);
                 }
         this.ON = this.algorithms.ON;
         return this;
     }
 
     _createClass(PersianDateClass, [{
-        key: 'rangeName',
-        value: function rangeName() {
-            if (this.localType === 'fa') {
-                if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
-                    return fa.persian;
-                } else {
-                    return fa.gregorian;
-                }
-            } else {
-                if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
-                    return en.persian;
-                } else {
-                    return en.gregorian;
-                }
-            }
+        key: '_gDateToCalculators',
+        value: function _gDateToCalculators(inputgDate) {
+            this.algorithms.calcGregorian([inputgDate.getFullYear(), inputgDate.getMonth(), inputgDate.getDate(), inputgDate.getHours(), inputgDate.getMinutes(), inputgDate.getSeconds(), inputgDate.getMilliseconds()]);
         }
     }, {
-        key: '_locale',
-        value: function _locale() {
+        key: 'rangeName',
+        value: function rangeName() {
+            var t = this.calendarType;
             if (this.localType === 'fa') {
-                if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+                if (t === 'persianAlgo' || t === 'persianAstro') {
                     return fa.persian;
                 } else {
                     return fa.gregorian;
                 }
             } else {
-                if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+                if (t === 'persianAlgo' || t === 'persianAstro') {
                     return en.persian;
                 } else {
                     return en.gregorian;
@@ -342,6 +354,24 @@ var PersianDateClass = function () {
             }
 
             return this;
+        }
+    }, {
+        key: '_locale',
+        value: function _locale() {
+            var t = this.calendarType;
+            if (this.localType === 'fa') {
+                if (t === 'persianAlgo' || t === 'persianAstro') {
+                    return fa.persian;
+                } else {
+                    return fa.gregorian;
+                }
+            } else {
+                if (t === 'persianAlgo' || t === 'persianAstro') {
+                    return en.persian;
+                } else {
+                    return en.gregorian;
+                }
+            }
         }
     }, {
         key: '_weekName',
@@ -1506,14 +1536,16 @@ var PersianDateClass = function () {
     }], [{
         key: 'rangeName',
         value: function rangeName() {
-            if (PersianDateClass.localType === 'fa') {
-                if (PersianDateClass.calendarType === 'persianAlgo' || PersianDateClass.calendarType === 'persianAstro') {
+            var p = PersianDateClass,
+                t = p.calendarType;
+            if (p.localType === 'fa') {
+                if (t === 'persianAlgo' || t === 'persianAstro') {
                     return fa.persian;
                 } else {
                     return fa.gregorian;
                 }
             } else {
-                if (PersianDateClass.calendarType === 'persianAlgo' || PersianDateClass.calendarType === 'persianAstro') {
+                if (t === 'persianAlgo' || t === 'persianAstro') {
                     return en.persian;
                 } else {
                     return en.gregorian;
@@ -1593,7 +1625,7 @@ var PersianDateClass = function () {
 module.exports = PersianDateClass;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1604,7 +1636,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // Start algorithm class
-var ASTRO = __webpack_require__(3);
+var ASTRO = __webpack_require__(4);
 var ON = __webpack_require__(9);
 
 var Algorithms = function () {
@@ -2232,7 +2264,7 @@ var Algorithms = function () {
 module.exports = Algorithms;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2736,31 +2768,6 @@ var ASTRO = function () {
 module.exports = ASTRO;
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Constants
- * @module constants
- */
-
-module.exports = {
-    durationUnit: {
-        year: ['y', 'years', 'year'],
-        month: ['M', 'months', 'month'],
-        day: ['d', 'days', 'day'],
-        hour: ['h', 'hours', 'hour'],
-        minute: ['m', 'minutes', 'minute'],
-        second: ['s', 'second', 'seconds'],
-        millisecond: ['ms', 'milliseconds', 'millisecond'],
-        week: ['w', '', 'weeks', 'week']
-    }
-};
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2771,7 +2778,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Helpers = __webpack_require__(0);
+var Helpers = __webpack_require__(1);
 var normalizeDuration = new Helpers().normalizeDuration;
 var absRound = new Helpers().absRound;
 var absFloor = new Helpers().absFloor;
@@ -3045,7 +3052,7 @@ module.exports = {
 "use strict";
 
 
-var PersianDateClass = __webpack_require__(1);
+var PersianDateClass = __webpack_require__(2);
 //String.prototype.toPersianDigit = function (latinDigit) {
 //    return this.replace(/\d+/g, function (digit) {
 //        let enDigitArr = [], peDigitArr = [], i, j;

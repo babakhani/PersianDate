@@ -12,47 +12,28 @@ class PersianDateClass {
 
     //    static calendarType : 'persianAstro';
     constructor (input) {
+
         this.calendarType = PersianDateClass.calendarType;
         this.localType = PersianDateClass.localType;
         this.algorithms = new Algorithms();
         this.version = __VERSION__;
-
+        this._utcMode = false;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
         } else {
             this.formatPersian = '_default';
         }
 
-        this._utcMode = false;
-
         // Convert Any thing to Gregorian Date
         if (TypeChecking.isDate(input)) {
-            this.algorithms.calcGregorian(
-              [
-                  input.getFullYear(),
-                  input.getMonth(),
-                  input.getDate(),
-                  input.getHours(),
-                  input.getMinutes(),
-                  input.getSeconds(),
-                  input.getMilliseconds()
-              ]);
+            this._gDateToCalculators(input);
         }
         else if (TypeChecking.isArray(input)) {
             this.algorithmsCalc([input[0], (input[1] ? input[1] : 1), (input[2] ? input[2] : 1), input[3], input[4], input[5], (input[6] ? input[6] : 0)]);
         }
         else if (TypeChecking.isNumber(input)) {
             const fromUnix = new Date(input);
-            this.algorithms.calcGregorian(
-              [
-                  fromUnix.getFullYear(),
-                  fromUnix.getMonth(),
-                  fromUnix.getDate(),
-                  fromUnix.getHours(),
-                  fromUnix.getMinutes(),
-                  fromUnix.getSeconds(),
-                  fromUnix.getMilliseconds()
-              ]);
+            this._gDateToCalculators(fromUnix);
         }
         // instance of pDate
         else if (input instanceof PersianDateClass) {
@@ -69,44 +50,41 @@ class PersianDateClass {
         // ASP.NET JSON Date
         else if (input && input.substring(0, 6) === '/Date(') {
             const fromDotNet = new Date(parseInt(input.substr(6)));
-            this.algorithms.calcGregorian(
-              [
-                  fromDotNet.getFullYear(),
-                  fromDotNet.getMonth(),
-                  fromDotNet.getDate(),
-                  fromDotNet.getHours(),
-                  fromDotNet.getMinutes(),
-                  fromDotNet.getSeconds(),
-                  fromDotNet.getMilliseconds()
-              ]);
+            this._gDateToCalculators(fromDotNet);
         }
         else {
             const now = new Date();
-            this.algorithms.calcGregorian(
-              [
-                  now.getFullYear(),
-                  now.getMonth(),
-                  now.getDate(),
-                  now.getHours(),
-                  now.getMinutes(),
-                  now.getSeconds(),
-                  now.getMilliseconds()
-              ]);
+            this._gDateToCalculators(now);
         }
         this.ON = this.algorithms.ON;
         return this;
     }
 
+    _gDateToCalculators (inputgDate) {
+        this.algorithms.calcGregorian(
+          [
+              inputgDate.getFullYear(),
+              inputgDate.getMonth(),
+              inputgDate.getDate(),
+              inputgDate.getHours(),
+              inputgDate.getMinutes(),
+              inputgDate.getSeconds(),
+              inputgDate.getMilliseconds()
+          ]);
+    }
+
     static rangeName () {
-        if (PersianDateClass.localType === 'fa') {
-            if (PersianDateClass.calendarType === 'persianAlgo' || PersianDateClass.calendarType === 'persianAstro') {
+        const p = PersianDateClass,
+          t = p.calendarType;
+        if (p.localType === 'fa') {
+            if (t === 'persianAlgo' || t === 'persianAstro') {
                 return fa.persian;
             }
             else {
                 return fa.gregorian;
             }
         } else {
-            if (PersianDateClass.calendarType === 'persianAlgo' || PersianDateClass.calendarType === 'persianAstro') {
+            if (t === 'persianAlgo' || t === 'persianAstro') {
                 return en.persian;
             }
             else {
@@ -116,15 +94,16 @@ class PersianDateClass {
     }
 
     rangeName () {
+        const t = this.calendarType;
         if (this.localType === 'fa') {
-            if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+            if (t === 'persianAlgo' || t === 'persianAstro') {
                 return fa.persian;
             }
             else {
                 return fa.gregorian;
             }
         } else {
-            if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+            if (t === 'persianAlgo' || t === 'persianAstro') {
                 return en.persian;
             }
             else {
@@ -133,23 +112,6 @@ class PersianDateClass {
         }
     }
 
-    _locale () {
-        if (this.localType === 'fa') {
-            if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
-                return fa.persian;
-            }
-            else {
-                return fa.gregorian;
-            }
-        } else {
-            if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
-                return en.persian;
-            }
-            else {
-                return en.gregorian;
-            }
-        }
-    }
 
     toCalendar (input) {
         this.calendarType = input;
@@ -182,6 +144,26 @@ class PersianDateClass {
         }
 
         return this;
+    }
+
+
+    _locale () {
+        const t = this.calendarType;
+        if (this.localType === 'fa') {
+            if (t === 'persianAlgo' || t === 'persianAstro') {
+                return fa.persian;
+            }
+            else {
+                return fa.gregorian;
+            }
+        } else {
+            if (t === 'persianAlgo' || t === 'persianAstro') {
+                return en.persian;
+            }
+            else {
+                return en.gregorian;
+            }
+        }
     }
 
     _weekName (input) {
@@ -251,7 +233,7 @@ class PersianDateClass {
             return this.algorithms.calcPersiana(dateArray);
         }
         else if (this.calendarType === 'gregorian') {
-            dateArray[1] = dateArray[1]-1;
+            dateArray[1] = dateArray[1] - 1;
             return this.algorithms.calcGregorian(dateArray);
         }
     }
@@ -317,7 +299,9 @@ class PersianDateClass {
      */
     year (input) {
         if (input || input === 0) {
-            this.algorithmsCalc([input, this.month(), this.date(), this.hour(), this.minute(), this.second(), this.millisecond()]);
+            this.algorithmsCalc(
+              [input, this.month(), this.date(), this.hour(), this.minute(), this.second(), this.millisecond()]
+            );
             return this;
         } else {
             return this.calendar().year;
