@@ -144,8 +144,8 @@ To get this wrapper object, simply call ``` persianDate() ``` with one of the su
 
 ### Now
 
-```
-persianDate();
+```javascript
+new persianDate();
 ```
 
 To get the current date and time, just call ```persianDate()``` with no parameters.
@@ -159,7 +159,7 @@ This is essentially the same as calling ```persianDate(new Date())``` .
 
 ### Unix Offset (milliseconds)
 
-```
+```javascript
 new persianDate(/* Number */);
 ```
 
@@ -172,7 +172,7 @@ var day = new persianDate(1318781876406); // "۱۳۹۰-۰۷-۲۴ ۱۹:۴۷:۵۶ 
 
 ### Unix Timestamp (seconds)
 
-```
+```javascript
 persianDate.unix(/* Number */);
 ```
 
@@ -309,7 +309,6 @@ Accepts numbers from 0 to 59. If the range is exceeded, it will bubble up to the
 ### Minute
 
 ```javascript
-
 new persianDate().minute(20);
 new persianDate().minute(); // 20
 new persianDate().minutes(20);
