@@ -2073,7 +2073,7 @@ var Algorithms = function () {
 
             this.ON.gDate = new Date(year, mon, mday, this.ON.gregorian.hour, this.ON.gregorian.minute, this.ON.gregorian.second, this.ON.gregorian.millisecond);
 
-            if (this.parent._utcMode == false) {
+            if (this.parent._utcMode === false) {
                 this.ON.zone = this.ON.gDate.getTimezoneOffset();
             }
 

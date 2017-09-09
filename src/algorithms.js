@@ -381,10 +381,9 @@ class Algorithms {
           this.ON.gregorian.millisecond
         );
 
-        if (this.parent._utcMode == false) {
+        if (this.parent._utcMode === false) {
             this.ON.zone = this.ON.gDate.getTimezoneOffset();
         }
-
 
         // Added for this algorithms cant parse 2016,13,32 successfully
         this.ON.gregorian.year = this.ON.gDate.getFullYear();
