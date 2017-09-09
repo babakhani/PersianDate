@@ -44,6 +44,7 @@
     "jshint": "^2.9.4",
     "load-grunt-tasks": "^3.5.2",
     "markdown-doctest": "^0.9.1",
+    "markdown-link-check": "^3.1.2",
     "mocha": "^3.2.0",
     "mocha-lcov-reporter": "^0.0.2",
     "moment": "^2.18.1",
@@ -60,12 +61,14 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "./node_modules/jshint/bin/jshint src/*.js; ./node_modules/eslint/bin/eslint.js src/",
     "doc": "grunt --doc",
+    "doctest": "./node_modules/markdown-doctest/bin/cmd.js README.md && ./node_modules/markdown-link-check/markdown-link-check README.md",
     "sync-pkg": "sync-pkg",
     "pre-dev": "sudo npm install -g nyc"
   },
   "pre-commit": [
     "test",
-    "lint"
+    "lint",
+    "doctest"
   ],
   "dependencies": {
     "eslint": "^4.4.1",

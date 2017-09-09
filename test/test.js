@@ -136,21 +136,21 @@ describe('Make Instance', function () {
 
 describe('locale just in object', function () {
     it('[1404,1,1] locale global en', function () {
-        let a = new pDate([1404, 1, 1]).locale('en').format();
+        let a = new pDate([1404, 1, 1]).toLocale('en').format();
         assert.deepEqual(a, "1404-01-01 00:00:00 AM");
-        b = new pDate([1404, 1, 1]).locale('en').format('dddd');
+        b = new pDate([1404, 1, 1]).toLocale('en').format('dddd');
         assert.deepEqual(b, "Friday");
-        c = new pDate([1404, 1, 2]).locale('en').format('dddd');
+        c = new pDate([1404, 1, 2]).toLocale('en').format('dddd');
         assert.deepEqual(c, "Saturday");
-        d = new pDate([1404, 1, 3]).locale('en').format('dddd');
+        d = new pDate([1404, 1, 3]).toLocale('en').format('dddd');
         assert.deepEqual(d, "Sunday");
-        e = new pDate([1404, 1, 4]).locale('en').format('dddd');
+        e = new pDate([1404, 1, 4]).toLocale('en').format('dddd');
         assert.deepEqual(e, "Monday");
-        f = new pDate([1404, 1, 5]).locale('en').format('dddd');
+        f = new pDate([1404, 1, 5]).toLocale('en').format('dddd');
         assert.deepEqual(f, "Tuesday");
-        g = new pDate([1404, 1, 6]).locale('en').format('dddd');
+        g = new pDate([1404, 1, 6]).toLocale('en').format('dddd');
         assert.deepEqual(g, "Wednesday");
-        h = new pDate([1404, 1, 7]).locale('en').format('dddd');
+        h = new pDate([1404, 1, 7]).toLocale('en').format('dddd');
         assert.deepEqual(h, "Thursday");
         pDate.localType = 'fa';
     });
@@ -161,7 +161,7 @@ describe('locale global', function () {
 
 
     it('[1404,1,1] locale global en', function () {
-        pDate.locale('en');
+        pDate.toLocale('en');
         let a = new pDate([1404, 1, 1]).format();
         assert.deepEqual(a, "1404-01-01 00:00:00 AM");
         b = new pDate([1404, 1, 1]).format('dddd');
@@ -178,7 +178,7 @@ describe('locale global', function () {
         assert.deepEqual(g, "Wednesday");
         h = new pDate([1404, 1, 7]).format('dddd');
         assert.deepEqual(h, "Thursday");
-        pDate.locale('fa');
+        pDate.toLocale('fa');
     });
 
 
@@ -226,17 +226,17 @@ describe('locale global', function () {
 
 describe('toCalendar gregorian', function () {
     it('[1404,1,1] gregorian en', function () {
-        let a = new pDate([1404, 1, 1]).toCalendar('gregorian').locale('en').format();
+        let a = new pDate([1404, 1, 1]).toCalendar('gregorian').toLocale('en').format();
         assert.deepEqual(a, "2025-03-21 00:00:00 AM");
     });
     it('[1404,1,1] gregorian fa format("llll")', function () {
-        let a = new pDate([1404, 1, 1]).toCalendar('gregorian').locale('fa').format('llll');
+        let a = new pDate([1404, 1, 1]).toCalendar('gregorian').toLocale('fa').format('llll');
         assert.deepEqual(a, "جمعه ۲۱ مارس ۲۰۲۵  ۰:۰۰  ق ظ");
     });
     it('[1403,1,1] gregorian fa format("dddd")', function () {
-        let persainAlgo = new pDate([1404, 1, 1]).toCalendar('persianAlgo').locale('en').format('dddd');
-        let persianAstroWeekday = new pDate([1404, 1, 1]).toCalendar('persianAstro').locale('en').format('dddd');
-        let gregorianWeekday = new pDate([1404, 1, 1]).toCalendar('gregorian').locale('en').format('dddd');
+        let persainAlgo = new pDate([1404, 1, 1]).toCalendar('persianAlgo').toLocale('en').format('dddd');
+        let persianAstroWeekday = new pDate([1404, 1, 1]).toCalendar('persianAstro').toLocale('en').format('dddd');
+        let gregorianWeekday = new pDate([1404, 1, 1]).toCalendar('gregorian').toLocale('en').format('dddd');
         assert.deepEqual(gregorianWeekday, "Friday");
         assert.deepEqual(persianAstroWeekday, "Friday");
         assert.deepEqual(persainAlgo, "Friday");
@@ -248,7 +248,7 @@ describe('toCalendar ', function () {
     const defArray = [1403, 12, 30];
     it('[1403,1,1] persianAlgo en', function () {
         pDate.toCalendar('persianAlgo');
-        let a = new pDate(defArray).locale('fa').format();
+        let a = new pDate(defArray).toLocale('fa').format();
         assert.deepEqual(a, "۱۴۰۴-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
         pDate.toCalendar('persianAstro');
     });
@@ -257,13 +257,13 @@ describe('toCalendar ', function () {
 describe('toCalendar persianAlgo', function () {
     const defArray = [1403, 12, 30];
     it('[1403,1,1] persianAlgo en', function () {
-        let a = new pDate(defArray).toCalendar('persianAlgo').locale('fa').format();
+        let a = new pDate(defArray).toCalendar('persianAlgo').toLocale('fa').format();
         assert.deepEqual(a, "۱۴۰۴-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
     });
     it('[1403,1,1] persianAlgo fa format("dddd")', function () {
-        let persainAlgoWeekday = new pDate(defArray).toCalendar('persianAlgo').locale('fa').format('dddd');
-        let persianAstroWeekday = new pDate(defArray).toCalendar('persianAstro').locale('fa').format('dddd');
-        let gregorianWeekday = new pDate(defArray).toCalendar('gregorian').locale('fa').format('dddd');
+        let persainAlgoWeekday = new pDate(defArray).toCalendar('persianAlgo').toLocale('fa').format('dddd');
+        let persianAstroWeekday = new pDate(defArray).toCalendar('persianAstro').toLocale('fa').format('dddd');
+        let gregorianWeekday = new pDate(defArray).toCalendar('gregorian').toLocale('fa').format('dddd');
         assert.deepEqual(gregorianWeekday, 'پنج‌شنبه');
         assert.deepEqual(persianAstroWeekday, 'پنج‌شنبه');
         assert.deepEqual(persainAlgoWeekday, 'پنج‌شنبه');
@@ -273,65 +273,65 @@ describe('toCalendar persianAlgo', function () {
 
 describe('rangeName', function () {
     it('weekdats gregorian en', function () {
-        pDate.toCalendar('gregorian').locale('en');
+        pDate.toCalendar('gregorian').toLocale('en');
         assert.deepEqual(pDate.rangeName().weekdays, ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
     });
     it('weekdats gregorian fa', function () {
-        pDate.toCalendar('gregorian').locale('fa');
+        pDate.toCalendar('gregorian').toLocale('fa');
         assert.deepEqual(pDate.rangeName().weekdays, 'یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_جمعه_شنبه'.split('_'));
     });
 
     it('weekdats persianAstro fa', function () {
-        pDate.toCalendar('persianAstro').locale('fa');
+        pDate.toCalendar('persianAstro').toLocale('fa');
         assert.deepEqual(pDate.rangeName().weekdays, ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهار شنبه", "پنج‌شنبه", "جمعه"]);
     });
 
     it('weekdats persianAstro en', function () {
-        pDate.toCalendar('persianAstro').locale('en');
+        pDate.toCalendar('persianAstro').toLocale('en');
         assert.deepEqual(pDate.rangeName().weekdays, ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
     });
 
     it('weekdats persianAstro fa', function () {
-        pDate.toCalendar('persianAstro').locale('fa');
+        pDate.toCalendar('persianAstro').toLocale('fa');
         assert.deepEqual(pDate.rangeName().weekdaysShort, ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج']);
     });
 
     it('weekdats persianAstro fa', function () {
-        pDate.toCalendar('persianAstro').locale('fa');
+        pDate.toCalendar('persianAstro').toLocale('fa');
         assert.deepEqual(pDate.rangeName().months, ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']);
     });
 
 
     it('weekdats gregorian en', function () {
-        pDate.toCalendar('gregorian').locale('en');
+        pDate.toCalendar('gregorian').toLocale('en');
         assert.deepEqual(new pDate().rangeName().weekdays, ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
     });
     it('weekdats gregorian fa', function () {
-        pDate.toCalendar('gregorian').locale('fa');
+        pDate.toCalendar('gregorian').toLocale('fa');
         assert.deepEqual(new pDate().rangeName().weekdays, 'یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_جمعه_شنبه'.split('_'));
     });
 
     it('weekdats persianAstro fa', function () {
-        pDate.toCalendar('persianAstro').locale('fa');
+        pDate.toCalendar('persianAstro').toLocale('fa');
         assert.deepEqual(new pDate().rangeName().weekdays, ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهار شنبه", "پنج‌شنبه", "جمعه"]);
     });
 
     it('weekdats persianAstro en', function () {
-        pDate.toCalendar('persianAstro').locale('en');
+        pDate.toCalendar('persianAstro').toLocale('en');
         assert.deepEqual(new pDate().rangeName().weekdays, ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
     });
 
     it('weekdats persianAstro fa', function () {
-        pDate.toCalendar('persianAstro').locale('fa');
+        pDate.toCalendar('persianAstro').toLocale('fa');
         assert.deepEqual(new pDate().rangeName().weekdaysShort, ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج']);
     });
 
     it('weekdats persianAstro fa', function () {
-        pDate.toCalendar('persianAstro').locale('fa');
+        pDate.toCalendar('persianAstro').toLocale('fa');
         assert.deepEqual(new pDate().rangeName().months, ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']);
     });
 
-    pDate.toCalendar('persianAstro').locale('fa');
+    pDate.toCalendar('persianAstro').toLocale('fa');
 });
 
 
@@ -755,7 +755,7 @@ describe('format', function () {
     });
 
     it('format("YYYY/MM/DD a ddddd dddd ddd d MMM MMMM X w ww")', function () {
-        const a = new pDate([1404, 1, 1]).toCalendar('persianAstro').locale('fa').format('YYYY/MM/DD ddddd dddd ddd d MMM MMMM w ww');
+        const a = new pDate([1404, 1, 1]).toCalendar('persianAstro').toLocale('fa').format('YYYY/MM/DD ddddd dddd ddd d MMM MMMM w ww');
         assert.deepEqual(a, "۱۴۰۴/۰۱/۰۱ اورمزد جمعه ج ۷ فرو فروردین ۱ ۰۱");
     });
 

@@ -36,7 +36,8 @@ new persianDate([1403]).toCalendar('persianAlgo').isLeapYear(); // false
  
 ```
 
-## Deiffrent
+
+# Test leap years calculation algorithm
 
 I designed a test to understand the differences between these algorithms.
 
@@ -45,7 +46,8 @@ Check total leap years in next 3003 year after 1396, Difference test between per
 you can see this result by run mocha test.
 
 ### Check total leap years in next 3003 year, Difference algorithm
-  
+
+```bash
 - Total gregorian leap year: 728
 - Total Nasa algorithm leap year: 727
 - Total Algorithmic leap year: 727
@@ -65,19 +67,18 @@ you can see this result by run mocha test.
 - Common leap year (persianAlgo, wiki): 711
 
 - Total jalaali leap year: 431
-- Jalaali Error Count: 1221
-
-
-
+- Jalaali Error Count: 1221 
+(unfortunailtly jalaali.js return error if year number is greater than 3178 )
+```
 
 # More info:
 
-[http://www.fourmilab.ch/documents/calendar/]
+(fourmilab)[http://www.fourmilab.ch/documents/calendar/]
 
-[https://fa.wikipedia.org/wiki/%DA%AF%D8%A7%D9%87%E2%80%8C%D8%B4%D9%85%D8%A7%D8%B1%DB%8C_%D9%87%D8%AC%D8%B1%DB%8C_%D8%AE%D9%88%D8%B1%D8%B4%DB%8C%D8%AF%DB%8C_%D8%AD%D8%B3%D8%A7%D8%A8%DB%8C]
+(wikipedia)[https://fa.wikipedia.org/wiki/%DA%AF%D8%A7%D9%87%E2%80%8C%D8%B4%D9%85%D8%A7%D8%B1%DB%8C_%D9%87%D8%AC%D8%B1%DB%8C_%D8%AE%D9%88%D8%B1%D8%B4%DB%8C%D8%AF%DB%8C_%D8%AD%D8%B3%D8%A7%D8%A8%DB%8C]
 
-[https://en.wikipedia.org/wiki/Jalali_calendar]
+(wikipedia)[https://en.wikipedia.org/wiki/Jalali_calendar]
 
-[https://eclipse.gsfc.nasa.gov/SKYCAL/SKYCAL.html]
+(NASA sky calendar)[https://eclipse.gsfc.nasa.gov/SKYCAL/SKYCAL.html]
 
-[http://www.astro.uni.torun.pl/~kb/Papers/EMP/PersianC-EMP.htm]
+(Kazimierz M. Borkowski algorithm)[http://www.astro.uni.torun.pl/~kb/Papers/EMP/PersianC-EMP.htm]

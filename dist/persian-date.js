@@ -344,15 +344,14 @@ var PersianDateClass = function () {
             return this;
         }
     }, {
-        key: 'locale',
-        value: function locale(input) {
+        key: 'toLocale',
+        value: function toLocale(input) {
             this.localType = input;
             if (this.localType !== 'fa') {
                 this.formatPersian = false;
             } else {
                 this.formatPersian = '_default';
             }
-
             return this;
         }
     }, {
@@ -1566,8 +1565,8 @@ var PersianDateClass = function () {
             return this;
         }
     }, {
-        key: 'locale',
-        value: function locale(input) {
+        key: 'toLocale',
+        value: function toLocale(input) {
             PersianDateClass.localType = input;
             if (PersianDateClass.localType !== 'fa') {
                 PersianDateClass.formatPersian = false;

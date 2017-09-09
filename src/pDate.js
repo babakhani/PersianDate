@@ -124,7 +124,7 @@ class PersianDateClass {
     }
 
 
-    static locale (input) {
+    static toLocale (input) {
         PersianDateClass.localType = input;
         if (PersianDateClass.localType !== 'fa') {
             PersianDateClass.formatPersian = false;
@@ -135,14 +135,13 @@ class PersianDateClass {
     }
 
 
-    locale (input) {
+    toLocale (input) {
         this.localType = input;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
         } else {
             this.formatPersian = '_default';
         }
-
         return this;
     }
 

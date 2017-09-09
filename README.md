@@ -73,8 +73,68 @@ new persianDate([1403]).toCalendar('persianAlgo').isLeapYear(); // false
  
 ```
 
-for more information you can see this: [persian calendar leap year calculation](http://babakhani.github.io/PersianWebToolkit/doc/datepicker/leapyear)
 
+## toCalendar
+
+default: ```persianAstro```
+
+available option: ```persianAstro``` ```persianAlgo``` ```gregorian```
+
+as version 0.3.0 persianDate have option that allow developers to set calendar type of date object.
+
+you can change calendar type globally or only in specific object
+
+if you want change calendar type globally:
+
+
+```
+persianDate.toCalendar('gregorian');
+new persianDate([2017]).year(); // 2017
+new persianDate([2017]).format('MMM'); // "ژانویه"
+```
+
+or only on instance:
+
+```
+new persianDate([1396]).toCalendar('gregorian').year(); // 2017
+```
+
+
+## toLocale
+
+default: ```fa```
+
+available option: ```fa``` ```en```
+
+if you want change locale globally:
+
+```
+persianDate.toCalendar('fa');
+new persianDate([1396,6,17]).format(); // "۱۳۹۶-۰۶-۱۷ ۰۰:۰۰:۰۰ ق ظ"
+new persianDate([1396,6,17]).format('dddd'); // "جمعه"
+new persianDate([1396,6,17]).format('MMMM'); // "شهریور"
+
+persianDate.toCalendar(6'en');
+new persianDate([1396,6,17]).format(); // "1396-06-17 00:00:00 AM"
+new persianDate([1396,6,17]).format('dddd'); // "Friday"
+new persianDate([1396,6,17]).format('MMMM'); // "June"
+
+```
+
+or only on instance:
+
+
+```
+new persianDate([1396,6,17]).toLocale('fa').format(); // "۱۳۹۶-۰۶-۱۷ ۰۰:۰۰:۰۰ ق ظ"
+new persianDate([1396,6,17]).toLocale('fa').format('dddd'); // "جمعه"
+new persianDate([1396,6,17]).toLocale('fa').format('MMMM'); // "شهریور"
+
+persianDate.toCalendar('en');
+new persianDate([1396,6,17]).toLocale('en').format(); // "1397-07-07 00:00:00 AM"
+new persianDate([1396,6,17]).toLocale('en').format('dddd'); // "Friday"
+new persianDate([1396,6,17]).toLocale('en').format('MMMM'); // "June"
+
+```
 
 
 ## Parse
