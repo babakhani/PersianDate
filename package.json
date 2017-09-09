@@ -61,7 +61,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "./node_modules/jshint/bin/jshint src/*.js; ./node_modules/eslint/bin/eslint.js src/",
     "doc": "grunt --doc",
-    "doctest": "./node_modules/markdown-doctest/bin/cmd.js README.md && ./node_modules/markdown-link-check/markdown-link-check README.md",
+    "doctest": "./node_modules/markdown-doctest/bin/cmd.js README.md && ./node_modules/markdown-link-check/markdown-link-check README.md && ./node_modules/markdown-doctest/bin/cmd.js doc/leapyear.md && ./node_modules/markdown-link-check/markdown-link-check doc/leapyear.md",
     "sync-pkg": "sync-pkg",
     "pre-dev": "sudo npm install -g nyc"
   },

@@ -73,12 +73,10 @@ you can see this result by run mocha test.
 
 # More info:
 
-(fourmilab)[http://www.fourmilab.ch/documents/calendar/]
+[fourmilab](http://www.fourmilab.ch/documents/calendar/)
 
-(wikipedia)[https://fa.wikipedia.org/wiki/%DA%AF%D8%A7%D9%87%E2%80%8C%D8%B4%D9%85%D8%A7%D8%B1%DB%8C_%D9%87%D8%AC%D8%B1%DB%8C_%D8%AE%D9%88%D8%B1%D8%B4%DB%8C%D8%AF%DB%8C_%D8%AD%D8%B3%D8%A7%D8%A8%DB%8C]
+[wikipedia](https://fa.wikipedia.org/wiki/%DA%AF%D8%A7%D9%87%E2%80%8C%D8%B4%D9%85%D8%A7%D8%B1%DB%8C_%D9%87%D8%AC%D8%B1%DB%8C_%D8%AE%D9%88%D8%B1%D8%B4%DB%8C%D8%AF%DB%8C_%D8%AD%D8%B3%D8%A7%D8%A8%DB%8C)
 
-(wikipedia)[https://en.wikipedia.org/wiki/Jalali_calendar]
+[wikipedia](https://en.wikipedia.org/wiki/Jalali_calendar)
 
-(NASA sky calendar)[https://eclipse.gsfc.nasa.gov/SKYCAL/SKYCAL.html]
-
-(Kazimierz M. Borkowski algorithm)[http://www.astro.uni.torun.pl/~kb/Papers/EMP/PersianC-EMP.htm]
+[NASA sky calendar](https://eclipse.gsfc.nasa.gov/SKYCAL/SKYCAL.html)
