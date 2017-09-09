@@ -35,6 +35,48 @@ bower install persian-date@beta --save-dev
 </script>
 ```
 
+
+## Note About leap year
+
+there is two popular way to determining leap years for the Persian calendar. 
+
+astronomical: occur whenever that number of days elapse between equinoxes at the reference meridian.
+
+algorithmic: based on Ahmad Birashk proposed algorithm.
+
+After version 0.3.0 persianDate support both algorithm and you can choose which algorithm use in your project. 
+currently we have support 3 type of calendar ``` gregorian ```, ``` persianAstro ```, ``` persianAlgo ```.
+
+you can change it globaly like this example
+
+```
+persianDate.toCalendar('gregorian')
+new persianDate().year(); // 2017
+```
+
+or chnage it in you instance
+
+```
+new persianDate().toCalendar('gregorian').year(); // 2017
+new persianDate().year(); // 1396
+```
+
+also as you can see there is some deference leap years in algorithms.
+
+
+```
+new persianDate([1404]).toCalendar('persianAstro').isLeapYear(); // false
+new persianDate([1404]).toCalendar('persianAlgo').isLeapYear(); // true
+ 
+new persianDate([1403]).toCalendar('persianAstro').isLeapYear(); // true
+new persianDate([1403]).toCalendar('persianAlgo').isLeapYear(); // false
+ 
+```
+
+for more information you can see this: [persian calendar leap year calculation](http://babakhani.github.io/PersianWebToolkit/doc/datepicker/leapyear)
+
+
+
 ## Parse
 
 Instead of modifying the native ``` Date.prototype ``` , persianDate creates a wrapper for the Date object.
@@ -58,7 +100,7 @@ This is essentially the same as calling ```persianDate(new Date())``` .
 ### Unix Offset (milliseconds)
 
 ```
-persianDate(/* Number */);
+new persianDate(/* Number */);
 ```
 
 Similar to ``` new Date(Number)```, you can create a persianDate by passing an integer value representing the number of milliseconds since the Unix Epoch (Jan 1 1970 12AM UTC).
@@ -88,12 +130,14 @@ var day = persianDate.unix(1318781876);
 
 ### Date
 
+<!-- skip-example -->
 ```javascript
 new persianDate(new Date());
 ```
 
 You can create a ```persianDate``` with a pre-existing native Javascript ```Date``` object.
 
+<!-- skip-example -->
 ```javascript
 var day = new Date(2011, 9, 16);
 var dayWrapper = new persianDate(day); // "۱۳۹۰-۰۷-۲۴ ۰۰:۰۰:۰۰ ق ظ"
@@ -174,15 +218,15 @@ These map to the corresponding function on the native ```Date``` object.
 ```javascript
 new persianDate().seconds(30).valueOf() === new Date().setSeconds(30); // true
 new persianDate().seconds() === new Date().getSeconds(); // true
-`
+```
 
 ## Millisecond
 
 ```javascript
-new persianDate().millisecond(Number);
-new persianDate().millisecond(); // Number
-new persianDate().milliseconds(Number);
-new persianDate().milliseconds(); // Number
+new persianDate().millisecond(100);
+new persianDate().millisecond(); // 100
+new persianDate().milliseconds(100);
+new persianDate().milliseconds(); // 100
 ```
 
 Gets or sets the milliseconds.
@@ -192,10 +236,10 @@ Accepts numbers from 0 to 999. If the range is exceeded, it will bubble up to th
 ### Second
 
 ```javascript
-new persianDate().second(Number);
-new persianDate().second(); // Number
-new persianDate().seconds(Number);
-new persianDate().seconds(); // Number
+new persianDate().second(10);
+new persianDate().second(); // 10
+new persianDate().seconds(10);
+new persianDate().seconds(); // 10
 ```
 
 Gets or sets the seconds.
@@ -205,10 +249,11 @@ Accepts numbers from 0 to 59. If the range is exceeded, it will bubble up to the
 ### Minute
 
 ```javascript
-new persianDate().minute(Number);
-new persianDate().minute(); // Number
-new persianDate().minutes(Number);
-new persianDate().minutes(); // Number
+
+new persianDate().minute(20);
+new persianDate().minute(); // 20
+new persianDate().minutes(20);
+new persianDate().minutes(); // 20
 ```
 
 Gets or sets the minutes.
@@ -218,10 +263,10 @@ Accepts numbers from 0 to 59. If the range is exceeded, it will bubble up to the
 ### Hour
 
 ```javascript
-new persianDate().hour(Number);
-new persianDate().hour(); // Number
-new persianDate().hours(Number);
-new persianDate().hours(); // Number
+new persianDate().hour(12);
+new persianDate().hour(); // 12
+new persianDate().hours(12);
+new persianDate().hours(); // 12
 ```
 
 Gets or sets the hour.
@@ -231,10 +276,10 @@ Accepts numbers from 0 to 23. If the range is exceeded, it will bubble up to the
 ### Date of Month
 
 ```javascript
-new persianDate().date(Number);
-new persianDate().date(); // Number
-new persianDate().dates(Number);
-new persianDate().dates(); // Number
+new persianDate().date(23);
+new persianDate().date(); // 23
+new persianDate().dates(23);
+new persianDate().dates(); // 23
 ```
 
 Gets or sets the day of the month.
@@ -246,10 +291,10 @@ Note: persianDate#date is for the date of the month, and persianDate#day is for 
 ### Year
 
 ```javascript
-new persianDate().year(Number);
-new persianDate().year(); // Number
-new persianDate().years(Number);
-new persianDate().years(); // Number
+new persianDate().year(1390);
+new persianDate().year(); // 1390
+new persianDate().years(1390);
+new persianDate().years(); // 1390
 ```
 
 Gets or sets the year.
@@ -286,6 +331,7 @@ If you want to create a copy and manipulate it, you should use ```persianDate#cl
 
 ### Add
 
+<!-- skip-example -->
 ```javascript
 new persianDate().add(String, Number);
 ```
@@ -330,6 +376,7 @@ new persianDate().add('days', 360); // 360 days
 
 ### Subtract
 
+<!-- skip-example -->
 ```javascript
 new persianDate().subtract(String, Number);
 ```
@@ -344,6 +391,7 @@ new persianDate().subtract('days', 7);
 
 ### Start of Time
 
+<!-- skip-example -->
 ```javascript
 new persianDate().startOf(String);
 ```
@@ -395,14 +443,14 @@ Once parsing and manipulation are done, you need some way to display the persian
 
 ```javascript
 new persianDate().format();
-new persianDate().format(String);
+new persianDate().format('string');
 ```
 
 This is the most robust display option. It takes a string of tokens and replaces them with their corresponding values.
 
 ```javascript
-persianDate().format("dddd, MMMM DD YYYY, h:mm:ss a"); // "شنبه, فروردین ۱۲ ۱۳۹۶, ۵:۵۴:۱۱ ب ظ"
-persianDate().format("dddd, ha"); // "شنبه, ۵ب ظ"
+new persianDate().format("dddd, MMMM DD YYYY, h:mm:ss a"); // "شنبه, فروردین ۱۲ ۱۳۹۶, ۵:۵۴:۱۱ ب ظ"
+new persianDate().format("dddd, ha"); // "شنبه, ۵ب ظ"
 ```
 
 There are a couple conventions used with the naming of the
@@ -464,6 +512,7 @@ ISO8601 format ```YYYY-MM-DDTHH:mm:ssZ```
 
 By Default persianDate format, use Persian Number System, for engilsh number Set formatPersian Option as false
 
+<!-- skip-example -->
 ```javascript
 var d = new persianDate([1391]);
 d.format(); //"۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ"
@@ -472,12 +521,15 @@ d.format(); //"1391-01-01 00:00:00 AM"
 ```
 
 Also you can set golbal config like this
+
+<!-- skip-example -->
 ```javascript
 window.formatPersian  = false;
 ```
 
 > Note: After Set Golbal config you can set config for every instance
 
+<!-- skip-example -->
 ```javascript
 var d = new persianDate([1391]);
 d.format(); //"۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ"
@@ -530,6 +582,7 @@ b.diff(a); // 1000
 
 A easy way to think of this is by replacing ```.diff(``` with a minus operator.
 
+<!-- skip-example -->
 ```javascript
 a.diff(b);
 b.diff(a);
@@ -659,5 +712,5 @@ To check if a variable is a persianDate object, use ```persianDate().isPersianDa
 ```javascript
 new persianDate().isPersianDate(); // false
 new persianDate().isPersianDate(new Date()); // false
-new persianDate().isPersianDate(persianDate()); // true
+new persianDate().isPersianDate(new persianDate()); // true
 ```
