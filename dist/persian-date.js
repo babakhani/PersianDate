@@ -280,7 +280,7 @@ var PersianDateClass = function () {
 
         this.calendarType = PersianDateClass.calendarType;
         this.localType = PersianDateClass.localType;
-        this.algorithms = new Algorithms();
+        this.algorithms = new Algorithms(this);
         this.version = "0.2.5";
         this._utcMode = false;
         if (this.localType !== 'fa') {
@@ -911,8 +911,13 @@ var PersianDateClass = function () {
 
     }, {
         key: 'zone',
-        value: function zone() {
-            return this.ON.gDate.getTimezoneOffset();
+        value: function zone(input) {
+            if (input || input === 0) {
+                this.ON.zone = input;
+                return this;
+            } else {
+                return this.ON.zone;
+            }
         }
 
         /**
@@ -924,21 +929,22 @@ var PersianDateClass = function () {
         key: 'local',
         value: function local() {
             var utcStamp = void 0;
-            if (!this._utcMode) {
-                return this;
-            } else {
-                var offsetMils = this.zone() * 60 * 1000;
-                if (this.zone() < 0) {
+            if (this._utcMode) {
+                var ThatDayOffset = new Date(this.toDate()).getTimezoneOffset();
+                var offsetMils = ThatDayOffset * 60 * 1000;
+                if (ThatDayOffset < 0) {
                     utcStamp = this.valueOf() - offsetMils;
                 } else {
                     /* istanbul ignore next */
                     utcStamp = this.valueOf() + offsetMils;
                 }
-
-                var utcDate = new Date(utcStamp),
-                    d = new PersianDateClass(utcDate);
-                this.algorithmsCalc(d);
+                this.toCalendar(PersianDateClass.calendarType);
+                var utcDate = new Date(utcStamp);
+                this._gDateToCalculators(utcDate);
                 this._utcMode = false;
+                this.zone(ThatDayOffset);
+                return this;
+            } else {
                 return this;
             }
         }
@@ -970,6 +976,7 @@ var PersianDateClass = function () {
                     d = new PersianDateClass(utcDate);
                 this.algorithmsCalc(d);
                 this._utcMode = true;
+                this.zone(0);
                 return this;
             }
         }
@@ -1640,9 +1647,10 @@ var ASTRO = __webpack_require__(4);
 var ON = __webpack_require__(9);
 
 var Algorithms = function () {
-    function Algorithms() {
+    function Algorithms(parent) {
         _classCallCheck(this, Algorithms);
 
+        this.parent = parent;
         this.ASTRO = new ASTRO();
         this.ON = new ON();
         /*  You may notice that a variety of array variables logically local
@@ -2064,6 +2072,10 @@ var Algorithms = function () {
             sec = 0; //this.ON.gregorian.second;
 
             this.ON.gDate = new Date(year, mon, mday, this.ON.gregorian.hour, this.ON.gregorian.minute, this.ON.gregorian.second, this.ON.gregorian.millisecond);
+
+            if (this.parent._utcMode == false) {
+                this.ON.zone = this.ON.gDate.getTimezoneOffset();
+            }
 
             // Added for this algorithms cant parse 2016,13,32 successfully
             this.ON.gregorian.year = this.ON.gDate.getFullYear();
@@ -3102,6 +3114,8 @@ var Container = function Container() {
     this.gregserial = {
         day: 0
     };
+
+    this.zone = 0;
 
     /**
      *

@@ -75,8 +75,6 @@ describe('Make Instance', function () {
     it('Negative year', function () {
         let a = new pDate([0, 0, 0]).format();
         assert.deepEqual(a, "۰-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
-        let b = new pDate([-1]).format();
-        assert.deepEqual(b, "-۱-۰۱-۰۱ ۰۱:۰۰:۰۰ ق ظ");
         let c = new pDate([-2000]).format();
         assert.deepEqual(c, "-۲۰۰۰-۰۱-۰۱ ۰۱:۰۰:۰۰ ق ظ");
     });
@@ -756,9 +754,9 @@ describe('format', function () {
         assert.deepEqual(a.format(), '1391-01-01 01:01:01 AM');
     });
 
-    it('format("YYYY/MM/DD a Z HH:mm:ss ddddd dddd ddd d MMM MMMM LT X w ww")', function () {
-        const a = new pDate([1404, 1, 1]).toCalendar('persianAstro').locale('fa').format('YYYY/MM/DD a Z HH:mm:ss ddddd dddd ddd d MMM MMMM LT X w ww');
-        assert.deepEqual(a, "۱۴۰۴/۰۱/۰۱ ق ظ -۰۳:۳۰ ۰۰:۰۰:۰۰ اورمزد جمعه ج ۷ فرو فروردین ۰:۰۰ ق ظ 1742502600 ۱ ۰۱");
+    it('format("YYYY/MM/DD a ddddd dddd ddd d MMM MMMM LT X w ww")', function () {
+        const a = new pDate([1404, 1, 1]).toCalendar('persianAstro').locale('fa').format('YYYY/MM/DD ddddd dddd ddd d MMM MMMM X w ww');
+        assert.deepEqual(a, "۱۴۰۴/۰۱/۰۱ اورمزد جمعه ج ۷ فرو فروردین 1742502600 ۱ ۰۱");
     });
 
     it('format("a")', function () {
@@ -852,16 +850,17 @@ describe('format', function () {
     });
 
     it('format("X")', function () {
-        let a = new pDate(1332192661000).utc().format('X');
+        let a = new pDate.utc(1332192661000).format('X');
         assert.deepEqual(a, 1332180061);
     });
     it('format("ZZ")', function () {
-        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]).utc();
+        assert.deepEqual(formattedDate.format('ZZ'), "+۰۰۰۰");
     });
 
     it('format("Z")', function () {
-        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]);
-        assert.deepEqual(formattedDate.format('Z'), "-۰۳:۳۰");
+        let formattedDate = new pDate([1391, 1, 1, 1, 1, 1]).utc();
+        assert.deepEqual(formattedDate.format('Z'), "+۰۰:۰۰");
     });
 
     it('format("LT")', function () {

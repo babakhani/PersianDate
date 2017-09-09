@@ -22,6 +22,8 @@ class Container {
             day: 0
         };
 
+        this.zone = 0;
+
         /**
          *
          * @type {{year: number, month: number, day: number, hour: number, minute: number, second: number, millisecond: number, weekday: number, unix: number, leap: number}}

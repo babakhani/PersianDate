@@ -3,7 +3,8 @@ let ASTRO = require('./astro');
 let ON = require('./on');
 
 class Algorithms {
-    constructor () {
+    constructor (parent) {
+        this.parent = parent;
         this.ASTRO = new ASTRO();
         this.ON = new ON();
         /*  You may notice that a variety of array variables logically local
@@ -379,6 +380,11 @@ class Algorithms {
           this.ON.gregorian.second,
           this.ON.gregorian.millisecond
         );
+
+        if (this.parent._utcMode == false) {
+            this.ON.zone = this.ON.gDate.getTimezoneOffset();
+        }
+
 
         // Added for this algorithms cant parse 2016,13,32 successfully
         this.ON.gregorian.year = this.ON.gDate.getFullYear();

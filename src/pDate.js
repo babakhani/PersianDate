@@ -15,7 +15,7 @@ class PersianDateClass {
 
         this.calendarType = PersianDateClass.calendarType;
         this.localType = PersianDateClass.localType;
-        this.algorithms = new Algorithms();
+        this.algorithms = new Algorithms(this);
         this.version = __VERSION__;
         this._utcMode = false;
         if (this.localType !== 'fa') {
@@ -663,8 +663,13 @@ class PersianDateClass {
     /** Get the timezone offset in minutes.
      * @return {*}
      */
-    zone () {
-        return this.ON.gDate.getTimezoneOffset();
+    zone (input) {
+        if (input || input === 0) {
+            this.ON.zone = input;
+            return this;
+        } else {
+            return this.ON.zone;
+        }
     }
 
 
@@ -674,21 +679,23 @@ class PersianDateClass {
      */
     local () {
         let utcStamp;
-        if (!this._utcMode) {
-            return this;
-        } else {
-            let offsetMils = this.zone() * 60 * 1000;
-            if (this.zone() < 0) {
+        if (this._utcMode) {
+            let ThatDayOffset = new Date(this.toDate()).getTimezoneOffset();
+            let offsetMils = ThatDayOffset * 60 * 1000;
+            if (ThatDayOffset < 0) {
                 utcStamp = this.valueOf() - offsetMils;
             } else {
                 /* istanbul ignore next */
                 utcStamp = this.valueOf() + offsetMils;
             }
-
-            const utcDate = new Date(utcStamp),
-              d = new PersianDateClass(utcDate);
-            this.algorithmsCalc(d);
+            this.toCalendar(PersianDateClass.calendarType);
+            const utcDate = new Date(utcStamp);
+            this._gDateToCalculators(utcDate);
             this._utcMode = false;
+            this.zone(ThatDayOffset);
+            return this;
+        }
+        else {
             return this;
         }
     }
@@ -728,6 +735,7 @@ class PersianDateClass {
               d = new PersianDateClass(utcDate);
             this.algorithmsCalc(d);
             this._utcMode = true;
+            this.zone(0);
             return this;
         }
     }
