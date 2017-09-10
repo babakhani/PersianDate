@@ -12,7 +12,6 @@ class PersianDateClass {
 
     //    static calendarType : 'persianAstro';
     constructor (input) {
-
         this.calendarType = PersianDateClass.calendarType;
         this.localType = PersianDateClass.localType;
         this.algorithms = new Algorithms(this);
@@ -23,7 +22,12 @@ class PersianDateClass {
         } else {
             this.formatPersian = '_default';
         }
+        this.setup(input);
+        this.ON = this.algorithms.ON;
+        return this;
+    }
 
+    setup (input) {
         // Convert Any thing to Gregorian Date
         if (TypeChecking.isDate(input)) {
             this._gDateToCalculators(input);
@@ -56,8 +60,6 @@ class PersianDateClass {
             const now = new Date();
             this._gDateToCalculators(now);
         }
-        this.ON = this.algorithms.ON;
-        return this;
     }
 
     _gDateToCalculators (inputgDate) {
@@ -119,19 +121,21 @@ class PersianDateClass {
     }
 
     static toCalendar (input) {
-        PersianDateClass.calendarType = input;
-        return this;
+        let d = PersianDateClass;
+        d.calendarType = input;
+        return d;
     }
 
 
     static toLocale (input) {
-        PersianDateClass.localType = input;
-        if (PersianDateClass.localType !== 'fa') {
-            PersianDateClass.formatPersian = false;
+        let d = PersianDateClass;
+        d.localType = input;
+        if (d.localType !== 'fa') {
+            d.formatPersian = false;
         } else {
-            PersianDateClass.formatPersian = '_default';
+            d.formatPersian = '_default';
         }
-        return PersianDateClass;
+        return d;
     }
 
 
