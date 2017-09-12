@@ -362,7 +362,7 @@ class Algorithms {
      */
     updateFromGregorian () {
         let j, year, mon, mday, hour, min, sec,
-          weekday, julcal, utime, perscal;
+          weekday, utime, perscal;
 
         year = this.ON.gregorian.year;
         mon = this.ON.gregorian.month;
@@ -384,6 +384,7 @@ class Algorithms {
         if (this.parent._utcMode === false) {
             this.ON.zone = this.ON.gDate.getTimezoneOffset();
         }
+
 
         // Added for this algorithms cant parse 2016,13,32 successfully
         this.ON.gregorian.year = this.ON.gDate.getFullYear();
@@ -410,33 +411,36 @@ class Algorithms {
 
         //  Update Julian Calendar
         // ---------------------------------------------------------------------------
-        julcal = this.jd_to_julian(j);
-
-        this.ON.juliancalendar.year = julcal[0];
-        this.ON.juliancalendar.month = julcal[1] - 1;
-        this.ON.juliancalendar.day = julcal[2];
-        this.ON.juliancalendar.leap = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
+//        julcal = this.jd_to_julian(j);
+//
+//        this.ON.juliancalendar.year = julcal[0];
+//        this.ON.juliancalendar.month = julcal[1] - 1;
+//        this.ON.juliancalendar.day = julcal[2];
+//        this.ON.juliancalendar.leap = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
         weekday = this.ASTRO.jwday(j);
-        this.ON.juliancalendar.weekday = weekday;
+//        this.ON.juliancalendar.weekday = weekday;
 
         //  Update Persian Calendar
         // ---------------------------------------------------------------------------
-        perscal = this.jd_to_persian(j);
-        this.ON.persian.year = perscal[0];
-        this.ON.persian.month = perscal[1] - 1;
-        this.ON.persian.day = perscal[2];
-        this.ON.persian.weekday = this.gWeekDayToPersian(weekday);
-        this.ON.persian.leap = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
+        if (this.parent.calendarType == 'persianAlgo') {
+            perscal = this.jd_to_persian(j);
+            this.ON.persian.year = perscal[0];
+            this.ON.persian.month = perscal[1] - 1;
+            this.ON.persian.day = perscal[2];
+            this.ON.persian.weekday = this.gWeekDayToPersian(weekday);
+            this.ON.persian.leap = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
+        }
 
         //  Update Persian Astronomical Calendar
         // ---------------------------------------------------------------------------
-        perscal = this.jd_to_persiana(j);
-        this.ON.persianAstro.year = perscal[0];
-        this.ON.persianAstro.month = perscal[1] - 1;
-        this.ON.persianAstro.day = perscal[2];
-        this.ON.persianAstro.weekday = this.gWeekDayToPersian(weekday);
-        this.ON.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
-
+        if (this.parent.calendarType == 'persianAstro') {
+            perscal = this.jd_to_persiana(j);
+            this.ON.persianAstro.year = perscal[0];
+            this.ON.persianAstro.month = perscal[1] - 1;
+            this.ON.persianAstro.day = perscal[2];
+            this.ON.persianAstro.weekday = this.gWeekDayToPersian(weekday);
+            this.ON.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
+        }
         //  Update Gregorian serial number
         // ---------------------------------------------------------------------------
         if (this.ON.gregserial.day !== null) {

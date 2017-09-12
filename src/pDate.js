@@ -117,6 +117,7 @@ class PersianDateClass {
 
     toCalendar (input) {
         this.calendarType = input;
+        this.algorithms.updateFromGregorian();
         return this;
     }
 
@@ -574,33 +575,33 @@ class PersianDateClass {
      * @returns {*}
      */
     startOf (key) {
-
+        let syncedCelander = PersianDateClass.toCalendar(this.calendarType).toLocale(this.localType);
         // Simplify this\
         /* jshint ignore:start */
         switch (key) {
             case 'years':
             case 'year':
-                return new PersianDateClass([this.year(), 1, 1]);
+                return new syncedCelander([this.year(), 1, 1]);
             case 'months':
             case 'month':
-                return new PersianDateClass([this.year(), this.month(), 1]);
+                return new syncedCelander([this.year(), this.month(), 1]);
             case 'days':
             case 'day':
-                return new PersianDateClass([this.year(), this.month(), this.date(), 0, 0, 0]);
+                return new syncedCelander([this.year(), this.month(), this.date(), 0, 0, 0]);
             case 'hours':
             case 'hour':
-                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), 0, 0]);
+                return new syncedCelander([this.year(), this.month(), this.date(), this.hours(), 0, 0]);
             case 'minutes':
             case 'minute':
-                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 0]);
+                return new syncedCelander([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 0]);
             case 'seconds':
             case 'second':
-                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
+                return new syncedCelander([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
             case 'weeks':
             case 'week':
-                return new PersianDateClass([this.year(), this.month(), this.date() - (this.calendar().weekday - 1)]);
+                return new syncedCelander([this.year(), this.month(), this.date() - (this.calendar().weekday - 1)]);
             default:
-                return this;
+                return this.clone();
         }
         /* jshint ignore:end */
     }
@@ -613,34 +614,35 @@ class PersianDateClass {
      */
     /* eslint-disable no-case-declarations */
     endOf (key) {
+        let syncedCelander = PersianDateClass.toCalendar(this.calendarType).toLocale(this.localType);
         // Simplify this
         switch (key) {
             case 'years':
             case 'year':
                 let days = this.isLeapYear() ? 30 : 29;
-                return new PersianDateClass([this.year(), 12, days, 23, 59, 59]);
+                return new syncedCelander([this.year(), 12, days, 23, 59, 59]);
             case 'months':
             case 'month':
                 let monthDays = this.daysInMonth(this.year(), this.month());
-                return new PersianDateClass([this.year(), this.month(), monthDays, 23, 59, 59]);
+                return new syncedCelander([this.year(), this.month(), monthDays, 23, 59, 59]);
             case 'days':
             case 'day':
-                return new PersianDateClass([this.year(), this.month(), this.date(), 23, 59, 59]);
+                return new syncedCelander([this.year(), this.month(), this.date(), 23, 59, 59]);
             case 'hours':
             case 'hour':
-                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), 59, 59]);
+                return new syncedCelander([this.year(), this.month(), this.date(), this.hours(), 59, 59]);
             case 'minutes':
             case 'minute':
-                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 59]);
+                return new syncedCelander([this.year(), this.month(), this.date(), this.hours(), this.minutes(), 59]);
             case 'seconds':
             case 'second':
-                return new PersianDateClass([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
+                return new syncedCelander([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
             case 'weeks':
             case 'week':
                 let weekDayNumber = this.calendar().weekday;
-                return new PersianDateClass([this.year(), this.month(), this.date() + (7 - weekDayNumber)]);
+                return new syncedCelander([this.year(), this.month(), this.date() + (7 - weekDayNumber)]);
             default:
-                return this;
+                return this.clone();
         }
         /* eslint-enable no-case-declarations */
     }
