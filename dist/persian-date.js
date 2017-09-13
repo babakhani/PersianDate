@@ -2141,7 +2141,7 @@ var Algorithms = function () {
 
             //  Update Persian Calendar
             // ---------------------------------------------------------------------------
-            if (this.parent.leapYearMode == 'algorithmic') {
+            if (this.parent.calendarType == 'persian' && this.parent.leapYearMode == 'algorithmic') {
                 perscal = this.jd_to_persian(j);
                 this.ON.persian.year = perscal[0];
                 this.ON.persian.month = perscal[1] - 1;
@@ -2152,7 +2152,7 @@ var Algorithms = function () {
 
             //  Update Persian Astronomical Calendar
             // ---------------------------------------------------------------------------
-            if (this.parent.leapYearMode == 'astronomical') {
+            if (this.parent.calendarType == 'persian' && this.parent.leapYearMode == 'astronomical') {
                 perscal = this.jd_to_persiana(j);
                 this.ON.persianAstro.year = perscal[0];
                 this.ON.persianAstro.month = perscal[1] - 1;
