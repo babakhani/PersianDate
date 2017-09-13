@@ -91,41 +91,41 @@ class Algorithms {
     /**
      * @param {*} year
      */
-    leap_julian (year) {
-        return this.ASTRO.mod(year, 4) === ((year > 0) ? 0 : 3);
-    }
+//    leap_julian (year) {
+//        return this.ASTRO.mod(year, 4) === ((year > 0) ? 0 : 3);
+//    }
 
 
     /**
      * @desc Calculate Julian calendar date from Julian day
      * @param {*} td
      */
-    jd_to_julian (td) {
-        let z, a, b, c, d, e, year, month, day;
-
-        td += 0.5;
-        z = Math.floor(td);
-
-        a = z;
-        b = a + 1524;
-        c = Math.floor((b - 122.1) / 365.25);
-        d = Math.floor(365.25 * c);
-        e = Math.floor((b - d) / 30.6001);
-
-        month = Math.floor((e < 14) ? (e - 1) : (e - 13));
-        year = Math.floor((month > 2) ? (c - 4716) : (c - 4715));
-        day = b - d - Math.floor(30.6001 * e);
-
-        /*  If year is less than 1, subtract one to convert from
-         a zero based date system to the common era system in
-         which the year -1 (1 B.C.E) is followed by year 1 (1 C.E.).  */
-
-        if (year < 1) {
-            year--;
-        }
-
-        return [year, month, day];
-    }
+//    jd_to_julian (td) {
+//        let z, a, b, c, d, e, year, month, day;
+//
+//        td += 0.5;
+//        z = Math.floor(td);
+//
+//        a = z;
+//        b = a + 1524;
+//        c = Math.floor((b - 122.1) / 365.25);
+//        d = Math.floor(365.25 * c);
+//        e = Math.floor((b - d) / 30.6001);
+//
+//        month = Math.floor((e < 14) ? (e - 1) : (e - 13));
+//        year = Math.floor((month > 2) ? (c - 4716) : (c - 4715));
+//        day = b - d - Math.floor(30.6001 * e);
+//
+//        /*  If year is less than 1, subtract one to convert from
+//         a zero based date system to the common era system in
+//         which the year -1 (1 B.C.E) is followed by year 1 (1 C.E.).  */
+//
+//        if (year < 1) {
+//            year--;
+//        }
+//
+//        return [year, month, day];
+//    }
 
 
     /**
@@ -422,7 +422,7 @@ class Algorithms {
 
         //  Update Persian Calendar
         // ---------------------------------------------------------------------------
-        if (this.parent.calendarType == 'persianAlgo') {
+        if (this.parent.leapYearMode == 'algorithmic') {
             perscal = this.jd_to_persian(j);
             this.ON.persian.year = perscal[0];
             this.ON.persian.month = perscal[1] - 1;
@@ -433,7 +433,7 @@ class Algorithms {
 
         //  Update Persian Astronomical Calendar
         // ---------------------------------------------------------------------------
-        if (this.parent.calendarType == 'persianAstro') {
+        if (this.parent.leapYearMode == 'astronomical') {
             perscal = this.jd_to_persiana(j);
             this.ON.persianAstro.year = perscal[0];
             this.ON.persianAstro.month = perscal[1] - 1;

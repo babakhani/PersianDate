@@ -12,8 +12,11 @@ class PersianDateClass {
 
     //    static calendarType : 'persianAstro';
     constructor (input) {
+
         this.calendarType = PersianDateClass.calendarType;
         this.localType = PersianDateClass.localType;
+        this.leapYearMode = PersianDateClass.leapYearMode;
+
         this.algorithms = new Algorithms(this);
         this.version = __VERSION__;
         this._utcMode = false;
@@ -62,6 +65,11 @@ class PersianDateClass {
         }
     }
 
+    _getSyncedClass (input) {
+        let syncedCelander = PersianDateClass.toCalendar(this.calendarType).toLocale(this.localType).toLeapYearMode(this.leapYearMode);
+        return new syncedCelander(input);
+    }
+
     _gDateToCalculators (inputgDate) {
         this.algorithms.calcGregorian(
           [
@@ -79,14 +87,14 @@ class PersianDateClass {
         const p = PersianDateClass,
           t = p.calendarType;
         if (p.localType === 'fa') {
-            if (t === 'persianAlgo' || t === 'persianAstro') {
+            if (t === 'persian') {
                 return fa.persian;
             }
             else {
                 return fa.gregorian;
             }
         } else {
-            if (t === 'persianAlgo' || t === 'persianAstro') {
+            if (t === 'persian') {
                 return en.persian;
             }
             else {
@@ -98,14 +106,14 @@ class PersianDateClass {
     rangeName () {
         const t = this.calendarType;
         if (this.localType === 'fa') {
-            if (t === 'persianAlgo' || t === 'persianAstro') {
+            if (t === 'persian') {
                 return fa.persian;
             }
             else {
                 return fa.gregorian;
             }
         } else {
-            if (t === 'persianAlgo' || t === 'persianAstro') {
+            if (t === 'persian') {
                 return en.persian;
             }
             else {
@@ -114,6 +122,25 @@ class PersianDateClass {
         }
     }
 
+
+    toLeapYearMode (input) {
+        this.leapYearMode = input;
+        if (input === 'astronomical' && this.calendarType == 'persian') {
+            this.leapYearMode = 'astronomical';
+        }
+        else if (input === 'algorithmic' && this.calendarType == 'persian') {
+            this.leapYearMode = 'algorithmic';
+        }
+        this.algorithms.updateFromGregorian();
+        return this;
+    }
+
+
+    static toLeapYearMode (input) {
+        let d = PersianDateClass;
+        d.leapYearMode = input;
+        return d;
+    }
 
     toCalendar (input) {
         this.calendarType = input;
@@ -150,18 +177,17 @@ class PersianDateClass {
         return this;
     }
 
-
     _locale () {
         const t = this.calendarType;
         if (this.localType === 'fa') {
-            if (t === 'persianAlgo' || t === 'persianAstro') {
+            if (t === 'persian') {
                 return fa.persian;
             }
             else {
                 return fa.gregorian;
             }
         } else {
-            if (t === 'persianAlgo' || t === 'persianAstro') {
+            if (t === 'persian') {
                 return en.persian;
             }
             else {
@@ -214,7 +240,7 @@ class PersianDateClass {
      * @returns {PersianDate}
      */
     clone () {
-        return new PersianDateClass(this.ON.gDate);
+        return this._getSyncedClass(this.ON.gDate);
     }
 
 
@@ -230,10 +256,10 @@ class PersianDateClass {
                 dateArray.millisecond()
             ];
         }
-        if (this.calendarType === 'persianAlgo') {
+        if (this.calendarType === 'persian' && this.leapYearMode == 'algorithmic') {
             return this.algorithms.calcPersian(dateArray);
         }
-        else if (this.calendarType === 'persianAstro') {
+        else if (this.calendarType === 'persian' && this.leapYearMode == 'astronomical') {
             return this.algorithms.calcPersiana(dateArray);
         }
         else if (this.calendarType === 'gregorian') {
@@ -243,7 +269,18 @@ class PersianDateClass {
     }
 
     calendar () {
-        return this.ON[this.calendarType];
+        let key;
+        if (this.calendarType == 'persian') {
+            if (this.leapYearMode == 'astronomical') {
+                key = 'persianAstro';
+            }
+            else if (this.leapYearMode == 'algorithmic') {
+                key = 'persianAlgo';
+            }
+        } else {
+            key = 'gregorian';
+        }
+        return this.ON[key];
     }
 
 
@@ -496,7 +533,7 @@ class PersianDateClass {
     unix (timestamp) {
         let output;
         if (timestamp) {
-            return new PersianDateClass(timestamp * 1000);
+            return this._getSyncedClass(timestamp * 1000);
         } else {
             let str = this.ON.gDate.valueOf().toString();
             output = str.substring(0, str.length - 3);
@@ -530,7 +567,7 @@ class PersianDateClass {
      * @returns {*}
      */
     getFirstWeekDayOfMonth (year, month) {
-        return new PersianDateClass([year, month, 1]).day();
+        return this._getSyncedClass([year, month, 1]).day();
     }
 
 
@@ -724,7 +761,7 @@ class PersianDateClass {
     utc (input) {
         let utcStamp;
         if (input) {
-            return new PersianDateClass(input).utc();
+            return this._getSyncedClass(input).utc();
         }
         if (this._utcMode) {
             return this;
@@ -737,7 +774,7 @@ class PersianDateClass {
                 utcStamp = this.valueOf() - offsetMils;
             }
             const utcDate = new Date(utcStamp),
-              d = new PersianDateClass(utcDate);
+              d = this._getSyncedClass(utcDate);
             this.algorithmsCalc(d);
             this._utcMode = true;
             this.zone(0);
@@ -780,13 +817,13 @@ class PersianDateClass {
         if (year === undefined) {
             year = this.year();
         }
-        if (this.calendarType === 'persianAlgo') {
+        if (this.calendarType == 'persian' && this.leapYearMode === 'algorithmic') {
             return this.algorithms.leap_persian(year);
         }
-        if (this.calendarType === 'persianAstro') {
+        if (this.calendarType == 'persian' && this.leapYearMode === 'astronomical') {
             return this.algorithms.leap_persiana(year);
         }
-        if (this.calendarType === 'gregorian') {
+        else if (this.calendarType == 'gregorian') {
             return this.algorithms.leap_gregorian(year);
         }
     }
@@ -801,14 +838,13 @@ class PersianDateClass {
     daysInMonth (yearInput, monthInput) {
         let year = yearInput ? yearInput : this.year(),
           month = monthInput ? monthInput : this.month();
-        if (this.calendarType === 'persianAlgo' || this.calendarType === 'persianAstro') {
+        if (this.calendarType === 'persian') {
             if (month < 1 || month > 12)
                 return 0;
             if (month < 7)
                 return 31;
             if (month < 12)
                 return 30;
-            // TODO: need fix in gregorian mode
             if (this.isLeapYear(year)) {
                 return 30;
             }
@@ -1156,7 +1192,7 @@ class PersianDateClass {
             let newMillisecond = this.valueOf() + value;
             return this.unix(newMillisecond / 1000);
         }
-        return new PersianDateClass(this.valueOf());
+        return this._getSyncedClass(this.valueOf());
     }
 
 
@@ -1209,7 +1245,7 @@ class PersianDateClass {
             let newMillisecond = this.valueOf() - value;
             return this.unix(newMillisecond / 1000);
         }
-        return new PersianDateClass(this.valueOf());
+        return this._getSyncedClass(this.valueOf());
     }
 
     /**
