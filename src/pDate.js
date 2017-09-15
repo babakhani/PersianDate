@@ -1279,7 +1279,7 @@ class PersianDateClass {
     }
 
     /**
-     *
+     * @desc check two for month similarity
      * @param dateA
      * @param dateB
      * @return {*|boolean}

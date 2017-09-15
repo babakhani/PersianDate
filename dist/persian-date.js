@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  0.3.0
+ * persian-date -  0.3.0b
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -258,7 +258,7 @@ var PersianDateClass = function () {
         this.leapYearMode = PersianDateClass.leapYearMode;
 
         this.algorithms = new Algorithms(this);
-        this.version = "0.3.0";
+        this.version = "0.3.0b";
         this._utcMode = false;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
@@ -1540,7 +1540,7 @@ var PersianDateClass = function () {
 
 
         /**
-         *
+         * @desc check two for month similarity
          * @param dateA
          * @param dateB
          * @return {*|boolean}
@@ -3096,23 +3096,9 @@ module.exports = {
 
 
 var PersianDateClass = __webpack_require__(1);
-//String.prototype.toPersianDigit = function (latinDigit) {
-//    return this.replace(/\d+/g, function (digit) {
-//        let enDigitArr = [], peDigitArr = [], i, j;
-//        for (i = 0; i < digit.length; i += 1) {
-//            enDigitArr.push(digit.charCodeAt(i));
-//        }
-//        for (j = 0; j < enDigitArr.length; j += 1) {
-//            peDigitArr.push(String.fromCharCode(enDigitArr[j] + ((!!latinDigit && latinDigit === true) ? 1584 : 1728)));
-//        }
-//        return peDigitArr.join('');
-//    });
-//
-//};
 PersianDateClass.calendarType = 'persian';
 PersianDateClass.leapYearMode = 'astronomical';
 PersianDateClass.localType = 'fa';
-
 module.exports = PersianDateClass;
 
 /***/ }),

@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.3.0]
+- fix algorithms
+- add toCalendar, toLocale, toLeapYearMode options
+- support two persian leap year calculation mode
+- add rangeName, isSameDay, isSameMonth
+
+
 ## [0.2.5]
 - fix [#37](https://github.com/babakhani/PersianDate/issues/37)
 

@@ -1,13 +1,11 @@
 Persian Date
 ==============
 
-Javascript date library for parsing, validating, manipulating, and formatting persian dates System.
+Javascript date library for parsing, validating, manipulating, and formatting Persian dates System.
 
 Inspired by [momentjs](http://momentjs.com/)
 
 More info at [wikipedia](http://en.wikipedia.org/wiki/Iranian_calendar)
-
-
 
 [![npm version](https://badge.fury.io/js/persian-date.svg)](https://github.com/babakhani/persiandate)
 [![Bower version](https://badge.fury.io/bo/persian-date.svg)](https://github.com/babakhani/persiandate)
@@ -21,7 +19,7 @@ More info at [wikipedia](http://en.wikipedia.org/wiki/Iranian_calendar)
 
 ## Install
 
-```bash
+```shell
 npm install persian-date@beta --save-dev
 bower install persian-date@beta --save-dev
 ```
@@ -34,60 +32,25 @@ bower install persian-date@beta --save-dev
     new persianDate().format(); // "۱۳۹۶-۰۱-۱۱ ۲۳:۳۳:۲۷ ب ظ" (when i run in my console)  
 </script>
 ```
-
-
-## Note About leap year
-
-there is two popular way to determining leap years for the Persian calendar. 
-
-astronomical: occur whenever that number of days elapse between equinoxes at the reference meridian.
-
-algorithmic: based on Ahmad Birashk proposed algorithm.
-
-After version 0.3.0 persianDate support both algorithm and you can choose which algorithm use in your project. 
-currently we have support 3 type of calendar ``` gregorian ```, ``` persianAstro ```, ``` persianAlgo ```.
-
-you can change it globaly like this example
-
+## Webpack
 ```
-persianDate.toCalendar('gregorian')
-new persianDate().year(); // 2017
+require('persian-date');
 ```
-
-or chnage it in you instance
-
-```
-new persianDate().toCalendar('gregorian').year(); // 2017
-new persianDate().year(); // 1396
-```
-
-also as you can see there is some deference leap years in algorithms.
-
-
-```
-new persianDate([1404]).toCalendar('persianAstro').isLeapYear(); // false
-new persianDate([1404]).toCalendar('persianAlgo').isLeapYear(); // true
- 
-new persianDate([1403]).toCalendar('persianAstro').isLeapYear(); // true
-new persianDate([1403]).toCalendar('persianAlgo').isLeapYear(); // false
- 
-```
-
 
 ## toCalendar
 
-default: ```persianAstro```
+default: ```persian```
 
-available option: ```persianAstro``` ```persianAlgo``` ```gregorian```
+available option: ```persian``` ```gregorian```
 
-as version 0.3.0 persianDate have option that allow developers to set calendar type of date object.
+from version 0.3.* ```persianDate``` have an option that allows developers to set calendar type of Date object.
 
 you can change calendar type globally or only in specific object
 
 if you want change calendar type globally:
 
 
-```
+```javascript
 persianDate.toCalendar('gregorian');
 new persianDate([2017]).year(); // 2017
 new persianDate([2017]).format('MMM'); // "ژانویه"
@@ -95,10 +58,38 @@ new persianDate([2017]).format('MMM'); // "ژانویه"
 
 or only on instance:
 
-```
+```javascript
 new persianDate([1396]).toCalendar('gregorian').year(); // 2017
 ```
 
+## toLeapYearMode
+
+default: ``` algorithmic ```
+
+available option: ``` algorithmic ```, ``` astronomical ```
+
+There is two popular way to determining leap years for the Persian calendar. 
+
+- astronomical: occur whenever that number of days elapsed between equinoxes at the reference meridian.
+
+- algorithmic: based on Ahmad Birashk proposed algorithm.
+
+After version 0.3.* ```persianDate``` support both algorithms and you can choose which algorithm use in your project. 
+currently, we have support 3 type of leap year mode ``` algorithmic ```, ``` astronomical ```.
+
+you can change it globally like this example
+
+```javascript
+persianDate.toLeapYearMode('algorithmic')
+```
+
+or change it in you instance
+
+```javascript
+new persianDate().toLeapYearMode('algorithmic')
+```
+
+> ```toLeapYearMode``` only work when calendar type is ```persian```, and doesnt any effect on ```gregorian``` calendar
 
 ## toLocale
 
@@ -107,14 +98,14 @@ default: ```fa```
 available option: ```fa``` ```en```
 
 if you want change locale globally:
-
-```
-persianDate.toCalendar('fa');
+ 
+```javascript
+persianDate.toLocale('fa');
 new persianDate([1396,6,17]).format(); // "۱۳۹۶-۰۶-۱۷ ۰۰:۰۰:۰۰ ق ظ"
 new persianDate([1396,6,17]).format('dddd'); // "جمعه"
 new persianDate([1396,6,17]).format('MMMM'); // "شهریور"
 
-persianDate.toCalendar(6'en');
+persianDate.toLocale('en');
 new persianDate([1396,6,17]).format(); // "1396-06-17 00:00:00 AM"
 new persianDate([1396,6,17]).format('dddd'); // "Friday"
 new persianDate([1396,6,17]).format('MMMM'); // "June"
@@ -124,18 +115,19 @@ new persianDate([1396,6,17]).format('MMMM'); // "June"
 or only on instance:
 
 
-```
+```javascript
 new persianDate([1396,6,17]).toLocale('fa').format(); // "۱۳۹۶-۰۶-۱۷ ۰۰:۰۰:۰۰ ق ظ"
 new persianDate([1396,6,17]).toLocale('fa').format('dddd'); // "جمعه"
 new persianDate([1396,6,17]).toLocale('fa').format('MMMM'); // "شهریور"
 
-persianDate.toCalendar('en');
+persianDate.toCalendar('gregorian');
 new persianDate([1396,6,17]).toLocale('en').format(); // "1397-07-07 00:00:00 AM"
 new persianDate([1396,6,17]).toLocale('en').format('dddd'); // "Friday"
 new persianDate([1396,6,17]).toLocale('en').format('MMMM'); // "June"
 
 ```
 
+> after version 0.3.*, you must use ```toLocale``` instead ```formatPersian```, for show persian or english digit.
 
 ## Parse
 
@@ -253,6 +245,7 @@ new persianDate(persianDate);
 All persianDate are mutable. If you want a clone of a persianDate, you can do so explicitly or implicitly.
 Calling ```persianDate()``` on a persianDate will clone it.
 
+<!-- skip-example -->
 ```javascript
 var a = new persianDate([1392]);
 var b = new persianDate(a);
@@ -260,6 +253,7 @@ a.year(1300);
 b.year(); // 1392
 ```
 
+<!-- skip-example -->
 ```javascript
 var a = new persianDate([1392]);
 var b = a.clone();
@@ -567,7 +561,9 @@ ISO8601 format ```YYYY-MM-DDTHH:mm:ssZ```
 "۱۳۹۱-۱۰-۰۴ ۱۱:۲۷:۵۳ ق ظ"
 
 
-### Format To Persian date
+### Format To Persian digit
+
+> Deprecated as 0.3.* instead use [toLocale](#tolocale)
 
 By Default persianDate format, use Persian Number System, for engilsh number Set formatPersian Option as false
 
@@ -586,7 +582,7 @@ Also you can set golbal config like this
 window.formatPersian  = false;
 ```
 
-> Note: After Set Golbal config you can set config for every instance
+> Note: After Set Global config you can set config for every instance
 
 <!-- skip-example -->
 ```javascript
@@ -725,7 +721,43 @@ This returns an array that mirrors the parameters from new ```persianDate()``` .
 new persianDate().toArray(); // [1391, 1, 4, 14, 40, 16, 154];
 ```
 
-## Quert
+### Range Name
+
+Helper method that return date range name like week days name, month names, days names (specially in persian calendar).
+
+```javascript
+
+persianDate.toLocale('fa').toCalendar('persian');
+
+persianDate.rangeName().weekdays;
+// ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهار شنبه", "پنج‌شنبه", "جمعه"]
+
+persianDate.rangeName().weekdaysMin;
+// ["ش", "ی", "د", "س", "چ", "پ", "ج"]
+
+persianDate.rangeName().months;
+// ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"]
+
+persianDate.rangeName().monthsShort; 
+// ["فرو", "ارد", "خرد", "تیر", "مرد", "شهر", "مهر", "آبا", "آذر", "دی", "بهم", "اسف"]
+
+persianDate.rangeName().persianDaysName[0]; 
+// "اورمزد"
+
+```
+
+Also You can get Gregorian calendar range names
+
+```javascript
+persianDate.toCalendar('gregorian').rangeName().months;
+// ["ژانویه", "فوریه", "مارس", "آوریل", "مه", "ژوئن", "ژوئیه", "اوت", "سپتامبر", "اکتبر", "نوامبر", "دسامبر"]
+
+persianDate.toCalendar('gregorian').toLocale('en').rangeName().months;
+// ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+```
+
+## Query
 
 ### Is Leap Year
 
@@ -733,7 +765,7 @@ new persianDate().toArray(); // [1391, 1, 4, 14, 40, 16, 154];
 new persianDate().isLeapYear();
 ```
 
-```persianDate#isLeapYear``` returns true if that year is a leap year, and ```false``` if it is not.
+```persianDate#isLeapYear``` returns true if that year is a leap year, and ```false``` if it is not. base on object calendarType.
 
 ```javascript
 new persianDate([1391]).isLeapYear(); // true
@@ -759,11 +791,18 @@ new persianDate([1396, 2, 12]).isDST(); // false
 new persianDate([1396, 7, 14]).isDST(); // true
 ```
 
-### Is a PersainDat
+### Is a PersianDat
 
 ```javascript
 var obj = new persianDate();
+
+// options 1
+
 new persianDate().isPersianDate(obj); // true
+
+//option 2
+persianDate.isPersianDate(obj);
+
 ```
 
 To check if a variable is a persianDate object, use ```persianDate().isPersianDate()``` .
@@ -773,3 +812,38 @@ new persianDate().isPersianDate(); // false
 new persianDate().isPersianDate(new Date()); // false
 new persianDate().isPersianDate(new persianDate()); // true
 ```
+
+### Is Same Month
+
+```javascript
+// options 1 
+
+var a = new persianDate([1396,1,1]);
+var b = new persianDate([1396,1,12]);
+b.isSameMonth(a); // true
+
+// options 2
+
+var a = new persianDate([1396,1,1]);
+var b = new persianDate([1396,1,12]);
+persianDate.isSameMonth(a,b); // true
+```
+
+### Is Same Day
+
+```javascript
+// options 1 
+
+var a = new persianDate([1396,1,1]);
+var b = new persianDate([1396,1,1]);
+b.isSameDay(a); // true
+
+// options 2
+var a = new persianDate([1396,1,12]);
+var b = new persianDate([1396,1,12]);
+persianDate.isSameDay(a,b); // true
+```
+
+
+
+
