@@ -1,6 +1,6 @@
 {
   "name": "persian-date",
-  "version": "0.3.0b",
+  "version": "0.3.1b",
   "license": "WTFPL",
   "author": "Reza Babakhani <babakhani.reza@gmail.com>",
   "description": "Javascript date library for parsing, validating, manipulating, and formatting persian dates System.",

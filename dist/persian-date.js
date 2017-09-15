@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  0.3.0b
+ * persian-date -  0.3.1b
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -258,7 +258,7 @@ var PersianDateClass = function () {
         this.leapYearMode = PersianDateClass.leapYearMode;
 
         this.algorithms = new Algorithms(this);
-        this.version = "0.3.0b";
+        this.version = "0.3.1b";
         this._utcMode = false;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
