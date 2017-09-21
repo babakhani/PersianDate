@@ -4,8 +4,8 @@ require("amd-loader");
 let expect = require('chai').expect;
 let obj = require('../dist/persian-date.js');
 const pDate = obj,
-  Duration = new pDate().duration,
-  defaultArray = [1391, 1, 1, 1, 1, 1, 1];
+    Duration = new pDate().duration,
+    defaultArray = [1391, 1, 1, 1, 1, 1, 1];
 
 pDate.formatPersian = true;
 
@@ -98,7 +98,7 @@ describe('Make Instance', function () {
 
     it('From pDate', function () {
         let a = new pDate(),
-          b = new pDate(a);
+            b = new pDate(a);
         assert.ok(b);
     });
 
@@ -123,7 +123,7 @@ describe('Make Instance', function () {
 
     it('javascript Date()', function () {
         let gDateObject = new Date(),
-          createFromDotNet = new pDate(gDateObject);
+            createFromDotNet = new pDate(gDateObject);
         assert.ok(createFromDotNet);
 
         createFromDotNet = new pDate(new Date());
@@ -234,8 +234,8 @@ describe('toCalendar gregorian', function () {
     });
     it('[1403,1,1] gregorian fa format("dddd")', function () {
         let persainAlgo = new pDate([1404, 1, 1]).toCalendar('persian').toLeapYearMode('algorithmic').toLocale('en').format('dddd'),
-          persianAstroWeekday = new pDate([1404, 1, 1]).toCalendar('persian').toLeapYearMode('astronomical').toLocale('en').format('dddd'),
-          gregorianWeekday = new pDate([1404, 1, 1]).toCalendar('gregorian').toLocale('en').format('dddd');
+            persianAstroWeekday = new pDate([1404, 1, 1]).toCalendar('persian').toLeapYearMode('astronomical').toLocale('en').format('dddd'),
+            gregorianWeekday = new pDate([1404, 1, 1]).toCalendar('gregorian').toLocale('en').format('dddd');
         assert.deepEqual(gregorianWeekday, "Friday");
         assert.deepEqual(persianAstroWeekday, "Friday");
         assert.deepEqual(persainAlgo, "Friday");
@@ -261,8 +261,8 @@ describe('toCalendar persian', function () {
     });
     it('[1403,1,1] persian algorithmic fa format("dddd")', function () {
         let persainAlgoWeekday = new pDate(defArray).toCalendar('persian').toLeapYearMode('algorithmic').toLocale('fa').format('dddd'),
-          persianAstroWeekday = new pDate(defArray).toCalendar('persian').toLeapYearMode('astronomical').toLocale('fa').format('dddd'),
-          gregorianWeekday = new pDate(defArray).toCalendar('gregorian').toLocale('fa').format('dddd');
+            persianAstroWeekday = new pDate(defArray).toCalendar('persian').toLeapYearMode('astronomical').toLocale('fa').format('dddd'),
+            gregorianWeekday = new pDate(defArray).toCalendar('gregorian').toLocale('fa').format('dddd');
         assert.deepEqual(gregorianWeekday, 'پنج‌شنبه');
         assert.deepEqual(persianAstroWeekday, 'پنج‌شنبه');
         assert.deepEqual(persainAlgoWeekday, 'پنج‌شنبه');
@@ -300,7 +300,6 @@ describe('rangeName', function () {
         assert.deepEqual(pDate.rangeName().months, ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']);
     });
 
-
     it('weekdats gregorian en', function () {
         pDate.toCalendar('gregorian').toLocale('en');
         assert.deepEqual(new pDate().rangeName().weekdays, ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
@@ -310,6 +309,16 @@ describe('rangeName', function () {
         assert.deepEqual(new pDate().rangeName().weekdays, 'یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_جمعه_شنبه'.split('_'));
     });
 
+    it('weekdats persian en', function () {
+        pDate.toCalendar('gregorian').toLocale('en');
+        assert.deepEqual(new pDate().rangeName().weekdaysMin, ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']);
+    });
+
+    it('weekdats persian en', function () {
+        pDate.toCalendar('gregorian').toLocale('en');
+        assert.deepEqual(new pDate().rangeName().weekdaysShort, ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+    });
+
     it('weekdats persian fa', function () {
         pDate.toCalendar('persian').toLocale('fa');
         assert.deepEqual(new pDate().rangeName().weekdays, ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهار شنبه", "پنج‌شنبه", "جمعه"]);
@@ -317,7 +326,7 @@ describe('rangeName', function () {
 
     it('weekdats persian en', function () {
         pDate.toCalendar('persian').toLocale('en');
-        assert.deepEqual(new pDate().rangeName().weekdays, ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
+        assert.deepEqual(new pDate().rangeName().weekdaysMin, ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']);
     });
 
     it('weekdats persian fa', function () {
@@ -450,8 +459,8 @@ describe('Leap Year', function () {
 
     it('print next 5 leap year', function () {
         let startYear = 1396,
-          endYear = 1420,
-          indexYear = startYear;
+            endYear = 1420,
+            indexYear = startYear;
         while (indexYear < endYear) {
             let createdDate = new pDate([indexYear]);
             if (createdDate.isLeapYear()) {
@@ -490,7 +499,7 @@ describe('toArray', function () {
 
     it('Convert new pDate().toArray()', function () {
         let generatedArray = new pDate().toArray(),
-          formattedDate = new pDate(generatedArray).toArray();
+            formattedDate = new pDate(generatedArray).toArray();
         assert.deepEqual(formattedDate, generatedArray);
     });
 });
@@ -498,12 +507,12 @@ describe('toArray', function () {
 describe('valueOf', function () {
     it('from 1332192661000', function () {
         let defaultUnixtime = 1332192661000,
-          formattedDate = new pDate(defaultUnixtime).valueOf();
+            formattedDate = new pDate(defaultUnixtime).valueOf();
         assert.deepEqual(formattedDate, defaultUnixtime);
     });
     it('from new pDate().valueOf()', function () {
         let defaultUnixtime = new pDate().valueOf(),
-          formattedDate = new pDate(defaultUnixtime).valueOf();
+            formattedDate = new pDate(defaultUnixtime).valueOf();
         assert.deepEqual(formattedDate, defaultUnixtime);
     });
 });
@@ -527,7 +536,7 @@ describe('Month', function () {
         assert.deepEqual(formattedDate, 12);
     });
     it('set', function () {
-        let formattedDate = new pDate().month(11).month();
+        let formattedDate = new pDate([1391, 12, 1, 1, 1, 1]).month(11).month();
         assert.deepEqual(formattedDate, 11);
     });
 });
@@ -676,7 +685,7 @@ describe('isDST', function () {
 describe('Clone', function () {
     it('clone', function () {
         let a = new pDate([1391, 1, 1, 1, 1, 1, 0]),
-          b = a.clone();
+            b = a.clone();
         assert.deepEqual(b.toArray(), [1391, 1, 1, 1, 1, 1, 0]);
     });
 });
@@ -727,12 +736,12 @@ describe('English Format', function () {
 describe('Diff', function () {
     it('set', function () {
         let a = new pDate([1392, 1, 1]),
-          b = new pDate([1392, 2, 2]);
+            b = new pDate([1392, 2, 2]);
         assert.ok(a.diff(b));
     });
     it('set', function () {
         let a = new pDate([1392, 1, 1]),
-          b = new pDate([1391, 1, 1]);
+            b = new pDate([1391, 1, 1]);
         assert.deepEqual(a.diff(b, 'year'), 1);
         assert.deepEqual(a.diff(b, 'month'), 12);
         assert.deepEqual(a.diff(b, 'day'), 366);
