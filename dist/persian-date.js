@@ -1004,8 +1004,9 @@ var PersianDateClass = function () {
 
         /**
          *
+         *
          * @returns {boolean}
-         * version 0.0.1
+         * @link https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D8%B9%D8%AA_%D8%AA%D8%A7%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%DB%8C
          */
 
     }, {
@@ -1013,8 +1014,7 @@ var PersianDateClass = function () {
         value: function isDST() {
             var month = this.month(),
                 day = this.date();
-
-            if (month >= 7 || month == 6 && day == 31) {
+            if (month == 1 && day > 1 || month == 6 && day < 31 || month < 6 && month >= 2) {
                 return true;
             } else {
                 return false;

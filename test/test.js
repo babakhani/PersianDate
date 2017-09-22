@@ -673,12 +673,16 @@ describe('timezone', function () {
 
 describe('isDST', function () {
     it('IS', function () {
-        let a = new pDate([1391, 1, 1, 1, 1, 1]).isDST();
-        assert.deepEqual(a, false);
+        let a = new pDate([1396, 1, 2]).isDST();
+        assert.deepEqual(a, true);
+        a = new pDate([1396, 6, 30]).isDST();
+        assert.deepEqual(a, true);
     });
     it('Not', function () {
-        let a = new pDate([1391, 7, 1, 1, 1, 1]).isDST();
-        assert.deepEqual(a, true);
+       let a = new pDate([1396, 1, 1]).isDST();
+        assert.deepEqual(a, false);
+        a = new pDate([1396, 6, 31]).isDST();
+        assert.deepEqual(a, false);
     });
 });
 
