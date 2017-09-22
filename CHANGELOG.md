@@ -6,10 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [0.3.0]
-- fix algorithms
+- refactor algorithms
 - add toCalendar, toLocale, toLeapYearMode options
 - support two persian leap year calculation mode
+- support gregorian calendar type
+- fix isDST method
+- fix add subtract issue with bubbled days
 - add rangeName, isSameDay, isSameMonth
+- write more test
 
 
 ## [0.2.5]
