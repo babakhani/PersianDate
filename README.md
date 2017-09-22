@@ -806,8 +806,6 @@ new persianDate().isDST();
 
 ```persianDate#isDST``` checks if the current persianDate is in daylight savings time.
 
-> Note: [Daylight saving time in Iran](https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D8%B9%D8%AA_%D8%AA%D8%A7%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%DB%8C)
-
 ```javascript
 new persianDate([1396, 1, 1]).isDST(); // false
 new persianDate([1396, 1, 2]).isDST(); // true
@@ -823,7 +821,6 @@ new persianDate([1396, 6, 31]).isDST(); // false
 var obj = new persianDate();
 
 // options 1
-
 new persianDate().isPersianDate(obj); // true
 
 //option 2
@@ -841,33 +838,57 @@ new persianDate().isPersianDate(new persianDate()); // true
 
 ### Is Same Month
 
-```javascript
-// options 1 
+Check date object with given date object month similarity
 
+
+```javascript
+// options 1
 var a = new persianDate([1396,1,1]);
 var b = new persianDate([1396,1,12]);
 b.isSameMonth(a); // true
 
-// options 2
+var a = new persianDate([1396,1,1]);
+var b = new persianDate([1397,1,12]);
+b.isSameMonth(a); // false
 
+// options 2
 var a = new persianDate([1396,1,1]);
 var b = new persianDate([1396,1,12]);
 persianDate.isSameMonth(a,b); // true
+
+var a = new persianDate([1396,1,1]);
+var b = new persianDate([1397,1,12]);
+persianDate.isSameMonth(a,b); // false
 ```
 
 ### Is Same Day
 
-```javascript
-// options 1 
+Check date object with given date object day similarity
 
+
+```javascript
+// options 1
 var a = new persianDate([1396,1,1]);
 var b = new persianDate([1396,1,1]);
 b.isSameDay(a); // true
+
+var a = new persianDate([1396,1,1]);
+var b = new persianDate([1396,2,1]);
+b.isSameDay(a); // false
 
 // options 2
 var a = new persianDate([1396,1,12]);
 var b = new persianDate([1396,1,12]);
 persianDate.isSameDay(a,b); // true
+
+var a = new persianDate([1396,1,12]);
+var b = new persianDate([1397,1,12]);
+persianDate.isSameDay(a,b); // false
+```
+
+
+
+
 ```
 
 
