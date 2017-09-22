@@ -1013,10 +1013,11 @@ var PersianDateClass = function () {
         value: function isDST() {
             var month = this.month(),
                 day = this.date();
-            if (month < 7) {
-                return false;
-            } else if (month === 7 && day >= 2 || month >= 7) {
+
+            if (month >= 7 || month == 6 && day == 31) {
                 return true;
+            } else {
+                return false;
             }
         }
 

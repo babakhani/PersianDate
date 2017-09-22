@@ -3,6 +3,8 @@ Persian Date
 
 Javascript date library for parsing, validating, manipulating, and formatting Persian dates System.
 
+> from 0.6.0 support gregorian calendar.
+
 Inspired by [momentjs](http://momentjs.com/)
 
 More info at [wikipedia](http://en.wikipedia.org/wiki/Iranian_calendar)
@@ -20,8 +22,8 @@ More info at [wikipedia](http://en.wikipedia.org/wiki/Iranian_calendar)
 ## Install
 
 ```shell
-npm install persian-date@beta --save-dev
-bower install persian-date@beta --save-dev
+npm install persian-date --save-dev
+bower install persian-date --save-dev
 ```
 
 ## Browser
@@ -37,7 +39,9 @@ bower install persian-date@beta --save-dev
 require('persian-date');
 ```
 
-## toCalendar
+## Calendar and locale
+
+### toCalendar
 
 default: ```persian```
 
@@ -62,7 +66,7 @@ or only on instance:
 new persianDate([1396]).toCalendar('gregorian').year(); // 2017
 ```
 
-## toLeapYearMode
+### toLeapYearMode
 
 default: ``` algorithmic ```
 
@@ -72,10 +76,10 @@ There is two popular way to determining leap years for the Persian calendar.
 
 - astronomical: occur whenever that number of days elapsed between equinoxes at the reference meridian.
 
-- algorithmic: based on Ahmad Birashk proposed algorithm.
+- algorithmic: based on Behrooz-Birashk proposed algorithm.
 
 After version 0.3.* ```persianDate``` support both algorithms and you can choose which algorithm use in your project. 
-currently, we have support 3 type of leap year mode ``` algorithmic ```, ``` astronomical ```.
+currently, we have support 2 type of leap year mode ``` algorithmic ```, ``` astronomical ```.
 
 you can change it globally like this example
 
@@ -91,7 +95,7 @@ new persianDate().toLeapYearMode('algorithmic')
 
 > ```toLeapYearMode``` only work when calendar type is ```persian```, and doesnt any effect on ```gregorian``` calendar
 
-## toLocale
+### toLocale
 
 default: ```fa```
 
@@ -108,7 +112,7 @@ new persianDate([1396,6,17]).format('MMMM'); // "شهریور"
 persianDate.toLocale('en');
 new persianDate([1396,6,17]).format(); // "1396-06-17 00:00:00 AM"
 new persianDate([1396,6,17]).format('dddd'); // "Friday"
-new persianDate([1396,6,17]).format('MMMM'); // "June"
+new persianDate([1396,6,17]).format('MMMM'); // "Shahrivar"
 
 ```
 
@@ -146,7 +150,7 @@ To get the current date and time, just call ```persianDate()``` with no paramete
 var now = new persianDate();
 ```
 
-This is essentially the same as calling ```persianDate(new Date())``` .
+This is essentially the same as calling ```new persianDate(new Date())``` .
 
 
 ### Unix Offset (milliseconds)
@@ -176,10 +180,6 @@ var day = new persianDate.unix(1318781876); // "۱۳۹۰-۰۷-۲۴ ۱۹:۴۷:۵�
 
 This is implemented as ```persianDate(timestamp * 1000)``` , so partial seconds in the input timestamp are included.
 
-```javascript
-var day = persianDate.unix(1318781876);
-```
-
 ### Date
 
 <!-- skip-example -->
@@ -199,14 +199,13 @@ This is the fastest way to get a persianDate.js wrapper.
 
 ### Array
 
+> ['year', 'month', 'day', 'hour', 'minute', 'second', 'millisecond']
+
 ```javascript
 new persianDate([1391, 12, 29, 12, 25, 25, 900]);
 ```
 
 You can create a persianDate with an array of numbers that mirror the parameters passed to new ```Date()``` But As Persian Date Number Like [1393,2,22,11,22,30]
-
-> Note:In this version array of Gregorian Date dose not Support
-> ['year', 'month', 'day', 'hour', 'minute', 'second', 'millisecond']
 
 ```javascript
 new persianDate([1393, 1, 14, 15,25, 50,125]); // "۱۳۹۳-۰۱-۱۴ ۱۵:۲۵:۵۰ ب ظ"
@@ -218,6 +217,15 @@ Any value past the year is optional, and will default to the lowest possible num
 new persianDate([1392]); // Farvardin 1st
 new persianDate([1392, 6]); // Shahrivar 1st
 new persianDate([1392, 6, 10]); // Shahrivar 10th
+```
+
+> Note: from 0.3.* you can pass gregorian date array to create gregorian date object. for this functionality you must change date object calendar type by ```toCalendar('gregorian')```
+
+example:
+
+```javascript
+persianDate.toCalendar('gregorian');
+new persianDate([2017,2,2]).format(); // "۲۰۱۷-۰۲-۰۲ ۰۰:۰۰:۰۰ ق ظ"
 ```
 
 
@@ -236,7 +244,7 @@ new persianDate("/Date(1198908717056-0700)/"); //"۱۳۸۶-۱۰-۰۸ ۰۹:۴۱:�
 ```
 
 
-#### PesianDate Clone
+### PesianDate Clone
 
 ```
 new persianDate(persianDate);
@@ -274,7 +282,7 @@ new persianDate().seconds(30).valueOf() === new Date().setSeconds(30); // true
 new persianDate().seconds() === new Date().getSeconds(); // true
 ```
 
-## Millisecond
+### Millisecond
 
 ```javascript
 new persianDate().millisecond(100);
@@ -339,7 +347,7 @@ Gets or sets the day of the month.
 
 Accepts numbers from 1 to 31. If the range is exceeded, it will bubble up to the months.
 
-Note: persianDate#date is for the date of the month, and persianDate#day is for the day of the week.
+> Note: persianDate#date is for the date of the month, and persianDate#day is for the day of the week.
 
 ### Year
 
@@ -363,7 +371,7 @@ new persianDate().days(); // Number
 
 Gets the day of the week.
 
-Note: ```persianDate#date``` is for the date of the month, and ```persianDate#day``` is for the day of the week.
+> Note: ```persianDate#date``` is for the date of the month, and ```persianDate#day``` is for the day of the week.
 
 
 ## Manipulate
@@ -465,7 +473,7 @@ These shortcuts are essentially the same as the following.
 
 ```javascript
 new persianDate().startOf('year');
-new persianDate().month(0).date(1).hours(0).minutes(0).seconds(0).milliseconds(0);
+new persianDate().month(1).date(1).hours(0).minutes(0).seconds(0).milliseconds(0);
 ```
 
 ```javascript
@@ -506,7 +514,7 @@ new persianDate().format("dddd, MMMM DD YYYY, h:mm:ss a"); // "شنبه, فرو�
 new persianDate().format("dddd, ha"); // "شنبه, ۵ب ظ"
 ```
 
-There are a couple conventions used with the naming of the
+This is the most robust display option. It takes a string of tokens and replaces them with their corresponding values.
 
 
 | Type	            | Tocken	    | Output |
@@ -600,7 +608,9 @@ d.format(); //"۱۳۹۱-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ"
 new persianDate().diff(PersianDate|String|Boolean);
 ```
 
-To get the difference in milliseconds, use ```persianDate#diff``` like you would use ```persianDate#from``` .
+Accept 3 argument, (ccmparable persianDate object, difference key, boolean value that make returned output float)
+
+To get the difference in milliseconds, use ```persianDate#diff```.
 
 ```javascript
 var a = new persianDate([1392, 0, 29]);
@@ -707,7 +717,7 @@ new persianDate().toDate();
 
 To get the native ```Date``` object that ```persianDate.js``` wraps, use ```persianDate#toDate``` .
 
-This will return the ```Date``` that the ```persianDate``` uses, so any changes to that ```Date``` will cause the persianDate to change. If you want a Date that is a copy, use ```persianDate#clone``` before you use ```persianDate#toDate``` .
+This will return the ```Date``` that the ```persianDate``` uses.
 
 ### As Array
 
@@ -723,7 +733,7 @@ new persianDate().toArray(); // [1391, 1, 4, 14, 40, 16, 154];
 
 ### Range Name
 
-Helper method that return date range name like week days name, month names, days names (specially in persian calendar).
+Helper method that return date range name like week days name, month names, month days names (specially in persian calendar).
 
 ```javascript
 
@@ -746,6 +756,8 @@ persianDate.rangeName().persianDaysName[0];
 
 ```
 
+> [Persian month day name wiki](https://fa.wikipedia.org/wiki/%D9%81%D9%87%D8%B1%D8%B3%D8%AA_%D9%86%D8%A7%D9%85_%D8%B1%D9%88%D8%B2%D9%87%D8%A7%DB%8C_%D9%85%D8%A7%D9%87)
+
 Also You can get Gregorian calendar range names
 
 ```javascript
@@ -754,6 +766,16 @@ persianDate.toCalendar('gregorian').rangeName().months;
 
 persianDate.toCalendar('gregorian').toLocale('en').rangeName().months;
 // ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+
+persianDate.toCalendar('gregorian').toLocale('en').rangeName().weekDayes;
+// ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+persianDate.toCalendar('gregorian').toLocale('en').rangeName().weekDayesShort;
+// ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+persianDate.toCalendar('gregorian').toLocale('en').rangeName().weekDayesMin;
+// ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
 
 ```
 
