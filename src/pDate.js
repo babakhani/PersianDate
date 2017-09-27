@@ -761,7 +761,7 @@ class PersianDateClass {
      * @returns {*}
      */
     milliseconds (input) {
-        if (input) {
+        if (input || input === 0) {
             this.gDate.setMilliseconds(input);
             this._updatePDate();
             return this;
@@ -788,7 +788,7 @@ class PersianDateClass {
      * @returns {*}
      */
     seconds (input) {
-        if (input | input === 0) {
+        if (input || input === 0) {
             this.gDate.setSeconds(input);
             this._updatePDate();
             return this;
@@ -841,7 +841,7 @@ class PersianDateClass {
      * @returns {*}
      */
     hours (input) {
-        if (input | input === 0) {
+        if (input || input === 0) {
             this.gDate.setHours(input);
             this._updatePDate();
             return this;
@@ -903,7 +903,7 @@ class PersianDateClass {
      * @returns {*}
      */
     month (input) {
-        if (input | input === 0) {
+        if (input || input === 0) {
             var pDateArray = this.algorithms.getPersianArrayFromPDate(this.pDate);
             pDateArray[1] = input;
             this.gDate = this.algorithms.persianArrayToGregorianDate(pDateArray);
@@ -931,7 +931,7 @@ class PersianDateClass {
      * @returns {*}
      */
     year (input) {
-        if (input | input === 0) {
+        if (input || input === 0) {
             var pDateArray = this.algorithms.getPersianArrayFromPDate(this.pDate);
             pDateArray[0] = input;
             this.gDate = this.algorithms.persianArrayToGregorianDate(pDateArray);
