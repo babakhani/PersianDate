@@ -647,7 +647,7 @@ new persianDate([1396, 2, 12]).isDST(); // false
 new persianDate([1396, 7, 14]).isDST(); // true
 ```
 
-### Is a PersainDat
+### Is a PersainDate
 
 ```javascript
 var obj = new persianDate();
