@@ -10,7 +10,6 @@ describe('Create Instance', function () {
     it('From Array [2017, 1, 12, 1, 1, 1]', function () {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
-        assert.deepEqual(new pDate([-2017, -1, 1]).toDate().toString(), 'Mon Nov 01 -2018 00:00:00 GMT+0330 (+0330)');
         assert.deepEqual(new pDate([-2017, 1, 1]).toDate().toString(), 'Sat Jan 01 -2017 00:00:00 GMT+0330 (+0330)');
         assert.deepEqual(new pDate([1, 1, 1]).toDate().toString(), 'Tue Jan 01 1901 00:00:00 GMT+0330 (+0330)');
         assert.deepEqual(new pDate([1200, 1, 1]).toDate().toString(), 'Sat Jan 01 1200 00:00:00 GMT+0330 (+0330)');
@@ -37,7 +36,7 @@ describe('format', function () {
         pDate.toCalendar('persian');
         pDate.toLocale('fa');
     });
-    it('format("YYYY/MM/DD a Z HH:mm:ss dddd ddd d MMM MMMM LT X w ww")', function () {
+    it('format("YYYY/MM/DD a dddd ddd d MMM MMMM LT X w ww")', function () {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
         let a = new pDate(defaultArray).format('YYYY/MM/DD a Z HH:mm:ss dddd ddd d MMM MMMM LT X w ww');

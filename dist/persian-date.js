@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  1.0.0
+ * persian-date -  1.0.1
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -262,7 +262,7 @@ var PersianDateClass = function () {
         this.leapYearMode = PersianDateClass.leapYearMode;
 
         this.algorithms = new Algorithms(this);
-        this.version = "1.0.0";
+        this.version = "1.0.1";
         this._utcMode = false;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
