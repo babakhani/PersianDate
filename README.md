@@ -889,4 +889,4 @@ persianDate.isSameDay(a,b); // false
 
 ## license
 
-- [WTFPL](http://www.wtfpl.net/)
+[WTFPL](http://www.wtfpl.net/)
