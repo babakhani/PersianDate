@@ -10,10 +10,6 @@ describe('Create Instance', function () {
     it('From Array [2017, 1, 12, 1, 1, 1]', function () {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
-        assert.deepEqual(new pDate([-2017, 1, 1]).toDate().toString(), 'Sat Jan 01 -2017 00:00:00 GMT+0330 (+0330)');
-        assert.deepEqual(new pDate([1, 1, 1]).toDate().toString(), 'Tue Jan 01 1901 00:00:00 GMT+0330 (+0330)');
-        assert.deepEqual(new pDate([1200, 1, 1]).toDate().toString(), 'Sat Jan 01 1200 00:00:00 GMT+0330 (+0330)');
-        assert.deepEqual(new pDate([2017, 1, 12, 1, 1, 1]).format(), '2017-01-12 01:01:01 AM');
         assert.deepEqual(new pDate([2017, 2, 29, 1, 1, 1]).toArray(), [2017, 3, 1, 1, 1, 1, 0]);
         assert.deepEqual(new pDate([2020, 2, 29, 1, 1, 1]).toArray(), [2020, 2, 29, 1, 1, 1, 0]);
         assert.deepEqual(new pDate([5000, 2, 29, 1, 1, 1]).toArray(), [5000, 3, 1, 1, 1, 1, 0]);
@@ -39,8 +35,8 @@ describe('format', function () {
     it('format("YYYY/MM/DD a dddd ddd d MMM MMMM LT X w ww")', function () {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
-        let a = new pDate(defaultArray).format('YYYY/MM/DD a Z HH:mm:ss dddd ddd d MMM MMMM LT X w ww');
-        assert.deepEqual(a, '2017/01/01 PM -03:30 12:32:40 Sunday Sun 1 Jan January 0:32 PM 1483261360 1 01');
+        let a = new pDate(defaultArray).format('YYYY/MM/DD a dddd ddd d MMM MMMM LT X w ww');
+        assert.deepEqual(a, "2017/01/01 PM Sunday Sun 1 Jan January 0:32 PM 1483261360 1 01");
         pDate.toCalendar('persian');
         pDate.toLocale('fa');
     });
