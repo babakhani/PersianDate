@@ -5,25 +5,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [0.3.0]
-- refactor algorithms
-- add toCalendar, toLocale, toLeapYearMode options
-- support two persian leap year calculation mode
-- support gregorian calendar type
-- fix isDST method
-- fix add subtract issue with bubbled days
-- add rangeName, isSameDay, isSameMonth
-- write more test
-
+## [1.0.0] - 2017-09-1
+- Refactor algorithms
+- Support gregorian calendar type
+- Support two persian leap year calculation mode
+- Add toCalendar, toLocale, toLeapYearMode options
+- Fix isDST method
+- Fix add subtract issue with bubbled days
+- Add rangeName, isSameDay, isSameMonth
+- Write more test
 
 ## [0.2.5]
-- fix [#37](https://github.com/babakhani/PersianDate/issues/37)
+- Fix [#37](https://github.com/babakhani/PersianDate/issues/37)
 
 ## [0.2.4]
-- merge bit-foundation-typings .d.ts
+- Merge bit-foundation-typings .d.ts
 
 ## [0.2.2]
-- fix bower 
+- Fix bower 
 
 ## [0.2.1]
 - Some dev env fix before release 
@@ -39,7 +38,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix some issue
 - Add document
 
-## [0.1.7]
+## [0.1.7] - 2015-01-05
 - Fix Format Like Moment.js
 - Fix formatPersian Config
 - Fix Constructor Without New Keyword

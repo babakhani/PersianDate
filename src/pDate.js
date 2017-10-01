@@ -8,9 +8,16 @@ let normalizeDuration = new Helpers().normalizeDuration;
 let fa = require('./fa');
 let en = require('./en');
 
+
+/**
+ * @description persian date class
+ */
 class PersianDateClass {
 
-    //    static calendarType : 'persianAstro';
+    /**
+     * @param input
+     * @return {PersianDateClass}
+     */
     constructor(input) {
 
         this.calendarType = PersianDateClass.calendarType;
@@ -30,6 +37,9 @@ class PersianDateClass {
         return this;
     }
 
+    /**
+     * @param input
+     */
     setup(input) {
         // Convert Any thing to Gregorian Date
         if (TypeChecking.isDate(input)) {
@@ -65,11 +75,20 @@ class PersianDateClass {
         }
     }
 
+    /**
+     * @param input
+     * @return {*}
+     * @private
+     */
     _getSyncedClass(input) {
         let syncedCelander = PersianDateClass.toCalendar(this.calendarType).toLocale(this.localType).toLeapYearMode(this.leapYearMode);
         return new syncedCelander(input);
     }
 
+    /**
+     * @param inputgDate
+     * @private
+     */
     _gDateToCalculators(inputgDate) {
         this.algorithms.calcGregorian(
             [
@@ -83,6 +102,12 @@ class PersianDateClass {
             ]);
     }
 
+    /**
+     * @since 1.0.0
+     * @description Helper method that return date range name like week days name, month names, month days names (specially in persian calendar).
+     * @static
+     * @return {*}
+     */
     static rangeName() {
         const p = PersianDateClass,
             t = p.calendarType;
@@ -103,6 +128,11 @@ class PersianDateClass {
         }
     }
 
+    /**
+     * @since 1.0.0
+     * @description Helper method that return date range name like week days name, month names, month days names (specially in persian calendar).
+     * @return {*}
+     */
     rangeName() {
         const t = this.calendarType;
         if (this.localType === 'fa') {
@@ -122,7 +152,11 @@ class PersianDateClass {
         }
     }
 
-
+    /**
+     * @since 1.0.0
+     * @param input
+     * @return {PersianDateClass}
+     */
     toLeapYearMode(input) {
         this.leapYearMode = input;
         if (input === 'astronomical' && this.calendarType == 'persian') {
@@ -135,19 +169,36 @@ class PersianDateClass {
         return this;
     }
 
-
+    /**
+     * @since 1.0.0
+     * @static
+     * @param input
+     * @return {PersianDateClass}
+     */
     static toLeapYearMode(input) {
         let d = PersianDateClass;
         d.leapYearMode = input;
         return d;
     }
 
+    /**
+     * @since 1.0.0
+     * @param input
+     * @return {PersianDateClass}
+     */
     toCalendar(input) {
         this.calendarType = input;
         this.algorithms.updateFromGregorian();
         return this;
     }
 
+
+    /**
+     * @since 1.0.0
+     * @static
+     * @param input
+     * @return {PersianDateClass}
+     */
     static toCalendar(input) {
         let d = PersianDateClass;
         d.calendarType = input;
@@ -155,6 +206,12 @@ class PersianDateClass {
     }
 
 
+    /**
+     * @since 1.0.0
+     * @static
+     * @param input
+     * @return {PersianDateClass}
+     */
     static toLocale(input) {
         let d = PersianDateClass;
         d.localType = input;
@@ -166,7 +223,11 @@ class PersianDateClass {
         return d;
     }
 
-
+    /**
+     * @since 1.0.0
+     * @param input
+     * @return {PersianDateClass}
+     */
     toLocale(input) {
         this.localType = input;
         if (this.localType !== 'fa') {
@@ -177,6 +238,10 @@ class PersianDateClass {
         return this;
     }
 
+    /**
+     * @return {*}
+     * @private
+     */
     _locale() {
         const t = this.calendarType;
         if (this.localType === 'fa') {
@@ -196,34 +261,57 @@ class PersianDateClass {
         }
     }
 
+    /**
+     * @param input
+     * @private
+     */
     _weekName(input) {
         return this._locale().weekdays[input - 1];
     }
 
+    /**
+     * @param input
+     * @private
+     */
     _weekNameShort(input) {
         return this._locale().weekdaysShort[input - 1];
     }
 
+    /**
+     * @param input
+     * @private
+     */
     _weekNameMin(input) {
         return this._locale().weekdaysMin[input - 1];
     }
 
+    /**
+     * @param input
+     * @return {*}
+     * @private
+     */
     _dayName(input) {
         return this._locale().persianDaysName[input - 1];
     }
 
-
+    /**
+     * @param input
+     * @private
+     */
     _monthName(input) {
         return this._locale().months[input - 1];
     }
 
+    /**
+     * @param input
+     * @private
+     */
     _monthNameShort(input) {
         return this._locale().monthsShort[input - 1];
     }
 
 
     /**
-     *
      * @param obj
      * @returns {boolean}
      */
@@ -231,19 +319,26 @@ class PersianDateClass {
         return obj instanceof PersianDateClass;
     }
 
+    /**
+     * @param obj
+     * @return {boolean}
+     */
     isPersianDate(obj) {
         return obj instanceof PersianDateClass;
     }
 
     /**
-     *
      * @returns {PersianDate}
      */
     clone() {
         return this._getSyncedClass(this.ON.gDate);
     }
 
-
+    /**
+     * @since 1.0.0
+     * @param dateArray
+     * @return {*}
+     */
     algorithmsCalc(dateArray) {
         if (this.isPersianDate(dateArray)) {
             dateArray = [
@@ -268,6 +363,10 @@ class PersianDateClass {
         }
     }
 
+    /**
+     * @since 1.0.0
+     * @return {*}
+     */
     calendar() {
         let key;
         if (this.calendarType == 'persian') {
@@ -324,7 +423,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param input
      * @returns {*}
      */
@@ -334,7 +432,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param input
      * @returns {*}
      */
@@ -351,7 +448,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param input
      * @returns {*}
      */
@@ -375,7 +471,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @returns {Function|Date.toJSON.day|date_json.day|PersianDate.day|day|output.day|*}
      */
     day() {
@@ -394,7 +489,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param input
      * @returns {*}
      */
@@ -408,7 +502,6 @@ class PersianDateClass {
     }
 
     /**
-     *
      * @param input
      * @returns {*}
      */
@@ -418,7 +511,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param input
      * @returns {*}
      */
@@ -432,7 +524,6 @@ class PersianDateClass {
     }
 
     /**
-     *
      * @param input
      * @returns {*}
      */
@@ -442,7 +533,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param input
      * @returns {*}
      */
@@ -456,7 +546,6 @@ class PersianDateClass {
     }
 
     /**
-     *
      * @param input
      * @returns {*}
      */
@@ -467,7 +556,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param input
      * @returns {*}
      */
@@ -482,7 +570,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param input
      * @returns {*}
      * Getter Setter
@@ -493,7 +580,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param input
      * @returns {*}
      */
@@ -542,7 +628,6 @@ class PersianDateClass {
     }
 
     /**
-     *
      * @returns {*}
      */
     valueOf() {
@@ -551,20 +636,20 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param year
      * @param month
      * @returns {*}
+     * @since 1.0.0
      */
     static getFirstWeekDayOfMonth(year, month) {
         return new PersianDateClass([year, month, 1]).day();
     }
 
     /**
-     *
      * @param year
      * @param month
      * @returns {*}
+     * @since 1.0.0
      */
     getFirstWeekDayOfMonth(year, month) {
         return this._getSyncedClass([year, month, 1]).day();
@@ -572,7 +657,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param input
      * @param val
      * @param asFloat
@@ -607,7 +691,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param key
      * @returns {*}
      */
@@ -645,7 +728,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param key
      * @returns {*}
      */
@@ -686,7 +768,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @returns {*}
      */
     sod() {
@@ -695,7 +776,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @returns {*}
      */
     eod() {
@@ -716,7 +796,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @returns {PersianDate}
      */
     local() {
@@ -742,7 +821,10 @@ class PersianDateClass {
         }
     }
 
-
+    /**
+     * @param input
+     * @return {*}
+     */
     static utc(input) {
         if (input) {
             return new PersianDateClass(input).utc();
@@ -754,7 +836,7 @@ class PersianDateClass {
 
 
     /**
-     * Current date/time in UTC mode
+     * @description Current date/time in UTC mode
      * @param input
      * @returns {*}
      */
@@ -784,7 +866,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @returns {boolean}
      */
     isUtc() {
@@ -793,8 +874,6 @@ class PersianDateClass {
 
 
     /**
-     *
-     *
      * @returns {boolean}
      * @link https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D8%B9%D8%AA_%D8%AA%D8%A7%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%DB%8C
      */
@@ -811,7 +890,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @returns {boolean}
      */
     isLeapYear(year) {
@@ -831,7 +909,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param yearInput
      * @param monthInput
      * @returns {number}
@@ -858,7 +935,7 @@ class PersianDateClass {
 
 
     /**
-     * Return Native Javascript Date
+     * @description Return Native Javascript Date
      * @returns {*|PersianDate.gDate}
      */
     toDate() {
@@ -867,7 +944,7 @@ class PersianDateClass {
 
 
     /**
-     * Returns Array Of Persian Date
+     * @description Returns Array Of Persian Date
      * @returns {array}
      */
     toArray() {
@@ -876,7 +953,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @returns {*}
      */
     formatNumber() {
@@ -916,7 +992,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param inputString
      * @returns {*}
      */
@@ -1145,7 +1220,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param key
      * @param value
      * @returns {PersianDate}
@@ -1198,7 +1272,6 @@ class PersianDateClass {
 
 
     /**
-     *
      * @param key
      * @param value
      * @returns {PersianDate}
@@ -1253,6 +1326,7 @@ class PersianDateClass {
      * check if a date is same as b
      * @param dateA
      * @param dateB
+     * @since 1.0.0
      * @return {boolean}
      * @static
      */
@@ -1262,6 +1336,7 @@ class PersianDateClass {
 
     /**
      * @param dateB
+     * @since 1.0.0
      * @return {PersianDateClass|*|boolean}
      */
     isSameDay(dateB) {
@@ -1273,6 +1348,7 @@ class PersianDateClass {
      * @param {Date} dateA
      * @param {Date} dateB
      * @return {boolean}
+     * @since 1.0.0
      * @static
      */
     static isSameMonth(dateA, dateB) {
@@ -1283,6 +1359,7 @@ class PersianDateClass {
      * @desc check two for month similarity
      * @param dateA
      * @param dateB
+     * @since 1.0.0
      * @return {*|boolean}
      */
     isSameMonth(dateB) {
@@ -1290,4 +1367,7 @@ class PersianDateClass {
     }
 }
 
+/**
+ * @type {PersianDateClass}
+ */
 module.exports = PersianDateClass;

@@ -1,9 +1,7 @@
 /*
  JavaScript functions for positional astronomy
-
  by John Walker  --  September, MIM
  http://www.fourmilab.ch/
-
  This program is in the public domain.
  */
 

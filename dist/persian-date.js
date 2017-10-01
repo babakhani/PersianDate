@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  0.3.1b
+ * persian-date -  1.0.0
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -199,6 +199,13 @@ var Helpers = function () {
                 return Math.floor(number);
             }
         }
+
+        /**
+         *
+         * @param number
+         * @return {number}
+         */
+
     }, {
         key: 'absFloor',
         value: function absFloor(number) {
@@ -209,16 +216,6 @@ var Helpers = function () {
                 return Math.floor(number);
             }
         }
-
-        // absCeil(number) {
-        //     if (number < 0) {
-        //         return Math.floor(number);
-        //     } else {
-        //         return Math.ceil(number);
-        //     }
-        // }
-
-
     }]);
 
     return Helpers;
@@ -247,9 +244,16 @@ var normalizeDuration = new Helpers().normalizeDuration;
 var fa = __webpack_require__(7);
 var en = __webpack_require__(6);
 
+/**
+ * @description persian date class
+ */
+
 var PersianDateClass = function () {
 
-    //    static calendarType : 'persianAstro';
+    /**
+     * @param input
+     * @return {PersianDateClass}
+     */
     function PersianDateClass(input) {
         _classCallCheck(this, PersianDateClass);
 
@@ -258,7 +262,7 @@ var PersianDateClass = function () {
         this.leapYearMode = PersianDateClass.leapYearMode;
 
         this.algorithms = new Algorithms(this);
-        this.version = "0.3.1b";
+        this.version = "1.0.0";
         this._utcMode = false;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
@@ -269,6 +273,11 @@ var PersianDateClass = function () {
         this.ON = this.algorithms.ON;
         return this;
     }
+
+    /**
+     * @param input
+     */
+
 
     _createClass(PersianDateClass, [{
         key: 'setup',
@@ -295,19 +304,47 @@ var PersianDateClass = function () {
                         this._gDateToCalculators(now);
                     }
         }
+
+        /**
+         * @param input
+         * @return {*}
+         * @private
+         */
+
     }, {
         key: '_getSyncedClass',
         value: function _getSyncedClass(input) {
             var syncedCelander = PersianDateClass.toCalendar(this.calendarType).toLocale(this.localType).toLeapYearMode(this.leapYearMode);
             return new syncedCelander(input);
         }
+
+        /**
+         * @param inputgDate
+         * @private
+         */
+
     }, {
         key: '_gDateToCalculators',
         value: function _gDateToCalculators(inputgDate) {
             this.algorithms.calcGregorian([inputgDate.getFullYear(), inputgDate.getMonth(), inputgDate.getDate(), inputgDate.getHours(), inputgDate.getMinutes(), inputgDate.getSeconds(), inputgDate.getMilliseconds()]);
         }
+
+        /**
+         * @since 1.0.0
+         * @description Helper method that return date range name like week days name, month names, month days names (specially in persian calendar).
+         * @static
+         * @return {*}
+         */
+
     }, {
         key: 'rangeName',
+
+
+        /**
+         * @since 1.0.0
+         * @description Helper method that return date range name like week days name, month names, month days names (specially in persian calendar).
+         * @return {*}
+         */
         value: function rangeName() {
             var t = this.calendarType;
             if (this.localType === 'fa') {
@@ -324,6 +361,13 @@ var PersianDateClass = function () {
                 }
             }
         }
+
+        /**
+         * @since 1.0.0
+         * @param input
+         * @return {PersianDateClass}
+         */
+
     }, {
         key: 'toLeapYearMode',
         value: function toLeapYearMode(input) {
@@ -336,15 +380,45 @@ var PersianDateClass = function () {
             this.algorithms.updateFromGregorian();
             return this;
         }
+
+        /**
+         * @since 1.0.0
+         * @static
+         * @param input
+         * @return {PersianDateClass}
+         */
+
     }, {
         key: 'toCalendar',
+
+
+        /**
+         * @since 1.0.0
+         * @param input
+         * @return {PersianDateClass}
+         */
         value: function toCalendar(input) {
             this.calendarType = input;
             this.algorithms.updateFromGregorian();
             return this;
         }
+
+        /**
+         * @since 1.0.0
+         * @static
+         * @param input
+         * @return {PersianDateClass}
+         */
+
     }, {
         key: 'toLocale',
+
+
+        /**
+         * @since 1.0.0
+         * @param input
+         * @return {PersianDateClass}
+         */
         value: function toLocale(input) {
             this.localType = input;
             if (this.localType !== 'fa') {
@@ -354,6 +428,12 @@ var PersianDateClass = function () {
             }
             return this;
         }
+
+        /**
+         * @return {*}
+         * @private
+         */
+
     }, {
         key: '_locale',
         value: function _locale() {
@@ -372,31 +452,68 @@ var PersianDateClass = function () {
                 }
             }
         }
+
+        /**
+         * @param input
+         * @private
+         */
+
     }, {
         key: '_weekName',
         value: function _weekName(input) {
             return this._locale().weekdays[input - 1];
         }
+
+        /**
+         * @param input
+         * @private
+         */
+
     }, {
         key: '_weekNameShort',
         value: function _weekNameShort(input) {
             return this._locale().weekdaysShort[input - 1];
         }
+
+        /**
+         * @param input
+         * @private
+         */
+
     }, {
         key: '_weekNameMin',
         value: function _weekNameMin(input) {
             return this._locale().weekdaysMin[input - 1];
         }
+
+        /**
+         * @param input
+         * @return {*}
+         * @private
+         */
+
     }, {
         key: '_dayName',
         value: function _dayName(input) {
             return this._locale().persianDaysName[input - 1];
         }
+
+        /**
+         * @param input
+         * @private
+         */
+
     }, {
         key: '_monthName',
         value: function _monthName(input) {
             return this._locale().months[input - 1];
         }
+
+        /**
+         * @param input
+         * @private
+         */
+
     }, {
         key: '_monthNameShort',
         value: function _monthNameShort(input) {
@@ -404,19 +521,23 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param obj
          * @returns {boolean}
          */
 
     }, {
         key: 'isPersianDate',
+
+
+        /**
+         * @param obj
+         * @return {boolean}
+         */
         value: function isPersianDate(obj) {
             return obj instanceof PersianDateClass;
         }
 
         /**
-         *
          * @returns {PersianDate}
          */
 
@@ -425,6 +546,13 @@ var PersianDateClass = function () {
         value: function clone() {
             return this._getSyncedClass(this.ON.gDate);
         }
+
+        /**
+         * @since 1.0.0
+         * @param dateArray
+         * @return {*}
+         */
+
     }, {
         key: 'algorithmsCalc',
         value: function algorithmsCalc(dateArray) {
@@ -440,6 +568,12 @@ var PersianDateClass = function () {
                 return this.algorithms.calcGregorian(dateArray);
             }
         }
+
+        /**
+         * @since 1.0.0
+         * @return {*}
+         */
+
     }, {
         key: 'calendar',
         value: function calendar() {
@@ -497,7 +631,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          */
@@ -509,7 +642,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          */
@@ -526,7 +658,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          */
@@ -554,7 +685,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @returns {Function|Date.toJSON.day|date_json.day|PersianDate.day|day|output.day|*}
          */
 
@@ -577,7 +707,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          */
@@ -594,7 +723,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          */
@@ -606,7 +734,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          */
@@ -623,7 +750,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          */
@@ -635,7 +761,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          */
@@ -652,7 +777,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          */
@@ -664,7 +788,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          */
@@ -681,7 +804,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          * Getter Setter
@@ -694,7 +816,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param input
          * @returns {*}
          */
@@ -741,7 +862,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @returns {*}
          */
 
@@ -752,10 +872,10 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param year
          * @param month
          * @returns {*}
+         * @since 1.0.0
          */
 
     }, {
@@ -763,17 +883,16 @@ var PersianDateClass = function () {
 
 
         /**
-         *
          * @param year
          * @param month
          * @returns {*}
+         * @since 1.0.0
          */
         value: function getFirstWeekDayOfMonth(year, month) {
             return this._getSyncedClass([year, month, 1]).day();
         }
 
         /**
-         *
          * @param input
          * @param val
          * @param asFloat
@@ -811,7 +930,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param key
          * @returns {*}
          */
@@ -851,7 +969,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param key
          * @returns {*}
          */
@@ -894,7 +1011,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @returns {*}
          */
 
@@ -905,7 +1021,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @returns {*}
          */
 
@@ -931,7 +1046,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @returns {PersianDate}
          */
 
@@ -958,12 +1072,18 @@ var PersianDateClass = function () {
                 return this;
             }
         }
+
+        /**
+         * @param input
+         * @return {*}
+         */
+
     }, {
         key: 'utc',
 
 
         /**
-         * Current date/time in UTC mode
+         * @description Current date/time in UTC mode
          * @param input
          * @returns {*}
          */
@@ -992,7 +1112,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @returns {boolean}
          */
 
@@ -1003,8 +1122,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
-         *
          * @returns {boolean}
          * @link https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D8%B9%D8%AA_%D8%AA%D8%A7%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%DB%8C
          */
@@ -1022,7 +1139,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @returns {boolean}
          */
 
@@ -1043,7 +1159,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param yearInput
          * @param monthInput
          * @returns {number}
@@ -1069,7 +1184,7 @@ var PersianDateClass = function () {
         }
 
         /**
-         * Return Native Javascript Date
+         * @description Return Native Javascript Date
          * @returns {*|PersianDate.gDate}
          */
 
@@ -1080,7 +1195,7 @@ var PersianDateClass = function () {
         }
 
         /**
-         * Returns Array Of Persian Date
+         * @description Returns Array Of Persian Date
          * @returns {array}
          */
 
@@ -1091,7 +1206,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @returns {*}
          */
 
@@ -1134,7 +1248,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param inputString
          * @returns {*}
          */
@@ -1399,7 +1512,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param key
          * @param value
          * @returns {PersianDate}
@@ -1454,7 +1566,6 @@ var PersianDateClass = function () {
         }
 
         /**
-         *
          * @param key
          * @param value
          * @returns {PersianDate}
@@ -1512,6 +1623,7 @@ var PersianDateClass = function () {
          * check if a date is same as b
          * @param dateA
          * @param dateB
+         * @since 1.0.0
          * @return {boolean}
          * @static
          */
@@ -1522,6 +1634,7 @@ var PersianDateClass = function () {
 
         /**
          * @param dateB
+         * @since 1.0.0
          * @return {PersianDateClass|*|boolean}
          */
         value: function isSameDay(dateB) {
@@ -1533,6 +1646,7 @@ var PersianDateClass = function () {
          * @param {Date} dateA
          * @param {Date} dateB
          * @return {boolean}
+         * @since 1.0.0
          * @static
          */
 
@@ -1544,6 +1658,7 @@ var PersianDateClass = function () {
          * @desc check two for month similarity
          * @param dateA
          * @param dateB
+         * @since 1.0.0
          * @return {*|boolean}
          */
         value: function isSameMonth(dateB) {
@@ -1582,6 +1697,14 @@ var PersianDateClass = function () {
             d.calendarType = input;
             return d;
         }
+
+        /**
+         * @since 1.0.0
+         * @static
+         * @param input
+         * @return {PersianDateClass}
+         */
+
     }, {
         key: 'toLocale',
         value: function toLocale(input) {
@@ -1646,6 +1769,11 @@ var PersianDateClass = function () {
 
     return PersianDateClass;
 }();
+
+/**
+ * @type {PersianDateClass}
+ */
+
 
 module.exports = PersianDateClass;
 
@@ -2298,10 +2426,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /*
  JavaScript functions for positional astronomy
-
  by John Walker  --  September, MIM
  http://www.fourmilab.ch/
-
  This program is in the public domain.
  */
 
@@ -2891,144 +3017,6 @@ var Duration = function () {
 }();
 
 module.exports = Duration;
-
-// let Helpers = require('./helpers');
-// let normalizeDuration = new Helpers().normalizeDuration;
-// let absRound = new Helpers().absRound;
-// /**
-//  * Duration object constructor
-//  * @param duration
-//  * @class Duration
-//  * @constructor
-//  */
-// class Duration {
-//     constructor(key, value) {
-//         let duration = {},
-//             normalizedUnit = normalizeDuration(key, value),
-//             unit = normalizedUnit.unit;
-//             duration[unit] = normalizedUnit.value;
-//         let years = duration.years || duration.year || duration.y || 0,
-//             quarters = duration.quarter || duration.quarter || 0,
-//             months = duration.months || duration.month || duration.M || 0,
-//             weeks = duration.weeks || duration.w || duration.week || 0,
-//             days = duration.days || duration.d || duration.day || 0,
-//             hours = duration.hours || duration.hour || duration.h || 0,
-//             minutes = duration.minutes || duration.minute || duration.m || 0,
-//             seconds = duration.seconds || duration.second || duration.s || 0,
-//             milliseconds = duration.milliseconds || duration.milli || duration.millisecond || duration.ms || 0;
-
-
-//         // TODO: must implement
-//         // this._isValid = isDurationValid(normalizedInput);
-
-//         // representation for dateAddRemove
-//         this._milliseconds = +milliseconds +
-//             seconds * 1e3 + // 1000
-//             minutes * 6e4 + // 1000 * 60
-//             hours * 1000 * 60 * 60; //using 1000 * 60 * 60 instead of 36e5 to avoid floating point rounding errors https://github.com/moment/moment/issues/2978
-//         // Because of dateAddRemove treats 24 hours as different from a
-//         // day when working around DST, we need to store them separately
-//         this._days = +days +
-//             weeks * 7;
-//         // It is impossible to translate months into days without knowing
-//         // which months you are are talking about, so we have to store
-//         // it separately.
-//         this._months = +months +
-//             quarters * 3 +
-//             years * 12;
-
-//         this._data = {};
-//         this.bubble();
-
-//     }
-
-//     absFloor(number) {
-//         if (number < 0) {
-//             // -0 -> 0
-//             return Math.ceil(number) || 0;
-//         } else {
-//             return Math.floor(number);
-//         }
-//     }
-
-//     absCeil(number) {
-//         if (number < 0) {
-//             return Math.floor(number);
-//         } else {
-//             return Math.ceil(number);
-//         }
-//     }
-
-//     bubble() {
-//         var milliseconds = this._milliseconds;
-//         var days = this._days;
-//         var months = this._months;
-//         var data = this._data;
-//         var seconds, minutes, hours, years, monthsFromDays;
-
-//         // if we have a mix of positive and negative values, bubble down first
-//         // check: https://github.com/moment/moment/issues/2166
-//         if (!((milliseconds >= 0 && days >= 0 && months >= 0) ||
-//             (milliseconds <= 0 && days <= 0 && months <= 0))) {
-//             milliseconds += this.absCeil(monthsToDays(months) + days) * 864e5;
-//             days = 0;
-//             months = 0;
-//         }
-
-//         // The following code bubbles up values, see the tests for
-//         // examples of what that means.
-//         data.milliseconds = milliseconds % 1000;
-
-//         seconds = this.absFloor(milliseconds / 1000);
-//         data.seconds = seconds % 60;
-
-//         minutes = this.absFloor(seconds / 60);
-//         data.minutes = minutes % 60;
-
-//         hours = this.absFloor(minutes / 60);
-//         data.hours = hours % 24;
-
-//         days += this.absFloor(hours / 24);
-
-//         // convert days to months
-//         // Remember: I change this from absFloor to absCeil
-//         monthsFromDays = this.absFloor(this.daysToMonths(days));
-//         months += monthsFromDays;
-
-//         // Remember: I commnet this Line
-//         days -= this.absCeil(this.monthsToDays(monthsFromDays));
-
-//         // 12 months -> 1 year
-//         years = this.absFloor(months / 12);
-//         months %= 12;
-
-//         data.days = days;
-//         data.months = months;
-//         data.years = years;
-//         return this;
-//     }
-
-//     daysToMonths(days) {
-//         // 400 years have 146097 days (taking into account leap year rules)
-//         // 400 years have 12 months === 4800
-//         return days * 4800 / 146097;
-//     }
-
-//     monthsToDays(months) {
-//         // the reverse of daysToMonths
-//         return months * 146097 / 4800;
-//     }
-
-//     valueOf() {
-//         return this._milliseconds + this._days * (864e5) + this._months * (2592e6);
-//     }
-
-//     static valueOf() {
-//         return this._milliseconds + this._days * (864e5) + this._months * (2592e6);
-//     }
-// }
-
-// module.exports = Duration;
 
 /***/ }),
 /* 6 */

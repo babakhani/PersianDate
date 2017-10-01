@@ -64,8 +64,8 @@ describe('Check total leap years in next 3003 year, Difference algorithm', funct
           totalCommonWikiAlgo = 0;
         let i = 1396;
         while (i < (1396 + 3003)) {
-            const algo = startYear.toCalendar('persianAlgo').isLeapYear(i),
-              astro = startYear.toCalendar('persianAstro').isLeapYear(i),
+            const algo = startYear.toCalendar('persian').toLeapYearMode('algorithmic').isLeapYear(i),
+              astro = startYear.toCalendar('persian').toLeapYearMode('astronomical').isLeapYear(i),
               gregorian = startYear.toCalendar('gregorian').isLeapYear(i),
               nasa = isLeapYearWithNasaAlgorithm(i),
               birash = isLeapYearBirashk(i),
@@ -141,16 +141,16 @@ describe('Check total leap years in next 3003 year, Difference algorithm', funct
         console.log("- Total Behrooz_Birashk leap year: " + totalLeapCountInBirashk);
         console.log("- Total Wikipedia python code leap year: " + totalLeapCountInWikiPythonCode);
         console.log('');
-        console.log("- Total Common leap year (nasa, persianAstro, persianAlgo, Behrooz_Birashk, wiki python, gregorian): " + totalCommonNasaAstroAlgo);
+        console.log("- Total Common leap year (nasa, astronomical, algorithmic, Behrooz_Birashk, wiki python, gregorian): " + totalCommonNasaAstroAlgo);
         console.log('');
-        console.log("- Common leap year (persianAstro, NASA): " + totalCommonNasaAstro);
-        console.log("- Common leap year (persianAlgo, NASA): " + totalCommonNasaAlgo);
+        console.log("- Common leap year (astronomical, NASA): " + totalCommonNasaAstro);
+        console.log("- Common leap year (algorithmic, NASA): " + totalCommonNasaAlgo);
         console.log('');
-        console.log("- Common leap year (persianAstro, Behrooz_Birashk): " + totalCommonBirashkAstro);
-        console.log("- Common leap year (persianAlgo, Behrooz_Birashk): " + totalCommonBirashkAlgo);
+        console.log("- Common leap year (astronomical, Behrooz_Birashk): " + totalCommonBirashkAstro);
+        console.log("- Common leap year (algorithmic, Behrooz_Birashk): " + totalCommonBirashkAlgo);
         console.log('');
-        console.log("- Common leap year (persianAstro, wiki): " + totalCommonWikiAstro);
-        console.log("- Common leap year (persianAlgo, wiki): " + totalCommonWikiAlgo);
+        console.log("- Common leap year (astronomical, wiki): " + totalCommonWikiAstro);
+        console.log("- Common leap year (algorithmic, wiki): " + totalCommonWikiAlgo);
         console.log('');
         console.log("- Total jalaali leap year: " + totalLeapCountInJalaali);
         console.log("- Jalaali Error Count: " + totalJalaaliErrorCount);

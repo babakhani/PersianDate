@@ -7,10 +7,10 @@ module.exports = function (grunt) {
             config: {
                 options: {
                     'no-gfm': true,
-                    'heading-depth': 2,
-                    'example-lang': 'js'
+                    'heading-depth': 1,
+                    'example-lang': 'js',
                 },
-                src: 'src/*.js',
+                src: 'src/pDate.js',
                 dest: 'doc/document.md'
             }
         },

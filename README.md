@@ -3,7 +3,7 @@ Persian Date
 
 Javascript date library for parsing, validating, manipulating, and formatting Persian dates System.
 
-> from 0.6.0 support gregorian calendar.
+> from 1.0.0 persian date support gregorian calendar.
 
 Inspired by [momentjs](http://momentjs.com/)
 
@@ -47,7 +47,7 @@ default: ```persian```
 
 available option: ```persian``` ```gregorian```
 
-from version 0.3.* ```persianDate``` have an option that allows developers to set calendar type of Date object.
+from version 1.0.* ```persianDate``` have an option that allows developers to set calendar type of Date object.
 
 you can change calendar type globally or only in specific object
 
@@ -78,7 +78,7 @@ There is two popular way to determining leap years for the Persian calendar.
 
 - algorithmic: based on Behrooz-Birashk proposed algorithm.
 
-After version 0.3.* ```persianDate``` support both algorithms and you can choose which algorithm use in your project. 
+After version 1.0.* ```persianDate``` support both algorithms and you can choose which algorithm use in your project. 
 currently, we have support 2 type of leap year mode ``` algorithmic ```, ``` astronomical ```.
 
 you can change it globally like this example
@@ -131,7 +131,7 @@ new persianDate([1396,6,17]).toLocale('en').format('MMMM'); // "June"
 
 ```
 
-> after version 0.3.*, you must use ```toLocale``` instead ```formatPersian```, for show persian or english digit.
+> after version 1.0.*, you must use ```toLocale``` instead ```formatPersian```, for show persian or english digit.
 
 ## Parse
 
@@ -219,7 +219,7 @@ new persianDate([1392, 6]); // Shahrivar 1st
 new persianDate([1392, 6, 10]); // Shahrivar 10th
 ```
 
-> Note: from 0.3.* you can pass gregorian date array to create gregorian date object. for this functionality you must change date object calendar type by ```toCalendar('gregorian')```
+> Note: from 1.0.* you can pass gregorian date array to create gregorian date object. for this functionality you must change date object calendar type by ```toCalendar('gregorian')```
 
 example:
 
@@ -571,7 +571,7 @@ ISO8601 format ```YYYY-MM-DDTHH:mm:ssZ```
 
 ### Format To Persian digit
 
-> Deprecated as 0.3.* instead use [toLocale](#tolocale)
+> Deprecated as 1.0.* instead use [toLocale](#tolocale)
 
 By Default persianDate format, use Persian Number System, for engilsh number Set formatPersian Option as false
 
@@ -887,10 +887,6 @@ persianDate.isSameDay(a,b); // false
 ```
 
 
+## license
 
-
-```
-
-
-
-
+- [WTFPL](http://www.wtfpl.net/)

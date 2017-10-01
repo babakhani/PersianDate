@@ -88,7 +88,11 @@ class Helpers {
         }
     }
 
-
+    /**
+     *
+     * @param number
+     * @return {number}
+     */
     absFloor (number) {
         if (number < 0) {
             // -0 -> 0
@@ -97,16 +101,6 @@ class Helpers {
             return Math.floor(number);
         }
     }
-
-    // absCeil(number) {
-    //     if (number < 0) {
-    //         return Math.floor(number);
-    //     } else {
-    //         return Math.ceil(number);
-    //     }
-    // }
-
-
 }
 
 module.exports = Helpers;
