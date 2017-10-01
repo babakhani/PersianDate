@@ -32,15 +32,8 @@ describe('format', function () {
         pDate.toCalendar('persian');
         pDate.toLocale('fa');
     });
-    it('format("YYYY/MM/DD a dddd ddd d MMM MMMM LT X w ww")', function () {
-        pDate.toCalendar('gregorian');
-        pDate.toLocale('en');
-        let a = new pDate(defaultArray).format('YYYY/MM/DD a dddd ddd d MMM MMMM LT X w ww');
-        assert.deepEqual(a, "2017/01/01 PM Sunday Sun 1 Jan January 0:32 PM 1483261360 1 01");
-        pDate.toCalendar('persian');
-        pDate.toLocale('fa');
-    });
 });
+
 
 describe('isLeapYear', function () {
     it('2017 : Normal Year ', function () {
