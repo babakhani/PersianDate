@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.0.3] - 2017-12-24
 - Fix [183](https://github.com/babakhani/pwt.datepicker/issues/183)
+- Fix [41](https://github.com/babakhani/PersianDate/issues/41)
 
 ## [1.0.1] - 2017-10-1
 - Fix npm published package

@@ -1171,7 +1171,7 @@ class PersianDateClass {
                 }
                 // 8:30 PM
                 case ('LT'): {
-                    return self.format('h:m a');
+                    return self.format('H:m a');
                 }
                 // 09/04/1986
                 case ('L'): {
