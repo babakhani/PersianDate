@@ -461,25 +461,25 @@ class Algorithms {
      * @param {*} dateArray
      */
     calcGregorian (dateArray) {
-        if (dateArray[0]) {
+        if (dateArray[0] || dateArray[0] === 0) {
             this.ON.gregorian.year = dateArray[0];
         }
-        if (dateArray[1]) {
+        if (dateArray[1] || dateArray[1] === 0) {
             this.ON.gregorian.month = dateArray[1];
         }
-        if (dateArray[2]) {
+        if (dateArray[2] || dateArray[2] === 0) {
             this.ON.gregorian.day = dateArray[2];
         }
-        if (dateArray[3]) {
+        if (dateArray[3] || dateArray[3] === 0) {
             this.ON.gregorian.hour = dateArray[3];
         }
-        if (dateArray[4]) {
+        if (dateArray[4] || dateArray[4] === 0) {
             this.ON.gregorian.minute = dateArray[4];
         }
-        if (dateArray[5]) {
+        if (dateArray[5] || dateArray[5] === 0) {
             this.ON.gregorian.second = dateArray[5];
         }
-        if (dateArray[6]) {
+        if (dateArray[6] || dateArray[6] === 0) {
             this.ON.gregorian.millisecond = dateArray[6];
         }
         this.updateFromGregorian();
