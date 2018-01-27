@@ -1191,19 +1191,19 @@ class PersianDateClass {
                 }
                 //September 4th 1986 8:30 PM
                 case ('LLL'): {
-                    return self.format('MMMM YYYY DD   h:m  a');
+                    return self.format('MMMM YYYY DD   H:m  a');
                 }
                 // Sep 4 1986 8:30 PM
                 case ('lll'): {
-                    return self.format('MMM YYYY DD   h:m  a');
+                    return self.format('MMM YYYY DD   H:m  a');
                 }
                 //Thursday, September 4th 1986 8:30 PM
                 case ('LLLL'): {
-                    return self.format('dddd D MMMM YYYY  h:m  a');
+                    return self.format('dddd D MMMM YYYY  H:m  a');
                 }
                 // Thu, Sep 4 1986 8:30 PM
                 case ('llll'): {
-                    return self.format('ddd D MMM YYYY  h:m  a');
+                    return self.format('ddd D MMM YYYY  H:m  a');
                 }
             }
         }

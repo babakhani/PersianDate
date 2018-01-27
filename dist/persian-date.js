@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  1.0.3
+ * persian-date -  1.0.4
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under WTFPL license 
@@ -262,7 +262,7 @@ var PersianDateClass = function () {
         this.leapYearMode = PersianDateClass.leapYearMode;
 
         this.algorithms = new Algorithms(this);
-        this.version = "1.0.3";
+        this.version = "1.0.4";
         this._utcMode = false;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
@@ -1481,22 +1481,22 @@ var PersianDateClass = function () {
                     //September 4th 1986 8:30 PM
                     case 'LLL':
                         {
-                            return self.format('MMMM YYYY DD   h:m  a');
+                            return self.format('MMMM YYYY DD   H:m  a');
                         }
                     // Sep 4 1986 8:30 PM
                     case 'lll':
                         {
-                            return self.format('MMM YYYY DD   h:m  a');
+                            return self.format('MMM YYYY DD   H:m  a');
                         }
                     //Thursday, September 4th 1986 8:30 PM
                     case 'LLLL':
                         {
-                            return self.format('dddd D MMMM YYYY  h:m  a');
+                            return self.format('dddd D MMMM YYYY  H:m  a');
                         }
                     // Thu, Sep 4 1986 8:30 PM
                     case 'llll':
                         {
-                            return self.format('ddd D MMM YYYY  h:m  a');
+                            return self.format('ddd D MMM YYYY  H:m  a');
                         }
                 }
             }

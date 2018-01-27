@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.4] - 2018-1-27
+- Fix [43](https://github.com/babakhani/PersianDate/issues/43)
+- Fix [44](https://github.com/babakhani/PersianDate/issues/44)
+
 ## [1.0.3] - 2017-12-24
 - Fix [183](https://github.com/babakhani/pwt.datepicker/issues/183)
 - Fix [41](https://github.com/babakhani/PersianDate/issues/41)

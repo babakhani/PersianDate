@@ -23,9 +23,9 @@ describe('format', function () {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
         assert.deepEqual(new pDate(defaultArray).format(), '2017-01-01 12:32:40 PM');
-        assert.deepEqual(new pDate(defaultArray).format('lllll'), 'Sun 1 Jan 2017  0:32  PM2017/1/1');
-        assert.deepEqual(new pDate(defaultArray).format('llll'), 'Sun 1 Jan 2017  0:32  PM');
-        assert.deepEqual(new pDate(defaultArray).format('lll'), 'Jan 2017 01   0:32  PM');
+        assert.deepEqual(new pDate(defaultArray).format('lllll'), 'Sun 1 Jan 2017  12:32  PM2017/1/1');
+        assert.deepEqual(new pDate(defaultArray).format('llll'), 'Sun 1 Jan 2017  12:32  PM');
+        assert.deepEqual(new pDate(defaultArray).format('lll'), 'Jan 2017 01   12:32  PM');
         assert.deepEqual(new pDate(defaultArray).format('ll'), 'Jan 01 2017');
         assert.deepEqual(new pDate(defaultArray).format('l'), '2017/1/1');
         assert.deepEqual(new pDate(defaultArray).format('dddd'), 'Sunday');
