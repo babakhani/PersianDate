@@ -1,6 +1,6 @@
 {
   "name": "persian-date",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "WTFPL",
   "main": "dist/persian-date",
   "author": "Reza Babakhani <babakhani.reza@gmail.com>",

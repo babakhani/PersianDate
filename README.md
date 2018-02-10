@@ -11,7 +11,7 @@ More info at [wikipedia](http://en.wikipedia.org/wiki/Iranian_calendar)
 
 [![npm version](https://badge.fury.io/js/persian-date.svg)](https://github.com/babakhani/persiandate)
 [![Bower version](https://badge.fury.io/bo/persian-date.svg)](https://github.com/babakhani/persiandate)
-[![Coverage Status](https://coveralls.io/repos/github/babakhani/PersianDate/badge.svg?branch=develop)](https://coveralls.io/github/babakhani/PersianDate?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/babakhani/PersianDate/badge.svg?branch=master)](https://coveralls.io/github/babakhani/PersianDate?branch=master)
 [![Travis-ci](https://travis-ci.org/babakhani/PersianDate.svg?branch=master)](https://github.com/babakhani/persiandate)
 
 <a class="github-button" href="https://github.com/babakhani/persiandate" data-icon="octicon-star" data-style="mega" data-count-href="/babakhani/persiandate/stargazers" data-count-api="/repos/babakhani/persiandate#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star babakhani/persiandate on GitHub">Star</a>

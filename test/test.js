@@ -650,7 +650,7 @@ describe('timezone', function () {
         assert.deepEqual(d.valueOf(), d.toDate().valueOf());
     });
     it('static unix method', function () {
-        let a = pDate.unix(1491031614047).valueOf();
+        let a = pDate.unix(1491031614047).unix();
         assert.deepEqual(a, 1491031614047);
         let b = pDate.unix();
         assert.ok(b);

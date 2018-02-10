@@ -605,7 +605,7 @@ class PersianDateClass {
 
     static unix(timestamp) {
         if (timestamp) {
-            return new PersianDateClass(timestamp * 1000).unix();
+            return new PersianDateClass(timestamp * 1000);
         } else {
             return new PersianDateClass().unix();
         }
