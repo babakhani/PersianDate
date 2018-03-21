@@ -25,9 +25,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
+/******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/ 		}
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -973,7 +973,8 @@ var PersianDateClass = function () {
                     return new syncedCelander([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
                 case 'weeks':
                 case 'week':
-                    return new syncedCelander([this.year(), this.month(), this.date() - (this.calendar().weekday - 1)]);
+                    var newArray = new PersianDateClass(this.valueOf() - (this.calendar().weekday - 1) * 86400000).toArray();
+                    return new syncedCelander(newArray);
                 default:
                     return this.clone();
             }
@@ -1544,21 +1545,29 @@ var PersianDateClass = function () {
                 return this.unix(tempDate.unix());
             }
             if (unit === 'month') {
-                var tempYear = Math.floor(value / 12),
-                    remainingMonth = value - tempYear * 12,
+                var tempYear = Math.floor(value / 12);
+                var remainingMonth = value - tempYear * 12,
                     calcedMonth = null;
                 if (arr[1] + remainingMonth > 12) {
                     tempYear += 1;
-                    calcedMonth = 1;
+                    calcedMonth = arr[1] + remainingMonth - 12;
                 } else {
-                    if (remainingMonth > 0) {
-                        calcedMonth = arr[1] + value;
-                    } else {
-                        calcedMonth = arr[1] + remainingMonth;
-                    }
+                    calcedMonth = arr[1] + remainingMonth;
                 }
-                var _tempDate = new PersianDateClass([arr[0] + tempYear, calcedMonth, arr[2], arr[3], arr[4], arr[5], arr[6]]);
-                return this.unix(_tempDate.unix());
+                //console.log('tempYear : ' + tempYear)
+                //console.log('remainingMonth : ' + remainingMonth)
+                //console.log('calcedMonth : ' + calcedMonth)
+                //console.log('tempdate array')
+                //console.log([arr[0] + tempYear, calcedMonth, 1, arr[3], arr[4], arr[5], arr[6]])
+                var normalizaedDate = arr[2];
+                var tempDateArray = new PersianDateClass([arr[0] + tempYear, calcedMonth, 1, arr[3], arr[4], arr[5], arr[6]]).toArray();
+                var monthDays = this.daysInMonth(arr[0] + tempYear, calcedMonth);
+                if (arr[2] > monthDays) {
+                    normalizaedDate = monthDays;
+                }
+                console.log('Array:');
+                console.log([tempDateArray[0], tempDateArray[1], normalizaedDate, tempDateArray[3], tempDateArray[4], tempDateArray[5], tempDateArray[6]]);
+                return this.unix(new PersianDateClass([tempDateArray[0], tempDateArray[1], normalizaedDate, tempDateArray[3], tempDateArray[4], tempDateArray[5], tempDateArray[6]]).unix());
             }
             if (unit === 'day') {
                 var newMillisecond = this.valueOf() + value * 86400000;
@@ -1596,56 +1605,7 @@ var PersianDateClass = function () {
     }, {
         key: 'subtract',
         value: function subtract(key, value) {
-            var duration = new Duration(key, value)._data,
-                unit = normalizeDuration(key, value).unit,
-                arr = this.toArray();
-            value = normalizeDuration(key, value).value;
-            if (unit === 'year') {
-                var tempDate = new PersianDateClass([arr[0] - value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]]);
-                return this.unix(tempDate.unix());
-            }
-            if (unit === 'month') {
-                var tempYear = Math.floor(value / 12),
-                    remainingMonth = value - tempYear * 12,
-                    calcedMonth = null;
-                if (arr[1] - remainingMonth < 1) {
-                    tempYear += 1;
-                    calcedMonth = 12;
-                } else {
-                    if (remainingMonth > 0) {
-                        calcedMonth = arr[1] - value;
-                    } else {
-                        calcedMonth = arr[1] - remainingMonth;
-                    }
-                }
-                var _tempDate2 = new PersianDateClass([arr[0] - tempYear, calcedMonth, arr[2], arr[3], arr[4], arr[5], arr[6]]);
-                return this.unix(_tempDate2.unix());
-            }
-            if (unit === 'day') {
-                var newMillisecond = this.valueOf() - value * 86400000;
-                return this.unix(newMillisecond / 1000);
-            }
-            if (unit === 'week') {
-                var _newMillisecond6 = this.valueOf() - value * 7 * 86400000;
-                return this.unix(_newMillisecond6 / 1000);
-            }
-            if (unit === 'hour') {
-                var _newMillisecond7 = this.valueOf() - value * 3600000;
-                return this.unix(_newMillisecond7 / 1000);
-            }
-            if (unit === 'minute') {
-                var _newMillisecond8 = this.valueOf() - value * 60000;
-                return this.unix(_newMillisecond8 / 1000);
-            }
-            if (unit === 'second') {
-                var _newMillisecond9 = this.valueOf() - value * 1000;
-                return this.unix(_newMillisecond9 / 1000);
-            }
-            if (unit === 'millisecond') {
-                var _newMillisecond10 = this.valueOf() - value;
-                return this.unix(_newMillisecond10 / 1000);
-            }
-            return this._getSyncedClass(this.valueOf());
+            return this.add(key, value * -1);
         }
 
         /**

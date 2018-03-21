@@ -739,7 +739,8 @@ class PersianDateClass {
                 return new syncedCelander([this.year(), this.month(), this.date(), this.hours(), this.minutes(), this.seconds()]);
             case 'weeks':
             case 'week':
-                return new syncedCelander([this.year(), this.month(), this.date() - (this.calendar().weekday - 1)]);
+                let newArray = new PersianDateClass(this.valueOf() - ((this.calendar().weekday - 1) * 86400000)).toArray()
+                return new syncedCelander(newArray);
             default:
                 return this.clone();
         }
@@ -1257,21 +1258,22 @@ class PersianDateClass {
             return this.unix(tempDate.unix());
         }
         if (unit === 'month') {
-            let tempYear = Math.floor(value / 12),
-            remainingMonth = value - (tempYear * 12),
-            calcedMonth = null;
+            let tempYear = Math.floor(value / 12)
+            let remainingMonth = value - (tempYear * 12),
+                calcedMonth = null;
             if (arr[1] + remainingMonth > 12) {
                 tempYear += 1
-                calcedMonth = 1
+                calcedMonth = arr[1] + remainingMonth - 12
             } else {
-                if (remainingMonth > 0) {
-                    calcedMonth = arr[1] + value 
-                } else {
-                    calcedMonth = arr[1] + remainingMonth
-                }
+                calcedMonth = arr[1] + remainingMonth 
             }
-            let tempDate = new PersianDateClass([arr[0] + tempYear, calcedMonth, arr[2], arr[3], arr[4], arr[5], arr[6]])
-            return this.unix(tempDate.unix());
+            let normalizaedDate = arr[2]
+            let tempDateArray = new PersianDateClass([arr[0] + tempYear, calcedMonth, 1, arr[3], arr[4], arr[5], arr[6]]).toArray()
+            let monthDays = this.daysInMonth(arr[0] + tempYear, calcedMonth);
+            if (arr[2] > monthDays) {
+                normalizaedDate = monthDays
+            }
+            return this.unix(new PersianDateClass([tempDateArray[0], tempDateArray[1], normalizaedDate, tempDateArray[3], tempDateArray[4], tempDateArray[5], tempDateArray[6]]).unix());
         }
         if (unit === 'day') {
             let newMillisecond = this.valueOf() + (value * 86400000)
@@ -1307,56 +1309,7 @@ class PersianDateClass {
      * @returns {PersianDate}
      */
     subtract(key, value) {
-        let duration = new Duration(key, value)._data,
-            unit = normalizeDuration(key, value).unit,
-            arr = this.toArray();
-        value = normalizeDuration(key, value).value
-        if (unit === 'year') {
-            let tempDate = new PersianDateClass([arr[0] - value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]])
-            return this.unix(tempDate.unix());
-        }
-        if (unit === 'month') {
-            let tempYear = Math.floor(value / 12),
-                remainingMonth = value - (tempYear * 12),           
-                calcedMonth = null;
-            if ((arr[1] - remainingMonth) < 1) {
-                tempYear += 1
-                calcedMonth = 12
-            } else {
-                if (remainingMonth > 0) {
-                    calcedMonth = arr[1] - value 
-                } else {
-                    calcedMonth = arr[1] - remainingMonth
-                }
-            }
-            let tempDate = new PersianDateClass([arr[0] - tempYear, calcedMonth, arr[2], arr[3], arr[4], arr[5], arr[6]])
-            return this.unix(tempDate.unix());
-        }
-        if (unit === 'day') {
-            let newMillisecond = this.valueOf() - (value * 86400000)
-            return this.unix(newMillisecond / 1000);
-        }
-        if (unit === 'week') {
-            let newMillisecond = this.valueOf() - ((value*7) * 86400000)
-            return this.unix(newMillisecond / 1000);
-        }
-        if (unit === 'hour') {
-            let newMillisecond = this.valueOf() - (value * 3600000)
-            return this.unix(newMillisecond / 1000);
-        }
-        if (unit === 'minute') {
-            let newMillisecond = this.valueOf() - (value * 60000)
-            return this.unix(newMillisecond / 1000);
-        }
-        if (unit === 'second') {
-            let newMillisecond = this.valueOf() - (value * 1000)
-            return this.unix(newMillisecond / 1000);
-        }
-        if (unit === 'millisecond') {
-            let newMillisecond = this.valueOf() - value;
-            return this.unix(newMillisecond / 1000);
-        }
-        return this._getSyncedClass(this.valueOf());
+        return this.add(key, value * -1)
     }
 
     /**

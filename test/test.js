@@ -72,7 +72,7 @@ describe('Make Instance', function () {
 
     it('Negative year', function () {
         let a = new pDate([0]).format();
-        assert.deepEqual(a, "۰-۰۰-۰۱ ۰۰:۰۰:۰۰ ق ظ");
+        assert.deepEqual(a, "۰-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
         let c = new pDate([-2000]).format('YYYY/MM/DD');
         assert.deepEqual(c, "-۲۰۰۰/۰۱/۰۱");
     });
@@ -1170,7 +1170,7 @@ describe('Add', function () {
 
     it('Month to 1395(leap)/11/30', function () {
         a = new pDate([1395, 11, 30, 1, 1, 1]).add('month', 1).toArray();
-        assert.deepEqual(a, [1395, 12, 30, 1, 1, 1, 0]);
+        assert.deepEqual(a, [1395, 12, 30, 1, 1, 1, d]);
     });
 
     it('Month to 1394(none leap)/11/30', function () {
