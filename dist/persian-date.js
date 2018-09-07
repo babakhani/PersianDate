@@ -25,9 +25,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -922,9 +922,6 @@ var PersianDateClass = function () {
                 val === 'days' || val === 'day' ? diff / 864e5 : // 1000 * 60 * 60 * 24
                 val === 'weeks' || val === 'week' ? diff / 6048e5 : // 1000 * 60 * 60 * 24 * 7
                 diff;
-            }
-            if (output < 0) {
-                output = output * -1;
             }
             return asFloat ? output : Math.round(output);
         }
@@ -1985,7 +1982,7 @@ var Algorithms = function () {
          astronomical calendar in which a
          given Julian day falls.  Returns an
          array of two elements:
-          [0]  Persian year
+           [0]  Persian year
          [1]  Julian day number containing
          equinox for this year.
          * @param {*} jd
@@ -2532,11 +2529,11 @@ var ASTRO = function () {
         /*  EQUINOX  --  Determine the Julian Ephemeris Day of an
          equinox or solstice.  The "which" argument
          selects the item to be computed:
-          0   March equinox
+           0   March equinox
          1   June solstice
          2   September equinox
          3   December solstice
-          */
+           */
         /**
          * @desc Periodic terms to obtain true time
          * @type Array
@@ -2697,8 +2694,8 @@ var ASTRO = function () {
 
             /* Calculate angles.  The correspondence between the elements
              of our array and the terms cited in Meeus are:
-              ta[0] = D  ta[0] = M  ta[2] = M'  ta[3] = F  ta[4] = \Omega
-              */
+               ta[0] = D  ta[0] = M  ta[2] = M'  ta[3] = F  ta[4] = \Omega
+               */
 
             ta[0] = this.dtr(297.850363 + 445267.11148 * t - 0.0019142 * t2 + t3 / 189474.0);
             ta[1] = this.dtr(357.52772 + 35999.05034 * t - 0.0001603 * t2 - t3 / 300000.0);
@@ -3101,114 +3098,114 @@ module.exports = PersianDateClass;
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Container = function Container() {
-    _classCallCheck(this, Container);
+        _classCallCheck(this, Container);
 
-    this.gDate = null;
-    /**
-     *
-     * @type {number}
-     */
-    this.modifiedjulianday = 0;
+        this.gDate = null;
+        /**
+         *
+         * @type {number}
+         */
+        this.modifiedjulianday = 0;
 
-    /**
-     *
-     * @type {number}
-     */
-    this.julianday = 0;
+        /**
+         *
+         * @type {number}
+         */
+        this.julianday = 0;
 
-    /**
-     *
-     * @type {{day: number}}
-     */
-    this.gregserial = {
-        day: 0
-    };
+        /**
+         *
+         * @type {{day: number}}
+         */
+        this.gregserial = {
+                day: 0
+        };
 
-    this.zone = 0;
+        this.zone = 0;
 
-    /**
-     *
-     * @type {{year: number, month: number, day: number, hour: number, minute: number, second: number, millisecond: number, weekday: number, unix: number, leap: number}}
-     */
-    this.gregorian = {
-        year: 0,
-        month: 0,
-        day: 0,
-        hour: 0,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-        weekday: 0,
-        unix: 0,
-        leap: 0
-    };
+        /**
+         *
+         * @type {{year: number, month: number, day: number, hour: number, minute: number, second: number, millisecond: number, weekday: number, unix: number, leap: number}}
+         */
+        this.gregorian = {
+                year: 0,
+                month: 0,
+                day: 0,
+                hour: 0,
+                minute: 0,
+                second: 0,
+                millisecond: 0,
+                weekday: 0,
+                unix: 0,
+                leap: 0
+        };
 
-    /**
-     *
-     * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
-     */
-    this.juliancalendar = {
-        year: 0,
-        month: 0,
-        day: 0,
-        leap: 0,
-        weekday: 0
-    };
+        /**
+         *
+         * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
+         */
+        this.juliancalendar = {
+                year: 0,
+                month: 0,
+                day: 0,
+                leap: 0,
+                weekday: 0
+        };
 
-    /**
-     *
-     * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
-     */
-    this.islamic = {
-        year: 0,
-        month: 0,
-        day: 0,
-        leap: 0,
-        weekday: 0
-    };
+        /**
+         *
+         * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
+         */
+        this.islamic = {
+                year: 0,
+                month: 0,
+                day: 0,
+                leap: 0,
+                weekday: 0
+        };
 
-    /**
-     *
-     * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
-     */
-    this.persianAlgo = this.persian = {
-        year: 0,
-        month: 0,
-        day: 0,
-        leap: 0,
-        weekday: 0
-    };
+        /**
+         *
+         * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
+         */
+        this.persianAlgo = this.persian = {
+                year: 0,
+                month: 0,
+                day: 0,
+                leap: 0,
+                weekday: 0
+        };
 
-    /**
-     *
-     * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
-     */
-    this.persianAstro = {
-        year: 0,
-        month: 0,
-        day: 0,
-        leap: 0,
-        weekday: 0
-    };
+        /**
+         *
+         * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
+         */
+        this.persianAstro = {
+                year: 0,
+                month: 0,
+                day: 0,
+                leap: 0,
+                weekday: 0
+        };
 
-    /**
-     *
-     * @type {{year: number, week: number, day: number}}
-     */
-    this.isoweek = {
-        year: 0,
-        week: 0,
-        day: 0
-    };
+        /**
+         *
+         * @type {{year: number, week: number, day: number}}
+         */
+        this.isoweek = {
+                year: 0,
+                week: 0,
+                day: 0
+        };
 
-    /**
-     *
-     * @type {{year: number, day: number}}
-     */
-    this.isoday = {
-        year: 0,
-        day: 0
-    };
+        /**
+         *
+         * @type {{year: number, day: number}}
+         */
+        this.isoday = {
+                year: 0,
+                day: 0
+        };
 };
 
 module.exports = Container;
