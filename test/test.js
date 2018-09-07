@@ -738,12 +738,12 @@ describe('English Format', function () {
 
 
 describe('Diff', function () {
-    it('set', function () {
+    it('a.diff(b) !== undefined', function () {
         let a = new pDate([1392, 1, 1]),
             b = new pDate([1392, 2, 2]);
         assert.ok(a.diff(b));
     });
-    it('set', function () {
+    it('a.diff(b) a > b', function () {
         let a = new pDate([1392, 1, 1]),
             b = new pDate([1391, 1, 1]);
         assert.deepEqual(a.diff(b, 'year'), 1);
@@ -753,6 +753,28 @@ describe('Diff', function () {
         assert.deepEqual(a.diff(b, 'minute'), 527040);
         assert.deepEqual(a.diff(b, 'second'), 31622400);
         assert.deepEqual(a.diff(b), 31622400000);
+    });
+    it('a.diff(b) a < b', function () {
+        let a = new pDate([1391, 1, 1]),
+            b = new pDate([1392, 1, 1]);
+        assert.deepEqual(a.diff(b, 'year'), -1);
+        assert.deepEqual(a.diff(b, 'month'), -12);
+        assert.deepEqual(a.diff(b, 'day'), -366);
+        assert.deepEqual(a.diff(b, 'hour'), -8784);
+        assert.deepEqual(a.diff(b, 'minute'), -527040);
+        assert.deepEqual(a.diff(b, 'second'), -31622400);
+        assert.deepEqual(a.diff(b), -31622400000);
+    });
+    it('a.diff(b) a === b', function () {
+        let a = new pDate([1391, 1, 1]),
+            b = new pDate([1391, 1, 1]);
+        assert.deepEqual(a.diff(b, 'year'), 0);
+        assert.deepEqual(a.diff(b, 'month'), 0);
+        assert.deepEqual(a.diff(b, 'day'), 0);
+        assert.deepEqual(a.diff(b, 'hour'), 0);
+        assert.deepEqual(a.diff(b, 'minute'), 0);
+        assert.deepEqual(a.diff(b, 'second'), 0);
+        assert.deepEqual(a.diff(b), 0);
     });
 });
 
