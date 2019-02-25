@@ -3,7 +3,7 @@
  * persian-date -  1.0.5
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
- * Under WTFPL license 
+ * Under MIT license 
  * 
  * 
  */
@@ -25,9 +25,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -286,7 +286,7 @@ var PersianDateClass = function () {
             if (TypeChecking.isDate(input)) {
                 this._gDateToCalculators(input);
             } else if (TypeChecking.isArray(input)) {
-                this.algorithmsCalc([input[0], input[1] ? input[1] : 1, input[2] ? input[2] : 1, input[3], input[4], input[5], input[6] ? input[6] : 0]);
+                this.algorithmsCalc([input[0], input[1] ? input[1] : 1, input[2] ? input[2] : 1, input[3] ? input[3] : 0, input[4] ? input[4] : 0, input[5] ? input[5] : 0, input[6] ? input[6] : 0]);
             } else if (TypeChecking.isNumber(input)) {
                 var fromUnix = new Date(input);
                 this._gDateToCalculators(fromUnix);
@@ -742,6 +742,9 @@ var PersianDateClass = function () {
         key: 'hours',
         value: function hours(input) {
             if (input || input === 0) {
+                if (input === 0) {
+                    input = 24;
+                }
                 this.algorithmsCalc([this.year(), this.month(), this.date(), input]);
                 return this;
             } else {
@@ -1525,9 +1528,10 @@ var PersianDateClass = function () {
             value = normalizeDuration(key, value).value;
 
             if (unit === 'year' || unit === 'month') {
+                var tempDate = new PersianDateClass();
                 if (duration.years > 0) {
                     var newYear = this.year() + duration.years;
-                    this.year(newYear);
+                    tempDate.year(newYear);
                 }
                 if (duration.months > 0) {
                     var oldDate = this.date();
@@ -1536,26 +1540,34 @@ var PersianDateClass = function () {
                     if (oldDate >= thisMonthDaysCount) {
                         oldDate = thisMonthDaysCount;
                     }
-                    this.date(oldDate);
-                    this.month(newMonth);
+                    tempDate.date(oldDate);
+                    tempDate.month(newMonth);
                 }
+                return this.unix(tempDate.unix());
             }
             if (unit === 'day') {
                 var oldHour = this.hour();
-                var newDate = this.valueOf() + value * 24 * 60 * 60 * 1000;
-                return this.unix(newDate / 1000).hour(oldHour);
+                var oldMinute = this.minute();
+                var oldSecond = this.second();
+                var newDate = new PersianDateClass(this.valueOf()).endOf('day') + value * 24 * 60 * 60 * 1000;
+                return this.unix(newDate / 1000).hour(oldHour).minute(oldMinute).second(oldSecond);
+            }
+            if (unit === 'week') {
+                var _oldHour = this.hour();
+                var _newDate = this.valueOf() + value * 7 * 24 * 60 * 60 * 1000;
+                return this.unix(_newDate / 1000).hour(_oldHour);
             }
             if (unit === 'hour') {
-                var _newDate = this.valueOf() + value * 60 * 60 * 1000;
-                return this.unix(_newDate / 1000);
-            }
-            if (unit === 'minute') {
-                var _newDate2 = this.valueOf() + value * 60 * 1000;
+                var _newDate2 = this.valueOf() + value * 60 * 60 * 1000;
                 return this.unix(_newDate2 / 1000);
             }
-            if (unit === 'second') {
-                var _newDate3 = this.valueOf() + value * 1000;
+            if (unit === 'minute') {
+                var _newDate3 = this.valueOf() + value * 60 * 1000;
                 return this.unix(_newDate3 / 1000);
+            }
+            if (unit === 'second') {
+                var _newDate4 = this.valueOf() + value * 1000;
+                return this.unix(_newDate4 / 1000);
             }
             if (unit === 'millisecond') {
                 // log('add millisecond')
@@ -1579,37 +1591,44 @@ var PersianDateClass = function () {
             value = normalizeDuration(key, value).value;
 
             if (unit === 'year' || unit === 'month') {
+                var tempDate = new PersianDateClass();
                 if (duration.years > 0) {
                     var newYear = this.year() - duration.years;
-                    this.year(newYear);
+                    tempDate.year(newYear);
                 }
                 if (duration.months > 0) {
                     var oldDate = this.date();
                     var newMonth = this.month() - duration.months;
-                    this.month(newMonth);
+                    tempDate.month(newMonth);
                     var thisMonthDaysCount = this.daysInMonth(this.year(), this.month());
                     if (oldDate > thisMonthDaysCount) {
                         oldDate = thisMonthDaysCount;
                     }
-                    this.date(oldDate);
+                    tempDate.date(oldDate);
                 }
+                return this.unix(tempDate.unix());
             }
             if (unit === 'day') {
                 var oldHour = this.hour();
-                var newDate = this.valueOf() - value * 24 * 60 * 60 * 1000;
+                var newDate = new PersianDateClass(this.valueOf()).startOf('day') - value * 24 * 60 * 60 * 1000;
                 return this.unix(newDate / 1000).hour(oldHour);
             }
+            if (unit === 'week') {
+                var _oldHour2 = this.hour();
+                var _newDate5 = this.valueOf() - value * 7 * 24 * 60 * 60 * 1000;
+                return this.unix(_newDate5 / 1000).hour(_oldHour2);
+            }
             if (unit === 'hour') {
-                var _newDate4 = this.valueOf() - value * 60 * 60 * 1000;
-                return this.unix(_newDate4 / 1000);
+                var _newDate6 = this.valueOf() - value * 60 * 60 * 1000;
+                return this.unix(_newDate6 / 1000);
             }
             if (unit === 'minute') {
-                var _newDate5 = this.valueOf() - value * 60 * 1000;
-                return this.unix(_newDate5 / 1000);
+                var _newDate7 = this.valueOf() - value * 60 * 1000;
+                return this.unix(_newDate7 / 1000);
             }
             if (unit === 'second') {
-                var _newDate6 = this.valueOf() - value * 1000;
-                return this.unix(_newDate6 / 1000);
+                var _newDate8 = this.valueOf() - value * 1000;
+                return this.unix(_newDate8 / 1000);
             }
             if (unit === 'millisecond') {
                 // log('add millisecond')
@@ -2382,6 +2401,9 @@ var Algorithms = function () {
     }, {
         key: 'calcPersiana',
         value: function calcPersiana(dateArray) {
+            console.log('calcPersian');
+            console.log(dateArray);
+            console.log(dateArray[4]);
             if (dateArray[0]) {
                 this.ON.persianAstro.year = dateArray[0];
             }
@@ -3042,8 +3064,8 @@ module.exports = {
         months: ['Farvardin', 'Ordibehesht', 'Khordad', 'Tir', 'Mordad', 'Shahrivar', 'Mehr', 'Aban', 'Azar', 'Dey', 'Bahman', 'Esfand'],
         monthsShort: ['Far', 'Ord', 'Kho', 'Tir', 'Mor', 'Sha', 'Meh', 'Aba', 'Aza', 'Dey', 'Bah', 'Esf'],
         weekdays: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-        weekdaysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+        weekdaysShort: ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        weekdaysMin: ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'],
         persianDaysName: ['Urmazd', 'Bahman', 'Ordibehesht', 'Shahrivar', 'Sepandarmaz', 'Khurdad', 'Amordad', 'Dey-be-azar', 'Azar', 'Aban', 'Khorshid', 'Mah', 'Tir', 'Gush', 'Dey-be-mehr', 'Mehr', 'Sorush', 'Rashn', 'Farvardin', 'Bahram', 'Ram', 'Bad', 'Dey-be-din', 'Din', 'Ord', 'Ashtad', 'Asman', 'Zamyad', 'Mantre-sepand', 'Anaram', 'Ziadi']
     }
 };

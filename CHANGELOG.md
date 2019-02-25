@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [unreleased]
+- Fix [52](https://github.com/babakhani/PersianDate/issues/52)
+- Fix [53](https://github.com/babakhani/PersianDate/issues/53)
+- Fix [56](https://github.com/babakhani/PersianDate/issues/56)
+
 ## [1.0.5] - 2018-2-11
 - Fix [35](https://github.com/babakhani/PersianDate/issues/35)
 

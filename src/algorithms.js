@@ -553,6 +553,9 @@ class Algorithms {
      * @param {*} dateArray
      */
     calcPersiana (dateArray) {
+        console.log('calcPersian')
+        console.log(dateArray)
+        console.log(dateArray[4])
         if (dateArray[0]) {
             this.ON.persianAstro.year = dateArray[0];
         }
