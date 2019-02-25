@@ -474,7 +474,7 @@ class Algorithms {
             this.ON.gregorian.hour = dateArray[3];
         }
         if (dateArray[4] || dateArray[4] === 0) {
-            this.ON.gregorian.minute = dateArray[4];
+          this.ON.gregorian.minute = dateArray[4];
         }
         if (dateArray[5] || dateArray[5] === 0) {
             this.ON.gregorian.second = dateArray[5];
@@ -517,25 +517,25 @@ class Algorithms {
      * @param {*} dateArray
      */
     calcPersian (dateArray) {
-        if (dateArray[0]) {
+        if (dateArray[0] || dateArray[0] === 0) {
             this.ON.persian.year = dateArray[0];
         }
-        if (dateArray[1]) {
+        if (dateArray[1] || dateArray[1] === 0) {
             this.ON.persian.month = dateArray[1];
         }
-        if (dateArray[2]) {
+        if (dateArray[2] || dateArray[2] === 0) {
             this.ON.persian.day = dateArray[2];
         }
-        if (dateArray[3]) {
+        if (dateArray[3] || dateArray[3] === 0) {
             this.ON.gregorian.hour = dateArray[3];
         }
-        if (dateArray[4]) {
+        if (dateArray[4] || dateArray[4] === 0) {
             this.ON.gregorian.minute = dateArray[4];
         }
-        if (dateArray[5]) {
+        if (dateArray[5] || dateArray[5] === 0) {
             this.ON.gregorian.second = dateArray[5];
         }
-        if (dateArray[6]) {
+        if (dateArray[6] || dateArray[6] === 0) {
             this.ON.gregorian.millisecond = dateArray[6];
         }
 
@@ -553,29 +553,26 @@ class Algorithms {
      * @param {*} dateArray
      */
     calcPersiana (dateArray) {
-        console.log('calcPersian')
-        console.log(dateArray)
-        console.log(dateArray[4])
-        if (dateArray[0]) {
+        if (dateArray[0] || dateArray[0] === 0) {
             this.ON.persianAstro.year = dateArray[0];
         }
-        if (dateArray[1]) {
+        if (dateArray[1] || dateArray[1] === 0) {
             this.ON.persianAstro.month = dateArray[1];
         }
-        if (dateArray[2]) {
+        if (dateArray[2] || dateArray[2] === 0) {
             this.ON.persianAstro.day = dateArray[2];
         }
 
-        if (dateArray[3]) {
+        if (dateArray[3] || dateArray[3] === 0) {
             this.ON.gregorian.hour = dateArray[3];
         }
-        if (dateArray[4]) {
+        if (dateArray[4] || dateArray[4] === 0) {
             this.ON.gregorian.minute = dateArray[4];
         }
-        if (dateArray[5]) {
+        if (dateArray[5] || dateArray[5] === 0) {
             this.ON.gregorian.second = dateArray[5];
         }
-        if (dateArray[6]) {
+        if (dateArray[6] || dateArray[6] === 0) {
             this.ON.gregorian.millisecond = dateArray[6];
         }
         this.setJulian(

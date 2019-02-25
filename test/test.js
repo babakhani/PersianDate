@@ -71,8 +71,8 @@ describe('Make Instance', function () {
     });
 
     it('Negative year', function () {
-        let a = new pDate([0, 0, 0]).format();
-        assert.deepEqual(a, "۰-۰۱-۰۱ ۰۰:۰۰:۰۰ ق ظ");
+        let a = new pDate([0]).format();
+        assert.deepEqual(a, "۰-۰۰-۰۱ ۰۰:۰۰:۰۰ ق ظ");
         let c = new pDate([-2000]).format('YYYY/MM/DD');
         assert.deepEqual(c, "-۲۰۰۰/۰۱/۰۱");
     });
@@ -271,36 +271,36 @@ describe('toCalendar persian', function () {
 
 
 describe('rangeName', function () {
-    it('weekdats gregorian en', function () {
+    it('weekdays gregorian en', function () {
         pDate.toCalendar('gregorian').toLocale('en');
         assert.deepEqual(pDate.rangeName().weekdays, ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
     });
-    it('weekdats gregorian fa', function () {
+    it('weekdays gregorian fa', function () {
         pDate.toCalendar('gregorian').toLocale('fa');
         assert.deepEqual(pDate.rangeName().weekdays, 'یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_جمعه_شنبه'.split('_'));
     });
 
-    it('weekdats persian fa', function () {
+    it('weekdays persian fa', function () {
         pDate.toCalendar('persian').toLocale('fa');
         assert.deepEqual(pDate.rangeName().weekdays, ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهار شنبه", "پنج‌شنبه", "جمعه"]);
     });
 
-    it('weekdats persian en', function () {
+    it('weekdays persian en', function () {
         pDate.toCalendar('persian').toLocale('en');
         assert.deepEqual(pDate.rangeName().weekdays, ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
     });
 
-    it('weekdats persian fa', function () {
+    it('weekdaysShort persian fa', function () {
         pDate.toCalendar('persian').toLocale('fa');
         assert.deepEqual(pDate.rangeName().weekdaysShort, ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج']);
     });
 
-    it('weekdats persian fa', function () {
+    it('months persian fa', function () {
         pDate.toCalendar('persian').toLocale('fa');
         assert.deepEqual(pDate.rangeName().months, ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']);
     });
 
-    it('weekdats gregorian en', function () {
+    it('weekdays gregorian en', function () {
         pDate.toCalendar('gregorian').toLocale('en');
         assert.deepEqual(new pDate().rangeName().weekdays, ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
     });
@@ -309,32 +309,32 @@ describe('rangeName', function () {
         assert.deepEqual(new pDate().rangeName().weekdays, 'یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_جمعه_شنبه'.split('_'));
     });
 
-    it('weekdats persian en', function () {
+    it('weekdaysMin gregorian en', function () {
         pDate.toCalendar('gregorian').toLocale('en');
         assert.deepEqual(new pDate().rangeName().weekdaysMin, ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']);
     });
 
-    it('weekdats persian en', function () {
+    it('weekdaysShort gregorian en', function () {
         pDate.toCalendar('gregorian').toLocale('en');
         assert.deepEqual(new pDate().rangeName().weekdaysShort, ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
     });
 
-    it('weekdats persian fa', function () {
+    it('weekdays persian fa', function () {
         pDate.toCalendar('persian').toLocale('fa');
         assert.deepEqual(new pDate().rangeName().weekdays, ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهار شنبه", "پنج‌شنبه", "جمعه"]);
     });
 
-    it('weekdats persian en', function () {
+    it('weekdaysMin persian en', function () {
         pDate.toCalendar('persian').toLocale('en');
-        assert.deepEqual(new pDate().rangeName().weekdaysMin, ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']);
+        assert.deepEqual(new pDate().rangeName().weekdaysMin, ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr']);
     });
 
-    it('weekdats persian fa', function () {
+    it('weekdaysShort persian fa', function () {
         pDate.toCalendar('persian').toLocale('fa');
         assert.deepEqual(new pDate().rangeName().weekdaysShort, ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج']);
     });
 
-    it('weekdats persian fa', function () {
+    it('month persian fa', function () {
         pDate.toCalendar('persian').toLocale('fa');
         assert.deepEqual(new pDate().rangeName().months, ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']);
     });

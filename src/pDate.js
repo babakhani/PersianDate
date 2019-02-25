@@ -48,9 +48,9 @@ class PersianDateClass {
         else if (TypeChecking.isArray(input)) {
             this.algorithmsCalc([
               input[0], 
-              input[1] ? input[1] : 1, 
-              input[2] ? input[2] : 1, 
-              input[3] ? input[3] : 0,
+              input[1] || input[1] === 0 ? input[1] : 1, 
+              input[2] || input[2] === 0 ? input[2] : 1, 
+              input[3] || input[3] === 0 ? input[3] : 0,
               input[4] ? input[4] : 0,
               input[5] ? input[5] : 0,
               input[6] ? input[6] : 0
@@ -1239,36 +1239,25 @@ class PersianDateClass {
         let duration = new Duration(key, value)._data,
             unit = normalizeDuration(key, value).unit;
         value = normalizeDuration(key, value).value;
-
+        console.log('add')
+        console.log(duration)
+        console.log(unit)
+        let arr = this.toArray()
         if (unit === 'year' || unit === 'month') {
-            let tempDate = new PersianDateClass()
+            let tempDate = null
             if (duration.years > 0) {
-                let newYear = this.year() + duration.years;
-                tempDate.year(newYear);
+                tempDate = new PersianDateClass([arr[0] + value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]])
             }
             if (duration.months > 0) {
-                let oldDate = this.date();
-                let newMonth = this.month() + duration.months;
-                let thisMonthDaysCount = this.daysInMonth(this.year(), newMonth);
-                if (oldDate >= thisMonthDaysCount) {
-                    oldDate = thisMonthDaysCount;
-                }
-                tempDate.date(oldDate);
-                tempDate.month(newMonth);
+               tempDate = new PersianDateClass([arr[0], arr[1] + value, arr[2], arr[3], arr[4], arr[5], arr[6]])
             }
             return this.unix(tempDate.unix());
         }
         if (unit === 'day') {
-            const oldHour = this.hour();
-            const oldMinute = this.minute();
-            const oldSecond = this.second();
-            let newDate = new PersianDateClass(this.valueOf()).endOf('day') + (value * 24 * 60 * 60 * 1000);
-            return this.unix(newDate / 1000).hour(oldHour).minute(oldMinute).second(oldSecond);
+            return new PersianDateClass([arr[0], arr[1], arr[2] + value, arr[3], arr[4], arr[5], arr[6]])
         }
         if (unit === 'week') {
-            const oldHour = this.hour();
-            let newDate = this.valueOf() + ((value*7) * 24 * 60 * 60 * 1000);
-            return this.unix(newDate / 1000).hour(oldHour);
+            return new PersianDateClass([arr[0], arr[1], arr[2] + (value * 7), arr[3], arr[4], arr[5], arr[6]])
         }
         if (unit === 'hour') {
             let newDate = this.valueOf() + (value * 60 * 60 * 1000);
@@ -1283,7 +1272,6 @@ class PersianDateClass {
             return this.unix(newDate / 1000);
         }
         if (unit === 'millisecond') {
-            // log('add millisecond')
             let newMillisecond = this.valueOf() + value;
             return this.unix(newMillisecond / 1000);
         }
@@ -1300,34 +1288,22 @@ class PersianDateClass {
         let duration = new Duration(key, value)._data;
         let unit = normalizeDuration(key, value).unit;
         value = normalizeDuration(key, value).value;
-
+        let arr = this.toArray()
         if (unit === 'year' || unit === 'month') {
-            let tempDate = new PersianDateClass()
+            let tempDate = null
             if (duration.years > 0) {
-                let newYear = this.year() - duration.years;
-                tempDate.year(newYear);
+                tempDate = new PersianDateClass([arr[0] - value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]])
             }
             if (duration.months > 0) {
-                let oldDate = this.date();
-                let newMonth = this.month() - duration.months;
-                tempDate.month(newMonth);
-                let thisMonthDaysCount = this.daysInMonth(this.year(), this.month());
-                if (oldDate > thisMonthDaysCount) {
-                    oldDate = thisMonthDaysCount;
-                }
-                tempDate.date(oldDate);
+               tempDate = new PersianDateClass([arr[0], arr[1] - value, arr[2], arr[3], arr[4], arr[5], arr[6]])
             }
             return this.unix(tempDate.unix());
         }
         if (unit === 'day') {
-            const oldHour = this.hour();
-            let newDate = new PersianDateClass(this.valueOf()).startOf('day') - (value * 24 * 60 * 60 * 1000);
-            return this.unix(newDate / 1000).hour(oldHour);
+            return new PersianDateClass([arr[0], arr[1], arr[2] - value, arr[3], arr[4], arr[5], arr[6]])
         }
         if (unit === 'week') {
-            const oldHour = this.hour();
-            let newDate = this.valueOf() - ((value*7) * 24 * 60 * 60 * 1000);
-            return this.unix(newDate / 1000).hour(oldHour);
+            return new PersianDateClass([arr[0], arr[1], arr[2] - (value * 7), arr[3], arr[4], arr[5], arr[6]])
         }
         if (unit === 'hour') {
             let newDate = this.valueOf() - (value * 60 * 60 * 1000);
@@ -1342,7 +1318,6 @@ class PersianDateClass {
             return this.unix(newDate / 1000);
         }
         if (unit === 'millisecond') {
-            // log('add millisecond')
             let newMillisecond = this.valueOf() - value;
             return this.unix(newMillisecond / 1000);
         }
