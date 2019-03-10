@@ -286,7 +286,7 @@ var PersianDateClass = function () {
             if (TypeChecking.isDate(input)) {
                 this._gDateToCalculators(input);
             } else if (TypeChecking.isArray(input)) {
-                this.algorithmsCalc([input[0], input[1] ? input[1] : 1, input[2] ? input[2] : 1, input[3] ? input[3] : 0, input[4] ? input[4] : 0, input[5] ? input[5] : 0, input[6] ? input[6] : 0]);
+                this.algorithmsCalc([input[0], input[1] || input[1] === 0 ? input[1] : 1, input[2] || input[2] === 0 ? input[2] : 1, input[3] || input[3] === 0 ? input[3] : 0, input[4] ? input[4] : 0, input[5] ? input[5] : 0, input[6] ? input[6] : 0]);
             } else if (TypeChecking.isNumber(input)) {
                 var fromUnix = new Date(input);
                 this._gDateToCalculators(fromUnix);
@@ -1526,51 +1526,39 @@ var PersianDateClass = function () {
             var duration = new Duration(key, value)._data,
                 unit = normalizeDuration(key, value).unit;
             value = normalizeDuration(key, value).value;
-
+            console.log('add');
+            console.log(duration);
+            console.log(unit);
+            var arr = this.toArray();
             if (unit === 'year' || unit === 'month') {
-                var tempDate = new PersianDateClass();
+                var tempDate = null;
                 if (duration.years > 0) {
-                    var newYear = this.year() + duration.years;
-                    tempDate.year(newYear);
+                    tempDate = new PersianDateClass([arr[0] + value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]]);
                 }
                 if (duration.months > 0) {
-                    var oldDate = this.date();
-                    var newMonth = this.month() + duration.months;
-                    var thisMonthDaysCount = this.daysInMonth(this.year(), newMonth);
-                    if (oldDate >= thisMonthDaysCount) {
-                        oldDate = thisMonthDaysCount;
-                    }
-                    tempDate.date(oldDate);
-                    tempDate.month(newMonth);
+                    tempDate = new PersianDateClass([arr[0], arr[1] + value, arr[2], arr[3], arr[4], arr[5], arr[6]]);
                 }
                 return this.unix(tempDate.unix());
             }
             if (unit === 'day') {
-                var oldHour = this.hour();
-                var oldMinute = this.minute();
-                var oldSecond = this.second();
-                var newDate = new PersianDateClass(this.valueOf()).endOf('day') + value * 24 * 60 * 60 * 1000;
-                return this.unix(newDate / 1000).hour(oldHour).minute(oldMinute).second(oldSecond);
+                return new PersianDateClass([arr[0], arr[1], arr[2] + value, arr[3], arr[4], arr[5], arr[6]]);
             }
             if (unit === 'week') {
-                var _oldHour = this.hour();
-                var _newDate = this.valueOf() + value * 7 * 24 * 60 * 60 * 1000;
-                return this.unix(_newDate / 1000).hour(_oldHour);
+                return new PersianDateClass([arr[0], arr[1], arr[2] + value * 7, arr[3], arr[4], arr[5], arr[6]]);
             }
             if (unit === 'hour') {
-                var _newDate2 = this.valueOf() + value * 60 * 60 * 1000;
-                return this.unix(_newDate2 / 1000);
+                var newDate = this.valueOf() + value * 60 * 60 * 1000;
+                return this.unix(newDate / 1000);
             }
             if (unit === 'minute') {
-                var _newDate3 = this.valueOf() + value * 60 * 1000;
-                return this.unix(_newDate3 / 1000);
+                var _newDate = this.valueOf() + value * 60 * 1000;
+                return this.unix(_newDate / 1000);
             }
             if (unit === 'second') {
-                var _newDate4 = this.valueOf() + value * 1000;
-                return this.unix(_newDate4 / 1000);
+                var _newDate2 = this.valueOf() + value * 1000;
+                return this.unix(_newDate2 / 1000);
             }
             if (unit === 'millisecond') {
-                // log('add millisecond')
                 var newMillisecond = this.valueOf() + value;
                 return this.unix(newMillisecond / 1000);
             }
@@ -1589,49 +1577,36 @@ var PersianDateClass = function () {
             var duration = new Duration(key, value)._data;
             var unit = normalizeDuration(key, value).unit;
             value = normalizeDuration(key, value).value;
-
+            var arr = this.toArray();
             if (unit === 'year' || unit === 'month') {
-                var tempDate = new PersianDateClass();
+                var tempDate = null;
                 if (duration.years > 0) {
-                    var newYear = this.year() - duration.years;
-                    tempDate.year(newYear);
+                    tempDate = new PersianDateClass([arr[0] - value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]]);
                 }
                 if (duration.months > 0) {
-                    var oldDate = this.date();
-                    var newMonth = this.month() - duration.months;
-                    tempDate.month(newMonth);
-                    var thisMonthDaysCount = this.daysInMonth(this.year(), this.month());
-                    if (oldDate > thisMonthDaysCount) {
-                        oldDate = thisMonthDaysCount;
-                    }
-                    tempDate.date(oldDate);
+                    tempDate = new PersianDateClass([arr[0], arr[1] - value, arr[2], arr[3], arr[4], arr[5], arr[6]]);
                 }
                 return this.unix(tempDate.unix());
             }
             if (unit === 'day') {
-                var oldHour = this.hour();
-                var newDate = new PersianDateClass(this.valueOf()).startOf('day') - value * 24 * 60 * 60 * 1000;
-                return this.unix(newDate / 1000).hour(oldHour);
+                return new PersianDateClass([arr[0], arr[1], arr[2] - value, arr[3], arr[4], arr[5], arr[6]]);
             }
             if (unit === 'week') {
-                var _oldHour2 = this.hour();
-                var _newDate5 = this.valueOf() - value * 7 * 24 * 60 * 60 * 1000;
-                return this.unix(_newDate5 / 1000).hour(_oldHour2);
+                return new PersianDateClass([arr[0], arr[1], arr[2] - value * 7, arr[3], arr[4], arr[5], arr[6]]);
             }
             if (unit === 'hour') {
-                var _newDate6 = this.valueOf() - value * 60 * 60 * 1000;
-                return this.unix(_newDate6 / 1000);
+                var newDate = this.valueOf() - value * 60 * 60 * 1000;
+                return this.unix(newDate / 1000);
             }
             if (unit === 'minute') {
-                var _newDate7 = this.valueOf() - value * 60 * 1000;
-                return this.unix(_newDate7 / 1000);
+                var _newDate3 = this.valueOf() - value * 60 * 1000;
+                return this.unix(_newDate3 / 1000);
             }
             if (unit === 'second') {
-                var _newDate8 = this.valueOf() - value * 1000;
-                return this.unix(_newDate8 / 1000);
+                var _newDate4 = this.valueOf() - value * 1000;
+                return this.unix(_newDate4 / 1000);
             }
             if (unit === 'millisecond') {
-                // log('add millisecond')
                 var newMillisecond = this.valueOf() - value;
                 return this.unix(newMillisecond / 1000);
             }
@@ -2368,25 +2343,25 @@ var Algorithms = function () {
     }, {
         key: 'calcPersian',
         value: function calcPersian(dateArray) {
-            if (dateArray[0]) {
+            if (dateArray[0] || dateArray[0] === 0) {
                 this.ON.persian.year = dateArray[0];
             }
-            if (dateArray[1]) {
+            if (dateArray[1] || dateArray[1] === 0) {
                 this.ON.persian.month = dateArray[1];
             }
-            if (dateArray[2]) {
+            if (dateArray[2] || dateArray[2] === 0) {
                 this.ON.persian.day = dateArray[2];
             }
-            if (dateArray[3]) {
+            if (dateArray[3] || dateArray[3] === 0) {
                 this.ON.gregorian.hour = dateArray[3];
             }
-            if (dateArray[4]) {
+            if (dateArray[4] || dateArray[4] === 0) {
                 this.ON.gregorian.minute = dateArray[4];
             }
-            if (dateArray[5]) {
+            if (dateArray[5] || dateArray[5] === 0) {
                 this.ON.gregorian.second = dateArray[5];
             }
-            if (dateArray[6]) {
+            if (dateArray[6] || dateArray[6] === 0) {
                 this.ON.gregorian.millisecond = dateArray[6];
             }
 
@@ -2401,29 +2376,26 @@ var Algorithms = function () {
     }, {
         key: 'calcPersiana',
         value: function calcPersiana(dateArray) {
-            console.log('calcPersian');
-            console.log(dateArray);
-            console.log(dateArray[4]);
-            if (dateArray[0]) {
+            if (dateArray[0] || dateArray[0] === 0) {
                 this.ON.persianAstro.year = dateArray[0];
             }
-            if (dateArray[1]) {
+            if (dateArray[1] || dateArray[1] === 0) {
                 this.ON.persianAstro.month = dateArray[1];
             }
-            if (dateArray[2]) {
+            if (dateArray[2] || dateArray[2] === 0) {
                 this.ON.persianAstro.day = dateArray[2];
             }
 
-            if (dateArray[3]) {
+            if (dateArray[3] || dateArray[3] === 0) {
                 this.ON.gregorian.hour = dateArray[3];
             }
-            if (dateArray[4]) {
+            if (dateArray[4] || dateArray[4] === 0) {
                 this.ON.gregorian.minute = dateArray[4];
             }
-            if (dateArray[5]) {
+            if (dateArray[5] || dateArray[5] === 0) {
                 this.ON.gregorian.second = dateArray[5];
             }
-            if (dateArray[6]) {
+            if (dateArray[6] || dateArray[6] === 0) {
                 this.ON.gregorian.millisecond = dateArray[6];
             }
             this.setJulian(this.persiana_to_jd(this.ON.persianAstro.year, this.ON.persianAstro.month, this.ON.persianAstro.day + 0.5));

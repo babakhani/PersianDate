@@ -8,9 +8,9 @@
     * _instance_
         * [.setup(input)](#PersianDateClass+setup)
         * [.rangeName()](#PersianDateClass+rangeName) ⇒ <code>\*</code>
-        * [.toLeapYearMode(input)](#PersianDateClass+toLeapYearMode) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
-        * [.toCalendar(input)](#PersianDateClass+toCalendar) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
-        * [.toLocale(input)](#PersianDateClass+toLocale) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
+        * [.toLeapYearMode(input)](#PersianDateClass+toLeapYearMode) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
+        * [.toCalendar(input)](#PersianDateClass+toCalendar) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
+        * [.toLocale(input)](#PersianDateClass+toLocale) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
         * [.isPersianDate(obj)](#PersianDateClass+isPersianDate) ⇒ <code>boolean</code>
         * [.clone()](#PersianDateClass+clone) ⇒ <code>PersianDate</code>
         * [.algorithmsCalc(dateArray)](#PersianDateClass+algorithmsCalc) ⇒ <code>\*</code>
@@ -53,13 +53,13 @@
         * [.format(inputString)](#PersianDateClass+format) ⇒ <code>\*</code>
         * [.add(key, value)](#PersianDateClass+add) ⇒ <code>PersianDate</code>
         * [.subtract(key, value)](#PersianDateClass+subtract) ⇒ <code>PersianDate</code>
-        * [.isSameDay(dateB)](#PersianDateClass+isSameDay) ⇒ <code>[PersianDateClass](#PersianDateClass)</code> \| <code>\*</code> \| <code>boolean</code>
+        * [.isSameDay(dateB)](#PersianDateClass+isSameDay) ⇒ [<code>PersianDateClass</code>](#PersianDateClass) \| <code>\*</code> \| <code>boolean</code>
         * [.isSameMonth(dateA, dateB)](#PersianDateClass+isSameMonth) ⇒ <code>\*</code> \| <code>boolean</code>
     * _static_
         * [.rangeName()](#PersianDateClass.rangeName) ⇒ <code>\*</code>
-        * [.toLeapYearMode(input)](#PersianDateClass.toLeapYearMode) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
-        * [.toCalendar(input)](#PersianDateClass.toCalendar) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
-        * [.toLocale(input)](#PersianDateClass.toLocale) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
+        * [.toLeapYearMode(input)](#PersianDateClass.toLeapYearMode) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
+        * [.toCalendar(input)](#PersianDateClass.toCalendar) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
+        * [.toLocale(input)](#PersianDateClass.toLocale) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
         * [.isPersianDate(obj)](#PersianDateClass.isPersianDate) ⇒ <code>boolean</code>
         * [.duration(input, key)](#PersianDateClass.duration) ⇒ <code>Duration</code>
         * [.isDuration(obj)](#PersianDateClass.isDuration) ⇒ <code>boolean</code>
@@ -88,7 +88,7 @@ persian date class
 <a name="PersianDateClass+setup"></a>
 
 ## persianDateClass.setup(input)
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -106,12 +106,12 @@ persian date class
 ## persianDateClass.rangeName() ⇒ <code>\*</code>
 Helper method that return date range name like week days name, month names, month days names (specially in persian calendar).
 
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <a name="PersianDateClass+toLeapYearMode"></a>
 
-## persianDateClass.toLeapYearMode(input) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+## persianDateClass.toLeapYearMode(input) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -127,8 +127,8 @@ Helper method that return date range name like week days name, month names, mont
 
 <a name="PersianDateClass+toCalendar"></a>
 
-## persianDateClass.toCalendar(input) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+## persianDateClass.toCalendar(input) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -144,8 +144,8 @@ Helper method that return date range name like week days name, month names, mont
 
 <a name="PersianDateClass+toLocale"></a>
 
-## persianDateClass.toLocale(input) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+## persianDateClass.toLocale(input) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -162,7 +162,7 @@ Helper method that return date range name like week days name, month names, mont
 <a name="PersianDateClass+isPersianDate"></a>
 
 ## persianDateClass.isPersianDate(obj) ⇒ <code>boolean</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -178,11 +178,11 @@ Helper method that return date range name like week days name, month names, mont
 <a name="PersianDateClass+clone"></a>
 
 ## persianDateClass.clone() ⇒ <code>PersianDate</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+algorithmsCalc"></a>
 
 ## persianDateClass.algorithmsCalc(dateArray) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -199,14 +199,14 @@ Helper method that return date range name like week days name, month names, mont
 <a name="PersianDateClass+calendar"></a>
 
 ## persianDateClass.calendar() ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <a name="PersianDateClass+duration"></a>
 
 ## persianDateClass.duration(input, key) ⇒ <code>Duration</code>
 return Duration object
 
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -226,7 +226,7 @@ return Duration object
 ## persianDateClass.isDuration(obj) ⇒ <code>boolean</code>
 check if passed object is duration
 
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -242,7 +242,7 @@ check if passed object is duration
 <a name="PersianDateClass+years"></a>
 
 ## persianDateClass.years(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -258,7 +258,7 @@ check if passed object is duration
 <a name="PersianDateClass+year"></a>
 
 ## persianDateClass.year(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -274,7 +274,7 @@ check if passed object is duration
 <a name="PersianDateClass+month"></a>
 
 ## persianDateClass.month(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -292,17 +292,17 @@ check if passed object is duration
 ## persianDateClass.days() ⇒ <code>function</code> \| <code>Date.toJSON.day</code> \| <code>date_json.day</code> \| <code>PersianDate.day</code> \| <code>day</code> \| <code>output.day</code> \| <code>\*</code>
 Day of week
 
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+day"></a>
 
 ## persianDateClass.day() ⇒ <code>function</code> \| <code>Date.toJSON.day</code> \| <code>date_json.day</code> \| <code>PersianDate.day</code> \| <code>day</code> \| <code>output.day</code> \| <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+dates"></a>
 
 ## persianDateClass.dates(input) ⇒ <code>\*</code>
 Day of Months
 
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -318,7 +318,7 @@ Day of Months
 <a name="PersianDateClass+date"></a>
 
 ## persianDateClass.date(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -334,7 +334,7 @@ Day of Months
 <a name="PersianDateClass+hour"></a>
 
 ## persianDateClass.hour(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -350,7 +350,7 @@ Day of Months
 <a name="PersianDateClass+hours"></a>
 
 ## persianDateClass.hours(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -366,7 +366,7 @@ Day of Months
 <a name="PersianDateClass+minute"></a>
 
 ## persianDateClass.minute(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -382,7 +382,7 @@ Day of Months
 <a name="PersianDateClass+minutes"></a>
 
 ## persianDateClass.minutes(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -398,7 +398,7 @@ Day of Months
 <a name="PersianDateClass+second"></a>
 
 ## persianDateClass.second(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -414,7 +414,7 @@ Day of Months
 <a name="PersianDateClass+seconds"></a>
 
 ## persianDateClass.seconds(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -430,7 +430,7 @@ Day of Months
 <a name="PersianDateClass+millisecond"></a>
 
 ## persianDateClass.millisecond(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Returns**: <code>\*</code> - Getter Setter  
 <table>
   <thead>
@@ -447,7 +447,7 @@ Day of Months
 <a name="PersianDateClass+milliseconds"></a>
 
 ## persianDateClass.milliseconds(input) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -465,7 +465,7 @@ Day of Months
 ## persianDateClass.unix(timestamp) ⇒ <code>\*</code>
 Return Unix Timestamp (1318874398)
 
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -481,11 +481,11 @@ Return Unix Timestamp (1318874398)
 <a name="PersianDateClass+valueOf"></a>
 
 ## persianDateClass.valueOf() ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+getFirstWeekDayOfMonth"></a>
 
 ## persianDateClass.getFirstWeekDayOfMonth(year, month) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -504,7 +504,7 @@ Return Unix Timestamp (1318874398)
 <a name="PersianDateClass+diff"></a>
 
 ## persianDateClass.diff(input, val, asFloat) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -524,7 +524,7 @@ Return Unix Timestamp (1318874398)
 <a name="PersianDateClass+startOf"></a>
 
 ## persianDateClass.startOf(key) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -540,7 +540,7 @@ Return Unix Timestamp (1318874398)
 <a name="PersianDateClass+endOf"></a>
 
 ## persianDateClass.endOf(key) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -556,27 +556,27 @@ Return Unix Timestamp (1318874398)
 <a name="PersianDateClass+sod"></a>
 
 ## persianDateClass.sod() ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+eod"></a>
 
 ## persianDateClass.eod() ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+zone"></a>
 
 ## persianDateClass.zone() ⇒ <code>\*</code>
 Get the timezone offset in minutes.
 
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+local"></a>
 
 ## persianDateClass.local() ⇒ <code>PersianDate</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+utc"></a>
 
 ## persianDateClass.utc(input) ⇒ <code>\*</code>
 Current date/time in UTC mode
 
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -592,20 +592,20 @@ Current date/time in UTC mode
 <a name="PersianDateClass+isUtc"></a>
 
 ## persianDateClass.isUtc() ⇒ <code>boolean</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+isDST"></a>
 
 ## persianDateClass.isDST() ⇒ <code>boolean</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Link**: https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D8%B9%D8%AA_%D8%AA%D8%A7%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%DB%8C  
 <a name="PersianDateClass+isLeapYear"></a>
 
 ## persianDateClass.isLeapYear() ⇒ <code>boolean</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+daysInMonth"></a>
 
 ## persianDateClass.daysInMonth(yearInput, monthInput) ⇒ <code>number</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -625,21 +625,21 @@ Current date/time in UTC mode
 ## persianDateClass.toDate() ⇒ <code>\*</code> \| <code>PersianDate.gDate</code>
 Return Native Javascript Date
 
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+toArray"></a>
 
 ## persianDateClass.toArray() ⇒ <code>array</code>
 Returns Array Of Persian Date
 
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+formatNumber"></a>
 
 ## persianDateClass.formatNumber() ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+format"></a>
 
 ## persianDateClass.format(inputString) ⇒ <code>\*</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -655,7 +655,7 @@ Returns Array Of Persian Date
 <a name="PersianDateClass+add"></a>
 
 ## persianDateClass.add(key, value) ⇒ <code>PersianDate</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -673,7 +673,7 @@ Returns Array Of Persian Date
 <a name="PersianDateClass+subtract"></a>
 
 ## persianDateClass.subtract(key, value) ⇒ <code>PersianDate</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -690,8 +690,8 @@ Returns Array Of Persian Date
 
 <a name="PersianDateClass+isSameDay"></a>
 
-## persianDateClass.isSameDay(dateB) ⇒ <code>[PersianDateClass](#PersianDateClass)</code> \| <code>\*</code> \| <code>boolean</code>
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+## persianDateClass.isSameDay(dateB) ⇒ [<code>PersianDateClass</code>](#PersianDateClass) \| <code>\*</code> \| <code>boolean</code>
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -710,7 +710,7 @@ Returns Array Of Persian Date
 ## persianDateClass.isSameMonth(dateA, dateB) ⇒ <code>\*</code> \| <code>boolean</code>
 check two for month similarity
 
-**Kind**: instance method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -731,12 +731,12 @@ check two for month similarity
 ## PersianDateClass.rangeName() ⇒ <code>\*</code>
 Helper method that return date range name like week days name, month names, month days names (specially in persian calendar).
 
-**Kind**: static method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <a name="PersianDateClass.toLeapYearMode"></a>
 
-## PersianDateClass.toLeapYearMode(input) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
-**Kind**: static method of <code>[PersianDateClass](#PersianDateClass)</code>  
+## PersianDateClass.toLeapYearMode(input) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
+**Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -752,8 +752,8 @@ Helper method that return date range name like week days name, month names, mont
 
 <a name="PersianDateClass.toCalendar"></a>
 
-## PersianDateClass.toCalendar(input) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
-**Kind**: static method of <code>[PersianDateClass](#PersianDateClass)</code>  
+## PersianDateClass.toCalendar(input) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
+**Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -769,8 +769,8 @@ Helper method that return date range name like week days name, month names, mont
 
 <a name="PersianDateClass.toLocale"></a>
 
-## PersianDateClass.toLocale(input) ⇒ <code>[PersianDateClass](#PersianDateClass)</code>
-**Kind**: static method of <code>[PersianDateClass](#PersianDateClass)</code>  
+## PersianDateClass.toLocale(input) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
+**Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -787,7 +787,7 @@ Helper method that return date range name like week days name, month names, mont
 <a name="PersianDateClass.isPersianDate"></a>
 
 ## PersianDateClass.isPersianDate(obj) ⇒ <code>boolean</code>
-**Kind**: static method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -805,7 +805,7 @@ Helper method that return date range name like week days name, month names, mont
 ## PersianDateClass.duration(input, key) ⇒ <code>Duration</code>
 return Duration object
 
-**Kind**: static method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -825,7 +825,7 @@ return Duration object
 ## PersianDateClass.isDuration(obj) ⇒ <code>boolean</code>
 check if passed object is duration
 
-**Kind**: static method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -841,7 +841,7 @@ check if passed object is duration
 <a name="PersianDateClass.getFirstWeekDayOfMonth"></a>
 
 ## PersianDateClass.getFirstWeekDayOfMonth(year, month) ⇒ <code>\*</code>
-**Kind**: static method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -860,7 +860,7 @@ check if passed object is duration
 <a name="PersianDateClass.utc"></a>
 
 ## PersianDateClass.utc(input) ⇒ <code>\*</code>
-**Kind**: static method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -878,7 +878,7 @@ check if passed object is duration
 ## PersianDateClass.isSameDay(dateA, dateB) ⇒ <code>boolean</code>
 check if a date is same as b
 
-**Kind**: static method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -899,7 +899,7 @@ check if a date is same as b
 ## PersianDateClass.isSameMonth(dateA, dateB) ⇒ <code>boolean</code>
 check if a month is same as b
 
-**Kind**: static method of <code>[PersianDateClass](#PersianDateClass)</code>  
+**Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
 **Since**: 1.0.0  
 <table>
   <thead>
