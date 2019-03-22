@@ -1244,6 +1244,16 @@ describe('Subtract', function () {
         assert.deepEqual(a, [1392, 12, 29, 1, 1, 1, 0]);
     });
 
+    it('Weeks', function () {
+        let a = new pDate([1397, 1, 1, 1, 1, 1]).add('week', 1).toArray();
+        assert.deepEqual(a, [1397, 1, 8, 1, 1, 1, 0]);
+    });
+
+    it('Weeks', function () {
+        let a = new pDate([1397, 1, 8, 1, 1, 1]).subtract('week', 1).toArray();
+        assert.deepEqual(a, [1397, 1, 1, 1, 1, 1, 0]);
+    });
+
     it('Days Base on month day count', function () {
         let a = new pDate([1395, 6, 31, 1, 1, 1]).subtract('day', 30).toArray();
         assert.deepEqual(a, [1395, 6, 1, 1, 1, 1, 0]);

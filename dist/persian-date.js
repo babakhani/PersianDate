@@ -25,9 +25,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -167,6 +167,8 @@ var Helpers = function () {
                 unit = 'year';
             } else if (durationUnit.month.indexOf(unit) > -1) {
                 unit = 'month';
+            } else if (durationUnit.week.indexOf(unit) > -1) {
+                unit = 'week';
             } else if (durationUnit.day.indexOf(unit) > -1) {
                 unit = 'day';
             } else if (durationUnit.hour.indexOf(unit) > -1) {
@@ -1540,22 +1542,27 @@ var PersianDateClass = function () {
                     this.month(newMonth);
                 }
             }
-            if (unit === 'day') {
+            if (unit === 'week') {
                 var oldHour = this.hour();
-                var newDate = this.valueOf() + value * 24 * 60 * 60 * 1000;
+                var newDate = this.valueOf() + value * 7 * 24 * 60 * 60 * 1000;
                 return this.unix(newDate / 1000).hour(oldHour);
             }
-            if (unit === 'hour') {
-                var _newDate = this.valueOf() + value * 60 * 60 * 1000;
-                return this.unix(_newDate / 1000);
+            if (unit === 'day') {
+                var _oldHour = this.hour();
+                var _newDate = this.valueOf() + value * 24 * 60 * 60 * 1000;
+                return this.unix(_newDate / 1000).hour(_oldHour);
             }
-            if (unit === 'minute') {
-                var _newDate2 = this.valueOf() + value * 60 * 1000;
+            if (unit === 'hour') {
+                var _newDate2 = this.valueOf() + value * 60 * 60 * 1000;
                 return this.unix(_newDate2 / 1000);
             }
-            if (unit === 'second') {
-                var _newDate3 = this.valueOf() + value * 1000;
+            if (unit === 'minute') {
+                var _newDate3 = this.valueOf() + value * 60 * 1000;
                 return this.unix(_newDate3 / 1000);
+            }
+            if (unit === 'second') {
+                var _newDate4 = this.valueOf() + value * 1000;
+                return this.unix(_newDate4 / 1000);
             }
             if (unit === 'millisecond') {
                 // log('add millisecond')
@@ -1594,22 +1601,27 @@ var PersianDateClass = function () {
                     this.date(oldDate);
                 }
             }
-            if (unit === 'day') {
+            if (unit === 'week') {
                 var oldHour = this.hour();
-                var newDate = this.valueOf() - value * 24 * 60 * 60 * 1000;
+                var newDate = this.valueOf() - value * 7 * 24 * 60 * 60 * 1000;
                 return this.unix(newDate / 1000).hour(oldHour);
             }
+            if (unit === 'day') {
+                var _oldHour2 = this.hour();
+                var _newDate5 = this.valueOf() - value * 24 * 60 * 60 * 1000;
+                return this.unix(_newDate5 / 1000).hour(_oldHour2);
+            }
             if (unit === 'hour') {
-                var _newDate4 = this.valueOf() - value * 60 * 60 * 1000;
-                return this.unix(_newDate4 / 1000);
+                var _newDate6 = this.valueOf() - value * 60 * 60 * 1000;
+                return this.unix(_newDate6 / 1000);
             }
             if (unit === 'minute') {
-                var _newDate5 = this.valueOf() - value * 60 * 1000;
-                return this.unix(_newDate5 / 1000);
+                var _newDate7 = this.valueOf() - value * 60 * 1000;
+                return this.unix(_newDate7 / 1000);
             }
             if (unit === 'second') {
-                var _newDate6 = this.valueOf() - value * 1000;
-                return this.unix(_newDate6 / 1000);
+                var _newDate8 = this.valueOf() - value * 1000;
+                return this.unix(_newDate8 / 1000);
             }
             if (unit === 'millisecond') {
                 // log('add millisecond')

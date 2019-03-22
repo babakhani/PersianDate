@@ -1245,6 +1245,11 @@ class PersianDateClass {
                 this.month(newMonth);
             }
         }
+        if (unit === 'week') {
+            const oldHour = this.hour();
+            let newDate = this.valueOf() + (value * 7 * 24 * 60 * 60 * 1000);
+            return this.unix(newDate / 1000).hour(oldHour);
+        }
         if (unit === 'day') {
             const oldHour = this.hour();
             let newDate = this.valueOf() + (value * 24 * 60 * 60 * 1000);
@@ -1296,6 +1301,11 @@ class PersianDateClass {
                 }
                 this.date(oldDate);
             }
+        }
+        if (unit === 'week') {
+            const oldHour = this.hour();
+            let newDate = this.valueOf() - (value * 7 * 24 * 60 * 60 * 1000);
+            return this.unix(newDate / 1000).hour(oldHour);
         }
         if (unit === 'day') {
             const oldHour = this.hour();
