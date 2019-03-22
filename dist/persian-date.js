@@ -25,9 +25,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -922,9 +922,6 @@ var PersianDateClass = function () {
                 val === 'days' || val === 'day' ? diff / 864e5 : // 1000 * 60 * 60 * 24
                 val === 'weeks' || val === 'week' ? diff / 6048e5 : // 1000 * 60 * 60 * 24 * 7
                 diff;
-            }
-            if (output < 0) {
-                output = output * -1;
             }
             return asFloat ? output : Math.round(output);
         }
