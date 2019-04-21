@@ -9,6 +9,7 @@ const pDate = obj,
 
 pDate.formatPersian = true;
 
+
 describe('Helpers', function () {
     it('throw error', function () {
         /* eslint-disable no-console */
@@ -33,6 +34,11 @@ describe('Helpers', function () {
 //    });
 //});
 
+describe('Invalid Date', function () {
+    it('', function () {
+      assert.equal(new pDate([1398, -1]).toString(), new Date([2019, -1]).toString());
+    });
+});
 
 describe('Check static methods', function () {
     it('isPersianDate', function () {
@@ -1158,6 +1164,7 @@ describe('Add', function () {
         a = new pDate([1391, 1, 1, 1, 1, 1]).add('year', 1).toArray();
         assert.deepEqual(a, [1392, 1, 1, 1, 1, 1, 0]);
     });
+
     it('Month', function () {
         a = new pDate([1391, 1, 1, 1, 1, 1]).add('month', 1).toArray();
         assert.deepEqual(a, [1391, 2, 1, 1, 1, 1, 0]);
@@ -1176,6 +1183,11 @@ describe('Add', function () {
     it('Month to 1394(none leap)/11/30', function () {
         a = new pDate([1394, 11, 30, 1, 1, 1]).add('month', 1).toArray();
         assert.deepEqual(a, [1394, 12, 29, 1, 1, 1, 0]);
+    });
+
+    it('Week', function () {
+        a = new pDate([1396, 1, 1]).add('week', 100).toArray();
+        assert.deepEqual(a, [1397, 11, 30, 0, 0, 0, 0]);
     });
 
     it('Days Base on month day count', function () {
@@ -1216,6 +1228,12 @@ describe('Add', function () {
         a = new pDate([1391, 1, 1, 1, 1, 1]).add('ms', 1200).toArray();
         assert.deepEqual(a, [1391, 1, 1, 1, 1, 2, 200]);
     });
+
+
+    it('Without unit', function () {
+        a = new pDate([1391, 1, 1, 1, 1, 1]).add('', 1200).toArray();
+        assert.deepEqual(a, [1391, 1, 1, 1, 1, 1, 0]);
+    });
 });
 
 
@@ -1242,6 +1260,11 @@ describe('Subtract', function () {
     it('Month to 1394(after none leap)/1/31', function () {
         a = new pDate([1393, 1, 31, 1, 1, 1]).subtract('month', 1).toArray();
         assert.deepEqual(a, [1392, 12, 29, 1, 1, 1, 0]);
+    });
+
+    it('Week', function () {
+        a = new pDate([1396, 1, 1]).subtract('w',100).toArray();
+        assert.deepEqual(a, [1394, 2, 1, 0, 0, 0, 0]);
     });
 
     it('Days Base on month day count', function () {
