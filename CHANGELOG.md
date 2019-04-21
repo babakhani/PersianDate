@@ -8,9 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix [52](https:g//github.com/babakhani/PersianDate/issues/52)
 - Fix [53](https://github.com/babakhani/PersianDate/issues/53)
 - Fix [56](https://github.com/babakhani/PersianDate/issues/56)
+- Fix [71](https://github.com/babakhani/PersianDate/issues/71)
 - Support zero and negative values in input array
-- Prevent ngative value for month/date/hour/minute/seconds   
--  Fix state manager naming "ON" to "State"
+- Validate array input, Prevent ngative value for month/date/hour/minute/seconds   
+- Fix state manager naming "ON" to "State"
+- Fix startOf week bug
+- Fix add/subtract week issue
 
 ## [1.0.5] - 2018-2-11
 - Fix [35](https://github.com/babakhani/PersianDate/issues/35)

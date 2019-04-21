@@ -20,8 +20,8 @@
         * [.years(input)](#PersianDateClass+years) ⇒ <code>\*</code>
         * [.year(input)](#PersianDateClass+year) ⇒ <code>\*</code>
         * [.month(input)](#PersianDateClass+month) ⇒ <code>\*</code>
-        * [.days()](#PersianDateClass+days) ⇒ <code>function</code> \| <code>Date.toJSON.day</code> \| <code>date_json.day</code> \| <code>PersianDate.day</code> \| <code>day</code> \| <code>output.day</code> \| <code>\*</code>
-        * [.day()](#PersianDateClass+day) ⇒ <code>function</code> \| <code>Date.toJSON.day</code> \| <code>date_json.day</code> \| <code>PersianDate.day</code> \| <code>day</code> \| <code>output.day</code> \| <code>\*</code>
+        * [.days()](#PersianDateClass+days) ⇒ <code>function</code> \| <code>Date.toJSON.day</code> \| <code>date\_json.day</code> \| <code>PersianDate.day</code> \| <code>day</code> \| <code>output.day</code> \| <code>\*</code>
+        * [.day()](#PersianDateClass+day) ⇒ <code>function</code> \| <code>Date.toJSON.day</code> \| <code>date\_json.day</code> \| <code>PersianDate.day</code> \| <code>day</code> \| <code>output.day</code> \| <code>\*</code>
         * [.dates(input)](#PersianDateClass+dates) ⇒ <code>\*</code>
         * [.date(input)](#PersianDateClass+date) ⇒ <code>\*</code>
         * [.hour(input)](#PersianDateClass+hour) ⇒ <code>\*</code>
@@ -289,13 +289,13 @@ check if passed object is duration
 
 <a name="PersianDateClass+days"></a>
 
-## persianDateClass.days() ⇒ <code>function</code> \| <code>Date.toJSON.day</code> \| <code>date_json.day</code> \| <code>PersianDate.day</code> \| <code>day</code> \| <code>output.day</code> \| <code>\*</code>
+## persianDateClass.days() ⇒ <code>function</code> \| <code>Date.toJSON.day</code> \| <code>date\_json.day</code> \| <code>PersianDate.day</code> \| <code>day</code> \| <code>output.day</code> \| <code>\*</code>
 Day of week
 
 **Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+day"></a>
 
-## persianDateClass.day() ⇒ <code>function</code> \| <code>Date.toJSON.day</code> \| <code>date_json.day</code> \| <code>PersianDate.day</code> \| <code>day</code> \| <code>output.day</code> \| <code>\*</code>
+## persianDateClass.day() ⇒ <code>function</code> \| <code>Date.toJSON.day</code> \| <code>date\_json.day</code> \| <code>PersianDate.day</code> \| <code>day</code> \| <code>output.day</code> \| <code>\*</code>
 **Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
 <a name="PersianDateClass+dates"></a>
 
