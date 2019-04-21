@@ -12,6 +12,6 @@ module.exports = {
         minute: ['m', 'minutes', 'minute'],
         second: ['s', 'second', 'seconds'],
         millisecond: ['ms', 'milliseconds', 'millisecond'],
-        week: ['w', 'w', 'weeks', 'week'],
+        week: ['W', 'w', 'weeks', 'week'],
     }
 };
