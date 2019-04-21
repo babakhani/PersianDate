@@ -1536,43 +1536,53 @@ var PersianDateClass = function () {
         key: 'add',
         value: function add(key, value) {
             var duration = new Duration(key, value)._data,
-                unit = normalizeDuration(key, value).unit;
+                unit = normalizeDuration(key, value).unit,
+                arr = this.toArray();
             value = normalizeDuration(key, value).value;
-            console.log('add');
-            console.log(duration);
-            console.log(unit);
-            var arr = this.toArray();
-            if (unit === 'year' || unit === 'month') {
-                var tempDate = null;
-                if (duration.years > 0) {
-                    tempDate = new PersianDateClass([arr[0] + value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]]);
-                }
-                if (duration.months > 0) {
-                    tempDate = new PersianDateClass([arr[0], arr[1] + value, arr[2], arr[3], arr[4], arr[5], arr[6]]);
-                }
+            if (unit === 'year') {
+                var tempDate = new PersianDateClass([arr[0] + value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]]);
                 return this.unix(tempDate.unix());
             }
+            if (unit === 'month') {
+                var tempYear = Math.floor(value / 12),
+                    remainingMonth = value - tempYear * 12,
+                    calcedMonth = null;
+                if (arr[1] + remainingMonth > 12) {
+                    tempYear += 1;
+                    calcedMonth = 1;
+                } else {
+                    if (remainingMonth > 0) {
+                        calcedMonth = arr[1] + value;
+                    } else {
+                        calcedMonth = arr[1] + remainingMonth;
+                    }
+                }
+                var _tempDate = new PersianDateClass([arr[0] + tempYear, calcedMonth, arr[2], arr[3], arr[4], arr[5], arr[6]]);
+                return this.unix(_tempDate.unix());
+            }
             if (unit === 'day') {
-                return new PersianDateClass([arr[0], arr[1], arr[2] + value, arr[3], arr[4], arr[5], arr[6]]);
+                var newMillisecond = this.valueOf() + value * 86400000;
+                return this.unix(newMillisecond / 1000);
             }
             if (unit === 'week') {
-                return new PersianDateClass([arr[0], arr[1], arr[2] + value * 7, arr[3], arr[4], arr[5], arr[6]]);
+                var _newMillisecond = this.valueOf() + value * 7 * 86400000;
+                return this.unix(_newMillisecond / 1000);
             }
             if (unit === 'hour') {
-                var newDate = this.valueOf() + value * 60 * 60 * 1000;
-                return this.unix(newDate / 1000);
+                var _newMillisecond2 = this.valueOf() + value * 3600000;
+                return this.unix(_newMillisecond2 / 1000);
             }
             if (unit === 'minute') {
-                var _newDate = this.valueOf() + value * 60 * 1000;
-                return this.unix(_newDate / 1000);
+                var _newMillisecond3 = this.valueOf() + value * 60000;
+                return this.unix(_newMillisecond3 / 1000);
             }
             if (unit === 'second') {
-                var _newDate2 = this.valueOf() + value * 1000;
-                return this.unix(_newDate2 / 1000);
+                var _newMillisecond4 = this.valueOf() + value * 1000;
+                return this.unix(_newMillisecond4 / 1000);
             }
             if (unit === 'millisecond') {
-                var newMillisecond = this.valueOf() + value;
-                return this.unix(newMillisecond / 1000);
+                var _newMillisecond5 = this.valueOf() + value;
+                return this.unix(_newMillisecond5 / 1000);
             }
             return this._getSyncedClass(this.valueOf());
         }
@@ -1586,41 +1596,54 @@ var PersianDateClass = function () {
     }, {
         key: 'subtract',
         value: function subtract(key, value) {
-            var duration = new Duration(key, value)._data;
-            var unit = normalizeDuration(key, value).unit;
+            var duration = new Duration(key, value)._data,
+                unit = normalizeDuration(key, value).unit,
+                arr = this.toArray();
             value = normalizeDuration(key, value).value;
-            var arr = this.toArray();
-            if (unit === 'year' || unit === 'month') {
-                var tempDate = null;
-                if (duration.years > 0) {
-                    tempDate = new PersianDateClass([arr[0] - value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]]);
-                }
-                if (duration.months > 0) {
-                    tempDate = new PersianDateClass([arr[0], arr[1] - value, arr[2], arr[3], arr[4], arr[5], arr[6]]);
-                }
+            if (unit === 'year') {
+                var tempDate = new PersianDateClass([arr[0] - value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]]);
                 return this.unix(tempDate.unix());
             }
+            if (unit === 'month') {
+                var tempYear = Math.floor(value / 12),
+                    remainingMonth = value - tempYear * 12,
+                    calcedMonth = null;
+                if (arr[1] - remainingMonth < 1) {
+                    tempYear += 1;
+                    calcedMonth = 12;
+                } else {
+                    if (remainingMonth > 0) {
+                        calcedMonth = arr[1] - value;
+                    } else {
+                        calcedMonth = arr[1] - remainingMonth;
+                    }
+                }
+                var _tempDate2 = new PersianDateClass([arr[0] - tempYear, calcedMonth, arr[2], arr[3], arr[4], arr[5], arr[6]]);
+                return this.unix(_tempDate2.unix());
+            }
             if (unit === 'day') {
-                return new PersianDateClass([arr[0], arr[1], arr[2] - value, arr[3], arr[4], arr[5], arr[6]]);
+                var newMillisecond = this.valueOf() - value * 86400000;
+                return this.unix(newMillisecond / 1000);
             }
             if (unit === 'week') {
-                return new PersianDateClass([arr[0], arr[1], arr[2] - value * 7, arr[3], arr[4], arr[5], arr[6]]);
+                var _newMillisecond6 = this.valueOf() - value * 7 * 86400000;
+                return this.unix(_newMillisecond6 / 1000);
             }
             if (unit === 'hour') {
-                var newDate = this.valueOf() - value * 60 * 60 * 1000;
-                return this.unix(newDate / 1000);
+                var _newMillisecond7 = this.valueOf() - value * 3600000;
+                return this.unix(_newMillisecond7 / 1000);
             }
             if (unit === 'minute') {
-                var _newDate3 = this.valueOf() - value * 60 * 1000;
-                return this.unix(_newDate3 / 1000);
+                var _newMillisecond8 = this.valueOf() - value * 60000;
+                return this.unix(_newMillisecond8 / 1000);
             }
             if (unit === 'second') {
-                var _newDate4 = this.valueOf() - value * 1000;
-                return this.unix(_newDate4 / 1000);
+                var _newMillisecond9 = this.valueOf() - value * 1000;
+                return this.unix(_newMillisecond9 / 1000);
             }
             if (unit === 'millisecond') {
-                var newMillisecond = this.valueOf() - value;
-                return this.unix(newMillisecond / 1000);
+                var _newMillisecond10 = this.valueOf() - value;
+                return this.unix(_newMillisecond10 / 1000);
             }
             return this._getSyncedClass(this.valueOf());
         }
@@ -3273,23 +3296,23 @@ module.exports = {
   validateInputArray: function validateInputArray(input) {
     var out = true;
     // Check month
-    if (input[1] < 1) {
+    if (input[1] < 1 || input[1] > 12) {
       out = false;
     }
     // Check date
-    if (input[2] < 1) {
+    if (input[2] < 1 || input[1] > 31) {
       out = false;
     }
     // Check hour 
-    if (input[3] < 0) {
+    if (input[3] < 0 || input[3] > 24) {
       out = false;
     }
     // Check minute 
-    if (input[4] < 0) {
+    if (input[4] < 0 || input[4] > 60) {
       out = false;
     }
     // Check second 
-    if (input[5] < 0) {
+    if (input[5] < 0 || input[5] > 60) {
       out = false;
     }
     return out;
