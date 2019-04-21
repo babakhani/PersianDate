@@ -59,7 +59,7 @@
     "start": "webpack --watch & webpack-dev-server --port 5000 --watch --hot",
     "dev": "webpack",
     "build": " webpack; MIN=1 webpack; npm run test; npm run lint; npm run doc;",
-    "test": "nyc --reporter=html --reporter=text mocha --timeout 15000",
+    "test": "nyc --reporter=html --reporter=text mocha --timeout 25000",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "./node_modules/jshint/bin/jshint src/*.js; ./node_modules/eslint/bin/eslint.js src/",
     "doc": "grunt --doc",

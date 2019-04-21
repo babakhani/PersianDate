@@ -167,6 +167,8 @@ var Helpers = function () {
                 unit = 'year';
             } else if (durationUnit.month.indexOf(unit) > -1) {
                 unit = 'month';
+            } else if (durationUnit.week.indexOf(unit) > -1) {
+                unit = 'week';
             } else if (durationUnit.day.indexOf(unit) > -1) {
                 unit = 'day';
             } else if (durationUnit.hour.indexOf(unit) > -1) {
@@ -295,7 +297,7 @@ var PersianDateClass = function () {
                     this.State.isInvalidDate = true;
                     return false;
                 }
-                this.algorithmsCalc([input[0], input[1] || input[1] === 0 ? input[1] : 1, input[2] || input[2] === 0 ? input[2] : 1, input[3] || input[3] === 0 ? input[3] : 0, input[4] ? input[4] : 0, input[5] ? input[5] : 0, input[6] ? input[6] : 0]);
+                this.algorithmsCalc([input[0], input[1] ? input[1] : 1, input[2] ? input[2] : 1, input[3] ? input[3] : 0, input[4] ? input[4] : 0, input[5] ? input[5] : 0, input[6] ? input[6] : 0]);
             } else if (TypeChecking.isNumber(input)) {
                 var fromUnix = new Date(input);
                 this._gDateToCalculators(fromUnix);
@@ -1152,6 +1154,25 @@ var PersianDateClass = function () {
         }
 
         /**
+         * @returns {init}
+         * @link https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D8%B9%D8%AA_%D8%AA%D8%A7%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%DB%8C
+         */
+
+    }, {
+        key: 'hoursInDay',
+        value: function hoursInDay() {
+            var hours = 24;
+            day = this.date();
+            if (month === 1 && day === 1) {
+                return hours + 1;
+            }
+            if (month === 6 && day === 30) {
+                return hours - 1;
+            }l;
+            return hour;
+        }
+
+        /**
          * @returns {boolean}
          */
 
@@ -1387,15 +1408,15 @@ var PersianDateClass = function () {
                     case 'w':
                         {
                             var _t2 = self.startOf('year'),
-                                day = parseInt(self.diff(_t2, 'days') / 7) + 1;
-                            return checkPersian(day);
+                                _day = parseInt(self.diff(_t2, 'days') / 7) + 1;
+                            return checkPersian(_day);
                         }
                     // Return Persian Day Name
                     case 'ww':
                         {
                             var _t3 = self.startOf('year'),
-                                _day = leftZeroFill(parseInt(self.diff(_t3, 'days') / 7) + 1, 2);
-                            return checkPersian(_day);
+                                _day2 = leftZeroFill(parseInt(self.diff(_t3, 'days') / 7) + 1, 2);
+                            return checkPersian(_day2);
                         }
                     // Month  (Int)
                     case 'M':
@@ -1554,28 +1575,25 @@ var PersianDateClass = function () {
                 } else {
                     calcedMonth = arr[1] + remainingMonth;
                 }
-                //console.log('tempYear : ' + tempYear)
-                //console.log('remainingMonth : ' + remainingMonth)
-                //console.log('calcedMonth : ' + calcedMonth)
-                //console.log('tempdate array')
-                //console.log([arr[0] + tempYear, calcedMonth, 1, arr[3], arr[4], arr[5], arr[6]])
                 var normalizaedDate = arr[2];
                 var tempDateArray = new PersianDateClass([arr[0] + tempYear, calcedMonth, 1, arr[3], arr[4], arr[5], arr[6]]).toArray();
                 var monthDays = this.daysInMonth(arr[0] + tempYear, calcedMonth);
                 if (arr[2] > monthDays) {
                     normalizaedDate = monthDays;
                 }
-                console.log('Array:');
-                console.log([tempDateArray[0], tempDateArray[1], normalizaedDate, tempDateArray[3], tempDateArray[4], tempDateArray[5], tempDateArray[6]]);
                 return this.unix(new PersianDateClass([tempDateArray[0], tempDateArray[1], normalizaedDate, tempDateArray[3], tempDateArray[4], tempDateArray[5], tempDateArray[6]]).unix());
             }
             if (unit === 'day') {
-                var newMillisecond = this.valueOf() + value * 86400000;
-                return this.unix(newMillisecond / 1000);
+                var calcedDay = new PersianDateClass(this.valueOf()).hour(12);
+                var newMillisecond = calcedDay.valueOf() + value * 86400000;
+                var newDate = new PersianDateClass(newMillisecond);
+                return newDate.hour(arr[3]);
             }
             if (unit === 'week') {
-                var _newMillisecond = this.valueOf() + value * 7 * 86400000;
-                return this.unix(_newMillisecond / 1000);
+                var _calcedDay = new PersianDateClass(this.valueOf()).hour(12);
+                var _newMillisecond = _calcedDay.valueOf() + 7 * value * 86400000;
+                var _newDate = new PersianDateClass(_newMillisecond);
+                return _newDate.hour(arr[3]);
             }
             if (unit === 'hour') {
                 var _newMillisecond2 = this.valueOf() + value * 3600000;
@@ -2922,7 +2940,7 @@ module.exports = {
         minute: ['m', 'minutes', 'minute'],
         second: ['s', 'second', 'seconds'],
         millisecond: ['ms', 'milliseconds', 'millisecond'],
-        week: ['w', '', 'weeks', 'week']
+        week: ['w', 'w', 'weeks', 'week']
     }
 };
 

@@ -53,6 +53,9 @@ class Helpers {
         else if (durationUnit.month.indexOf(unit) > -1) {
             unit = 'month';
         }
+        else if (durationUnit.week.indexOf(unit) > -1) {
+            unit = 'week';
+        }
         else if (durationUnit.day.indexOf(unit) > -1) {
             unit = 'day';
         }

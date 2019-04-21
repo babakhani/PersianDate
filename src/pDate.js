@@ -57,9 +57,9 @@ class PersianDateClass {
             }
             this.algorithmsCalc([
               input[0], 
-              input[1] || input[1] === 0 ? input[1] : 1, 
-              input[2] || input[2] === 0 ? input[2] : 1, 
-              input[3] || input[3] === 0 ? input[3] : 0,
+              input[1] ? input[1] : 1, 
+              input[2] ? input[2] : 1, 
+              input[3] ? input[3] : 0,
               input[4] ? input[4] : 0,
               input[5] ? input[5] : 0,
               input[6] ? input[6] : 0
@@ -911,6 +911,22 @@ class PersianDateClass {
 
 
     /**
+     * @returns {init}
+     * @link https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D8%B9%D8%AA_%D8%AA%D8%A7%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%DB%8C
+     */
+    hoursInDay() {
+        let hours = 24
+            day = this.date();
+        if (month === 1 && day === 1 ) {
+            return hours + 1;
+        }
+        if (month === 6 && day === 30 ) {
+            return hours - 1;
+        }l
+        return hour
+    }
+
+    /**
      * @returns {boolean}
      */
     isLeapYear(year) {
@@ -1276,12 +1292,16 @@ class PersianDateClass {
             return this.unix(new PersianDateClass([tempDateArray[0], tempDateArray[1], normalizaedDate, tempDateArray[3], tempDateArray[4], tempDateArray[5], tempDateArray[6]]).unix());
         }
         if (unit === 'day') {
-            let newMillisecond = this.valueOf() + (value * 86400000)
-            return this.unix(newMillisecond / 1000);
+            let calcedDay = new PersianDateClass(this.valueOf()).hour(12)
+            let newMillisecond = calcedDay.valueOf() + (value * 86400000)
+            let newDate = new PersianDateClass(newMillisecond)
+            return newDate.hour(arr[3])
         }
         if (unit === 'week') {
-            let newMillisecond = this.valueOf() + ((value*7) * 86400000)
-            return this.unix(newMillisecond / 1000);
+            let calcedDay = new PersianDateClass(this.valueOf()).hour(12)
+            let newMillisecond = calcedDay.valueOf() + (7 * value * 86400000)
+            let newDate = new PersianDateClass(newMillisecond)
+            return newDate.hour(arr[3])
         }
         if (unit === 'hour') {
             let newMillisecond = this.valueOf() + (value * 3600000)

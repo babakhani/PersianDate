@@ -1170,7 +1170,7 @@ describe('Add', function () {
 
     it('Month to 1395(leap)/11/30', function () {
         a = new pDate([1395, 11, 30, 1, 1, 1]).add('month', 1).toArray();
-        assert.deepEqual(a, [1395, 12, 30, 1, 1, 1, d]);
+        assert.deepEqual(a, [1395, 12, 30, 1, 1, 1, 0]);
     });
 
     it('Month to 1394(none leap)/11/30', function () {
