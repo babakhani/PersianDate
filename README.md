@@ -613,23 +613,23 @@ Accept 3 argument, (ccmparable persianDate object, difference key, boolean value
 To get the difference in milliseconds, use ```persianDate#diff```.
 
 ```javascript
-var a = new persianDate([1392, 0, 29]);
-var b = new persianDate([1392, 0,28]);
+var a = new persianDate([1392, 1, 29]);
+var b = new persianDate([1392, 1, 28]);
 a.diff(b) // 86400000
 ```
 
 To get the difference in another unit of measurement, pass that measurement as the second argument.
 
 ```javascript
-var a = new persianDate([1392, 0,29]);
-var b = new persianDate([1392,0,28]);
+var a = new persianDate([1392, 1, 29]);
+var b = new persianDate([1392,1, 28]);
 a.diff(b, 'days'); // 1
 ```
 
 The supported measurements are years, months, weeks, days, hours, minutes, and seconds. For ease of development, the singular forms are supported .
 
 ```javascript
-var a = new persianDate([1391, 0]);
+var a = new persianDate([1391, 1]);
 var b = new persianDate([1392, 5]);
 a.diff(b, 'years');
 a.diff(b, 'years', true);
