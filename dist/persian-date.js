@@ -238,6 +238,7 @@ var TypeChecking = __webpack_require__(10);
 var Algorithms = __webpack_require__(2);
 var Helpers = __webpack_require__(0);
 var Duration = __webpack_require__(5);
+var Validator = __webpack_require__(11);
 var toPersianDigit = new Helpers().toPersianDigit;
 var leftZeroFill = new Helpers().leftZeroFill;
 var normalizeDuration = new Helpers().normalizeDuration;
@@ -269,8 +270,12 @@ var PersianDateClass = function () {
         } else {
             this.formatPersian = '_default';
         }
+        this.State = this.algorithms.State;
         this.setup(input);
-        this.ON = this.algorithms.ON;
+        if (this.State.isInvalidDate) {
+            // Return Date like message
+            return new Date([-1, -1]);
+        }
         return this;
     }
 
@@ -286,6 +291,10 @@ var PersianDateClass = function () {
             if (TypeChecking.isDate(input)) {
                 this._gDateToCalculators(input);
             } else if (TypeChecking.isArray(input)) {
+                if (!Validator.validateInputArray(input)) {
+                    this.State.isInvalidDate = true;
+                    return false;
+                }
                 this.algorithmsCalc([input[0], input[1] || input[1] === 0 ? input[1] : 1, input[2] || input[2] === 0 ? input[2] : 1, input[3] || input[3] === 0 ? input[3] : 0, input[4] ? input[4] : 0, input[5] ? input[5] : 0, input[6] ? input[6] : 0]);
             } else if (TypeChecking.isNumber(input)) {
                 var fromUnix = new Date(input);
@@ -544,7 +553,7 @@ var PersianDateClass = function () {
     }, {
         key: 'clone',
         value: function clone() {
-            return this._getSyncedClass(this.ON.gDate);
+            return this._getSyncedClass(this.State.gDate);
         }
 
         /**
@@ -587,7 +596,7 @@ var PersianDateClass = function () {
             } else {
                 key = 'gregorian';
             }
-            return this.ON[key];
+            return this.State[key];
         }
 
         /**
@@ -748,7 +757,7 @@ var PersianDateClass = function () {
                 this.algorithmsCalc([this.year(), this.month(), this.date(), input]);
                 return this;
             } else {
-                return this.ON.gDate.getHours();
+                return this.State.gDate.getHours();
             }
         }
 
@@ -775,7 +784,7 @@ var PersianDateClass = function () {
                 this.algorithmsCalc([this.year(), this.month(), this.date(), this.hour(), input]);
                 return this;
             } else {
-                return this.ON.gDate.getMinutes();
+                return this.State.gDate.getMinutes();
             }
         }
 
@@ -802,7 +811,7 @@ var PersianDateClass = function () {
                 this.algorithmsCalc([this.year(), this.month(), this.date(), this.hour(), this.minute(), input]);
                 return this;
             } else {
-                return this.ON.gDate.getSeconds();
+                return this.State.gDate.getSeconds();
             }
         }
 
@@ -830,7 +839,7 @@ var PersianDateClass = function () {
                 this.algorithmsCalc([this.year(), this.month(), this.date(), this.hour(), this.minute(), this.second(), input]);
                 return this;
             } else {
-                return this.ON.gregorian.millisecond;
+                return this.State.gregorian.millisecond;
             }
         }
 
@@ -840,7 +849,7 @@ var PersianDateClass = function () {
          * @private
          */
         //    _valueOf () {
-        //        return this.ON.gDate.valueOf();
+        //        return this.State.gDate.valueOf();
         //    }
 
 
@@ -858,7 +867,7 @@ var PersianDateClass = function () {
             if (timestamp) {
                 return this._getSyncedClass(timestamp * 1000);
             } else {
-                var str = this.ON.gDate.valueOf().toString();
+                var str = this.State.gDate.valueOf().toString();
                 output = str.substring(0, str.length - 3);
             }
             return parseInt(output);
@@ -871,7 +880,7 @@ var PersianDateClass = function () {
     }, {
         key: 'valueOf',
         value: function valueOf() {
-            return this.ON.gDate.valueOf();
+            return this.State.gDate.valueOf();
         }
 
         /**
@@ -908,7 +917,7 @@ var PersianDateClass = function () {
             var self = this,
                 inputMoment = input,
                 zoneDiff = 0,
-                diff = self.ON.gDate - inputMoment.toDate() - zoneDiff,
+                diff = self.State.gDate - inputMoment.toDate() - zoneDiff,
                 year = self.year() - inputMoment.year(),
                 month = self.month() - inputMoment.month(),
                 date = (self.date() - inputMoment.date()) * -1,
@@ -1041,10 +1050,10 @@ var PersianDateClass = function () {
         key: 'zone',
         value: function zone(input) {
             if (input || input === 0) {
-                this.ON.zone = input;
+                this.State.zone = input;
                 return this;
             } else {
-                return this.ON.zone;
+                return this.State.zone;
             }
         }
 
@@ -1194,7 +1203,7 @@ var PersianDateClass = function () {
     }, {
         key: 'toDate',
         value: function toDate() {
-            return this.ON.gDate;
+            return this.State.gDate;
         }
 
         /**
@@ -1258,6 +1267,9 @@ var PersianDateClass = function () {
     }, {
         key: 'format',
         value: function format(inputString) {
+            if (this.State.isInvalidDate) {
+                return false;
+            }
             var self = this,
                 formattingTokens = /([[^[]*])|(\\)?(Mo|MM?M?M?|Do|DD?D?D?|dddddd?|ddddd?|dddd?|do?|w[o|w]?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|SS?S?|zz?|ZZ?|X|LT|ll?l?l?|LL?L?L?)/g,
                 info = {
@@ -1784,7 +1796,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 // Start algorithm class
 var ASTRO = __webpack_require__(3);
-var ON = __webpack_require__(9);
+var State = __webpack_require__(9);
 
 var Algorithms = function () {
     function Algorithms(parent) {
@@ -1792,7 +1804,7 @@ var Algorithms = function () {
 
         this.parent = parent;
         this.ASTRO = new ASTRO();
-        this.ON = new ON();
+        this.State = new State();
         /*  You may notice that a variety of array variables logically local
          to functions are declared globally here.  In JavaScript, construction
          of an array variable from source code occurs as the code is
@@ -2191,84 +2203,84 @@ var Algorithms = function () {
                 utime = void 0,
                 perscal = void 0;
 
-            year = this.ON.gregorian.year;
-            mon = this.ON.gregorian.month;
-            mday = this.ON.gregorian.day;
-            hour = 0; //this.ON.gregorian.hour;
-            min = 0; //this.ON.gregorian.minute;
-            sec = 0; //this.ON.gregorian.second;
+            year = this.State.gregorian.year;
+            mon = this.State.gregorian.month;
+            mday = this.State.gregorian.day;
+            hour = 0; //this.State.gregorian.hour;
+            min = 0; //this.State.gregorian.minute;
+            sec = 0; //this.State.gregorian.second;
 
-            this.ON.gDate = new Date(year, mon, mday, this.ON.gregorian.hour, this.ON.gregorian.minute, this.ON.gregorian.second, this.ON.gregorian.millisecond);
+            this.State.gDate = new Date(year, mon, mday, this.State.gregorian.hour, this.State.gregorian.minute, this.State.gregorian.second, this.State.gregorian.millisecond);
 
             if (this.parent._utcMode === false) {
-                this.ON.zone = this.ON.gDate.getTimezoneOffset();
+                this.State.zone = this.State.gDate.getTimezoneOffset();
             }
 
             // Added for this algorithms cant parse 2016,13,32 successfully
-            this.ON.gregorian.year = this.ON.gDate.getFullYear();
-            this.ON.gregorian.month = this.ON.gDate.getMonth();
-            this.ON.gregorian.day = this.ON.gDate.getDate();
+            this.State.gregorian.year = this.State.gDate.getFullYear();
+            this.State.gregorian.month = this.State.gDate.getMonth();
+            this.State.gregorian.day = this.State.gDate.getDate();
 
             //  Update Julian day
             // ---------------------------------------------------------------------------
             j = this.gregorian_to_jd(year, mon + 1, mday) + Math.floor(sec + 60 * (min + 60 * hour) + 0.5) / 86400.0;
 
-            this.ON.julianday = j;
-            this.ON.modifiedjulianday = j - this.JMJD;
+            this.State.julianday = j;
+            this.State.modifiedjulianday = j - this.JMJD;
 
             //  Update day of week in Gregorian box
             // ---------------------------------------------------------------------------
             weekday = this.ASTRO.jwday(j);
             // Move to 1 indexed number
-            this.ON.gregorian.weekday = weekday + 1;
+            this.State.gregorian.weekday = weekday + 1;
 
             //  Update leap year status in Gregorian box
             // ---------------------------------------------------------------------------
-            this.ON.gregorian.leap = this.NormLeap[this.leap_gregorian(year) ? 1 : 0];
+            this.State.gregorian.leap = this.NormLeap[this.leap_gregorian(year) ? 1 : 0];
 
             //  Update Julian Calendar
             // ---------------------------------------------------------------------------
             //        julcal = this.jd_to_julian(j);
             //
-            //        this.ON.juliancalendar.year = julcal[0];
-            //        this.ON.juliancalendar.month = julcal[1] - 1;
-            //        this.ON.juliancalendar.day = julcal[2];
-            //        this.ON.juliancalendar.leap = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
+            //        this.State.juliancalendar.year = julcal[0];
+            //        this.State.juliancalendar.month = julcal[1] - 1;
+            //        this.State.juliancalendar.day = julcal[2];
+            //        this.State.juliancalendar.leap = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
             weekday = this.ASTRO.jwday(j);
-            //        this.ON.juliancalendar.weekday = weekday;
+            //        this.State.juliancalendar.weekday = weekday;
 
             //  Update Persian Calendar
             // ---------------------------------------------------------------------------
             if (this.parent.calendarType == 'persian' && this.parent.leapYearMode == 'algorithmic') {
                 perscal = this.jd_to_persian(j);
-                this.ON.persian.year = perscal[0];
-                this.ON.persian.month = perscal[1] - 1;
-                this.ON.persian.day = perscal[2];
-                this.ON.persian.weekday = this.gWeekDayToPersian(weekday);
-                this.ON.persian.leap = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
+                this.State.persian.year = perscal[0];
+                this.State.persian.month = perscal[1] - 1;
+                this.State.persian.day = perscal[2];
+                this.State.persian.weekday = this.gWeekDayToPersian(weekday);
+                this.State.persian.leap = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
             }
 
             //  Update Persian Astronomical Calendar
             // ---------------------------------------------------------------------------
             if (this.parent.calendarType == 'persian' && this.parent.leapYearMode == 'astronomical') {
                 perscal = this.jd_to_persiana(j);
-                this.ON.persianAstro.year = perscal[0];
-                this.ON.persianAstro.month = perscal[1] - 1;
-                this.ON.persianAstro.day = perscal[2];
-                this.ON.persianAstro.weekday = this.gWeekDayToPersian(weekday);
-                this.ON.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
+                this.State.persianAstro.year = perscal[0];
+                this.State.persianAstro.month = perscal[1] - 1;
+                this.State.persianAstro.day = perscal[2];
+                this.State.persianAstro.weekday = this.gWeekDayToPersian(weekday);
+                this.State.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
             }
             //  Update Gregorian serial number
             // ---------------------------------------------------------------------------
-            if (this.ON.gregserial.day !== null) {
-                this.ON.gregserial.day = j - this.J0000;
+            if (this.State.gregserial.day !== null) {
+                this.State.gregserial.day = j - this.J0000;
             }
 
             //  Update Unix time()
             // ---------------------------------------------------------------------------
             utime = (j - this.J1970) * (60 * 60 * 24 * 1000);
 
-            this.ON.unixtime = Math.round(utime / 1000);
+            this.State.unixtime = Math.round(utime / 1000);
         }
 
         /**
@@ -2280,25 +2292,25 @@ var Algorithms = function () {
         key: 'calcGregorian',
         value: function calcGregorian(dateArray) {
             if (dateArray[0] || dateArray[0] === 0) {
-                this.ON.gregorian.year = dateArray[0];
+                this.State.gregorian.year = dateArray[0];
             }
             if (dateArray[1] || dateArray[1] === 0) {
-                this.ON.gregorian.month = dateArray[1];
+                this.State.gregorian.month = dateArray[1];
             }
             if (dateArray[2] || dateArray[2] === 0) {
-                this.ON.gregorian.day = dateArray[2];
+                this.State.gregorian.day = dateArray[2];
             }
             if (dateArray[3] || dateArray[3] === 0) {
-                this.ON.gregorian.hour = dateArray[3];
+                this.State.gregorian.hour = dateArray[3];
             }
             if (dateArray[4] || dateArray[4] === 0) {
-                this.ON.gregorian.minute = dateArray[4];
+                this.State.gregorian.minute = dateArray[4];
             }
             if (dateArray[5] || dateArray[5] === 0) {
-                this.ON.gregorian.second = dateArray[5];
+                this.State.gregorian.second = dateArray[5];
             }
             if (dateArray[6] || dateArray[6] === 0) {
-                this.ON.gregorian.millisecond = dateArray[6];
+                this.State.gregorian.millisecond = dateArray[6];
             }
             this.updateFromGregorian();
         }
@@ -2312,14 +2324,14 @@ var Algorithms = function () {
         value: function calcJulian() {
             var j = void 0,
                 date = void 0;
-            j = this.ON.julianday;
+            j = this.State.julianday;
             date = this.jd_to_gregorian(j);
-            this.ON.gregorian.year = date[0];
-            this.ON.gregorian.month = date[1] - 1;
-            this.ON.gregorian.day = date[2];
-            //        this.ON.gregorian.hour = this.pad(time[0], 2, " ");
-            //        this.ON.gregorian.minute = this.pad(time[1], 2, "0");
-            //        this.ON.gregorian.second = this.pad(time[2], 2, "0");
+            this.State.gregorian.year = date[0];
+            this.State.gregorian.month = date[1] - 1;
+            this.State.gregorian.day = date[2];
+            //        this.State.gregorian.hour = this.pad(time[0], 2, " ");
+            //        this.State.gregorian.minute = this.pad(time[1], 2, "0");
+            //        this.State.gregorian.second = this.pad(time[2], 2, "0");
             this.updateFromGregorian();
         }
 
@@ -2331,7 +2343,7 @@ var Algorithms = function () {
     }, {
         key: 'setJulian',
         value: function setJulian(j) {
-            this.ON.julianday = j;
+            this.State.julianday = j;
             this.calcJulian();
         }
 
@@ -2344,28 +2356,28 @@ var Algorithms = function () {
         key: 'calcPersian',
         value: function calcPersian(dateArray) {
             if (dateArray[0] || dateArray[0] === 0) {
-                this.ON.persian.year = dateArray[0];
+                this.State.persian.year = dateArray[0];
             }
             if (dateArray[1] || dateArray[1] === 0) {
-                this.ON.persian.month = dateArray[1];
+                this.State.persian.month = dateArray[1];
             }
             if (dateArray[2] || dateArray[2] === 0) {
-                this.ON.persian.day = dateArray[2];
+                this.State.persian.day = dateArray[2];
             }
             if (dateArray[3] || dateArray[3] === 0) {
-                this.ON.gregorian.hour = dateArray[3];
+                this.State.gregorian.hour = dateArray[3];
             }
             if (dateArray[4] || dateArray[4] === 0) {
-                this.ON.gregorian.minute = dateArray[4];
+                this.State.gregorian.minute = dateArray[4];
             }
             if (dateArray[5] || dateArray[5] === 0) {
-                this.ON.gregorian.second = dateArray[5];
+                this.State.gregorian.second = dateArray[5];
             }
             if (dateArray[6] || dateArray[6] === 0) {
-                this.ON.gregorian.millisecond = dateArray[6];
+                this.State.gregorian.millisecond = dateArray[6];
             }
 
-            this.setJulian(this.persian_to_jd(this.ON.persian.year, this.ON.persian.month, this.ON.persian.day));
+            this.setJulian(this.persian_to_jd(this.State.persian.year, this.State.persian.month, this.State.persian.day));
         }
 
         /**
@@ -2377,28 +2389,28 @@ var Algorithms = function () {
         key: 'calcPersiana',
         value: function calcPersiana(dateArray) {
             if (dateArray[0] || dateArray[0] === 0) {
-                this.ON.persianAstro.year = dateArray[0];
+                this.State.persianAstro.year = dateArray[0];
             }
             if (dateArray[1] || dateArray[1] === 0) {
-                this.ON.persianAstro.month = dateArray[1];
+                this.State.persianAstro.month = dateArray[1];
             }
             if (dateArray[2] || dateArray[2] === 0) {
-                this.ON.persianAstro.day = dateArray[2];
+                this.State.persianAstro.day = dateArray[2];
             }
 
             if (dateArray[3] || dateArray[3] === 0) {
-                this.ON.gregorian.hour = dateArray[3];
+                this.State.gregorian.hour = dateArray[3];
             }
             if (dateArray[4] || dateArray[4] === 0) {
-                this.ON.gregorian.minute = dateArray[4];
+                this.State.gregorian.minute = dateArray[4];
             }
             if (dateArray[5] || dateArray[5] === 0) {
-                this.ON.gregorian.second = dateArray[5];
+                this.State.gregorian.second = dateArray[5];
             }
             if (dateArray[6] || dateArray[6] === 0) {
-                this.ON.gregorian.millisecond = dateArray[6];
+                this.State.gregorian.millisecond = dateArray[6];
             }
-            this.setJulian(this.persiana_to_jd(this.ON.persianAstro.year, this.ON.persianAstro.month, this.ON.persianAstro.day + 0.5));
+            this.setJulian(this.persiana_to_jd(this.State.persianAstro.year, this.State.persianAstro.month, this.State.persianAstro.day + 0.5));
         }
     }]);
 
@@ -3097,6 +3109,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Container = function Container() {
     _classCallCheck(this, Container);
 
+    this.isInvalidDate = null;
+
     this.gDate = null;
     /**
      *
@@ -3242,6 +3256,44 @@ module.exports = {
     isDate: function isDate(input) {
         return input instanceof Date;
     }
+};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+  /**
+   * @param input
+   * @returns {boolean}
+   */
+  validateInputArray: function validateInputArray(input) {
+    var out = true;
+    // Check month
+    if (input[1] < 1) {
+      out = false;
+    }
+    // Check date
+    if (input[2] < 1) {
+      out = false;
+    }
+    // Check hour 
+    if (input[3] < 0) {
+      out = false;
+    }
+    // Check minute 
+    if (input[4] < 0) {
+      out = false;
+    }
+    // Check second 
+    if (input[5] < 0) {
+      out = false;
+    }
+    return out;
+  }
 };
 
 /***/ })

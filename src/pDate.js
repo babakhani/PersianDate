@@ -2,6 +2,7 @@ let TypeChecking = require('./type-checking');
 let Algorithms = require('./algorithms');
 let Helpers = require('./helpers');
 let Duration = require('./duration');
+let Validator = require('./validator');
 let toPersianDigit = new Helpers().toPersianDigit;
 let leftZeroFill = new Helpers().leftZeroFill;
 let normalizeDuration = new Helpers().normalizeDuration;
@@ -32,8 +33,12 @@ class PersianDateClass {
         } else {
             this.formatPersian = '_default';
         }
+        this.State = this.algorithms.State;
         this.setup(input);
-        this.ON = this.algorithms.ON;
+        if (this.State.isInvalidDate) {
+          // Return Date like message
+          return new Date([-1, -1])
+        }
         return this;
     }
 
@@ -46,6 +51,10 @@ class PersianDateClass {
             this._gDateToCalculators(input);
         }
         else if (TypeChecking.isArray(input)) {
+            if (!Validator.validateInputArray(input)) {
+              this.State.isInvalidDate = true
+              return false
+            }
             this.algorithmsCalc([
               input[0], 
               input[1] || input[1] === 0 ? input[1] : 1, 
@@ -339,7 +348,7 @@ class PersianDateClass {
      * @returns {PersianDate}
      */
     clone() {
-        return this._getSyncedClass(this.ON.gDate);
+        return this._getSyncedClass(this.State.gDate);
     }
 
     /**
@@ -387,7 +396,7 @@ class PersianDateClass {
         } else {
             key = 'gregorian';
         }
-        return this.ON[key];
+        return this.State[key];
     }
 
 
@@ -530,7 +539,7 @@ class PersianDateClass {
             this.algorithmsCalc([this.year(), this.month(), this.date(), input]);
             return this;
         } else {
-            return this.ON.gDate.getHours();
+            return this.State.gDate.getHours();
         }
     }
 
@@ -552,7 +561,7 @@ class PersianDateClass {
             this.algorithmsCalc([this.year(), this.month(), this.date(), this.hour(), input]);
             return this;
         } else {
-            return this.ON.gDate.getMinutes();
+            return this.State.gDate.getMinutes();
         }
     }
 
@@ -575,7 +584,7 @@ class PersianDateClass {
             this.algorithmsCalc([this.year(), this.month(), this.date(), this.hour(), this.minute(), input]);
             return this;
         } else {
-            return this.ON.gDate.getSeconds();
+            return this.State.gDate.getSeconds();
         }
     }
 
@@ -599,7 +608,7 @@ class PersianDateClass {
             this.algorithmsCalc([this.year(), this.month(), this.date(), this.hour(), this.minute(), this.second(), input]);
             return this;
         } else {
-            return this.ON.gregorian.millisecond;
+            return this.State.gregorian.millisecond;
         }
     }
 
@@ -610,7 +619,7 @@ class PersianDateClass {
      * @private
      */
     //    _valueOf () {
-    //        return this.ON.gDate.valueOf();
+    //        return this.State.gDate.valueOf();
     //    }
 
 
@@ -632,7 +641,7 @@ class PersianDateClass {
         if (timestamp) {
             return this._getSyncedClass(timestamp * 1000);
         } else {
-            let str = this.ON.gDate.valueOf().toString();
+            let str = this.State.gDate.valueOf().toString();
             output = str.substring(0, str.length - 3);
         }
         return parseInt(output);
@@ -642,7 +651,7 @@ class PersianDateClass {
      * @returns {*}
      */
     valueOf() {
-        return this.ON.gDate.valueOf();
+        return this.State.gDate.valueOf();
     }
 
 
@@ -677,7 +686,7 @@ class PersianDateClass {
         let self = this,
             inputMoment = input,
             zoneDiff = 0,
-            diff = self.ON.gDate - inputMoment.toDate() - zoneDiff,
+            diff = self.State.gDate - inputMoment.toDate() - zoneDiff,
             year = self.year() - inputMoment.year(),
             month = self.month() - inputMoment.month(),
             date = (self.date() - inputMoment.date()) * -1, output;
@@ -798,10 +807,10 @@ class PersianDateClass {
      */
     zone(input) {
         if (input || input === 0) {
-            this.ON.zone = input;
+            this.State.zone = input;
             return this;
         } else {
-            return this.ON.zone;
+            return this.State.zone;
         }
     }
 
@@ -950,7 +959,7 @@ class PersianDateClass {
      * @returns {*|PersianDate.gDate}
      */
     toDate() {
-        return this.ON.gDate;
+        return this.State.gDate;
     }
 
 
@@ -1007,6 +1016,9 @@ class PersianDateClass {
      * @returns {*}
      */
     format(inputString) {
+        if (this.State.isInvalidDate) {
+          return false
+        }
         let self = this,
             formattingTokens = /([[^[]*])|(\\)?(Mo|MM?M?M?|Do|DD?D?D?|dddddd?|ddddd?|dddd?|do?|w[o|w]?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|SS?S?|zz?|ZZ?|X|LT|ll?l?l?|LL?L?L?)/g,
             info = {

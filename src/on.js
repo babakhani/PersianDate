@@ -1,6 +1,8 @@
 class Container {
     constructor () {
 
+        this.isInvalidDate = null;
+
         this.gDate = null;
         /**
          *
