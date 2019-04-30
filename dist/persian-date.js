@@ -1538,12 +1538,20 @@ var PersianDateClass = function () {
     }, {
         key: 'add',
         value: function add(key, value) {
+            if (value === 0) {
+                return this;
+            }
             var unit = normalizeDuration(key, value).unit,
                 arr = this.toArray();
             value = normalizeDuration(key, value).value;
             if (unit === 'year') {
-                var tempDate = new PersianDateClass([arr[0] + value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]]);
-                return this.unix(tempDate.unix());
+                var normalizedDate = arr[2],
+                    monthDays = this.daysInMonth(arr[0] + value, arr[1]);
+                if (arr[2] > monthDays) {
+                    normalizedDate = monthDays;
+                }
+                var tempDate = new PersianDateClass([arr[0] + value, arr[1], normalizedDate, arr[3], arr[4], arr[5], arr[6], arr[7]]);
+                return tempDate;
             }
             if (unit === 'month') {
                 var tempYear = Math.floor(value / 12);
@@ -1556,12 +1564,12 @@ var PersianDateClass = function () {
                     calcedMonth = arr[1] + remainingMonth;
                 }
                 var normalizaedDate = arr[2],
-                    tempDateArray = new PersianDateClass([arr[0] + tempYear, calcedMonth, 1, arr[3], arr[4], arr[5], arr[6]]).toArray(),
-                    monthDays = this.daysInMonth(arr[0] + tempYear, calcedMonth);
-                if (arr[2] > monthDays) {
-                    normalizaedDate = monthDays;
+                    tempDateArray = new PersianDateClass([arr[0] + tempYear, calcedMonth, 1, arr[3], arr[4], arr[5], arr[6], arr[7]]).toArray(),
+                    _monthDays = this.daysInMonth(arr[0] + tempYear, calcedMonth);
+                if (arr[2] > _monthDays) {
+                    normalizaedDate = _monthDays;
                 }
-                return this.unix(new PersianDateClass([tempDateArray[0], tempDateArray[1], normalizaedDate, tempDateArray[3], tempDateArray[4], tempDateArray[5], tempDateArray[6]]).unix());
+                return new PersianDateClass([tempDateArray[0], tempDateArray[1], normalizaedDate, tempDateArray[3], tempDateArray[4], tempDateArray[5], tempDateArray[6], tempDateArray[7]]);
             }
             if (unit === 'day') {
                 var calcedDay = new PersianDateClass(this.valueOf()).hour(12),

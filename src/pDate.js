@@ -1250,12 +1250,20 @@ class PersianDateClass {
      * @returns {PersianDate}
      */
     add(key, value) {
+        if (value === 0 ) {
+          return this;
+        }
         let unit = normalizeDuration(key, value).unit,
             arr = this.toArray();
         value = normalizeDuration(key, value).value;
         if (unit === 'year') {
-            let tempDate = new PersianDateClass([arr[0] + value, arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]]);
-            return this.unix(tempDate.unix());
+            let normalizedDate = arr[2] ,
+              monthDays = this.daysInMonth(arr[0] + value, arr[1]);
+            if (arr[2] > monthDays) {
+                normalizedDate = monthDays;
+            }
+            let tempDate = new PersianDateClass([arr[0] + value, arr[1], normalizedDate, arr[3], arr[4], arr[5], arr[6], arr[7]]);
+            return tempDate;
         }
         if (unit === 'month') {
             let tempYear = Math.floor(value / 12);
@@ -1268,12 +1276,12 @@ class PersianDateClass {
                 calcedMonth = arr[1] + remainingMonth ;
             }
             let normalizaedDate = arr[2],
-                tempDateArray = new PersianDateClass([arr[0] + tempYear, calcedMonth, 1, arr[3], arr[4], arr[5], arr[6]]).toArray(),
+                tempDateArray = new PersianDateClass([arr[0] + tempYear, calcedMonth, 1, arr[3], arr[4], arr[5], arr[6], arr[7]]).toArray(),
                 monthDays = this.daysInMonth(arr[0] + tempYear, calcedMonth);
             if (arr[2] > monthDays) {
                 normalizaedDate = monthDays;
             }
-            return this.unix(new PersianDateClass([tempDateArray[0], tempDateArray[1], normalizaedDate, tempDateArray[3], tempDateArray[4], tempDateArray[5], tempDateArray[6]]).unix());
+            return new PersianDateClass([tempDateArray[0], tempDateArray[1], normalizaedDate, tempDateArray[3], tempDateArray[4], tempDateArray[5], tempDateArray[6], tempDateArray[7]]);
         }
         if (unit === 'day') {
             let calcedDay = new PersianDateClass(this.valueOf()).hour(12),
