@@ -1,6 +1,6 @@
 {
   "name": "persian-date",
-  "version": "1.1.0-rc1",
+  "version": "1.1.0-rc2",
   "license": "MIT",
   "main": "dist/persian-date",
   "author": "Reza Babakhani <babakhani.reza@gmail.com>",

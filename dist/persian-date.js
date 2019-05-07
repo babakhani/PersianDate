@@ -1,6 +1,6 @@
 /*!
  * 
- * persian-date -  1.1.0b
+ * persian-date -  1.1.0-rc2
  * Reza Babakhani <babakhani.reza@gmail.com>
  * http://babakhani.github.io/PersianWebToolkit/docs/persian-date/
  * Under MIT license 
@@ -265,7 +265,7 @@ var PersianDateClass = function () {
         this.leapYearMode = PersianDateClass.leapYearMode;
 
         this.algorithms = new Algorithms(this);
-        this.version = "1.1.0b";
+        this.version = "1.1.0-rc2";
         this._utcMode = false;
         if (this.localType !== 'fa') {
             this.formatPersian = false;
