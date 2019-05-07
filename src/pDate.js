@@ -703,9 +703,6 @@ class PersianDateClass {
                             val === 'weeks' || val === 'week' ? diff / 6048e5 : // 1000 * 60 * 60 * 24 * 7
                                 diff;
         }
-        if (output < 0) {
-            output = output * -1;
-        }
         return asFloat ? output : Math.round(output);
     }
 
