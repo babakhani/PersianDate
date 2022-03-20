@@ -83,7 +83,7 @@ class PersianDateClass {
         }
         // ASP.NET JSON Date
         else if (input && input.substring(0, 6) === '/Date(') {
-            const fromDotNet = new Date(parseInt(input.substr(6)));
+            const fromDotNet = new Date(parseInt(input.slice(6)));
             this._gDateToCalculators(fromDotNet);
         }
         else {
