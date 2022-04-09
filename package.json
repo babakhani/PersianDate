@@ -48,7 +48,7 @@
     "markdown-link-check": "3.1.2",
     "mocha": "3.2.0",
     "mocha-lcov-reporter": "0.0.2",
-    "moment": "2.18.1",
+    "moment": "2.29.2",
     "pre-commit": "1.2.2",
     "sync-pkg": "0.7.2",
     "unminified-webpack-plugin": "1.2.0",
