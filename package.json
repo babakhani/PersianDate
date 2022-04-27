@@ -33,7 +33,7 @@
     "babel-runtime": "6.22.0",
     "chai": "3.5.0",
     "coveralls": "2.13.1",
-    "grunt": "1.0.1",
+    "grunt": "1.5.2",
     "grunt-babel": "6.0.0",
     "grunt-cli": "0.1.13",
     "grunt-contrib-watch": "1.0.0",
