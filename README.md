@@ -815,7 +815,7 @@ new persianDate([1396, 6, 31]).isDST(); // false
 
 > Based on [Persian DST wiki](https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D8%B9%D8%AA_%D8%AA%D8%A7%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%DB%8C)
 
-### Is a PersianDat
+### Is a PersianDate
 
 ```javascript
 var obj = new persianDate();
