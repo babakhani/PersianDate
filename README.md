@@ -527,9 +527,10 @@ This is the most robust display option. It takes a string of tokens and replaces
 |                   | DD           | ۰۱ ۰۲ ... ۳۰ ۳۱|
 | Day of year       | DDD          | ۱ ۲ ... ۳۶۴ ۳۶۵|
 |                   | d            | ۰ ۱ ... ۵ ۶|
-|                   | dd            | ش ی ... ج|
-|                   | ddd       |شنبه یکشنبه ... جمعه|
-|                   | dddd    |انارام مانتره سپند ... اشتاد |
+|                   | dd            | ۰ ۱ ... ۵ ۶|
+|                   | ddd            | ش ی ... ج|
+|                   | dddd       |شنبه یکشنبه ... جمعه|
+|                   | ddddd    |انارام مانتره سپند ... اشتاد |
 | Week of Year      | w            | ۱ ۲ ... ۵۲ ۵۳ |
 |                   | ww           | ۰۱ ۰۲ ... ۵۲ ۵۳ |
 |Year               | YY           | ۶۶ ۹۱ ... ۹۸ ۳۰ |
