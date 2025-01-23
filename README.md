@@ -533,7 +533,7 @@ This is the most robust display option. It takes a string of tokens and replaces
 | Week of Year      | w            | ۱ ۲ ... ۵۲ ۵۳ |
 |                   | ww           | ۰۱ ۰۲ ... ۵۲ ۵۳ |
 |Year               | YY           | ۶۶ ۹۱ ... ۹۸ ۳۰ |
-|                   | YYYY          | ۱۳۶۶ ۱۳۹۱ ... ۱۳۹۸ ۱۴۰۱ |
+|                   | YYY          | ۱۳۶۶ ۱۳۹۱ ... ۱۳۹۸ ۱۴۰۱ |
 | AM/PM              | a            | "ق ظ", "ب ظ" |
 | Hour              | H            | ۰ ۱ ... ۲۲ ۲۳ |
 |                   | HH           | ۰۰ ۰۱ ... ۲۲ ۲۳ |
