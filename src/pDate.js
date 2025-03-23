@@ -20,11 +20,9 @@ class PersianDateClass {
      * @return {PersianDateClass}
      */
     constructor(input) {
-
         this.calendarType = PersianDateClass.calendarType;
         this.localType = PersianDateClass.localType;
         this.leapYearMode = PersianDateClass.leapYearMode;
-
         this.algorithms = new Algorithms(this);
         this.version = __VERSION__;
         this._utcMode = false;
@@ -34,6 +32,7 @@ class PersianDateClass {
             this.formatPersian = '_default';
         }
         this.State = this.algorithms.State;
+
         this.setup(input);
         if (this.State.isInvalidDate) {
           // Return Date like message
@@ -181,6 +180,9 @@ class PersianDateClass {
         }
         else if (input === 'algorithmic' && this.calendarType == 'persian') {
             this.leapYearMode = 'algorithmic';
+        }
+        else if (input === 'matematical' && this.calendarType == 'persian') {
+            this.leapYearMode = 'matematical';
         }
         this.algorithms.updateFromGregorian();
         return this;
@@ -374,6 +376,10 @@ class PersianDateClass {
         else if (this.calendarType === 'persian' && this.leapYearMode == 'astronomical') {
             return this.algorithms.calcPersiana(dateArray);
         }
+        else if (this.calendarType === 'persian' && this.leapYearMode == 'matematical') {
+            //return this.algorithms.calcPersiana(dateArray);
+            return this.algorithms.calcPersianMatematical(dateArray);
+        }
         else if (this.calendarType === 'gregorian') {
           dateArray[1] = dateArray[1] - 1;
           return this.algorithms.calcGregorian(dateArray);
@@ -392,6 +398,9 @@ class PersianDateClass {
             }
             else if (this.leapYearMode == 'algorithmic') {
                 key = 'persianAlgo';
+            }
+            else if (this.leapYearMode == 'matematical') {
+                key = 'persianMatematical';
             }
         } else {
             key = 'gregorian';
@@ -920,6 +929,9 @@ class PersianDateClass {
         }
         if (this.calendarType == 'persian' && this.leapYearMode === 'astronomical') {
             return this.algorithms.leap_persiana(year);
+        }
+        if (this.calendarType == 'persian' && this.leapYearMode === 'matematical') {
+            return this.algorithms.leap_persian_matematical(year);
         }
         else if (this.calendarType == 'gregorian') {
             return this.algorithms.leap_gregorian(year);

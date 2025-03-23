@@ -91,6 +91,14 @@ class Container {
             weekday: 0,
         };
 
+        this.persianMatematical = {
+            year: 0,
+            month: 0,
+            day: 0,
+            leap: 0,
+            weekday: 0,
+        };
+
         /**
          *
          * @type {{year: number, week: number, day: number}}

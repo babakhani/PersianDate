@@ -236,11 +236,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var TypeChecking = __webpack_require__(10);
+var TypeChecking = __webpack_require__(11);
 var Algorithms = __webpack_require__(2);
 var Helpers = __webpack_require__(0);
 var Duration = __webpack_require__(5);
-var Validator = __webpack_require__(11);
+var Validator = __webpack_require__(12);
 var toPersianDigit = new Helpers().toPersianDigit;
 var leftZeroFill = new Helpers().leftZeroFill;
 var normalizeDuration = new Helpers().normalizeDuration;
@@ -263,7 +263,6 @@ var PersianDateClass = function () {
         this.calendarType = PersianDateClass.calendarType;
         this.localType = PersianDateClass.localType;
         this.leapYearMode = PersianDateClass.leapYearMode;
-
         this.algorithms = new Algorithms(this);
         this.version = "1.1.0";
         this._utcMode = false;
@@ -273,6 +272,7 @@ var PersianDateClass = function () {
             this.formatPersian = '_default';
         }
         this.State = this.algorithms.State;
+
         this.setup(input);
         if (this.State.isInvalidDate) {
             // Return Date like message
@@ -387,6 +387,8 @@ var PersianDateClass = function () {
                 this.leapYearMode = 'astronomical';
             } else if (input === 'algorithmic' && this.calendarType == 'persian') {
                 this.leapYearMode = 'algorithmic';
+            } else if (input === 'matematical' && this.calendarType == 'persian') {
+                this.leapYearMode = 'matematical';
             }
             this.algorithms.updateFromGregorian();
             return this;
@@ -574,6 +576,9 @@ var PersianDateClass = function () {
                 return this.algorithms.calcPersian(dateArray);
             } else if (this.calendarType === 'persian' && this.leapYearMode == 'astronomical') {
                 return this.algorithms.calcPersiana(dateArray);
+            } else if (this.calendarType === 'persian' && this.leapYearMode == 'matematical') {
+                //return this.algorithms.calcPersiana(dateArray);
+                return this.algorithms.calcPersianMatematical(dateArray);
             } else if (this.calendarType === 'gregorian') {
                 dateArray[1] = dateArray[1] - 1;
                 return this.algorithms.calcGregorian(dateArray);
@@ -594,6 +599,8 @@ var PersianDateClass = function () {
                     key = 'persianAstro';
                 } else if (this.leapYearMode == 'algorithmic') {
                     key = 'persianAlgo';
+                } else if (this.leapYearMode == 'matematical') {
+                    key = 'persianMatematical';
                 }
             } else {
                 key = 'gregorian';
@@ -1165,6 +1172,9 @@ var PersianDateClass = function () {
             }
             if (this.calendarType == 'persian' && this.leapYearMode === 'astronomical') {
                 return this.algorithms.leap_persiana(year);
+            }
+            if (this.calendarType == 'persian' && this.leapYearMode === 'matematical') {
+                return this.algorithms.leap_persian_matematical(year);
             } else if (this.calendarType == 'gregorian') {
                 return this.algorithms.leap_gregorian(year);
             }
@@ -1782,7 +1792,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 // Start algorithm class
 var ASTRO = __webpack_require__(3);
-var State = __webpack_require__(9);
+var State = __webpack_require__(10);
+
+var jalaali = __webpack_require__(9);
 
 var Algorithms = function () {
     function Algorithms(parent) {
@@ -1791,18 +1803,10 @@ var Algorithms = function () {
         this.parent = parent;
         this.ASTRO = new ASTRO();
         this.State = new State();
-        /*  You may notice that a variety of array variables logically local
-         to functions are declared globally here.  In JavaScript, construction
-         of an array variable from source code occurs as the code is
-         interpreted.  Making these variables pseudo-globals permits us
-         to avoid overhead constructing and disposing of them in each
-         call on the function in which whey are used.  */
-        // TODO this block didnt used in main agorithm
         this.J0000 = 1721424.5; // Julian date of Gregorian epoch: 0000-01-01
         this.J1970 = 2440587.5; // Julian date at Unix epoch: 1970-01-01
         this.JMJD = 2400000.5; // Epoch of Modified Julian Date system
         this.NormLeap = [false /*"Normal year"*/, true /*"Leap year"*/];
-        // TODO END
         this.GREGORIAN_EPOCH = 1721425.5;
         this.PERSIAN_EPOCH = 1948320.5;
     }
@@ -1876,46 +1880,6 @@ var Algorithms = function () {
 
             return [year, month, day];
         }
-
-        /**
-         * @param {*} year
-         */
-        //    leap_julian (year) {
-        //        return this.ASTRO.mod(year, 4) === ((year > 0) ? 0 : 3);
-        //    }
-
-
-        /**
-         * @desc Calculate Julian calendar date from Julian day
-         * @param {*} td
-         */
-        //    jd_to_julian (td) {
-        //        let z, a, b, c, d, e, year, month, day;
-        //
-        //        td += 0.5;
-        //        z = Math.floor(td);
-        //
-        //        a = z;
-        //        b = a + 1524;
-        //        c = Math.floor((b - 122.1) / 365.25);
-        //        d = Math.floor(365.25 * c);
-        //        e = Math.floor((b - d) / 30.6001);
-        //
-        //        month = Math.floor((e < 14) ? (e - 1) : (e - 13));
-        //        year = Math.floor((month > 2) ? (c - 4716) : (c - 4715));
-        //        day = b - d - Math.floor(30.6001 * e);
-        //
-        //        /*  If year is less than 1, subtract one to convert from
-        //         a zero based date system to the common era system in
-        //         which the year -1 (1 B.C.E) is followed by year 1 (1 C.E.).  */
-        //
-        //        if (year < 1) {
-        //            year--;
-        //        }
-        //
-        //        return [year, month, day];
-        //    }
-
 
         /**
          * @desc TEHRAN_EQUINOX  --  Determine Julian day and fraction of the
@@ -2066,6 +2030,19 @@ var Algorithms = function () {
         }
 
         /**
+         * @desc Obtain Julian day from a given Persian mathematical calendar date.
+         * @param {*} year
+         * @param {*} month
+         * @param {*} day
+         */
+
+    }, {
+        key: 'persian_matematical_to_jd',
+        value: function persian_matematical_to_jd(year, month, day) {
+            return jalaali.j2d(year, month, day);
+        }
+
+        /**
          * @desc Is a given year a leap year in the Persian astronomical calendar ?
          * @param {*} year
          */
@@ -2074,6 +2051,23 @@ var Algorithms = function () {
         key: 'leap_persiana',
         value: function leap_persiana(year) {
             return this.persiana_to_jd(year + 1, 1, 1) - this.persiana_to_jd(year, 1, 1) > 365;
+        }
+
+        /**
+         * @desc Is a given year a leap year in the Persian matematical calendar ?
+         * @param {*} year
+         */
+
+    }, {
+        key: 'leap_persian_matematical',
+        value: function leap_persian_matematical(year) {
+            return jalaali.isLeapJalaaliYear(year);
+        }
+    }, {
+        key: 'jd_to_persian_matematical',
+        value: function jd_to_persian_matematical(jd) {
+            var o = jalaali.d2j(jd);
+            return [o.jy, o.jm, o.jd];
         }
 
         /**
@@ -2209,7 +2203,8 @@ var Algorithms = function () {
 
             //  Update Julian day
             // ---------------------------------------------------------------------------
-            j = this.gregorian_to_jd(year, mon + 1, mday) + Math.floor(sec + 60 * (min + 60 * hour) + 0.5) / 86400.0;
+            //j = this.gregorian_to_jd(year, mon + 1, mday) + (Math.floor(sec + 60 * (min + 60 * hour) + 0.5) / 86400.0);
+            j = this.State.julianday;
 
             this.State.julianday = j;
             this.State.modifiedjulianday = j - this.JMJD;
@@ -2224,16 +2219,7 @@ var Algorithms = function () {
             // ---------------------------------------------------------------------------
             this.State.gregorian.leap = this.NormLeap[this.leap_gregorian(year) ? 1 : 0];
 
-            //  Update Julian Calendar
-            // ---------------------------------------------------------------------------
-            //        julcal = this.jd_to_julian(j);
-            //
-            //        this.State.juliancalendar.year = julcal[0];
-            //        this.State.juliancalendar.month = julcal[1] - 1;
-            //        this.State.juliancalendar.day = julcal[2];
-            //        this.State.juliancalendar.leap = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
             weekday = this.ASTRO.jwday(j);
-            //        this.State.juliancalendar.weekday = weekday;
 
             //  Update Persian Calendar
             // ---------------------------------------------------------------------------
@@ -2256,6 +2242,16 @@ var Algorithms = function () {
                 this.State.persianAstro.weekday = this.gWeekDayToPersian(weekday);
                 this.State.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
             }
+
+            if (this.parent.calendarType == 'persian' && this.parent.leapYearMode == 'matematical') {
+                perscal = this.jd_to_persian_matematical(j);
+                this.State.persianMatematical.year = perscal[0];
+                this.State.persianMatematical.month = perscal[1] - 1;
+                this.State.persianMatematical.day = perscal[2];
+                this.State.persianMatematical.weekday = this.gWeekDayToPersian(weekday);
+                this.State.persianMatematical.leap = this.NormLeap[this.leap_persian_matematical(perscal[0]) ? 1 : 0];
+            }
+
             //  Update Gregorian serial number
             // ---------------------------------------------------------------------------
             if (this.State.gregserial.day !== null) {
@@ -2397,6 +2393,33 @@ var Algorithms = function () {
                 this.State.gregorian.millisecond = dateArray[6];
             }
             this.setJulian(this.persiana_to_jd(this.State.persianAstro.year, this.State.persianAstro.month, this.State.persianAstro.day + 0.5));
+        }
+    }, {
+        key: 'calcPersianMatematical',
+        value: function calcPersianMatematical(dateArray) {
+            if (dateArray[0] || dateArray[0] === 0) {
+                this.State.persianMatematical.year = dateArray[0];
+            }
+            if (dateArray[1] || dateArray[1] === 0) {
+                this.State.persianMatematical.month = dateArray[1];
+            }
+            if (dateArray[2] || dateArray[2] === 0) {
+                this.State.persianMatematical.day = dateArray[2];
+            }
+
+            if (dateArray[3] || dateArray[3] === 0) {
+                this.State.gregorian.hour = dateArray[3];
+            }
+            if (dateArray[4] || dateArray[4] === 0) {
+                this.State.gregorian.minute = dateArray[4];
+            }
+            if (dateArray[5] || dateArray[5] === 0) {
+                this.State.gregorian.second = dateArray[5];
+            }
+            if (dateArray[6] || dateArray[6] === 0) {
+                this.State.gregorian.millisecond = dateArray[6];
+            }
+            this.setJulian(this.persian_matematical_to_jd(this.State.persianMatematical.year, this.State.persianMatematical.month, this.State.persianMatematical.day));
         }
     }]);
 
@@ -3079,12 +3102,337 @@ module.exports = {
 
 var PersianDateClass = __webpack_require__(1);
 PersianDateClass.calendarType = 'persian';
-PersianDateClass.leapYearMode = 'astronomical';
+//PersianDateClass.leapYearMode = 'matematical';
 PersianDateClass.localType = 'fa';
 module.exports = PersianDateClass;
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+  Expose functions.
+*/
+module.exports = { toJalaali: toJalaali,
+  toGregorian: toGregorian,
+  isValidJalaaliDate: isValidJalaaliDate,
+  isLeapJalaaliYear: isLeapJalaaliYear,
+  jalaaliMonthLength: jalaaliMonthLength,
+  jalCal: jalCal,
+  j2d: j2d,
+  d2j: d2j,
+  g2d: g2d,
+  d2g: d2g,
+  jalaaliToDateObject: jalaaliToDateObject,
+  jalaaliWeek: jalaaliWeek
+
+  /*
+    Jalaali years starting the 33-year rule.
+  */
+};var breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
+
+/*
+  Converts a Gregorian date to Jalaali.
+*/
+function toJalaali(gy, gm, gd) {
+  if (Object.prototype.toString.call(gy) === '[object Date]') {
+    gd = gy.getDate();
+    gm = gy.getMonth() + 1;
+    gy = gy.getFullYear();
+  }
+  return d2j(g2d(gy, gm, gd));
+}
+
+/*
+  Converts a Jalaali date to Gregorian.
+*/
+function toGregorian(jy, jm, jd) {
+  return d2g(j2d(jy, jm, jd));
+}
+
+/*
+  Checks whether a Jalaali date is valid or not.
+*/
+function isValidJalaaliDate(jy, jm, jd) {
+  return jy >= -61 && jy <= 3177 && jm >= 1 && jm <= 12 && jd >= 1 && jd <= jalaaliMonthLength(jy, jm);
+}
+
+/*
+  Is this a leap year or not?
+*/
+function isLeapJalaaliYear(jy) {
+  return jalCalLeap(jy) === 0;
+}
+
+/*
+  Number of days in a given month in a Jalaali year.
+*/
+function jalaaliMonthLength(jy, jm) {
+  if (jm <= 6) return 31;
+  if (jm <= 11) return 30;
+  if (isLeapJalaaliYear(jy)) return 30;
+  return 29;
+}
+
+/*
+    This function determines if the Jalaali (Persian) year is
+    leap (366-day long) or is the common year (365 days)
+
+    @param jy Jalaali calendar year (-61 to 3177)
+    @returns number of years since the last leap year (0 to 4)
+ */
+function jalCalLeap(jy) {
+  var bl = breaks.length,
+      jp = breaks[0],
+      jm,
+      jump,
+      leap,
+      n,
+      i;
+
+  if (jy < jp || jy >= breaks[bl - 1]) throw new Error('Invalid Jalaali year ' + jy);
+
+  for (i = 1; i < bl; i += 1) {
+    jm = breaks[i];
+    jump = jm - jp;
+    if (jy < jm) break;
+    jp = jm;
+  }
+  n = jy - jp;
+
+  if (jump - n < 6) n = n - jump + div(jump + 4, 33) * 33;
+  leap = mod(mod(n + 1, 33) - 1, 4);
+  if (leap === -1) {
+    leap = 4;
+  }
+
+  return leap;
+}
+
+/*
+  This function determines if the Jalaali (Persian) year is
+  leap (366-day long) or is the common year (365 days), and
+  finds the day in March (Gregorian calendar) of the first
+  day of the Jalaali year (jy).
+
+  @param jy Jalaali calendar year (-61 to 3177)
+  @param withoutLeap when don't need leap (true or false) default is false
+  @return
+    leap: number of years since the last leap year (0 to 4)
+    gy: Gregorian year of the beginning of Jalaali year
+    march: the March day of Farvardin the 1st (1st day of jy)
+  @see: http://www.astro.uni.torun.pl/~kb/Papers/EMP/PersianC-EMP.htm
+  @see: http://www.fourmilab.ch/documents/calendar/
+*/
+function jalCal(jy, withoutLeap) {
+  var bl = breaks.length,
+      gy = jy + 621,
+      leapJ = -14,
+      jp = breaks[0],
+      jm,
+      jump,
+      leap,
+      leapG,
+      march,
+      n,
+      i;
+
+  if (jy < jp || jy >= breaks[bl - 1]) throw new Error('Invalid Jalaali year ' + jy);
+
+  // Find the limiting years for the Jalaali year jy.
+  for (i = 1; i < bl; i += 1) {
+    jm = breaks[i];
+    jump = jm - jp;
+    if (jy < jm) break;
+    leapJ = leapJ + div(jump, 33) * 8 + div(mod(jump, 33), 4);
+    jp = jm;
+  }
+  n = jy - jp;
+
+  // Find the number of leap years from AD 621 to the beginning
+  // of the current Jalaali year in the Persian calendar.
+  leapJ = leapJ + div(n, 33) * 8 + div(mod(n, 33) + 3, 4);
+  if (mod(jump, 33) === 4 && jump - n === 4) leapJ += 1;
+
+  // And the same in the Gregorian calendar (until the year gy).
+  leapG = div(gy, 4) - div((div(gy, 100) + 1) * 3, 4) - 150;
+
+  // Determine the Gregorian date of Farvardin the 1st.
+  march = 20 + leapJ - leapG;
+
+  // return with gy and march when we don't need leap
+  if (withoutLeap) return { gy: gy, march: march };
+
+  // Find how many years have passed since the last leap year.
+  if (jump - n < 6) n = n - jump + div(jump + 4, 33) * 33;
+  leap = mod(mod(n + 1, 33) - 1, 4);
+  if (leap === -1) {
+    leap = 4;
+  }
+
+  return { leap: leap,
+    gy: gy,
+    march: march
+  };
+}
+
+/*
+  Converts a date of the Jalaali calendar to the Julian Day number.
+
+  @param jy Jalaali year (1 to 3100)
+  @param jm Jalaali month (1 to 12)
+  @param jd Jalaali day (1 to 29/31)
+  @return Julian Day number
+*/
+function j2d(jy, jm, jd) {
+  var r = jalCal(jy, true);
+  return g2d(r.gy, 3, r.march) + (jm - 1) * 31 - div(jm, 7) * (jm - 7) + jd - 1;
+}
+
+/*
+  Converts the Julian Day number to a date in the Jalaali calendar.
+
+  @param jdn Julian Day number
+  @return
+    jy: Jalaali year (1 to 3100)
+    jm: Jalaali month (1 to 12)
+    jd: Jalaali day (1 to 29/31)
+*/
+function d2j(jdn) {
+  var gy = d2g(jdn).gy // Calculate Gregorian year (gy).
+  ,
+      jy = gy - 621,
+      r = jalCal(jy, false),
+      jdn1f = g2d(gy, 3, r.march),
+      jd,
+      jm,
+      k;
+
+  // Find number of days that passed since 1 Farvardin.
+  k = jdn - jdn1f;
+  if (k >= 0) {
+    if (k <= 185) {
+      // The first 6 months.
+      jm = 1 + div(k, 31);
+      jd = mod(k, 31) + 1;
+      return { jy: jy,
+        jm: jm,
+        jd: jd
+      };
+    } else {
+      // The remaining months.
+      k -= 186;
+    }
+  } else {
+    // Previous Jalaali year.
+    jy -= 1;
+    k += 179;
+    if (r.leap === 1) k += 1;
+  }
+  jm = 7 + div(k, 30);
+  jd = mod(k, 30) + 1;
+  return { jy: jy,
+    jm: jm,
+    jd: jd
+  };
+}
+
+/*
+  Calculates the Julian Day number from Gregorian or Julian
+  calendar dates. This integer number corresponds to the noon of
+  the date (i.e. 12 hours of Universal Time).
+  The procedure was tested to be good since 1 March, -100100 (of both
+  calendars) up to a few million years into the future.
+
+  @param gy Calendar year (years BC numbered 0, -1, -2, ...)
+  @param gm Calendar month (1 to 12)
+  @param gd Calendar day of the month (1 to 28/29/30/31)
+  @return Julian Day number
+*/
+function g2d(gy, gm, gd) {
+  var d = div((gy + div(gm - 8, 6) + 100100) * 1461, 4) + div(153 * mod(gm + 9, 12) + 2, 5) + gd - 34840408;
+  d = d - div(div(gy + 100100 + div(gm - 8, 6), 100) * 3, 4) + 752;
+  return d;
+}
+
+/*
+  Calculates Gregorian and Julian calendar dates from the Julian Day number
+  (jdn) for the period since jdn=-34839655 (i.e. the year -100100 of both
+  calendars) to some millions years ahead of the present.
+
+  @param jdn Julian Day number
+  @return
+    gy: Calendar year (years BC numbered 0, -1, -2, ...)
+    gm: Calendar month (1 to 12)
+    gd: Calendar day of the month M (1 to 28/29/30/31)
+*/
+function d2g(jdn) {
+  var j, i, gd, gm, gy;
+  j = 4 * jdn + 139361631;
+  j = j + div(div(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908;
+  i = div(mod(j, 1461), 4) * 5 + 308;
+  gd = div(mod(i, 153), 5) + 1;
+  gm = mod(div(i, 153), 12) + 1;
+  gy = div(j, 1461) - 100100 + div(8 - gm, 6);
+  return { gy: gy,
+    gm: gm,
+    gd: gd
+  };
+}
+
+/**
+ * Return Saturday and Friday day of current week(week start in Saturday)
+ * @param {number} jy jalaali year
+ * @param {number} jm jalaali month
+ * @param {number} jd jalaali day
+ * @returns Saturday and Friday of current week
+ */
+function jalaaliWeek(jy, jm, jd) {
+  var dayOfWeek = jalaaliToDateObject(jy, jm, jd).getDay();
+
+  var startDayDifference = dayOfWeek == 6 ? 0 : -(dayOfWeek + 1);
+  var endDayDifference = 6 + startDayDifference;
+
+  return {
+    saturday: d2j(j2d(jy, jm, jd + startDayDifference)),
+    friday: d2j(j2d(jy, jm, jd + endDayDifference))
+  };
+}
+
+/**
+ * Convert Jalaali calendar dates to javascript Date object
+ * @param {number} jy jalaali year
+ * @param {number} jm jalaali month
+ * @param {number} jd jalaali day
+ * @param {number} [h] hours
+ * @param {number} [m] minutes
+ * @param {number} [s] seconds
+ * @param {number} [ms] milliseconds
+ * @returns Date object of the jalaali calendar dates
+ */
+function jalaaliToDateObject(jy, jm, jd, h, m, s, ms) {
+  var gregorianCalenderDate = toGregorian(jy, jm, jd);
+
+  return new Date(gregorianCalenderDate.gy, gregorianCalenderDate.gm - 1, gregorianCalenderDate.gd, h || 0, m || 0, s || 0, ms || 0);
+}
+
+/*
+  Utility helper functions.
+*/
+
+function div(a, b) {
+  return ~~(a / b);
+}
+
+function mod(a, b) {
+  return a - ~~(a / b) * b;
+}
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3185,6 +3533,14 @@ var Container = function Container() {
         weekday: 0
     };
 
+    this.persianMatematical = {
+        year: 0,
+        month: 0,
+        day: 0,
+        leap: 0,
+        weekday: 0
+    };
+
     /**
      *
      * @type {{year: number, week: number, day: number}}
@@ -3208,7 +3564,7 @@ var Container = function Container() {
 module.exports = Container;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3245,7 +3601,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

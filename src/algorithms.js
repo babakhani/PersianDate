@@ -2,23 +2,17 @@
 let ASTRO = require('./astro');
 let State = require('./on');
 
+let jalaali = require('./jalaali');
+
 class Algorithms {
     constructor (parent) {
         this.parent = parent;
         this.ASTRO = new ASTRO();
         this.State = new State();
-        /*  You may notice that a variety of array variables logically local
-         to functions are declared globally here.  In JavaScript, construction
-         of an array variable from source code occurs as the code is
-         interpreted.  Making these variables pseudo-globals permits us
-         to avoid overhead constructing and disposing of them in each
-         call on the function in which whey are used.  */
-        // TODO this block didnt used in main agorithm
         this.J0000 = 1721424.5;                // Julian date of Gregorian epoch: 0000-01-01
         this.J1970 = 2440587.5;                // Julian date at Unix epoch: 1970-01-01
         this.JMJD = 2400000.5;                // Epoch of Modified Julian Date system
         this.NormLeap = [false/*"Normal year"*/, true/*"Leap year"*/];
-        // TODO END
         this.GREGORIAN_EPOCH = 1721425.5;
         this.PERSIAN_EPOCH = 1948320.5;
     }
@@ -86,47 +80,6 @@ class Algorithms {
 
         return [year, month, day];
     }
-
-
-    /**
-     * @param {*} year
-     */
-//    leap_julian (year) {
-//        return this.ASTRO.mod(year, 4) === ((year > 0) ? 0 : 3);
-//    }
-
-
-    /**
-     * @desc Calculate Julian calendar date from Julian day
-     * @param {*} td
-     */
-//    jd_to_julian (td) {
-//        let z, a, b, c, d, e, year, month, day;
-//
-//        td += 0.5;
-//        z = Math.floor(td);
-//
-//        a = z;
-//        b = a + 1524;
-//        c = Math.floor((b - 122.1) / 365.25);
-//        d = Math.floor(365.25 * c);
-//        e = Math.floor((b - d) / 30.6001);
-//
-//        month = Math.floor((e < 14) ? (e - 1) : (e - 13));
-//        year = Math.floor((month > 2) ? (c - 4716) : (c - 4715));
-//        day = b - d - Math.floor(30.6001 * e);
-//
-//        /*  If year is less than 1, subtract one to convert from
-//         a zero based date system to the common era system in
-//         which the year -1 (1 B.C.E) is followed by year 1 (1 C.E.).  */
-//
-//        if (year < 1) {
-//            year--;
-//        }
-//
-//        return [year, month, day];
-//    }
-
 
     /**
      * @desc TEHRAN_EQUINOX  --  Determine Julian day and fraction of the
@@ -228,7 +181,6 @@ class Algorithms {
         return [year, month, day];
     }
 
-
     /**
      * @desc Obtain Julian day from a given Persian
      astronomical calendar date.
@@ -257,6 +209,16 @@ class Algorithms {
         return jd;
     }
 
+    /**
+     * @desc Obtain Julian day from a given Persian mathematical calendar date.
+     * @param {*} year
+     * @param {*} month
+     * @param {*} day
+     */
+    persian_matematical_to_jd(year, month, day) {
+        return jalaali.j2d(year, month, day)
+    }
+
 
     /**
      * @desc Is a given year a leap year in the Persian astronomical calendar ?
@@ -267,6 +229,20 @@ class Algorithms {
           this.persiana_to_jd(year, 1, 1)) > 365;
     }
 
+    /**
+     * @desc Is a given year a leap year in the Persian matematical calendar ?
+     * @param {*} year
+     */
+    leap_persian_matematical (year) {
+      return jalaali.isLeapJalaaliYear(year)
+    }
+
+
+    jd_to_persian_matematical(jd) {
+        const o = jalaali.d2j(jd)
+        return [o.jy, o.jm, o.jd]
+    }
+    
 
     /**
      * @desc Is a given year a leap year in the Persian calendar ?
@@ -393,8 +369,9 @@ class Algorithms {
 
         //  Update Julian day
         // ---------------------------------------------------------------------------
-        j = this.gregorian_to_jd(year, mon + 1, mday) +
-          (Math.floor(sec + 60 * (min + 60 * hour) + 0.5) / 86400.0);
+        //j = this.gregorian_to_jd(year, mon + 1, mday) + (Math.floor(sec + 60 * (min + 60 * hour) + 0.5) / 86400.0);
+        j = this.State.julianday
+
 
         this.State.julianday = j;
         this.State.modifiedjulianday = j - this.JMJD;
@@ -409,16 +386,7 @@ class Algorithms {
         // ---------------------------------------------------------------------------
         this.State.gregorian.leap = this.NormLeap[this.leap_gregorian(year) ? 1 : 0];
 
-        //  Update Julian Calendar
-        // ---------------------------------------------------------------------------
-//        julcal = this.jd_to_julian(j);
-//
-//        this.State.juliancalendar.year = julcal[0];
-//        this.State.juliancalendar.month = julcal[1] - 1;
-//        this.State.juliancalendar.day = julcal[2];
-//        this.State.juliancalendar.leap = this.NormLeap[this.leap_julian(julcal[0]) ? 1 : 0];
         weekday = this.ASTRO.jwday(j);
-//        this.State.juliancalendar.weekday = weekday;
 
         //  Update Persian Calendar
         // ---------------------------------------------------------------------------
@@ -430,7 +398,7 @@ class Algorithms {
             this.State.persian.weekday = this.gWeekDayToPersian(weekday);
             this.State.persian.leap = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
         }
-
+      
         //  Update Persian Astronomical Calendar
         // ---------------------------------------------------------------------------
         if (this.parent.calendarType == 'persian' && this.parent.leapYearMode == 'astronomical') {
@@ -441,6 +409,16 @@ class Algorithms {
             this.State.persianAstro.weekday = this.gWeekDayToPersian(weekday);
             this.State.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
         }
+
+        if (this.parent.calendarType == 'persian' && this.parent.leapYearMode == 'matematical') {
+            perscal = this.jd_to_persian_matematical(j);
+            this.State.persianMatematical.year = perscal[0];
+            this.State.persianMatematical.month = perscal[1] - 1;
+            this.State.persianMatematical.day = perscal[2];
+            this.State.persianMatematical.weekday = this.gWeekDayToPersian(weekday);
+            this.State.persianMatematical.leap = this.NormLeap[this.leap_persian_matematical(perscal[0]) ? 1 : 0];
+        }
+
         //  Update Gregorian serial number
         // ---------------------------------------------------------------------------
         if (this.State.gregserial.day !== null) {
@@ -547,7 +525,6 @@ class Algorithms {
         );
     }
 
-
     /**
      * @desc Update from Persian astronomical calendar
      * @param {*} dateArray
@@ -580,6 +557,37 @@ class Algorithms {
             this.State.persianAstro.year,
             this.State.persianAstro.month,
             this.State.persianAstro.day + 0.5)
+        );
+    }
+
+    calcPersianMatematical (dateArray) {
+        if (dateArray[0] || dateArray[0] === 0) {
+            this.State.persianMatematical.year = dateArray[0];
+        }
+        if (dateArray[1] || dateArray[1] === 0) {
+            this.State.persianMatematical.month = dateArray[1];
+        }
+        if (dateArray[2] || dateArray[2] === 0) {
+            this.State.persianMatematical.day = dateArray[2];
+        }
+
+        if (dateArray[3] || dateArray[3] === 0) {
+            this.State.gregorian.hour = dateArray[3];
+        }
+        if (dateArray[4] || dateArray[4] === 0) {
+            this.State.gregorian.minute = dateArray[4];
+        }
+        if (dateArray[5] || dateArray[5] === 0) {
+            this.State.gregorian.second = dateArray[5];
+        }
+        if (dateArray[6] || dateArray[6] === 0) {
+            this.State.gregorian.millisecond = dateArray[6];
+        }
+        this.setJulian(
+          this.persian_matematical_to_jd(
+            this.State.persianMatematical.year,
+            this.State.persianMatematical.month,
+            this.State.persianMatematical.day)
         );
     }
 }
