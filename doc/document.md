@@ -112,6 +112,7 @@ Helper method that return date range name like week days name, month names, mont
 
 ## persianDateClass.toLeapYearMode(input) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
 **Kind**: instance method of [<code>PersianDateClass</code>](#PersianDateClass)  
+**Derecated**: 2.0.0  
 **Since**: 1.0.0  
 <table>
   <thead>
@@ -737,6 +738,7 @@ Helper method that return date range name like week days name, month names, mont
 
 ## PersianDateClass.toLeapYearMode(input) ⇒ [<code>PersianDateClass</code>](#PersianDateClass)
 **Kind**: static method of [<code>PersianDateClass</code>](#PersianDateClass)  
+**Derecated**: 2.0.0  
 **Since**: 1.0.0  
 <table>
   <thead>
