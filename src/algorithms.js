@@ -160,56 +160,6 @@ class Algorithms {
 
 
     /**
-     * @desc Calculate date in the Persian astronomical
-     calendar from Julian day.
-     * @param {*} jd
-     */
-    jd_to_persiana (jd) {
-        let year, month, day,
-          adr, equinox, yday;
-
-        jd = Math.floor(jd) + 0.5;
-        adr = this.persiana_year(jd);
-        year = adr[0];
-        equinox = adr[1];
-        day = Math.floor((jd - equinox) / 30) + 1;
-
-        yday = (Math.floor(jd) - this.persiana_to_jd(year, 1, 1)) + 1;
-        month = (yday <= 186) ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
-        day = (Math.floor(jd) - this.persiana_to_jd(year, month, 1)) + 1;
-
-        return [year, month, day];
-    }
-
-    /**
-     * @desc Obtain Julian day from a given Persian
-     astronomical calendar date.
-     * @param {*} year
-     * @param {*} month
-     * @param {*} day
-     */
-    persiana_to_jd (year, month, day) {
-        let adr, equinox, guess, jd;
-
-        guess = (this.PERSIAN_EPOCH - 1) + (this.ASTRO.TropicalYear * ((year - 1) - 1));
-        adr = [year - 1, 0];
-
-        while (adr[0] < year) {
-            adr = this.persiana_year(guess);
-            guess = adr[1] + (this.ASTRO.TropicalYear + 2);
-        }
-        equinox = adr[1];
-
-        jd = equinox +
-          ((month <= 7) ?
-              ((month - 1) * 31) :
-              (((month - 1) * 30) + 6)
-          ) +
-          (day - 1);
-        return jd;
-    }
-
-    /**
      * @desc Obtain Julian day from a given Persian mathematical calendar date.
      * @param {*} year
      * @param {*} month
@@ -219,15 +169,6 @@ class Algorithms {
         return jalaali.j2d(year, month, day)
     }
 
-
-    /**
-     * @desc Is a given year a leap year in the Persian astronomical calendar ?
-     * @param {*} year
-     */
-    leap_persiana (year) {
-        return (this.persiana_to_jd(year + 1, 1, 1) -
-          this.persiana_to_jd(year, 1, 1)) > 365;
-    }
 
     /**
      * @desc Is a given year a leap year in the Persian matematical calendar ?
@@ -243,73 +184,6 @@ class Algorithms {
         return [o.jy, o.jm, o.jd]
     }
     
-
-    /**
-     * @desc Is a given year a leap year in the Persian calendar ?
-     * also nasa use this algorithm https://eclipse.gsfc.nasa.gov/SKYCAL/algorithm.js search for 'getLastDayOfPersianMonth' and you can find it
-     * @param {*} year
-     *
-     */
-    leap_persian (year) {
-        return ((((((year - ((year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
-    }
-
-
-    /**
-     * @desc Determine Julian day from Persian date
-     * @param {*} year
-     * @param {*} month
-     * @param {*} day
-     */
-    persian_to_jd (year, month, day) {
-        let epbase, epyear;
-
-        epbase = year - ((year >= 0) ? 474 : 473);
-        epyear = 474 + this.ASTRO.mod(epbase, 2820);
-
-        return day +
-          ((month <= 7) ?
-              ((month - 1) * 31) :
-              (((month - 1) * 30) + 6)
-          ) +
-          Math.floor(((epyear * 682) - 110) / 2816) +
-          (epyear - 1) * 365 +
-          Math.floor(epbase / 2820) * 1029983 +
-          (this.PERSIAN_EPOCH - 1);
-    }
-
-
-    /**
-     * @desc Calculate Persian date from Julian day
-     * @param {*} jd
-     */
-    jd_to_persian (jd) {
-        let year, month, day, depoch, cycle, cyear, ycycle,
-          aux1, aux2, yday;
-
-
-        jd = Math.floor(jd) + 0.5;
-
-        depoch = jd - this.persian_to_jd(475, 1, 1);
-        cycle = Math.floor(depoch / 1029983);
-        cyear = this.ASTRO.mod(depoch, 1029983);
-        if (cyear === 1029982) {
-            ycycle = 2820;
-        } else {
-            aux1 = Math.floor(cyear / 366);
-            aux2 = this.ASTRO.mod(cyear, 366);
-            ycycle = Math.floor(((2134 * aux1) + (2816 * aux2) + 2815) / 1028522) +
-              aux1 + 1;
-        }
-        year = ycycle + (2820 * cycle) + 474;
-        if (year <= 0) {
-            year--;
-        }
-        yday = (jd - this.persian_to_jd(year, 1, 1)) + 1;
-        month = (yday <= 186) ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
-        day = (jd - this.persian_to_jd(year, month, 1)) + 1;
-        return [year, month, day];
-    }
 
 
     /**
@@ -387,28 +261,6 @@ class Algorithms {
         this.State.gregorian.leap = this.NormLeap[this.leap_gregorian(year) ? 1 : 0];
 
         weekday = this.ASTRO.jwday(j);
-
-        //  Update Persian Calendar
-        // ---------------------------------------------------------------------------
-        if (this.parent.calendarType == 'persian' && this.parent.leapYearMode == 'algorithmic') {
-            perscal = this.jd_to_persian(j);
-            this.State.persian.year = perscal[0];
-            this.State.persian.month = perscal[1] - 1;
-            this.State.persian.day = perscal[2];
-            this.State.persian.weekday = this.gWeekDayToPersian(weekday);
-            this.State.persian.leap = this.NormLeap[this.leap_persian(perscal[0]) ? 1 : 0];
-        }
-      
-        //  Update Persian Astronomical Calendar
-        // ---------------------------------------------------------------------------
-        if (this.parent.calendarType == 'persian' && this.parent.leapYearMode == 'astronomical') {
-            perscal = this.jd_to_persiana(j);
-            this.State.persianAstro.year = perscal[0];
-            this.State.persianAstro.month = perscal[1] - 1;
-            this.State.persianAstro.day = perscal[2];
-            this.State.persianAstro.weekday = this.gWeekDayToPersian(weekday);
-            this.State.persianAstro.leap = this.NormLeap[this.leap_persiana(perscal[0]) ? 1 : 0];
-        }
 
         if (this.parent.calendarType == 'persian' && this.parent.leapYearMode == 'matematical') {
             perscal = this.jd_to_persian_matematical(j);
@@ -490,40 +342,6 @@ class Algorithms {
     }
 
 
-    /**
-     * @desc  Update from Persian calendar
-     * @param {*} dateArray
-     */
-    calcPersian (dateArray) {
-        if (dateArray[0] || dateArray[0] === 0) {
-            this.State.persian.year = dateArray[0];
-        }
-        if (dateArray[1] || dateArray[1] === 0) {
-            this.State.persian.month = dateArray[1];
-        }
-        if (dateArray[2] || dateArray[2] === 0) {
-            this.State.persian.day = dateArray[2];
-        }
-        if (dateArray[3] || dateArray[3] === 0) {
-            this.State.gregorian.hour = dateArray[3];
-        }
-        if (dateArray[4] || dateArray[4] === 0) {
-            this.State.gregorian.minute = dateArray[4];
-        }
-        if (dateArray[5] || dateArray[5] === 0) {
-            this.State.gregorian.second = dateArray[5];
-        }
-        if (dateArray[6] || dateArray[6] === 0) {
-            this.State.gregorian.millisecond = dateArray[6];
-        }
-
-        this.setJulian(
-          this.persian_to_jd(
-            this.State.persian.year,
-            this.State.persian.month,
-            this.State.persian.day)
-        );
-    }
 
     /**
      * @desc Update from Persian astronomical calendar

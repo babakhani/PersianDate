@@ -370,10 +370,7 @@ class PersianDateClass {
                 dateArray.millisecond()
             ];
         }
-        if (this.calendarType === 'persian' && this.leapYearMode == 'algorithmic') {
-            return this.algorithms.calcPersian(dateArray);
-        }
-        else if (this.calendarType === 'persian' && this.leapYearMode == 'astronomical') {
+        if (this.calendarType === 'persian' && this.leapYearMode == 'astronomical') {
             return this.algorithms.calcPersiana(dateArray);
         }
         else if (this.calendarType === 'persian' && this.leapYearMode == 'matematical') {
