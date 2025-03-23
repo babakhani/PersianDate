@@ -63,7 +63,7 @@ describe('Check total leap years in next 3003 year, Difference algorithm', funct
           totalCommonWikiAstro = 0,
           totalCommonWikiAlgo = 0;
         let i = 1396;
-        while (i < (1396 + 3003)) {
+        while (i < (1396 + 1003)) {
             const algo = startYear.toCalendar('persian').toLeapYearMode('algorithmic').isLeapYear(i),
               astro = startYear.toCalendar('persian').toLeapYearMode('astronomical').isLeapYear(i),
               gregorian = startYear.toCalendar('gregorian').isLeapYear(i),

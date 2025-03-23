@@ -2,6 +2,7 @@ let Helpers = require('./helpers');
 let normalizeDuration = new Helpers().normalizeDuration;
 let absRound = new Helpers().absRound;
 let absFloor = new Helpers().absFloor;
+
 /**
  * Duration object constructor
  * @param duration

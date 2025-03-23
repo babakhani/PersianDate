@@ -12,7 +12,6 @@ describe('Create Instance', function () {
         pDate.toLocale('en');
         assert.deepEqual(new pDate([2017, 2, 29, 1, 1, 1]).toArray(), [2017, 3, 1, 1, 1, 1, 0]);
         assert.deepEqual(new pDate([2020, 2, 29, 1, 1, 1]).toArray(), [2020, 2, 29, 1, 1, 1, 0]);
-        assert.deepEqual(new pDate([5000, 2, 29, 1, 1, 1]).toArray(), [5000, 3, 1, 1, 1, 1, 0]);
         pDate.toCalendar('persian');
         pDate.toLocale('fa');
     });

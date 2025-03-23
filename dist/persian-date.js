@@ -82,7 +82,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -96,7 +96,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var durationUnit = __webpack_require__(4).durationUnit;
+var durationUnit = __webpack_require__(3).durationUnit;
 
 var Helpers = function () {
     function Helpers() {
@@ -195,11 +195,7 @@ var Helpers = function () {
     }, {
         key: 'absRound',
         value: function absRound(number) {
-            if (number < 0) {
-                return Math.ceil(number);
-            } else {
-                return Math.floor(number);
-            }
+            return Math.floor(number);
         }
 
         /**
@@ -236,16 +232,17 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var TypeChecking = __webpack_require__(11);
+var TypeChecking = __webpack_require__(10);
 var Algorithms = __webpack_require__(2);
 var Helpers = __webpack_require__(0);
-var Duration = __webpack_require__(5);
-var Validator = __webpack_require__(12);
+var Duration = __webpack_require__(4);
+var Validator = __webpack_require__(11);
 var toPersianDigit = new Helpers().toPersianDigit;
 var leftZeroFill = new Helpers().leftZeroFill;
 var normalizeDuration = new Helpers().normalizeDuration;
-var fa = __webpack_require__(7);
-var en = __webpack_require__(6);
+
+var fa = __webpack_require__(6);
+var en = __webpack_require__(5);
 
 /**
  * @description persian date class
@@ -293,6 +290,7 @@ var PersianDateClass = function () {
             if (TypeChecking.isDate(input)) {
                 this._gDateToCalculators(input);
             } else if (TypeChecking.isArray(input)) {
+
                 if (!Validator.validateInputArray(input)) {
                     this.State.isInvalidDate = true;
                     return false;
@@ -337,6 +335,7 @@ var PersianDateClass = function () {
     }, {
         key: '_gDateToCalculators',
         value: function _gDateToCalculators(inputgDate) {
+            inputgDate = new Date(inputgDate);
             this.algorithms.calcGregorian([inputgDate.getFullYear(), inputgDate.getMonth(), inputgDate.getDate(), inputgDate.getHours(), inputgDate.getMinutes(), inputgDate.getSeconds(), inputgDate.getMilliseconds()]);
         }
 
@@ -374,6 +373,7 @@ var PersianDateClass = function () {
         }
 
         /**
+         * @derecated 2.0.0
          * @since 1.0.0
          * @param input
          * @return {PersianDateClass}
@@ -381,20 +381,12 @@ var PersianDateClass = function () {
 
     }, {
         key: 'toLeapYearMode',
-        value: function toLeapYearMode(input) {
-            this.leapYearMode = input;
-            if (input === 'astronomical' && this.calendarType == 'persian') {
-                this.leapYearMode = 'astronomical';
-            } else if (input === 'algorithmic' && this.calendarType == 'persian') {
-                this.leapYearMode = 'algorithmic';
-            } else if (input === 'matematical' && this.calendarType == 'persian') {
-                this.leapYearMode = 'matematical';
-            }
-            this.algorithms.updateFromGregorian();
+        value: function toLeapYearMode() {
             return this;
         }
 
         /**
+         * @derecated 2.0.0
          * @since 1.0.0
          * @static
          * @param input
@@ -572,10 +564,7 @@ var PersianDateClass = function () {
             if (this.isPersianDate(dateArray)) {
                 dateArray = [dateArray.year(), dateArray.month(), dateArray.date(), dateArray.hour(), dateArray.minute(), dateArray.second(), dateArray.millisecond()];
             }
-            if (this.calendarType === 'persian' && this.leapYearMode == 'astronomical') {
-                return this.algorithms.calcPersiana(dateArray);
-            } else if (this.calendarType === 'persian' && this.leapYearMode == 'matematical') {
-                //return this.algorithms.calcPersiana(dateArray);
+            if (this.calendarType === 'persian') {
                 return this.algorithms.calcPersianMatematical(dateArray);
             } else if (this.calendarType === 'gregorian') {
                 dateArray[1] = dateArray[1] - 1;
@@ -593,13 +582,7 @@ var PersianDateClass = function () {
         value: function calendar() {
             var key = void 0;
             if (this.calendarType == 'persian') {
-                if (this.leapYearMode == 'astronomical') {
-                    key = 'persianAstro';
-                } else if (this.leapYearMode == 'algorithmic') {
-                    key = 'persianAlgo';
-                } else if (this.leapYearMode == 'matematical') {
-                    key = 'persianMatematical';
-                }
+                key = 'persian';
             } else {
                 key = 'gregorian';
             }
@@ -1165,13 +1148,7 @@ var PersianDateClass = function () {
             if (year === undefined) {
                 year = this.year();
             }
-            if (this.calendarType == 'persian' && this.leapYearMode === 'algorithmic') {
-                return this.algorithms.leap_persian(year);
-            }
-            if (this.calendarType == 'persian' && this.leapYearMode === 'astronomical') {
-                return this.algorithms.leap_persiana(year);
-            }
-            if (this.calendarType == 'persian' && this.leapYearMode === 'matematical') {
+            if (this.calendarType == 'persian') {
                 return this.algorithms.leap_persian_matematical(year);
             } else if (this.calendarType == 'gregorian') {
                 return this.algorithms.leap_gregorian(year);
@@ -1685,10 +1662,8 @@ var PersianDateClass = function () {
         }
     }, {
         key: 'toLeapYearMode',
-        value: function toLeapYearMode(input) {
-            var d = PersianDateClass;
-            d.leapYearMode = input;
-            return d;
+        value: function toLeapYearMode() {
+            return this;
         }
     }, {
         key: 'toCalendar',
@@ -1788,198 +1763,55 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// Start algorithm class
-var ASTRO = __webpack_require__(3);
-var State = __webpack_require__(10);
-
-var jalaali = __webpack_require__(9);
+var State = __webpack_require__(9);
+var jalaali = __webpack_require__(8);
 
 var Algorithms = function () {
     function Algorithms(parent) {
         _classCallCheck(this, Algorithms);
 
         this.parent = parent;
-        this.ASTRO = new ASTRO();
         this.State = new State();
         this.J0000 = 1721424.5; // Julian date of Gregorian epoch: 0000-01-01
         this.J1970 = 2440587.5; // Julian date at Unix epoch: 1970-01-01
         this.JMJD = 2400000.5; // Epoch of Modified Julian Date system
         this.NormLeap = [false /*"Normal year"*/, true /*"Leap year"*/];
         this.GREGORIAN_EPOCH = 1721425.5;
-        this.PERSIAN_EPOCH = 1948320.5;
     }
 
     /**
-     * @desc LEAP_GREGORIAN  --  Is a given year in the Gregorian calendar a leap year ?
-     * @param year
-     * @return {boolean}
+     *
+     * @param j
+     * @return {number}
      */
 
 
     _createClass(Algorithms, [{
+        key: 'jwday',
+        value: function jwday(j) {
+            return this.mod(Math.floor(j + 1.5), 7);
+        }
+    }, {
+        key: 'div',
+        value: function div(a, b) {
+            return ~~(a / b);
+        }
+    }, {
+        key: 'mod',
+        value: function mod(a, b) {
+            return a - ~~(a / b) * b;
+        }
+
+        /**
+         * @desc LEAP_GREGORIAN  --  Is a given year in the Gregorian calendar a leap year ?
+         * @param year
+         * @return {boolean}
+         */
+
+    }, {
         key: 'leap_gregorian',
         value: function leap_gregorian(year) {
             return year % 4 === 0 && !(year % 100 === 0 && year % 400 !== 0);
-        }
-
-        /**
-         * @desc Determine Julian day number from Gregorian calendar date
-         * @param {*} year
-         * @param {*} month
-         * @param {*} day
-         */
-
-    }, {
-        key: 'gregorian_to_jd',
-        value: function gregorian_to_jd(year, month, day) {
-            return this.GREGORIAN_EPOCH - 1 + 365 * (year - 1) + Math.floor((year - 1) / 4) + -Math.floor((year - 1) / 100) + Math.floor((year - 1) / 400) + Math.floor((367 * month - 362) / 12 + (month <= 2 ? 0 : this.leap_gregorian(year) ? -1 : -2) + day);
-        }
-
-        /**
-         * @desc Calculate Gregorian calendar date from Julian day
-         * @param {*} jd
-         */
-
-    }, {
-        key: 'jd_to_gregorian',
-        value: function jd_to_gregorian(jd) {
-            var wjd = void 0,
-                depoch = void 0,
-                quadricent = void 0,
-                dqc = void 0,
-                cent = void 0,
-                dcent = void 0,
-                quad = void 0,
-                dquad = void 0,
-                yindex = void 0,
-                year = void 0,
-                yearday = void 0,
-                leapadj = void 0,
-                month = void 0,
-                day = void 0;
-
-            wjd = Math.floor(jd - 0.5) + 0.5;
-            depoch = wjd - this.GREGORIAN_EPOCH;
-            quadricent = Math.floor(depoch / 146097);
-            dqc = this.ASTRO.mod(depoch, 146097);
-            cent = Math.floor(dqc / 36524);
-            dcent = this.ASTRO.mod(dqc, 36524);
-            quad = Math.floor(dcent / 1461);
-            dquad = this.ASTRO.mod(dcent, 1461);
-            yindex = Math.floor(dquad / 365);
-            year = quadricent * 400 + cent * 100 + quad * 4 + yindex;
-            if (!(cent === 4 || yindex === 4)) {
-                year++;
-            }
-            yearday = wjd - this.gregorian_to_jd(year, 1, 1);
-            leapadj = wjd < this.gregorian_to_jd(year, 3, 1) ? 0 : this.leap_gregorian(year) ? 1 : 2;
-            month = Math.floor(((yearday + leapadj) * 12 + 373) / 367);
-            day = wjd - this.gregorian_to_jd(year, month, 1) + 1;
-
-            return [year, month, day];
-        }
-
-        /**
-         * @desc TEHRAN_EQUINOX  --  Determine Julian day and fraction of the
-         March equinox at the Tehran meridian in
-         a given Gregorian year.
-         * @param {*} year
-         */
-
-    }, {
-        key: 'tehran_equinox',
-        value: function tehran_equinox(year) {
-            var equJED = void 0,
-                equJD = void 0,
-                equAPP = void 0,
-                equTehran = void 0,
-                dtTehran = void 0;
-
-            //  March equinox in dynamical time
-            equJED = this.ASTRO.equinox(year, 0);
-
-            //  Correct for delta T to obtain Universal time
-            equJD = equJED - this.ASTRO.deltat(year) / (24 * 60 * 60);
-
-            //  Apply the equation of time to yield the apparent time at Greenwich
-            equAPP = equJD + this.ASTRO.equationOfTime(equJED);
-
-            /*  Finally, we must correct for the constant difference between
-             the Greenwich meridian andthe time zone standard for
-             Iran Standard time, 52°30' to the East.  */
-
-            dtTehran = (52 + 30 / 60.0 + 0 / (60.0 * 60.0)) / 360;
-            equTehran = equAPP + dtTehran;
-
-            return equTehran;
-        }
-
-        /**
-         * @desc TEHRAN_EQUINOX_JD  --  Calculate Julian day during which the
-         March equinox, reckoned from the Tehran
-         meridian, occurred for a given Gregorian
-         year.
-         * @param {*} year
-         */
-
-    }, {
-        key: 'tehran_equinox_jd',
-        value: function tehran_equinox_jd(year) {
-            var ep = void 0,
-                epg = void 0;
-
-            ep = this.tehran_equinox(year);
-            epg = Math.floor(ep);
-
-            return epg;
-        }
-
-        /**
-         * @desc  PERSIANA_YEAR  --  Determine the year in the Persian
-         astronomical calendar in which a
-         given Julian day falls.  Returns an
-         array of two elements:
-          [0]  Persian year
-         [1]  Julian day number containing
-         equinox for this year.
-         * @param {*} jd
-         */
-
-    }, {
-        key: 'persiana_year',
-        value: function persiana_year(jd) {
-            var guess = this.jd_to_gregorian(jd)[0] - 2,
-                lasteq = void 0,
-                nexteq = void 0,
-                adr = void 0;
-
-            lasteq = this.tehran_equinox_jd(guess);
-            while (lasteq > jd) {
-                guess--;
-                lasteq = this.tehran_equinox_jd(guess);
-            }
-            nexteq = lasteq - 1;
-            while (!(lasteq <= jd && jd < nexteq)) {
-                lasteq = nexteq;
-                guess++;
-                nexteq = this.tehran_equinox_jd(guess);
-            }
-            adr = Math.round((lasteq - this.PERSIAN_EPOCH) / this.ASTRO.TropicalYear) + 1;
-
-            return [adr, lasteq];
-        }
-
-        /**
-         * @desc Obtain Julian day from a given Persian mathematical calendar date.
-         * @param {*} year
-         * @param {*} month
-         * @param {*} day
-         */
-
-    }, {
-        key: 'persian_matematical_to_jd',
-        value: function persian_matematical_to_jd(year, month, day) {
-            return jalaali.j2d(year, month, day);
         }
 
         /**
@@ -1991,12 +1823,6 @@ var Algorithms = function () {
         key: 'leap_persian_matematical',
         value: function leap_persian_matematical(year) {
             return jalaali.isLeapJalaaliYear(year);
-        }
-    }, {
-        key: 'jd_to_persian_matematical',
-        value: function jd_to_persian_matematical(jd) {
-            var o = jalaali.d2j(jd);
-            return [o.jy, o.jm, o.jd];
         }
 
         /**
@@ -2032,9 +1858,6 @@ var Algorithms = function () {
                 year = void 0,
                 mon = void 0,
                 mday = void 0,
-                hour = void 0,
-                min = void 0,
-                sec = void 0,
                 weekday = void 0,
                 utime = void 0,
                 perscal = void 0;
@@ -2042,9 +1865,6 @@ var Algorithms = function () {
             year = this.State.gregorian.year;
             mon = this.State.gregorian.month;
             mday = this.State.gregorian.day;
-            hour = 0; //this.State.gregorian.hour;
-            min = 0; //this.State.gregorian.minute;
-            sec = 0; //this.State.gregorian.second;
 
             this.State.gDate = new Date(year, mon, mday, this.State.gregorian.hour, this.State.gregorian.minute, this.State.gregorian.second, this.State.gregorian.millisecond);
 
@@ -2059,15 +1879,14 @@ var Algorithms = function () {
 
             //  Update Julian day
             // ---------------------------------------------------------------------------
-            //j = this.gregorian_to_jd(year, mon + 1, mday) + (Math.floor(sec + 60 * (min + 60 * hour) + 0.5) / 86400.0);
-            j = this.State.julianday;
+            j = jalaali.g2d(year, mon + 1, mday);
 
             this.State.julianday = j;
-            this.State.modifiedjulianday = j - this.JMJD;
 
             //  Update day of week in Gregorian box
             // ---------------------------------------------------------------------------
-            weekday = this.ASTRO.jwday(j);
+            weekday = this.jwday(j);
+
             // Move to 1 indexed number
             this.State.gregorian.weekday = weekday + 1;
 
@@ -2075,22 +1894,15 @@ var Algorithms = function () {
             // ---------------------------------------------------------------------------
             this.State.gregorian.leap = this.NormLeap[this.leap_gregorian(year) ? 1 : 0];
 
-            weekday = this.ASTRO.jwday(j);
-
-            if (this.parent.calendarType == 'persian' && this.parent.leapYearMode == 'matematical') {
-                perscal = this.jd_to_persian_matematical(j);
-                this.State.persianMatematical.year = perscal[0];
-                this.State.persianMatematical.month = perscal[1] - 1;
-                this.State.persianMatematical.day = perscal[2];
-                this.State.persianMatematical.weekday = this.gWeekDayToPersian(weekday);
-                this.State.persianMatematical.leap = this.NormLeap[this.leap_persian_matematical(perscal[0]) ? 1 : 0];
-            }
-
-            //  Update Gregorian serial number
-            // ---------------------------------------------------------------------------
-            if (this.State.gregserial.day !== null) {
-                this.State.gregserial.day = j - this.J0000;
-            }
+            //if (this.parent.calendarType == 'persian') {
+            var o = jalaali.d2j(j);
+            perscal = [o.jy, o.jm, parseInt(o.jd)];
+            this.State.persian.year = perscal[0];
+            this.State.persian.month = perscal[1] - 1;
+            this.State.persian.day = perscal[2];
+            this.State.persian.weekday = this.gWeekDayToPersian(weekday);
+            this.State.persian.leap = this.NormLeap[jalaali.isLeapJalaaliYear(perscal[0]) ? 1 : 0];
+            //}
 
             //  Update Unix time()
             // ---------------------------------------------------------------------------
@@ -2141,13 +1953,11 @@ var Algorithms = function () {
             var j = void 0,
                 date = void 0;
             j = this.State.julianday;
-            date = this.jd_to_gregorian(j);
+            var o = jalaali.d2g(j);
+            date = [o.gy, o.gm, o.gd];
             this.State.gregorian.year = date[0];
             this.State.gregorian.month = date[1] - 1;
             this.State.gregorian.day = date[2];
-            //        this.State.gregorian.hour = this.pad(time[0], 2, " ");
-            //        this.State.gregorian.minute = this.pad(time[1], 2, "0");
-            //        this.State.gregorian.second = this.pad(time[2], 2, "0");
             this.updateFromGregorian();
         }
 
@@ -2162,50 +1972,17 @@ var Algorithms = function () {
             this.State.julianday = j;
             this.calcJulian();
         }
-
-        /**
-         * @desc Update from Persian astronomical calendar
-         * @param {*} dateArray
-         */
-
-    }, {
-        key: 'calcPersiana',
-        value: function calcPersiana(dateArray) {
-            if (dateArray[0] || dateArray[0] === 0) {
-                this.State.persianAstro.year = dateArray[0];
-            }
-            if (dateArray[1] || dateArray[1] === 0) {
-                this.State.persianAstro.month = dateArray[1];
-            }
-            if (dateArray[2] || dateArray[2] === 0) {
-                this.State.persianAstro.day = dateArray[2];
-            }
-
-            if (dateArray[3] || dateArray[3] === 0) {
-                this.State.gregorian.hour = dateArray[3];
-            }
-            if (dateArray[4] || dateArray[4] === 0) {
-                this.State.gregorian.minute = dateArray[4];
-            }
-            if (dateArray[5] || dateArray[5] === 0) {
-                this.State.gregorian.second = dateArray[5];
-            }
-            if (dateArray[6] || dateArray[6] === 0) {
-                this.State.gregorian.millisecond = dateArray[6];
-            }
-            this.setJulian(this.persiana_to_jd(this.State.persianAstro.year, this.State.persianAstro.month, this.State.persianAstro.day + 0.5));
-        }
     }, {
         key: 'calcPersianMatematical',
         value: function calcPersianMatematical(dateArray) {
             if (dateArray[0] || dateArray[0] === 0) {
-                this.State.persianMatematical.year = dateArray[0];
+                this.State.persian.year = dateArray[0];
             }
             if (dateArray[1] || dateArray[1] === 0) {
-                this.State.persianMatematical.month = dateArray[1];
+                this.State.persian.month = dateArray[1];
             }
             if (dateArray[2] || dateArray[2] === 0) {
-                this.State.persianMatematical.day = dateArray[2];
+                this.State.persian.day = dateArray[2];
             }
 
             if (dateArray[3] || dateArray[3] === 0) {
@@ -2220,7 +1997,7 @@ var Algorithms = function () {
             if (dateArray[6] || dateArray[6] === 0) {
                 this.State.gregorian.millisecond = dateArray[6];
             }
-            this.setJulian(this.persian_matematical_to_jd(this.State.persianMatematical.year, this.State.persianMatematical.month, this.State.persianMatematical.day));
+            this.setJulian(jalaali.j2d(this.State.persian.year, this.State.persian.month, this.State.persian.day));
         }
     }]);
 
@@ -2231,505 +2008,6 @@ module.exports = Algorithms;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/*
- JavaScript functions for positional astronomy
- by John Walker  --  September, MIM
- http://www.fourmilab.ch/
- This program is in the public domain.
- */
-
-var ASTRO = function () {
-    function ASTRO() {
-        _classCallCheck(this, ASTRO);
-
-        //  Frequently-used constants
-        this.J2000 = 2451545.0; // Julian day of J2000 epoch
-        this.JulianCentury = 36525.0; // Days in Julian century
-        this.JulianMillennium = this.JulianCentury * 10; // Days in Julian millennium
-        //        this.AstronomicalUnit = 149597870.0;           // Astronomical unit in kilometres
-        this.TropicalYear = 365.24219878; // Mean solar tropical year
-
-        /*  OBLIQEQ  --  Calculate the obliquity of the ecliptic for a given
-         Julian date.  This uses Laskar's tenth-degree
-         polynomial fit (J. Laskar, Astronomy and
-         Astrophysics, Vol. 157, page 68 [1986]) which is
-         accurate to within 0.01 arc second between AD 1000
-         and AD 3000, and within a few seconds of arc for
-         +/-10000 years around AD 2000.  If we're outside the
-         range in which this fit is valid (deep time) we
-         simply return the J2000 value of the obliquity, which
-         happens to be almost precisely the mean.  */
-        this.oterms = [-4680.93, -1.55, 1999.25, -51.38, -249.67, -39.05, 7.12, 27.87, 5.79, 2.45];
-        /* Periodic terms for nutation in longiude (delta \Psi) and
-         obliquity (delta \Epsilon) as given in table 21.A of
-         Meeus, "Astronomical Algorithms", first edition. */
-        this.nutArgMult = [0, 0, 0, 0, 1, -2, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, -2, 1, 0, 2, 2, 0, 0, 0, 2, 1, 0, 0, 1, 2, 2, -2, -1, 0, 2, 2, -2, 0, 1, 0, 0, -2, 0, 0, 2, 1, 0, 0, -1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 1, 0, 1, 2, 0, -1, 2, 2, 0, 0, -1, 0, 1, 0, 0, 1, 2, 1, -2, 0, 2, 0, 0, 0, 0, -2, 2, 1, 2, 0, 0, 2, 2, 0, 0, 2, 2, 2, 0, 0, 2, 0, 0, -2, 0, 1, 2, 2, 0, 0, 0, 2, 0, -2, 0, 0, 2, 0, 0, 0, -1, 2, 1, 0, 2, 0, 0, 0, 2, 0, -1, 0, 1, -2, 2, 0, 2, 2, 0, 1, 0, 0, 1, -2, 0, 1, 0, 1, 0, -1, 0, 0, 1, 0, 0, 2, -2, 0, 2, 0, -1, 2, 1, 2, 0, 1, 2, 2, 0, 1, 0, 2, 2, -2, 1, 1, 0, 0, 0, -1, 0, 2, 2, 2, 0, 0, 2, 1, 2, 0, 1, 0, 0, -2, 0, 2, 2, 2, -2, 0, 1, 2, 1, 2, 0, -2, 0, 1, 2, 0, 0, 0, 1, 0, -1, 1, 0, 0, -2, -1, 0, 2, 1, -2, 0, 0, 0, 1, 0, 0, 2, 2, 1, -2, 0, 2, 0, 1, -2, 1, 0, 2, 1, 0, 0, 1, -2, 0, -1, 0, 1, 0, 0, -2, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 2, 0, -1, -1, 1, 0, 0, 0, 1, 1, 0, 0, 0, -1, 1, 2, 2, 2, -1, -1, 2, 2, 0, 0, -2, 2, 2, 0, 0, 3, 2, 2, 2, -1, 0, 2, 2];
-
-        this.nutArgCoeff = [-171996, -1742, 92095, 89, /*  0,  0,  0,  0,  1 */
-        -13187, -16, 5736, -31, /* -2,  0,  0,  2,  2 */
-        -2274, -2, 977, -5, /*  0,  0,  0,  2,  2 */
-        2062, 2, -895, 5, /*  0,  0,  0,  0,  2 */
-        1426, -34, 54, -1, /*  0,  1,  0,  0,  0 */
-        712, 1, -7, 0, /*  0,  0,  1,  0,  0 */
-        -517, 12, 224, -6, /* -2,  1,  0,  2,  2 */
-        -386, -4, 200, 0, /*  0,  0,  0,  2,  1 */
-        -301, 0, 129, -1, /*  0,  0,  1,  2,  2 */
-        217, -5, -95, 3, /* -2, -1,  0,  2,  2 */
-        -158, 0, 0, 0, /* -2,  0,  1,  0,  0 */
-        129, 1, -70, 0, /* -2,  0,  0,  2,  1 */
-        123, 0, -53, 0, /*  0,  0, -1,  2,  2 */
-        63, 0, 0, 0, /*  2,  0,  0,  0,  0 */
-        63, 1, -33, 0, /*  0,  0,  1,  0,  1 */
-        -59, 0, 26, 0, /*  2,  0, -1,  2,  2 */
-        -58, -1, 32, 0, /*  0,  0, -1,  0,  1 */
-        -51, 0, 27, 0, /*  0,  0,  1,  2,  1 */
-        48, 0, 0, 0, /* -2,  0,  2,  0,  0 */
-        46, 0, -24, 0, /*  0,  0, -2,  2,  1 */
-        -38, 0, 16, 0, /*  2,  0,  0,  2,  2 */
-        -31, 0, 13, 0, /*  0,  0,  2,  2,  2 */
-        29, 0, 0, 0, /*  0,  0,  2,  0,  0 */
-        29, 0, -12, 0, /* -2,  0,  1,  2,  2 */
-        26, 0, 0, 0, /*  0,  0,  0,  2,  0 */
-        -22, 0, 0, 0, /* -2,  0,  0,  2,  0 */
-        21, 0, -10, 0, /*  0,  0, -1,  2,  1 */
-        17, -1, 0, 0, /*  0,  2,  0,  0,  0 */
-        16, 0, -8, 0, /*  2,  0, -1,  0,  1 */
-        -16, 1, 7, 0, /* -2,  2,  0,  2,  2 */
-        -15, 0, 9, 0, /*  0,  1,  0,  0,  1 */
-        -13, 0, 7, 0, /* -2,  0,  1,  0,  1 */
-        -12, 0, 6, 0, /*  0, -1,  0,  0,  1 */
-        11, 0, 0, 0, /*  0,  0,  2, -2,  0 */
-        -10, 0, 5, 0, /*  2,  0, -1,  2,  1 */
-        -8, 0, 3, 0, /*  2,  0,  1,  2,  2 */
-        7, 0, -3, 0, /*  0,  1,  0,  2,  2 */
-        -7, 0, 0, 0, /* -2,  1,  1,  0,  0 */
-        -7, 0, 3, 0, /*  0, -1,  0,  2,  2 */
-        -7, 0, 3, 0, /*  2,  0,  0,  2,  1 */
-        6, 0, 0, 0, /*  2,  0,  1,  0,  0 */
-        6, 0, -3, 0, /* -2,  0,  2,  2,  2 */
-        6, 0, -3, 0, /* -2,  0,  1,  2,  1 */
-        -6, 0, 3, 0, /*  2,  0, -2,  0,  1 */
-        -6, 0, 3, 0, /*  2,  0,  0,  0,  1 */
-        5, 0, 0, 0, /*  0, -1,  1,  0,  0 */
-        -5, 0, 3, 0, /* -2, -1,  0,  2,  1 */
-        -5, 0, 3, 0, /* -2,  0,  0,  0,  1 */
-        -5, 0, 3, 0, /*  0,  0,  2,  2,  1 */
-        4, 0, 0, 0, /* -2,  0,  2,  0,  1 */
-        4, 0, 0, 0, /* -2,  1,  0,  2,  1 */
-        4, 0, 0, 0, /*  0,  0,  1, -2,  0 */
-        -4, 0, 0, 0, /* -1,  0,  1,  0,  0 */
-        -4, 0, 0, 0, /* -2,  1,  0,  0,  0 */
-        -4, 0, 0, 0, /*  1,  0,  0,  0,  0 */
-        3, 0, 0, 0, /*  0,  0,  1,  2,  0 */
-        -3, 0, 0, 0, /* -1, -1,  1,  0,  0 */
-        -3, 0, 0, 0, /*  0,  1,  1,  0,  0 */
-        -3, 0, 0, 0, /*  0, -1,  1,  2,  2 */
-        -3, 0, 0, 0, /*  2, -1, -1,  2,  2 */
-        -3, 0, 0, 0, /*  0,  0, -2,  2,  2 */
-        -3, 0, 0, 0, /*  0,  0,  3,  2,  2 */
-        -3, 0, 0, 0 /*  2, -1,  0,  2,  2 */
-        ];
-
-        /**
-         * @desc Table of observed Delta T values at the beginning of even numbered years from 1620 through 2002.
-         * @type Array
-         */
-        this.deltaTtab = [121, 112, 103, 95, 88, 82, 77, 72, 68, 63, 60, 56, 53, 51, 48, 46, 44, 42, 40, 38, 35, 33, 31, 29, 26, 24, 22, 20, 18, 16, 14, 12, 11, 10, 9, 8, 7, 7, 7, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 15, 15, 14, 13, 13.1, 12.5, 12.2, 12, 12, 12, 12, 12, 12, 11.9, 11.6, 11, 10.2, 9.2, 8.2, 7.1, 6.2, 5.6, 5.4, 5.3, 5.4, 5.6, 5.9, 6.2, 6.5, 6.8, 7.1, 7.3, 7.5, 7.6, 7.7, 7.3, 6.2, 5.2, 2.7, 1.4, -1.2, -2.8, -3.8, -4.8, -5.5, -5.3, -5.6, -5.7, -5.9, -6, -6.3, -6.5, -6.2, -4.7, -2.8, -0.1, 2.6, 5.3, 7.7, 10.4, 13.3, 16, 18.2, 20.2, 21.1, 22.4, 23.5, 23.8, 24.3, 24, 23.9, 23.9, 23.7, 24, 24.3, 25.3, 26.2, 27.3, 28.2, 29.1, 30, 30.7, 31.4, 32.2, 33.1, 34, 35, 36.5, 38.3, 40.2, 42.2, 44.5, 46.5, 48.5, 50.5, 52.2, 53.8, 54.9, 55.8, 56.9, 58.3, 60, 61.6, 63, 65, 66.6];
-
-        /*  EQUINOX  --  Determine the Julian Ephemeris Day of an
-         equinox or solstice.  The "which" argument
-         selects the item to be computed:
-          0   March equinox
-         1   June solstice
-         2   September equinox
-         3   December solstice
-          */
-        /**
-         * @desc Periodic terms to obtain true time
-         * @type Array
-         */
-        this.EquinoxpTerms = [485, 324.96, 1934.136, 203, 337.23, 32964.467, 199, 342.08, 20.186, 182, 27.85, 445267.112, 156, 73.14, 45036.886, 136, 171.52, 22518.443, 77, 222.54, 65928.934, 74, 296.72, 3034.906, 70, 243.58, 9037.513, 58, 119.81, 33718.147, 52, 297.17, 150.678, 50, 21.02, 2281.226, 45, 247.54, 29929.562, 44, 325.15, 31555.956, 29, 60.93, 4443.417, 18, 155.12, 67555.328, 17, 288.79, 4562.452, 16, 198.04, 62894.029, 14, 199.76, 31436.921, 12, 95.39, 14577.848, 12, 287.11, 31931.756, 12, 320.81, 34777.259, 9, 227.73, 1222.114, 8, 15.45, 16859.074];
-
-        this.JDE0tab1000 = [new Array(1721139.29189, 365242.13740, 0.06134, 0.00111, -0.00071), new Array(1721233.25401, 365241.72562, -0.05323, 0.00907, 0.00025), new Array(1721325.70455, 365242.49558, -0.11677, -0.00297, 0.00074), new Array(1721414.39987, 365242.88257, -0.00769, -0.00933, -0.00006)];
-
-        this.JDE0tab2000 = [new Array(2451623.80984, 365242.37404, 0.05169, -0.00411, -0.00057), new Array(2451716.56767, 365241.62603, 0.00325, 0.00888, -0.00030), new Array(2451810.21715, 365242.01767, -0.11575, 0.00337, 0.00078), new Array(2451900.05952, 365242.74049, -0.06223, -0.00823, 0.00032)];
-    }
-
-    /**
-     *
-     * @param Degrees to radians.
-     * @return {number}
-     */
-
-
-    _createClass(ASTRO, [{
-        key: "dtr",
-        value: function dtr(d) {
-            return d * Math.PI / 180.0;
-        }
-
-        /**
-         * @desc Radians to degrees.
-         * @param r
-         * @return {number}
-         */
-
-    }, {
-        key: "rtd",
-        value: function rtd(r) {
-            return r * 180.0 / Math.PI;
-        }
-
-        /**
-         * @desc Range reduce angle in degrees.
-         * @param a
-         * @return {number}
-         */
-
-    }, {
-        key: "fixangle",
-        value: function fixangle(a) {
-            return a - 360.0 * Math.floor(a / 360.0);
-        }
-
-        /**
-         * @desc Range reduce angle in radians.
-         * @param a
-         * @return {number}
-         */
-
-    }, {
-        key: "fixangr",
-        value: function fixangr(a) {
-            return a - 2 * Math.PI * Math.floor(a / (2 * Math.PI));
-        }
-
-        /**
-         * @desc  Sine of an angle in degrees
-         * @param d
-         * @return {number}
-         */
-
-    }, {
-        key: "dsin",
-        value: function dsin(d) {
-            return Math.sin(this.dtr(d));
-        }
-
-        /**
-         * @desc Cosine of an angle in degrees
-         * @param d
-         * @return {number}
-         */
-
-    }, {
-        key: "dcos",
-        value: function dcos(d) {
-            return Math.cos(this.dtr(d));
-        }
-
-        /**
-         * @desc Modulus function which works for non-integers.
-         * @param a
-         * @param b
-         * @return {number}
-         */
-
-    }, {
-        key: "mod",
-        value: function mod(a, b) {
-            return a - b * Math.floor(a / b);
-        }
-
-        /**
-         *
-         * @param j
-         * @return {number}
-         */
-
-    }, {
-        key: "jwday",
-        value: function jwday(j) {
-            return this.mod(Math.floor(j + 1.5), 7);
-        }
-
-        /**
-         *
-         * @param jd
-         * @return {number|*}
-         */
-
-    }, {
-        key: "obliqeq",
-        value: function obliqeq(jd) {
-            var eps, u, v, i;
-            v = u = (jd - this.J2000) / (this.JulianCentury * 100);
-            eps = 23 + 26 / 60.0 + 21.448 / 3600.0;
-
-            if (Math.abs(u) < 1.0) {
-                for (i = 0; i < 10; i++) {
-                    eps += this.oterms[i] / 3600.0 * v;
-                    v *= u;
-                }
-            }
-            return eps;
-        }
-
-        /**
-         * @desc  Calculate the nutation in longitude, deltaPsi, and
-         obliquity, deltaEpsilon for a given Julian date
-         jd.  Results are returned as a two element Array
-         giving (deltaPsi, deltaEpsilon) in degrees.
-         * @param jd
-         * @return Object
-         */
-
-    }, {
-        key: "nutation",
-        value: function nutation(jd) {
-            var deltaPsi,
-                deltaEpsilon,
-                i,
-                j,
-                t = (jd - 2451545.0) / 36525.0,
-                t2,
-                t3,
-                to10,
-                ta = [],
-                dp = 0,
-                de = 0,
-                ang;
-
-            t3 = t * (t2 = t * t);
-
-            /* Calculate angles.  The correspondence between the elements
-             of our array and the terms cited in Meeus are:
-              ta[0] = D  ta[0] = M  ta[2] = M'  ta[3] = F  ta[4] = \Omega
-              */
-
-            ta[0] = this.dtr(297.850363 + 445267.11148 * t - 0.0019142 * t2 + t3 / 189474.0);
-            ta[1] = this.dtr(357.52772 + 35999.05034 * t - 0.0001603 * t2 - t3 / 300000.0);
-            ta[2] = this.dtr(134.96298 + 477198.867398 * t + 0.0086972 * t2 + t3 / 56250.0);
-            ta[3] = this.dtr(93.27191 + 483202.017538 * t - 0.0036825 * t2 + t3 / 327270);
-            ta[4] = this.dtr(125.04452 - 1934.136261 * t + 0.0020708 * t2 + t3 / 450000.0);
-
-            /* Range reduce the angles in case the sine and cosine functions
-             don't do it as accurately or quickly. */
-
-            for (i = 0; i < 5; i++) {
-                ta[i] = this.fixangr(ta[i]);
-            }
-
-            to10 = t / 10.0;
-            for (i = 0; i < 63; i++) {
-                ang = 0;
-                for (j = 0; j < 5; j++) {
-                    if (this.nutArgMult[i * 5 + j] !== 0) {
-                        ang += this.nutArgMult[i * 5 + j] * ta[j];
-                    }
-                }
-                dp += (this.nutArgCoeff[i * 4 + 0] + this.nutArgCoeff[i * 4 + 1] * to10) * Math.sin(ang);
-                de += (this.nutArgCoeff[i * 4 + 2] + this.nutArgCoeff[i * 4 + 3] * to10) * Math.cos(ang);
-            }
-
-            /* Return the result, converting from ten thousandths of arc
-             seconds to radians in the process. */
-
-            deltaPsi = dp / (3600.0 * 10000.0);
-            deltaEpsilon = de / (3600.0 * 10000.0);
-
-            return [deltaPsi, deltaEpsilon];
-        }
-
-        /**
-         * @desc  Determine the difference, in seconds, between
-         Dynamical time and Universal time.
-         * @param year
-         * @return {*}
-         */
-
-    }, {
-        key: "deltat",
-        value: function deltat(year) {
-            var dt, f, i, t;
-
-            if (year >= 1620 && year <= 2000) {
-                i = Math.floor((year - 1620) / 2);
-                f = (year - 1620) / 2 - i;
-                /* Fractional part of year */
-                dt = this.deltaTtab[i] + (this.deltaTtab[i + 1] - this.deltaTtab[i]) * f;
-            } else {
-                t = (year - 2000) / 100;
-                if (year < 948) {
-                    dt = 2177 + 497 * t + 44.1 * t * t;
-                } else {
-                    dt = 102 + 102 * t + 25.3 * t * t;
-                    if (year > 2000 && year < 2100) {
-                        dt += 0.37 * (year - 2100);
-                    }
-                }
-            }
-            return dt;
-        }
-
-        /**
-         *
-         * @param year
-         * @param which
-         * @return {*}
-         */
-
-    }, {
-        key: "equinox",
-        value: function equinox(year, which) {
-            var deltaL = void 0,
-                i = void 0,
-                j = void 0,
-                JDE0 = void 0,
-                JDE = void 0,
-                JDE0tab = void 0,
-                S = void 0,
-                T = void 0,
-                W = void 0,
-                Y = void 0;
-            /*  Initialise terms for mean equinox and solstices.  We
-             have two sets: one for years prior to 1000 and a second
-             for subsequent years.  */
-
-            if (year < 1000) {
-                JDE0tab = this.JDE0tab1000;
-                Y = year / 1000;
-            } else {
-                JDE0tab = this.JDE0tab2000;
-                Y = (year - 2000) / 1000;
-            }
-
-            JDE0 = JDE0tab[which][0] + JDE0tab[which][1] * Y + JDE0tab[which][2] * Y * Y + JDE0tab[which][3] * Y * Y * Y + JDE0tab[which][4] * Y * Y * Y * Y;
-            T = (JDE0 - 2451545.0) / 36525;
-            W = 35999.373 * T - 2.47;
-            deltaL = 1 + 0.0334 * this.dcos(W) + 0.0007 * this.dcos(2 * W);
-            S = 0;
-            for (i = j = 0; i < 24; i++) {
-                S += this.EquinoxpTerms[j] * this.dcos(this.EquinoxpTerms[j + 1] + this.EquinoxpTerms[j + 2] * T);
-                j += 3;
-            }
-            JDE = JDE0 + S * 0.00001 / deltaL;
-            return JDE;
-        }
-
-        /**
-         * @desc  Position of the Sun.  Please see the comments
-         on the return statement at the end of this function
-         which describe the array it returns.  We return
-         intermediate values because they are useful in a
-         variety of other contexts.
-         * @param jd
-         * @return Object
-         */
-
-    }, {
-        key: "sunpos",
-        value: function sunpos(jd) {
-            var T = void 0,
-                T2 = void 0,
-                L0 = void 0,
-                M = void 0,
-                e = void 0,
-                C = void 0,
-                sunLong = void 0,
-                sunAnomaly = void 0,
-                sunR = void 0,
-                Omega = void 0,
-                Lambda = void 0,
-                epsilon = void 0,
-                epsilon0 = void 0,
-                Alpha = void 0,
-                Delta = void 0,
-                AlphaApp = void 0,
-                DeltaApp = void 0;
-
-            T = (jd - this.J2000) / this.JulianCentury;
-            T2 = T * T;
-            L0 = 280.46646 + 36000.76983 * T + 0.0003032 * T2;
-            L0 = this.fixangle(L0);
-            M = 357.52911 + 35999.05029 * T + -0.0001537 * T2;
-            M = this.fixangle(M);
-            e = 0.016708634 + -0.000042037 * T + -0.0000001267 * T2;
-            C = (1.914602 + -0.004817 * T + -0.000014 * T2) * this.dsin(M) + (0.019993 - 0.000101 * T) * this.dsin(2 * M) + 0.000289 * this.dsin(3 * M);
-            sunLong = L0 + C;
-            sunAnomaly = M + C;
-            sunR = 1.000001018 * (1 - e * e) / (1 + e * this.dcos(sunAnomaly));
-            Omega = 125.04 - 1934.136 * T;
-            Lambda = sunLong + -0.00569 + -0.00478 * this.dsin(Omega);
-            epsilon0 = this.obliqeq(jd);
-            epsilon = epsilon0 + 0.00256 * this.dcos(Omega);
-            Alpha = this.rtd(Math.atan2(this.dcos(epsilon0) * this.dsin(sunLong), this.dcos(sunLong)));
-            Alpha = this.fixangle(Alpha);
-            Delta = this.rtd(Math.asin(this.dsin(epsilon0) * this.dsin(sunLong)));
-            AlphaApp = this.rtd(Math.atan2(this.dcos(epsilon) * this.dsin(Lambda), this.dcos(Lambda)));
-            AlphaApp = this.fixangle(AlphaApp);
-            DeltaApp = this.rtd(Math.asin(this.dsin(epsilon) * this.dsin(Lambda)));
-
-            return [//  Angular quantities are expressed in decimal degrees
-            L0, //  [0] Geometric mean longitude of the Sun
-            M, //  [1] Mean anomaly of the Sun
-            e, //  [2] Eccentricity of the Earth's orbit
-            C, //  [3] Sun's equation of the Centre
-            sunLong, //  [4] Sun's true longitude
-            sunAnomaly, //  [5] Sun's true anomaly
-            sunR, //  [6] Sun's radius vector in AU
-            Lambda, //  [7] Sun's apparent longitude at true equinox of the date
-            Alpha, //  [8] Sun's true right ascension
-            Delta, //  [9] Sun's true declination
-            AlphaApp, // [10] Sun's apparent right ascension
-            DeltaApp // [11] Sun's apparent declination
-            ];
-        }
-
-        /**
-         * @desc Compute equation of time for a given moment. Returns the equation of time as a fraction of a day.
-         * @param jd
-         * @return {number|*}
-         */
-
-    }, {
-        key: "equationOfTime",
-        value: function equationOfTime(jd) {
-            var alpha = void 0,
-                deltaPsi = void 0,
-                E = void 0,
-                epsilon = void 0,
-                L0 = void 0,
-                tau = void 0;
-            tau = (jd - this.J2000) / this.JulianMillennium;
-            L0 = 280.4664567 + 360007.6982779 * tau + 0.03032028 * tau * tau + tau * tau * tau / 49931 + -(tau * tau * tau * tau / 15300) + -(tau * tau * tau * tau * tau / 2000000);
-            L0 = this.fixangle(L0);
-            alpha = this.sunpos(jd)[10];
-            deltaPsi = this.nutation(jd)[0];
-            epsilon = this.obliqeq(jd) + this.nutation(jd)[1];
-            E = L0 + -0.0057183 + -alpha + deltaPsi * this.dcos(epsilon);
-            E = E - 20.0 * Math.floor(E / 20.0);
-            E = E / (24 * 60);
-            return E;
-        }
-    }]);
-
-    return ASTRO;
-}();
-
-module.exports = ASTRO;
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2754,7 +2032,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2768,6 +2046,7 @@ var Helpers = __webpack_require__(0);
 var normalizeDuration = new Helpers().normalizeDuration;
 var absRound = new Helpers().absRound;
 var absFloor = new Helpers().absFloor;
+
 /**
  * Duration object constructor
  * @param duration
@@ -2835,7 +2114,7 @@ var Duration = function () {
 module.exports = Duration;
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2865,7 +2144,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2895,7 +2174,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2903,12 +2182,11 @@ module.exports = {
 
 var PersianDateClass = __webpack_require__(1);
 PersianDateClass.calendarType = 'persian';
-PersianDateClass.leapYearMode = 'matematical';
 PersianDateClass.localType = 'fa';
 module.exports = PersianDateClass;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2916,8 +2194,9 @@ module.exports = PersianDateClass;
 
 /*
   Expose functions.
-*/
-module.exports = { toJalaali: toJalaali,
+  */
+module.exports = {
+  toJalaali: toJalaali,
   toGregorian: toGregorian,
   isValidJalaaliDate: isValidJalaaliDate,
   isLeapJalaaliYear: isLeapJalaaliYear,
@@ -2929,15 +2208,16 @@ module.exports = { toJalaali: toJalaali,
   d2g: d2g,
   jalaaliToDateObject: jalaaliToDateObject,
   jalaaliWeek: jalaaliWeek
+};
 
-  /*
-    Jalaali years starting the 33-year rule.
+/*
+  Jalaali years starting the 33-year rule.
   */
-};var breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
+var breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
 
 /*
   Converts a Gregorian date to Jalaali.
-*/
+  */
 function toJalaali(gy, gm, gd) {
   if (Object.prototype.toString.call(gy) === '[object Date]') {
     gd = gy.getDate();
@@ -2949,28 +2229,28 @@ function toJalaali(gy, gm, gd) {
 
 /*
   Converts a Jalaali date to Gregorian.
-*/
+  */
 function toGregorian(jy, jm, jd) {
   return d2g(j2d(jy, jm, jd));
 }
 
 /*
   Checks whether a Jalaali date is valid or not.
-*/
+  */
 function isValidJalaaliDate(jy, jm, jd) {
   return jy >= -61 && jy <= 3177 && jm >= 1 && jm <= 12 && jd >= 1 && jd <= jalaaliMonthLength(jy, jm);
 }
 
 /*
   Is this a leap year or not?
-*/
+  */
 function isLeapJalaaliYear(jy) {
   return jalCalLeap(jy) === 0;
 }
 
 /*
   Number of days in a given month in a Jalaali year.
-*/
+  */
 function jalaaliMonthLength(jy, jm) {
   if (jm <= 6) return 31;
   if (jm <= 11) return 30;
@@ -2984,7 +2264,7 @@ function jalaaliMonthLength(jy, jm) {
 
     @param jy Jalaali calendar year (-61 to 3177)
     @returns number of years since the last leap year (0 to 4)
- */
+    */
 function jalCalLeap(jy) {
   var bl = breaks.length,
       jp = breaks[0],
@@ -3027,7 +2307,7 @@ function jalCalLeap(jy) {
     march: the March day of Farvardin the 1st (1st day of jy)
   @see: http://www.astro.uni.torun.pl/~kb/Papers/EMP/PersianC-EMP.htm
   @see: http://www.fourmilab.ch/documents/calendar/
-*/
+  */
 function jalCal(jy, withoutLeap) {
   var bl = breaks.length,
       gy = jy + 621,
@@ -3041,7 +2321,9 @@ function jalCal(jy, withoutLeap) {
       n,
       i;
 
-  if (jy < jp || jy >= breaks[bl - 1]) throw new Error('Invalid Jalaali year ' + jy);
+  if (jy < jp || jy >= breaks[bl - 1]) {
+    throw new Error('Invalid Jalaali year ' + jy);
+  }
 
   // Find the limiting years for the Jalaali year jy.
   for (i = 1; i < bl; i += 1) {
@@ -3074,7 +2356,8 @@ function jalCal(jy, withoutLeap) {
     leap = 4;
   }
 
-  return { leap: leap,
+  return {
+    leap: leap,
     gy: gy,
     march: march
   };
@@ -3087,7 +2370,7 @@ function jalCal(jy, withoutLeap) {
   @param jm Jalaali month (1 to 12)
   @param jd Jalaali day (1 to 29/31)
   @return Julian Day number
-*/
+  */
 function j2d(jy, jm, jd) {
   var r = jalCal(jy, true);
   return g2d(r.gy, 3, r.march) + (jm - 1) * 31 - div(jm, 7) * (jm - 7) + jd - 1;
@@ -3101,10 +2384,9 @@ function j2d(jy, jm, jd) {
     jy: Jalaali year (1 to 3100)
     jm: Jalaali month (1 to 12)
     jd: Jalaali day (1 to 29/31)
-*/
+    */
 function d2j(jdn) {
-  var gy = d2g(jdn).gy // Calculate Gregorian year (gy).
-  ,
+  var gy = d2g(jdn).gy,
       jy = gy - 621,
       r = jalCal(jy, false),
       jdn1f = g2d(gy, 3, r.march),
@@ -3119,7 +2401,8 @@ function d2j(jdn) {
       // The first 6 months.
       jm = 1 + div(k, 31);
       jd = mod(k, 31) + 1;
-      return { jy: jy,
+      return {
+        jy: jy,
         jm: jm,
         jd: jd
       };
@@ -3135,7 +2418,8 @@ function d2j(jdn) {
   }
   jm = 7 + div(k, 30);
   jd = mod(k, 30) + 1;
-  return { jy: jy,
+  return {
+    jy: jy,
     jm: jm,
     jd: jd
   };
@@ -3152,7 +2436,7 @@ function d2j(jdn) {
   @param gm Calendar month (1 to 12)
   @param gd Calendar day of the month (1 to 28/29/30/31)
   @return Julian Day number
-*/
+  */
 function g2d(gy, gm, gd) {
   var d = div((gy + div(gm - 8, 6) + 100100) * 1461, 4) + div(153 * mod(gm + 9, 12) + 2, 5) + gd - 34840408;
   d = d - div(div(gy + 100100 + div(gm - 8, 6), 100) * 3, 4) + 752;
@@ -3169,19 +2453,17 @@ function g2d(gy, gm, gd) {
     gy: Calendar year (years BC numbered 0, -1, -2, ...)
     gm: Calendar month (1 to 12)
     gd: Calendar day of the month M (1 to 28/29/30/31)
-*/
+    */
 function d2g(jdn) {
   var j, i, gd, gm, gy;
+
   j = 4 * jdn + 139361631;
   j = j + div(div(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908;
   i = div(mod(j, 1461), 4) * 5 + 308;
   gd = div(mod(i, 153), 5) + 1;
   gm = mod(div(i, 153), 12) + 1;
   gy = div(j, 1461) - 100100 + div(8 - gm, 6);
-  return { gy: gy,
-    gm: gm,
-    gd: gd
-  };
+  return { gy: gy, gm: gm, gd: gd };
 }
 
 /**
@@ -3222,7 +2504,7 @@ function jalaaliToDateObject(jy, jm, jd, h, m, s, ms) {
 
 /*
   Utility helper functions.
-*/
+  */
 
 function div(a, b) {
   return ~~(a / b);
@@ -3233,7 +2515,7 @@ function mod(a, b) {
 }
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3242,130 +2524,37 @@ function mod(a, b) {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Container = function Container() {
-    _classCallCheck(this, Container);
+  _classCallCheck(this, Container);
 
-    this.isInvalidDate = null;
-
-    this.gDate = null;
-    /**
-     *
-     * @type {number}
-     */
-    this.modifiedjulianday = 0;
-
-    /**
-     *
-     * @type {number}
-     */
-    this.julianday = 0;
-
-    /**
-     *
-     * @type {{day: number}}
-     */
-    this.gregserial = {
-        day: 0
-    };
-
-    this.zone = 0;
-
-    /**
-     *
-     * @type {{year: number, month: number, day: number, hour: number, minute: number, second: number, millisecond: number, weekday: number, unix: number, leap: number}}
-     */
-    this.gregorian = {
-        year: 0,
-        month: 0,
-        day: 0,
-        hour: 0,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-        weekday: 0,
-        unix: 0,
-        leap: 0
-    };
-
-    /**
-     *
-     * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
-     */
-    this.juliancalendar = {
-        year: 0,
-        month: 0,
-        day: 0,
-        leap: 0,
-        weekday: 0
-    };
-
-    /**
-     *
-     * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
-     */
-    this.islamic = {
-        year: 0,
-        month: 0,
-        day: 0,
-        leap: 0,
-        weekday: 0
-    };
-
-    /**
-     *
-     * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
-     */
-    this.persianAlgo = this.persian = {
-        year: 0,
-        month: 0,
-        day: 0,
-        leap: 0,
-        weekday: 0
-    };
-
-    /**
-     *
-     * @type {{year: number, month: number, day: number, leap: number, weekday: number}}
-     */
-    this.persianAstro = {
-        year: 0,
-        month: 0,
-        day: 0,
-        leap: 0,
-        weekday: 0
-    };
-
-    this.persianMatematical = {
-        year: 0,
-        month: 0,
-        day: 0,
-        leap: 0,
-        weekday: 0
-    };
-
-    /**
-     *
-     * @type {{year: number, week: number, day: number}}
-     */
-    this.isoweek = {
-        year: 0,
-        week: 0,
-        day: 0
-    };
-
-    /**
-     *
-     * @type {{year: number, day: number}}
-     */
-    this.isoday = {
-        year: 0,
-        day: 0
-    };
+  this.isInvalidDate = null;
+  this.gDate = null;
+  this.julianday = 0;
+  this.zone = 0;
+  this.gregorian = {
+    year: 0,
+    month: 0,
+    day: 0,
+    hour: 0,
+    minute: 0,
+    second: 0,
+    millisecond: 0,
+    weekday: 0,
+    unix: 0,
+    leap: 0
+  };
+  this.persian = {
+    year: 0,
+    month: 0,
+    day: 0,
+    leap: 0,
+    weekday: 0
+  };
 };
 
 module.exports = Container;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3402,7 +2591,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

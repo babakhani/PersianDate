@@ -77,18 +77,13 @@ class Helpers {
         };
     }
 
-
     /**
      *
      * @param number
      * @returns {number}
      */
     absRound (number) {
-        if (number < 0) {
-            return Math.ceil(number);
-        } else {
-            return Math.floor(number);
-        }
+      return Math.floor(number);
     }
 
     /**

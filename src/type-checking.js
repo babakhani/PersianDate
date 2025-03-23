@@ -7,7 +7,6 @@ module.exports = {
         return Object.prototype.toString.call(input) === '[object Array]';
     },
 
-
     /**
      *
      * @param input
@@ -16,7 +15,6 @@ module.exports = {
     isNumber (input) {
         return typeof input === 'number';
     },
-
 
     /**
      *

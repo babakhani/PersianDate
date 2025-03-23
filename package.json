@@ -63,7 +63,7 @@
     "build": " webpack; MIN=1 webpack; npm run test; npm run lint; npm run doc;",
     "test": "nyc --reporter=html --reporter=text mocha --timeout 25000",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "./node_modules/jshint/bin/jshint src/*.js; ./node_modules/eslint/bin/eslint.js src/",
+    "lint": "./node_modules/jshint/bin/jshint src/*.js; ./node_modules/eslint/bin/eslint.js src/ --fix",
     "doc": "grunt --doc",
     "doctest": "./node_modules/markdown-doctest/bin/cmd.js README.md && ./node_modules/markdown-link-check/markdown-link-check README.md && ./node_modules/markdown-doctest/bin/cmd.js doc/leapyear.md && ./node_modules/markdown-link-check/markdown-link-check doc/leapyear.md",
     "sync-pkg": "sync-pkg",
