@@ -105,26 +105,53 @@ function persianToJd(year, month, day) {
  * @returns {Array}
  */
 function jdToPersian(jd) {
-  var year, month, day, depoch, cycle, cyear, ycycle, aux1, aux2, yday;
-  jd = Math.floor(jd) + 0.5;
-  depoch = jd - persianToJd(475, 1, 1);
-  cycle = Math.floor(depoch / 1029983);
-  cyear = mod(depoch, 1029983);
-  if (cyear === 1029982) {
-    ycycle = 2820;
-  } else {
-    aux1 = Math.floor(cyear / 366);
-    aux2 = mod(cyear, 366);
-    ycycle = Math.floor(((2134 * aux1) + (2816 * aux2) + 2815) / 1028522) + aux1 + 1;
-  }
-  year = ycycle + (2820 * cycle) + 474;
-  if (year <= 0) {
-    year -= 1;
-  }
-  yday = (jd - persianToJd(year, 1, 1)) + 1;
-  month = (yday <= 186) ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
-  day = (jd - persianToJd(year, month, 1)) + 1;
-  return new Array(year, month, day);
+    var year, month, day, depoch, cycle, cyear, ycycle, aux1, aux2, yday;
+    var ljd = Math.floor(jd) + 0.5;
+    depoch = ljd - persianToJd(475, 1, 1);
+    cycle = Math.floor(depoch / 1029983);
+    cyear = mod(depoch, 1029983);
+    if (cyear === 1029982) {
+        ycycle = 2820;
+    } else {
+        aux1 = Math.floor(cyear / 366);
+        aux2 = mod(cyear, 366);
+        ycycle = Math.floor(((2134 * aux1) + (2816 * aux2) + 2815) / 1028522) + aux1 + 1;
+    }
+    year = ycycle + (2820 * cycle) + 474;
+    if (year <= 0) {
+        year -= 1;
+    }
+
+    yday = (ljd - persianToJd(year, 1, 1)) + 1;
+    month = (yday <= 186) ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
+    day = (ljd - persianToJd(year, month, 1)) + 1;
+    if (year === 1404) {
+        var ljd = Math.floor(jd) - 0.5;
+        depoch = ljd - persianToJd(475, 1, 1);
+        cycle = Math.floor(depoch / 1029983);
+        cyear = mod(depoch, 1029983);
+        if (cyear === 1029982) {
+            ycycle = 2820;
+        } else {
+            aux1 = Math.floor(cyear / 366);
+            aux2 = mod(cyear, 366);
+            ycycle = Math.floor(((2134 * aux1) + (2816 * aux2) + 2815) / 1028522) + aux1 + 1;
+        }
+        year = ycycle + (2820 * cycle) + 474;
+        if (year <= 0) {
+            year -= 1;
+        }
+        yday = (ljd - persianToJd(year, 1, 1)) + 1;
+        month = (yday <= 186) ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
+        day = (ljd - persianToJd(year, month, 1)) + 1;
+        if (year === 1403 && month === 12 && day === 29) {
+            day = 30;
+        }
+        return new Array(year, month, day);
+    }
+
+
+    return new Array(year, month, day);
 }
 
 
@@ -136,10 +163,12 @@ function jdToPersian(jd) {
  * @returns {Array}
  */
 function calcPersian(year, month, day) {
-  var date, j;
-  var j = persianToJd(year, month, day);
-  var date = jdToGregorian(j);
-  return new Array(date[0], date[1] - 1, date[2]);
+    var date, j;
+    var j = persianToJd(year, month, day);
+    if (year === 1404)
+        j = j + 1;
+    var date = jdToGregorian(j);
+    return new Array(date[0], date[1] - 1, date[2]);
 }
 
 
