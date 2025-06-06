@@ -52,7 +52,7 @@
     "pre-commit": "1.2.2",
     "sync-pkg": "0.7.2",
     "unminified-webpack-plugin": "1.2.0",
-    "webpack-dev-server": "2.3.0" ,
+    "webpack-dev-server": "5.2.1" ,
     "eslint": "4.4.1",
     "jalaali-js": "1.0.0",
     "webpack": "2.3.3"
