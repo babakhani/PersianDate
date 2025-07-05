@@ -1,4 +1,3 @@
-"use strict";
 function getDefaultExportFromCjs(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
 }
@@ -2038,7 +2037,7 @@ var hasRequiredPDate;
 function requirePDate() {
   if (hasRequiredPDate) return pDate.exports;
   hasRequiredPDate = 1;
-  (function(module2) {
+  (function(module) {
     let TypeChecking = requireTypeChecking();
     let Algorithms = requireAlgorithms();
     let Helpers = requireHelpers();
@@ -3216,7 +3215,7 @@ function requirePDate() {
         return this && dateB && this.year() == this.year() && this.month() == dateB.month();
       }
     }
-    module2.exports = PersianDateClass;
+    module.exports = PersianDateClass;
   })(pDate);
   return pDate.exports;
 }
@@ -3234,4 +3233,6 @@ function requireInit() {
 }
 var initExports = requireInit();
 const init = /* @__PURE__ */ getDefaultExportFromCjs(initExports);
-module.exports = init;
+export {
+  init as default
+};

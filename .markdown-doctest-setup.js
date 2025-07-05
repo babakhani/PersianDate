@@ -1,8 +1,9 @@
 module.exports = {
+    babel: false,
     require: {
-        persianDate: require("./dist/persian-date"),
+        "persian-date": require("./dist/persian-date.js"),
     },
     globals: {
-        persianDate: require("./dist/persian-date"),
+        persianDate: require("./dist/persian-date.js"),
     },
 };

@@ -33,7 +33,7 @@ npm install persian-date --save-dev
 </script>
 ```
 ## Webpack
-```
+```js
 require('persian-date');
 ```
 
@@ -167,13 +167,13 @@ var day = new persianDate(1318781876406); // "۱۳۹۰-۰۷-۲۴ ۱۹:۴۷:۵۶ 
 ### Unix Timestamp (seconds)
 
 ```js
-persianDate.unix(/* Number */);
+new persianDate().unix(/* Number */);
 ```
 
-To create a persianDate from a Unix timestamp (seconds since the Unix Epoch), use ```persianDate.unix(Number)```
+To create a persianDate from a Unix timestamp (seconds since the Unix Epoch), use ```persianDate().unix(Number)```
 
 ```js
-var day = new persianDate.unix(1318781876); // "۱۳۹۰-۰۷-۲۴ ۱۹:۴۷:۵۶ ب ظ"
+var day = new persianDate().unix(1318781876).format(); // "۱۳۹۰-۰۷-۲۴ ۱۹:۴۷:۵۶ ب ظ"
 ```
 
 This is implemented as ```persianDate(timestamp * 1000)``` , so partial seconds in the input timestamp are included.

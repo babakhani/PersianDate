@@ -18,25 +18,38 @@ export default defineConfig(({ command, mode }) => {
             emptyOutDir: false, // Because we use concurrently, we must not empty the output directory
             lib: {
                 entry: resolve(__dirname, "src/init.js"),
-                name: "PersianDate",
-                fileName: () =>
-                    isMinified ? `persian-date.min.js` : `persian-date.js`,
-                formats: ["iife"],
+                name: "persianDate",
             },
             commonjsOptions: {
                 transformMixedEsModules: true,
                 include: [/src\/.*/],
             },
             rollupOptions: {
-                external: ["jquery"],
-                output: {
-                    globals: {
-                        jquery: "jQuery",
+                output: [
+                    {
+                        format: "es",
+                        entryFileNames: isMinified
+                            ? `persian-date.esm.min.js`
+                            : `persian-date.esm.js`,
+                        sourcemap: false,
                     },
-                    inlineDynamicImports: true,
-                    format: "iife",
-                    esModule: false,
-                },
+                    {
+                        format: "cjs",
+                        exports: "default",
+                        entryFileNames: isMinified
+                            ? `persian-date.min.js`
+                            : `persian-date.js`,
+                        sourcemap: false,
+                    },
+                    {
+                        format: "iife",
+                        name: "persianDate",
+                        entryFileNames: isMinified
+                            ? `persian-date.iife.min.js`
+                            : `persian-date.iife.js`,
+                        sourcemap: false,
+                    },
+                ],
             },
             target: "es2015",
             sourcemap: false,
