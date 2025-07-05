@@ -15,6 +15,7 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       outDir: "dist",
+      emptyOutDir: false, // Because we use concurrently, we must not empty the output directory
       lib: {
         entry: resolve(__dirname, "src/init.js"),
         name: "PersianDate",
