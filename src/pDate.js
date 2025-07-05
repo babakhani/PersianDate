@@ -1,3 +1,8 @@
+/**
+ * @module pDate
+ * @description persian date class
+ */
+
 let TypeChecking = require('./type-checking');
 let Algorithms = require('./algorithms');
 let Helpers = require('./helpers');
