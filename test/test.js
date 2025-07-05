@@ -1,11 +1,9 @@
 /*global describe,it*/
-let assert = require('assert');
-require("amd-loader");
-let expect = require('chai').expect;
-let obj = require('../dist/persian-date.js');
-const pDate = obj,
-    Duration = new pDate().duration,
-    defaultArray = [1391, 1, 1, 1, 1, 1, 1];
+const assert = require('assert');
+const expect = require('chai').expect;
+const pDate = require('../dist/persian-date.js');
+const Duration = new pDate().duration;
+const defaultArray = [1391, 1, 1, 1, 1, 1, 1];
 
 pDate.formatPersian = true;
 
