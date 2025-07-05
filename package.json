@@ -21,9 +21,12 @@
   "repository": "git@github.com:babakhani/PersianDate.git",
   "homepage": "http://babakhani.github.io/PersianWebToolkit/docs/persian-date/",
   "devDependencies": {
+    "@types/node": "^24.0.12",
     "chai": "3.5.0",
+    "concurrently": "^9.2.0",
     "coveralls": "2.13.1",
     "istanbul": "0.4.5",
+    "jalaali-js": "1.0.0",
     "jsdoc": "3.2.0",
     "markdown-doctest": "0.9.1",
     "markdown-link-check": "3.1.2",
@@ -32,12 +35,12 @@
     "moment": "2.18.1",
     "pre-commit": "1.2.2",
     "sync-pkg": "0.7.2",
-    "jalaali-js": "1.0.0"
+    "vite": "^7.0.4"
   },
   "scripts": {
-    "start": "webpack --watch & webpack-dev-server --port 5000 --watch --hot",
-    "dev": "webpack",
-    "build": " webpack; MIN=1 webpack; npm run test; npm run lint; npm run doc;",
+    "start": "concurrently 'npm run dev' 'vite'",
+    "dev": "vite build --watch",
+    "build": "concurrently 'vite build --mode minified' 'vite build --mode unminified'",
     "test": "nyc --reporter=html --reporter=text mocha --timeout 25000",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "./node_modules/jshint/bin/jshint src/*.js; ./node_modules/eslint/bin/eslint.js src/",
