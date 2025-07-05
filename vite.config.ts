@@ -37,7 +37,7 @@ export default defineConfig(({ command, mode }) => {
         },
       },
       target: "es2015",
-      sourcemap: true,
+      sourcemap: false,
       minify: isMinified ? 'esbuild' : false,
     },
     define: {
