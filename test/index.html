@@ -12,18 +12,42 @@
 
         <!--<script src="../bower_components/moment-jalaali/build/moment-jalaali.js"></script>-->
         <title>Persian Document</title>
+        <style>
+            body {
+                text-align: left;
+                font-family: sans-serif;
+                background-color: #444;
+                color: #dfdfdf;
+                padding: 20px;
+            }
+            h1 {
+                color: #f0f0f0;
+            }
+            pre {
+                background-color: #333;
+                padding: 2rem;
+                border-radius: 5px;
+                line-height: 2;
+                font-size: 1rem;
+            }
+            .center {
+                margin: auto;
+                max-width: 700px;
+            }
+        </style>
     </head>
-    <h1>Open console and enjoy!!</h1>
-    <pre>
-    var t = new persianDate();
-    t.format();
-</pre
-    >
 
-    <script>
-        //    persianDate.toCalendar('gregorian');
-        //    persianDate.toLocale('en');
-    </script>
-
-    <body></body>
+    <body>
+        <div class="center">
+            <h1>Open console and enjoy!!</h1>
+            <pre>
+var t = new persianDate();
+t.format();</pre
+            >
+        </div>
+        <script>
+            //    persianDate.toCalendar('gregorian');
+            //    persianDate.toLocale('en');
+        </script>
+    </body>
 </html>
