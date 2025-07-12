@@ -562,4 +562,4 @@ class ASTRO {
 
 }
 
-module.exports = ASTRO;
+export default ASTRO;

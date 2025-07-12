@@ -3,16 +3,16 @@
  * @description persian date class
  */
 
-let TypeChecking = require('./type-checking');
-let Algorithms = require('./algorithms');
-let Helpers = require('./helpers');
-let Duration = require('./duration');
-let Validator = require('./validator');
-let toPersianDigit = new Helpers().toPersianDigit;
-let leftZeroFill = new Helpers().leftZeroFill;
-let normalizeDuration = new Helpers().normalizeDuration;
-let fa = require('./fa');
-let en = require('./en');
+import TypeChecking from './type-checking';
+import Algorithms from './algorithms';
+import Helpers from './helpers';
+import Duration from './duration';
+import Validator from './validator.js';
+const toPersianDigit = new Helpers().toPersianDigit;
+const leftZeroFill = new Helpers().leftZeroFill;
+const normalizeDuration = new Helpers().normalizeDuration;
+import fa from './fa';
+import en from './en';
 
 
 /**
@@ -1374,4 +1374,4 @@ class PersianDateClass {
 /**
  * @type {PersianDateClass}
  */
-module.exports = PersianDateClass;
+export default PersianDateClass;

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     babel: false,
     require: {
         "persian-date": require("./dist/persian-date.js"),

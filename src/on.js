@@ -1,6 +1,5 @@
 class Container {
-    constructor () {
-
+    constructor() {
         this.isInvalidDate = null;
 
         this.gDate = null;
@@ -21,7 +20,7 @@ class Container {
          * @type {{day: number}}
          */
         this.gregserial = {
-            day: 0
+            day: 0,
         };
 
         this.zone = 0;
@@ -40,7 +39,7 @@ class Container {
             millisecond: 0,
             weekday: 0,
             unix: 0,
-            leap: 0
+            leap: 0,
         };
 
         /**
@@ -107,11 +106,9 @@ class Container {
          */
         this.isoday = {
             year: 0,
-            day: 0
+            day: 0,
         };
     }
-
-
 }
 
-module.exports = Container;
+export default Container;
