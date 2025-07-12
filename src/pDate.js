@@ -628,7 +628,7 @@ class PersianDateClass {
     //    }
 
 
-    static unix(timestamp) {
+    static unix = function (timestamp) {
         if (timestamp) {
             return new PersianDateClass(timestamp * 1000);
         } else {
