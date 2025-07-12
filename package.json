@@ -1,57 +1,58 @@
 {
-    "name": "persian-date",
-    "version": "1.1.0",
-    "license": "MIT",
-    "main": "dist/persian-date",
-    "author": "Reza Babakhani <babakhani.reza@gmail.com>",
-    "description": "Javascript date library for parsing, validating, manipulating, and formatting persian dates System.",
-    "keywords": [
-        "jalali-date",
-        "khayyam",
-        "date",
-        "calendar",
-        "persian-date"
-    ],
-    "contributors": [
-        {
-            "name": "Reza Babakhani",
-            "email": "babakhani.reza@gmail.com"
-        }
-    ],
-    "repository": "git@github.com:babakhani/PersianDate.git",
-    "homepage": "http://babakhani.github.io/PersianWebToolkit/docs/persian-date/",
-    "devDependencies": {
-        "@types/node": "22.16.2",
-        "chai": "3.5.0",
-        "concurrently": "9.2.0",
-        "coveralls": "2.13.3",
-        "istanbul": "0.4.5",
-        "jalaali-js": "1.2.8",
-        "jsdoc": "3.2.0",
-        "jsdoc-to-markdown": "9.1.1",
-        "markdown-doctest": "1.1.0",
-        "markdown-link-check": "3.1.6",
-        "mocha": "11.7.1",
-        "mocha-lcov-reporter": "0.0.2",
-        "moment": "2.30.1",
-        "nyc": "17.1.0",
-        "pre-commit": "1.2.2",
-        "sync-pkg": "0.7.2",
-        "vite": "7.0.4"
-    },
-    "scripts": {
-        "start": "concurrently 'npm run dev' 'vite'",
-        "dev": "vite build --watch",
-        "build": "concurrently 'vite build --mode minified' 'vite build --mode unminified'",
-        "test": "nyc --reporter=html --reporter=text mocha --timeout 25000",
-        "coverage": "nyc report --reporter=text-lcov | coveralls",
-        "lint": "./node_modules/eslint/bin/eslint.js src/",
-        "doc": "./node_modules/jsdoc-to-markdown/bin/cli.js --no-gfm --heading-depth 1 --example-lang js src/pDate.js > doc/document.md",
-        "doctest": "./node_modules/markdown-doctest/bin/cmd.js README.md && ./node_modules/markdown-link-check/markdown-link-check README.md && ./node_modules/markdown-doctest/bin/cmd.js doc/leapyear.md && ./node_modules/markdown-link-check/markdown-link-check doc/leapyear.md",
-        "sync-pkg": "sync-pkg",
-        "pre-dev": "sudo npm install -g nyc"
-    },
-    "pre-commit": [
-        "test"
-    ]
+	"name": "persian-date",
+	"version": "1.1.0",
+	"license": "MIT",
+	"main": "dist/persian-date",
+	"author": "Reza Babakhani <babakhani.reza@gmail.com>",
+	"description": "Javascript date library for parsing, validating, manipulating, and formatting persian dates System.",
+	"keywords": [
+		"jalali-date",
+		"khayyam",
+		"date",
+		"calendar",
+		"persian-date"
+	],
+	"contributors": [
+		{
+			"name": "Reza Babakhani",
+			"email": "babakhani.reza@gmail.com"
+		}
+	],
+	"repository": "git@github.com:babakhani/PersianDate.git",
+	"homepage": "http://babakhani.github.io/PersianWebToolkit/docs/persian-date/",
+	"devDependencies": {
+		"@biomejs/biome": "2.1.1",
+		"@types/node": "22.16.2",
+		"chai": "3.5.0",
+		"concurrently": "9.2.0",
+		"coveralls": "2.13.3",
+		"istanbul": "0.4.5",
+		"jalaali-js": "1.2.8",
+		"jsdoc": "3.2.0",
+		"jsdoc-to-markdown": "9.1.1",
+		"markdown-doctest": "1.1.0",
+		"markdown-link-check": "3.1.6",
+		"mocha": "11.7.1",
+		"mocha-lcov-reporter": "0.0.2",
+		"moment": "2.30.1",
+		"nyc": "17.1.0",
+		"pre-commit": "1.2.2",
+		"sync-pkg": "0.7.2",
+		"vite": "7.0.4"
+	},
+	"scripts": {
+		"start": "concurrently 'npm run dev' 'vite'",
+		"dev": "vite build --watch",
+		"build": "concurrently 'vite build --mode minified' 'vite build --mode unminified'",
+		"test": "nyc --reporter=html --reporter=text mocha --timeout 25000",
+		"coverage": "nyc report --reporter=text-lcov | coveralls",
+		"lint": "npx @biomejs/biome format --write src/",
+		"doc": "./node_modules/jsdoc-to-markdown/bin/cli.js --no-gfm --heading-depth 1 --example-lang js src/pDate.js > doc/document.md",
+		"doctest": "./node_modules/markdown-doctest/bin/cmd.js README.md && ./node_modules/markdown-link-check/markdown-link-check README.md && ./node_modules/markdown-doctest/bin/cmd.js doc/leapyear.md && ./node_modules/markdown-link-check/markdown-link-check doc/leapyear.md",
+		"sync-pkg": "sync-pkg",
+		"pre-dev": "sudo npm install -g nyc"
+	},
+	"pre-commit": [
+		"test"
+	]
 }
