@@ -53,6 +53,8 @@
 		"pre-dev": "sudo npm install -g nyc"
 	},
 	"pre-commit": [
-		"test"
+		"test",
+		"lint",
+		"doctest"
 	]
 }
