@@ -411,7 +411,7 @@ class PersianDateClass {
      * @param key
      * @returns {Duration}
      */
-    static duration(input, key) {
+    static duration = function (input, key) {
         return new Duration(input, key);
     }
 
@@ -421,7 +421,7 @@ class PersianDateClass {
      * @param key
      * @returns {Duration}
      */
-    duration(input, key) {
+    duration = function (input, key) {
         return new Duration(input, key);
     }
 
@@ -848,7 +848,7 @@ class PersianDateClass {
      * @param input
      * @return {*}
      */
-    static utc(input) {
+    static utc = function (input) {
         if (input) {
             return new PersianDateClass(input).utc();
         }
@@ -863,7 +863,7 @@ class PersianDateClass {
      * @param input
      * @returns {*}
      */
-    utc(input) {
+    utc = function (input) {
         let utcStamp;
         if (input) {
             return this._getSyncedClass(input).utc();
