@@ -2599,21 +2599,6 @@ const _PersianDateClass = class _PersianDateClass {
     }
   }
   /**
-   * Return Milliseconds since the Unix Epoch (1318874398806)
-   * @returns {*}
-   * @private
-   */
-  //    _valueOf () {
-  //        return this.State.gDate.valueOf();
-  //    }
-  static unix(timestamp) {
-    if (timestamp) {
-      return new _PersianDateClass(timestamp * 1e3);
-    } else {
-      return new _PersianDateClass().unix();
-    }
-  }
-  /**
    * Return Unix Timestamp (1318874398)
    * @param timestamp
    * @returns {*}
@@ -3225,6 +3210,21 @@ const _PersianDateClass = class _PersianDateClass {
  */
 __publicField(_PersianDateClass, "duration", function(input, key) {
   return new Duration(input, key);
+});
+/**
+ * Return Milliseconds since the Unix Epoch (1318874398806)
+ * @returns {*}
+ * @private
+ */
+//    _valueOf () {
+//        return this.State.gDate.valueOf();
+//    }
+__publicField(_PersianDateClass, "unix", function(timestamp) {
+  if (timestamp) {
+    return new _PersianDateClass(timestamp * 1e3);
+  } else {
+    return new _PersianDateClass().unix();
+  }
 });
 /**
  * @param input

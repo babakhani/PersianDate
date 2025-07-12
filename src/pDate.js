@@ -624,13 +624,13 @@ class PersianDateClass {
 	//        return this.State.gDate.valueOf();
 	//    }
 
-	static unix(timestamp) {
+	static unix = function (timestamp) {
 		if (timestamp) {
 			return new PersianDateClass(timestamp * 1000);
 		} else {
 			return new PersianDateClass().unix();
 		}
-	}
+	};
 
 	/**
 	 * Return Unix Timestamp (1318874398)
@@ -698,21 +698,16 @@ class PersianDateClass {
 		} else {
 			output =
 				val === "seconds" || val === "second"
-					? diff / 1e3
-					: // 1000
-						val === "minutes" || val === "minute"
-						? diff / 6e4
-						: // 1000 * 60
-							val === "hours" || val === "hour"
-							? diff / 36e5
-							: // 1000 * 60 * 60
-								val === "days" || val === "day"
-								? diff / 864e5
-								: // 1000 * 60 * 60 * 24
-									val === "weeks" || val === "week"
-									? diff / 6048e5
-									: // 1000 * 60 * 60 * 24 * 7
-										diff;
+					? diff / 1e3 // 1000
+					: val === "minutes" || val === "minute"
+						? diff / 6e4 // 1000 * 60
+						: val === "hours" || val === "hour"
+							? diff / 36e5 // 1000 * 60 * 60
+							: val === "days" || val === "day"
+								? diff / 864e5 // 1000 * 60 * 60 * 24
+								: val === "weeks" || val === "week"
+									? diff / 6048e5 // 1000 * 60 * 60 * 24 * 7
+									: diff;
 		}
 		return asFloat ? output : Math.round(output);
 	}
