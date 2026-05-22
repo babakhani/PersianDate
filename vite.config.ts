@@ -28,6 +28,7 @@ export default defineConfig(({ command, mode }) => {
                             ? `persian-date.esm.min.mjs`
                             : `persian-date.esm.mjs`,
                         sourcemap: !isMinified,
+                        minify: isMinified,
                     },
                     {
                         format: "cjs",
@@ -36,6 +37,7 @@ export default defineConfig(({ command, mode }) => {
                             ? `persian-date.min.js`
                             : `persian-date.js`,
                         sourcemap: !isMinified,
+                        minify: isMinified,
                     },
                     {
                         format: "iife",
@@ -44,6 +46,7 @@ export default defineConfig(({ command, mode }) => {
                             ? `persian-date.iife.min.js`
                             : `persian-date.iife.js`,
                         sourcemap: !isMinified,
+                        minify: isMinified,
                     },
                 ],
             },
