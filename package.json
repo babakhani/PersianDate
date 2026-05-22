@@ -57,10 +57,9 @@
         "build": "concurrently 'vite build --mode minified' 'vite build --mode unminified'",
         "test": "nyc --reporter=html --reporter=text mocha --timeout 25000",
         "coverage": "nyc report --reporter=text-lcov | coveralls",
-        "doc": "./node_modules/jsdoc-to-markdown/bin/cli.js --no-gfm --heading-depth 1 --example-lang js src/pDate.js > doc/document.md",
-        "doctest": "./node_modules/markdown-doctest/bin/cmd.js README.md && ./node_modules/markdown-link-check/markdown-link-check README.md && ./node_modules/markdown-doctest/bin/cmd.js doc/leapyear.md && ./node_modules/markdown-link-check/markdown-link-check doc/leapyear.md",
-        "sync-pkg": "sync-pkg",
-        "pre-dev": "sudo npm install -g nyc"
+        "doc": "jsdoc2md --no-gfm --heading-depth 1 --example-lang js src/pDate.js > doc/document.md",
+        "doctest": "markdown-doctest README.md && markdown-link-check README.md && markdown-doctest doc/leapyear.md && markdown-link-check doc/leapyear.md",
+        "sync-pkg": "sync-pkg"
     },
     "pre-commit": [
         "test",
