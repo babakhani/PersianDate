@@ -1,77 +1,69 @@
 {
-  "name": "persian-date",
-  "version": "1.1.0",
-  "license": "MIT",
-  "main": "dist/persian-date",
-  "author": "Reza Babakhani <babakhani.reza@gmail.com>",
-  "description": "Javascript date library for parsing, validating, manipulating, and formatting persian dates System.",
-  "keywords": [
-    "jalali-date",
-    "khayyam",
-    "date",
-    "calendar",
-    "persian-date"
-  ],
-  "contributors": [
-    {
-      "name": "Reza Babakhani",
-      "email": "babakhani.reza@gmail.com"
-    }
-  ],
-  "repository": "git@github.com:babakhani/PersianDate.git",
-  "homepage": "http://babakhani.github.io/PersianWebToolkit/docs/persian-date/",
-  "devDependencies": {
-    "amd-loader": "0.0.8",
-    "babel-cli": "6.0.0",
-    "babel-core": "6.22.1",
-    "babel-loader": "6.4.1",
-    "babel-plugin-import": "1.1.1",
-    "babel-plugin-transform-runtime": "6.22.0",
-    "babel-polyfill": "6.22.0",
-    "babel-preset-es2015": "6.24.0",
-    "babel-preset-latest": "6.24.0",
-    "babel-runtime": "6.22.0",
-    "chai": "3.5.0",
-    "coveralls": "2.13.1",
-    "grunt": "1.0.1",
-    "grunt-babel": "6.0.0",
-    "grunt-cli": "0.1.13",
-    "grunt-contrib-watch": "1.0.0",
-    "grunt-jsdoc-to-markdown": "3.0.0",
-    "grunt-webpack": "2.0.1",
-    "grunt-webpack-server": "0.1.0",
-    "istanbul": "0.4.5",
-    "jsdoc": "3.2.0",
-    "jshint": "2.9.4",
-    "load-grunt-tasks": "3.5.2",
-    "markdown-doctest": "0.9.1",
-    "markdown-link-check": "3.1.2",
-    "mocha": "3.2.0",
-    "mocha-lcov-reporter": "0.0.2",
-    "moment": "2.18.1",
-    "pre-commit": "1.2.2",
-    "sync-pkg": "0.7.2",
-    "unminified-webpack-plugin": "1.2.0",
-    "webpack-dev-server": "2.3.0" ,
-    "eslint": "4.4.1",
-    "jalaali-js": "1.0.0",
-    "webpack": "2.3.3"
-  },
-  "scripts": {
-    "start": "webpack --watch & webpack-dev-server --port 5000 --watch --hot",
-    "dev": "webpack",
-    "build": " webpack; MIN=1 webpack; npm run test; npm run lint; npm run doc;",
-    "test": "nyc --reporter=html --reporter=text mocha --timeout 25000",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "./node_modules/jshint/bin/jshint src/*.js; ./node_modules/eslint/bin/eslint.js src/",
-    "doc": "grunt --doc",
-    "doctest": "./node_modules/markdown-doctest/bin/cmd.js README.md && ./node_modules/markdown-link-check/markdown-link-check README.md && ./node_modules/markdown-doctest/bin/cmd.js doc/leapyear.md && ./node_modules/markdown-link-check/markdown-link-check doc/leapyear.md",
-    "sync-pkg": "sync-pkg",
-    "pre-dev": "sudo npm install -g nyc"
-  },
-  "pre-commit": [
-    "test",
-    "lint",
-    "doctest"
-  ]
+    "name": "persian-date",
+    "version": "1.1.0",
+    "license": "MIT",
+    "main": "dist/persian-date.js",
+    "module": "dist/persian-date.esm.mjs",
+    "browser": "dist/persian-date.iife.js",
+    "unpkg": "dist/persian-date.iife.min.js",
+    "jsdelivr": "dist/persian-date.iife.min.js",
+    "exports": {
+        ".": {
+            "import": "./dist/persian-date.esm.mjs",
+            "require": "./dist/persian-date.js",
+            "default": "./dist/persian-date.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "author": "Reza Babakhani <babakhani.reza@gmail.com>",
+    "description": "Javascript date library for parsing, validating, manipulating, and formatting persian dates System.",
+    "keywords": [
+        "jalali-date",
+        "khayyam",
+        "date",
+        "calendar",
+        "persian-date"
+    ],
+    "contributors": [
+        {
+            "name": "Reza Babakhani",
+            "email": "babakhani.reza@gmail.com"
+        }
+    ],
+    "repository": "git@github.com:babakhani/PersianDate.git",
+    "homepage": "http://babakhani.github.io/PersianWebToolkit/docs/persian-date/",
+    "devDependencies": {
+        "@types/node": "22.16.2",
+        "chai": "3.5.0",
+        "concurrently": "9.2.0",
+        "coveralls": "2.13.3",
+        "istanbul": "0.4.5",
+        "jalaali-js": "1.2.8",
+        "jsdoc": "3.2.0",
+        "jsdoc-to-markdown": "9.1.1",
+        "markdown-doctest": "1.1.0",
+        "markdown-link-check": "3.1.6",
+        "mocha": "11.7.1",
+        "mocha-lcov-reporter": "0.0.2",
+        "moment": "2.30.1",
+        "nyc": "17.1.0",
+        "pre-commit": "1.2.2",
+        "sync-pkg": "0.7.2",
+        "vite": "8.0.14"
+    },
+    "scripts": {
+        "start": "concurrently 'npm run dev' 'vite'",
+        "dev": "vite build --watch",
+        "build": "concurrently 'vite build --mode minified' 'vite build --mode unminified'",
+        "test": "nyc --reporter=html --reporter=text mocha --timeout 25000",
+        "coverage": "nyc report --reporter=text-lcov | coveralls",
+        "doc": "./node_modules/jsdoc-to-markdown/bin/cli.js --no-gfm --heading-depth 1 --example-lang js src/pDate.js > doc/document.md",
+        "doctest": "./node_modules/markdown-doctest/bin/cmd.js README.md && ./node_modules/markdown-link-check/markdown-link-check README.md && ./node_modules/markdown-doctest/bin/cmd.js doc/leapyear.md && ./node_modules/markdown-link-check/markdown-link-check doc/leapyear.md",
+        "sync-pkg": "sync-pkg",
+        "pre-dev": "sudo npm install -g nyc"
+    },
+    "pre-commit": [
+        "test",
+        "doctest"
+    ]
 }
