@@ -1,4 +1,4 @@
-let Helpers = require('./helpers');
+import Helpers from './helpers.js';
 let normalizeDuration = new Helpers().normalizeDuration;
 let absRound = new Helpers().absRound;
 let absFloor = new Helpers().absFloor;
@@ -58,4 +58,4 @@ class Duration {
     }
 }
 
-module.exports = Duration;
+export default Duration;

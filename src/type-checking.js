@@ -1,29 +1,27 @@
-module.exports = {
+export default {
     /**
      * @param input
      * @returns {boolean}
      */
-    isArray (input) {
-        return Object.prototype.toString.call(input) === '[object Array]';
+    isArray(input) {
+        return Object.prototype.toString.call(input) === "[object Array]";
     },
-
 
     /**
      *
      * @param input
      * @returns {boolean}
      */
-    isNumber (input) {
-        return typeof input === 'number';
+    isNumber(input) {
+        return typeof input === "number";
     },
-
 
     /**
      *
      * @param input
      * @returns {boolean}
      */
-    isDate (input) {
+    isDate(input) {
         return input instanceof Date;
-    }
+    },
 };

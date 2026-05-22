@@ -1,6 +1,5 @@
-let PersianDateClass = require('./pDate');
-PersianDateClass.calendarType = 'persian';
-PersianDateClass.leapYearMode = 'astronomical';
-PersianDateClass.localType = 'fa';
-module.exports = PersianDateClass;
-
+import PersianDateClass from './pDate.js';
+PersianDateClass.calendarType = "persian";
+PersianDateClass.leapYearMode = "astronomical";
+PersianDateClass.localType = "fa";
+export default PersianDateClass;
