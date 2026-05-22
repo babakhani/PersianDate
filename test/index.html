@@ -1,27 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="../dist/persian-date.js"></script>
-    <script src="../node_modules/moment/moment.js"></script>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script src="../dist/persian-date.iife.js"></script>
+        <script src="../node_modules/moment/moment.js"></script>
 
-    <!--<script src="../bower_components/moment-jalaali/build/moment-jalaali.js"></script>-->
-    <title>Persian Document</title>
-</head>
-<h1>Open console and enjoy!!</h1>
-<pre>
-    var t = new persianDate();
-    t.format();
-</pre>
+        <!--<script src="../bower_components/moment-jalaali/build/moment-jalaali.js"></script>-->
+        <title>Persian Document</title>
+        <style>
+            body {
+                text-align: left;
+                font-family: sans-serif;
+                background-color: #444;
+                color: #dfdfdf;
+                padding: 20px;
+            }
+            h1 {
+                color: #f0f0f0;
+            }
+            pre {
+                background-color: #333;
+                padding: 2rem;
+                border-radius: 5px;
+                line-height: 2;
+                font-size: 1rem;
+            }
+            .center {
+                margin: auto;
+                max-width: 700px;
+            }
+        </style>
+    </head>
 
-<script>
-//    persianDate.toCalendar('gregorian');
-//    persianDate.toLocale('en');
-</script>
-
-<body>
-</body>
+    <body>
+        <div class="center">
+            <h1>Open console and enjoy!!</h1>
+            <pre>
+var t = new persianDate();
+t.format();</pre
+            >
+        </div>
+        <script>
+            //    persianDate.toCalendar('gregorian');
+            //    persianDate.toLocale('en');
+        </script>
+    </body>
 </html>

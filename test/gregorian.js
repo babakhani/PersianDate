@@ -1,8 +1,6 @@
 /*global describe,it*/
-let assert = require('assert');
-require('amd-loader');
-let obj = require('../dist/persian-date.js');
-const pDate = obj;
+const assert = require('assert');
+const pDate = require('../dist/persian-date.js');
 const defaultArray = [2017, 1, 1, 12, 32, 40];
 
 
