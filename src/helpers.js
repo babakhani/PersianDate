@@ -1,4 +1,4 @@
-let durationUnit = require('./constants').durationUnit;
+import {durationUnit} from './constants.js';
 
 class Helpers {
 
@@ -106,4 +106,4 @@ class Helpers {
     }
 }
 
-module.exports = Helpers;
+export default Helpers;

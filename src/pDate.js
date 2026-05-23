@@ -1,13 +1,16 @@
-let TypeChecking = require('./type-checking');
-let Algorithms = require('./algorithms');
-let Helpers = require('./helpers');
-let Duration = require('./duration');
-let Validator = require('./validator');
-let toPersianDigit = new Helpers().toPersianDigit;
-let leftZeroFill = new Helpers().leftZeroFill;
-let normalizeDuration = new Helpers().normalizeDuration;
-let fa = require('./fa');
-let en = require('./en');
+/**
+ * @module pDate
+ * @description persian date class
+ */
+
+import TypeChecking from './type-checking.js';
+import Algorithms from './algorithms.js';
+import Helpers from './helpers.js';
+import Duration from './duration.js';
+import Validator from './validator.js';
+import fa from './fa.js';
+import en from './en.js';
+const { toPersianDigit, leftZeroFill, normalizeDuration } = new Helpers();
 
 
 /**
@@ -406,7 +409,7 @@ class PersianDateClass {
      * @param key
      * @returns {Duration}
      */
-    static duration(input, key) {
+    static duration = function (input, key) {
         return new Duration(input, key);
     }
 
@@ -623,7 +626,7 @@ class PersianDateClass {
     //    }
 
 
-    static unix(timestamp) {
+    static unix = function (timestamp) {
         if (timestamp) {
             return new PersianDateClass(timestamp * 1000);
         } else {
@@ -843,7 +846,7 @@ class PersianDateClass {
      * @param input
      * @return {*}
      */
-    static utc(input) {
+    static utc = function (input) {
         if (input) {
             return new PersianDateClass(input).utc();
         }
@@ -1369,4 +1372,4 @@ class PersianDateClass {
 /**
  * @type {PersianDateClass}
  */
-module.exports = PersianDateClass;
+export default PersianDateClass;

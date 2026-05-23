@@ -1,4 +1,3 @@
-
 //#region src/type-checking.js
 var type_checking_default = {
 	/**
@@ -3117,5 +3116,5 @@ PersianDateClass.localType = "fa";
 var init_default = PersianDateClass;
 
 //#endregion
-module.exports = init_default;
-//# sourceMappingURL=persian-date.js.map
+export { init_default as default };
+//# sourceMappingURL=persian-date.esm.mjs.map

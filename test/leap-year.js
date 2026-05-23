@@ -4,13 +4,16 @@ const obj = require('../dist/persian-date.js');
 const jalaali = require('jalaali-js');
 const pDate = obj;
 pDate.formatPersian = true;
+const MAX_YEAR = 3177; // Jalaali calendar doesn't support years after 3177
+const START_YEAR = 1350;
+const N_NEXT_YEARS = MAX_YEAR - START_YEAR;
 /**
  * @see  https://fa.wikipedia.org/wiki/%DA%AF%D8%A7%D9%87%E2%80%8C%D8%B4%D9%85%D8%A7%D8%B1%DB%8C_%D9%87%D8%AC%D8%B1%DB%8C_%D8%AE%D9%88%D8%B1%D8%B4%DB%8C%D8%AF%DB%8C_%D8%AD%D8%B3%D8%A7%D8%A8%DB%8C
  * @see  http://www.fourmilab.ch/documents/calendar/calendar.js
  * @see  http://eclipse.gsfc.nasa.gov/SKYCAL/algorithm.js
  */
 
-describe('Check total leap years in next 3003 year, Difference algorithm', function () {
+describe(`Check total leap years in next ${N_NEXT_YEARS} year, different algorithms`, function () {
     // https://eclipse.gsfc.nasa.gov/SKYCAL/algorithm.js
     const isLeapYearWithNasaAlgorithm = function (y) {
         return ((((((y - ((y > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
@@ -46,7 +49,7 @@ describe('Check total leap years in next 3003 year, Difference algorithm', funct
     };
 
     it('Object Create Successfully', function () {
-        let startYear = new pDate([1396]),
+        let startYear = new pDate([START_YEAR]),
           totalLeapCountInAstro = 0,
           totalLeapCountInAlg = 0,
           totalLeapCountInGre = 0,
@@ -62,8 +65,8 @@ describe('Check total leap years in next 3003 year, Difference algorithm', funct
           totalCommonBirashkAlgo = 0,
           totalCommonWikiAstro = 0,
           totalCommonWikiAlgo = 0;
-        let i = 1396;
-        while (i < (1396 + 3003)) {
+        let i = START_YEAR;
+        while (i < (START_YEAR + N_NEXT_YEARS)) {
             const algo = startYear.toCalendar('persian').toLeapYearMode('algorithmic').isLeapYear(i),
               astro = startYear.toCalendar('persian').toLeapYearMode('astronomical').isLeapYear(i),
               gregorian = startYear.toCalendar('gregorian').isLeapYear(i),
@@ -129,6 +132,8 @@ describe('Check total leap years in next 3003 year, Difference algorithm', funct
                 }
             }
             catch (err) {
+                console.log('err', err);
+                
                 totalJalaaliErrorCount++;
             }
             i++;
