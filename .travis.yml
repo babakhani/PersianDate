@@ -1,12 +1,12 @@
 language: node_js
 node_js:
-- '10.15.1'
+    - "10.15.1"
 
 after_success: npm run coverage
 
 before_script:
-  - npm install -g grunt nyc
-  - npm install
+    - npm install -g grunt nyc
+    - npm install
 
 # deploy:
 #   provider: npm

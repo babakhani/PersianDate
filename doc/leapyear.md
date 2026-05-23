@@ -1,13 +1,12 @@
-Persian Date leap year calculation
-==============
+# Persian Date leap year calculation
 
-There is two popular way to determining leap years for the Persian calendar. 
+There is two popular way to determining leap years for the Persian calendar.
 astronomical: occur whenever that number of days elapse between equinoxes at the reference meridian.
 
 algorithmic: based on Ahmad Birashk proposed algorithm.
 
-After version 0.3.0 persianDate support both algorithm and you can choose which algorithm use in your project. 
-currently we have support 3 type of calendar ``` astronomical ```, ``` algorithmic ```.
+After version 0.3.0 persianDate support both algorithm and you can choose which algorithm use in your project.
+currently we have support 3 type of calendar `astronomical`, `algorithmic`.
 
 you can change it globally like this example.
 
@@ -44,8 +43,8 @@ you can see this result by run mocha test.
 
 # More info:
 
-[fourmilab](http://www.fourmilab.ch/documents/calendar/) 
-| 
+[fourmilab](http://www.fourmilab.ch/documents/calendar/)
+|
 [wikipedia](https://fa.wikipedia.org/wiki/%DA%AF%D8%A7%D9%87%E2%80%8C%D8%B4%D9%85%D8%A7%D8%B1%DB%8C_%D9%87%D8%AC%D8%B1%DB%8C_%D8%AE%D9%88%D8%B1%D8%B4%DB%8C%D8%AF%DB%8C_%D8%AD%D8%B3%D8%A7%D8%A8%DB%8C)
 |
 [wikipedia Jalali_calendar](https://en.wikipedia.org/wiki/Jalali_calendar)

@@ -1,4 +1,4 @@
-import Helpers from './helpers.js';
+import Helpers from "./helpers.js";
 let normalizeDuration = new Helpers().normalizeDuration;
 let absRound = new Helpers().absRound;
 let absFloor = new Helpers().absFloor;
@@ -11,7 +11,7 @@ let absFloor = new Helpers().absFloor;
 class Duration {
     constructor(key, value) {
         let duration = {},
-            data = this._data = {},
+            data = (this._data = {}),
             milliseconds = 0,
             normalizedUnit = normalizeDuration(key, value),
             unit = normalizedUnit.unit;
@@ -26,7 +26,7 @@ class Duration {
             minutes = duration.minutes || duration.minute || duration.m || 0,
             seconds = duration.seconds || duration.second || duration.s || 0;
         // representation for dateAddRemove
-        this._milliseconds = milliseconds + seconds * (1e3) + minutes * (6e4) + hours * (36e5);
+        this._milliseconds = milliseconds + seconds * 1e3 + minutes * 6e4 + hours * 36e5;
         // Because of dateAddRemove treats 24 hours as different from a
         // day when working around DST, we need to store them separately
         this._days = days + weeks * 7;
@@ -37,7 +37,7 @@ class Duration {
         // The following code bubbles up values, see the tests for
         // examples of what that means.
         data.milliseconds = milliseconds % 1000;
-        seconds += absFloor((milliseconds / 1000));
+        seconds += absFloor(milliseconds / 1000);
         data.seconds = seconds % 60;
         minutes += absRound(seconds / 60);
         data.minutes = minutes % 60;
@@ -53,8 +53,8 @@ class Duration {
         return this;
     }
 
-    valueOf () {
-        return this._milliseconds + this._days * (864e5) + this._months * (2592e6);
+    valueOf() {
+        return this._milliseconds + this._days * 864e5 + this._months * 2592e6;
     }
 }
 

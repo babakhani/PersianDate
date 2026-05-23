@@ -2071,7 +2071,7 @@ var PersianDateClass = class PersianDateClass {
 		this.localType = PersianDateClass.localType;
 		this.leapYearMode = PersianDateClass.leapYearMode;
 		this.algorithms = new Algorithms(this);
-		this.version = "1.1.0";
+		this.version = "1.2.1";
 		this._utcMode = false;
 		if (this.localType !== "fa") this.formatPersian = false;
 		else this.formatPersian = "_default";
