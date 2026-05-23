@@ -9,6 +9,8 @@ persian date class
         * [~PersianDateClass](#module_pDate--module.exports..PersianDateClass)
             * [new PersianDateClass(input)](#new_module_pDate--module.exports..PersianDateClass_new)
             * _instance_
+                * [.duration](#module_pDate--module.exports..PersianDateClass+duration) ⇒ <code>Duration</code>
+                * [.utc](#module_pDate--module.exports..PersianDateClass+utc) ⇒ <code>\*</code>
                 * [.setup(input)](#module_pDate--module.exports..PersianDateClass+setup)
                 * [.rangeName()](#module_pDate--module.exports..PersianDateClass+rangeName) ⇒ <code>\*</code>
                 * [.toLeapYearMode(input)](#module_pDate--module.exports..PersianDateClass+toLeapYearMode) ⇒ <code>PersianDateClass</code>
@@ -63,10 +65,8 @@ persian date class
                 * [.toCalendar(input)](#module_pDate--module.exports..PersianDateClass.toCalendar) ⇒ <code>PersianDateClass</code>
                 * [.toLocale(input)](#module_pDate--module.exports..PersianDateClass.toLocale) ⇒ <code>PersianDateClass</code>
                 * [.isPersianDate(obj)](#module_pDate--module.exports..PersianDateClass.isPersianDate) ⇒ <code>boolean</code>
-                * [.duration(input, key)](#module_pDate--module.exports..PersianDateClass.duration) ⇒ <code>Duration</code>
                 * [.isDuration(obj)](#module_pDate--module.exports..PersianDateClass.isDuration) ⇒ <code>boolean</code>
                 * [.getFirstWeekDayOfMonth(year, month)](#module_pDate--module.exports..PersianDateClass.getFirstWeekDayOfMonth) ⇒ <code>\*</code>
-                * [.utc(input)](#module_pDate--module.exports..PersianDateClass.utc) ⇒ <code>\*</code>
                 * [.isSameDay(dateA, dateB)](#module_pDate--module.exports..PersianDateClass.isSameDay) ⇒ <code>boolean</code>
                 * [.isSameMonth(dateA, dateB)](#module_pDate--module.exports..PersianDateClass.isSameMonth) ⇒ <code>boolean</code>
 
@@ -82,6 +82,8 @@ persian date class
 * [~PersianDateClass](#module_pDate--module.exports..PersianDateClass)
     * [new PersianDateClass(input)](#new_module_pDate--module.exports..PersianDateClass_new)
     * _instance_
+        * [.duration](#module_pDate--module.exports..PersianDateClass+duration) ⇒ <code>Duration</code>
+        * [.utc](#module_pDate--module.exports..PersianDateClass+utc) ⇒ <code>\*</code>
         * [.setup(input)](#module_pDate--module.exports..PersianDateClass+setup)
         * [.rangeName()](#module_pDate--module.exports..PersianDateClass+rangeName) ⇒ <code>\*</code>
         * [.toLeapYearMode(input)](#module_pDate--module.exports..PersianDateClass+toLeapYearMode) ⇒ <code>PersianDateClass</code>
@@ -136,10 +138,8 @@ persian date class
         * [.toCalendar(input)](#module_pDate--module.exports..PersianDateClass.toCalendar) ⇒ <code>PersianDateClass</code>
         * [.toLocale(input)](#module_pDate--module.exports..PersianDateClass.toLocale) ⇒ <code>PersianDateClass</code>
         * [.isPersianDate(obj)](#module_pDate--module.exports..PersianDateClass.isPersianDate) ⇒ <code>boolean</code>
-        * [.duration(input, key)](#module_pDate--module.exports..PersianDateClass.duration) ⇒ <code>Duration</code>
         * [.isDuration(obj)](#module_pDate--module.exports..PersianDateClass.isDuration) ⇒ <code>boolean</code>
         * [.getFirstWeekDayOfMonth(year, month)](#module_pDate--module.exports..PersianDateClass.getFirstWeekDayOfMonth) ⇒ <code>\*</code>
-        * [.utc(input)](#module_pDate--module.exports..PersianDateClass.utc) ⇒ <code>\*</code>
         * [.isSameDay(dateA, dateB)](#module_pDate--module.exports..PersianDateClass.isSameDay) ⇒ <code>boolean</code>
         * [.isSameMonth(dateA, dateB)](#module_pDate--module.exports..PersianDateClass.isSameMonth) ⇒ <code>boolean</code>
 
@@ -148,6 +148,42 @@ persian date class
 #### new PersianDateClass(input)
 persian date class
 
+<table>
+  <thead>
+    <tr>
+      <th>Param</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td>
+    </tr>  </tbody>
+</table>
+
+<a name="module_pDate--module.exports..PersianDateClass+duration"></a>
+
+#### persianDateClass.duration ⇒ <code>Duration</code>
+return Duration object
+
+**Kind**: instance property of [<code>PersianDateClass</code>](#module_pDate--module.exports..PersianDateClass)  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td>
+    </tr><tr>
+    <td>key</td>
+    </tr>  </tbody>
+</table>
+
+<a name="module_pDate--module.exports..PersianDateClass+utc"></a>
+
+#### persianDateClass.utc ⇒ <code>\*</code>
+**Kind**: instance property of [<code>PersianDateClass</code>](#module_pDate--module.exports..PersianDateClass)  
 <table>
   <thead>
     <tr>
@@ -859,26 +895,6 @@ Helper method that return date range name like week days name, month names, mont
     </tr>  </tbody>
 </table>
 
-<a name="module_pDate--module.exports..PersianDateClass.duration"></a>
-
-#### PersianDateClass.duration(input, key) ⇒ <code>Duration</code>
-return Duration object
-
-**Kind**: static method of [<code>PersianDateClass</code>](#module_pDate--module.exports..PersianDateClass)  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>input</td>
-    </tr><tr>
-    <td>key</td>
-    </tr>  </tbody>
-</table>
-
 <a name="module_pDate--module.exports..PersianDateClass.isDuration"></a>
 
 #### PersianDateClass.isDuration(obj) ⇒ <code>boolean</code>
@@ -913,22 +929,6 @@ check if passed object is duration
     <td>year</td>
     </tr><tr>
     <td>month</td>
-    </tr>  </tbody>
-</table>
-
-<a name="module_pDate--module.exports..PersianDateClass.utc"></a>
-
-#### PersianDateClass.utc(input) ⇒ <code>\*</code>
-**Kind**: static method of [<code>PersianDateClass</code>](#module_pDate--module.exports..PersianDateClass)  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>input</td>
     </tr>  </tbody>
 </table>
 
