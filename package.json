@@ -33,6 +33,7 @@
     "repository": "git@github.com:babakhani/PersianDate.git",
     "homepage": "http://babakhani.github.io/PersianWebToolkit/docs/persian-date/",
     "devDependencies": {
+        "@biomejs/biome": "2.4.15",
         "@types/node": "22.16.2",
         "chai": "3.5.0",
         "concurrently": "9.2.0",
@@ -59,7 +60,11 @@
         "coverage": "nyc report --reporter=text-lcov | coveralls",
         "doc": "jsdoc2md --no-gfm --heading-depth 1 --example-lang js src/pDate.js > doc/document.md",
         "doctest": "markdown-doctest README.md && markdown-link-check README.md && markdown-doctest doc/leapyear.md && markdown-link-check doc/leapyear.md",
-        "sync-pkg": "sync-pkg"
+        "sync-pkg": "sync-pkg",
+        "lint": "biome lint .",
+        "format": "biome format --write .",
+        "check": "biome check .",
+        "check:fix": "biome check --write ."
     },
     "pre-commit": [
         "test",
