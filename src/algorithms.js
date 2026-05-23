@@ -1,6 +1,6 @@
 // Start algorithm class
-let ASTRO = require('./astro');
-let State = require('./on');
+import ASTRO from './astro.js';
+import State from './on.js';
 
 class Algorithms {
     constructor (parent) {
@@ -585,4 +585,4 @@ class Algorithms {
 }
 
 
-module.exports = Algorithms;
+export default Algorithms;
