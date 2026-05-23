@@ -238,6 +238,7 @@ class ASTRO {
             de = 0,
             ang;
 
+        // biome-ignore lint/suspicious/noAssignInExpressions: intentional inline assignment
         t3 = t * (t2 = t * t);
 
         /* Calculate angles.  The correspondence between the elements

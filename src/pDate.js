@@ -38,6 +38,7 @@ class PersianDateClass {
         this.setup(input);
         if (this.State.isInvalidDate) {
             // Return Date like message
+            // biome-ignore lint/correctness/noConstructorReturn: intentional Date-like invalid return
             return new Date([-1, -1]);
         }
     }

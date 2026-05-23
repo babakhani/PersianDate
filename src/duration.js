@@ -12,6 +12,7 @@ const absFloor = new Helpers().absFloor;
 class Duration {
     constructor(key, value) {
         let duration = {},
+            // biome-ignore lint/suspicious/noAssignInExpressions: intentional inline assignment to initialize this._data
             data = (this._data = {}),
             milliseconds = 0,
             normalizedUnit = normalizeDuration(key, value),
