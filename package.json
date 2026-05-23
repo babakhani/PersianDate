@@ -1,7 +1,24 @@
 {
     "name": "persian-date",
-    "version": "1.2.0",
+    "version": "1.2.1",
+    "description": "Javascript date library for parsing, validating, manipulating, and formatting persian dates System.",
+    "keywords": [
+        "calendar",
+        "date",
+        "jalali-date",
+        "khayyam",
+        "persian-date"
+    ],
+    "homepage": "http://babakhani.github.io/PersianWebToolkit/docs/persian-date/",
     "license": "MIT",
+    "author": "Reza Babakhani <babakhani.reza@gmail.com>",
+    "contributors": [
+        {
+            "name": "Reza Babakhani",
+            "email": "babakhani.reza@gmail.com"
+        }
+    ],
+    "repository": "git@github.com:babakhani/PersianDate.git",
     "main": "dist/persian-date.js",
     "module": "dist/persian-date.esm.mjs",
     "browser": "dist/persian-date.iife.js",
@@ -15,23 +32,20 @@
         },
         "./package.json": "./package.json"
     },
-    "author": "Reza Babakhani <babakhani.reza@gmail.com>",
-    "description": "Javascript date library for parsing, validating, manipulating, and formatting persian dates System.",
-    "keywords": [
-        "jalali-date",
-        "khayyam",
-        "date",
-        "calendar",
-        "persian-date"
-    ],
-    "contributors": [
-        {
-            "name": "Reza Babakhani",
-            "email": "babakhani.reza@gmail.com"
-        }
-    ],
-    "repository": "git@github.com:babakhani/PersianDate.git",
-    "homepage": "http://babakhani.github.io/PersianWebToolkit/docs/persian-date/",
+    "scripts": {
+        "start": "concurrently 'npm run dev' 'vite'",
+        "dev": "vite build --watch",
+        "build": "concurrently 'vite build --mode minified' 'vite build --mode unminified'",
+        "test": "nyc --reporter=html --reporter=text mocha --timeout 25000",
+        "coverage": "nyc report --reporter=text-lcov | coveralls",
+        "doc": "jsdoc2md --no-gfm --heading-depth 1 --example-lang js src/pDate.js > doc/document.md",
+        "doctest": "markdown-doctest README.md && markdown-link-check README.md && markdown-doctest doc/leapyear.md && markdown-link-check doc/leapyear.md",
+        "lint": "oxlint",
+        "lint:fix": "oxlint --fix",
+        "format": "oxfmt",
+        "format:check": "oxfmt --check",
+        "sync-pkg": "sync-pkg"
+    },
     "devDependencies": {
         "@types/node": "22.16.2",
         "chai": "3.5.0",
@@ -47,19 +61,11 @@
         "mocha-lcov-reporter": "0.0.2",
         "moment": "2.30.1",
         "nyc": "17.1.0",
+        "oxfmt": "0.51.0",
+        "oxlint": "1.66.0",
         "pre-commit": "1.2.2",
         "sync-pkg": "0.7.2",
         "vite": "8.0.14"
-    },
-    "scripts": {
-        "start": "concurrently 'npm run dev' 'vite'",
-        "dev": "vite build --watch",
-        "build": "concurrently 'vite build --mode minified' 'vite build --mode unminified'",
-        "test": "nyc --reporter=html --reporter=text mocha --timeout 25000",
-        "coverage": "nyc report --reporter=text-lcov | coveralls",
-        "doc": "jsdoc2md --no-gfm --heading-depth 1 --example-lang js src/pDate.js > doc/document.md",
-        "doctest": "markdown-doctest README.md && markdown-link-check README.md && markdown-doctest doc/leapyear.md && markdown-link-check doc/leapyear.md",
-        "sync-pkg": "sync-pkg"
     },
     "pre-commit": [
         "test",
