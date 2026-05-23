@@ -4,7 +4,7 @@ export default {
      * @returns {boolean}
      */
     isArray(input) {
-        return Object.prototype.toString.call(input) === "[object Array]";
+        return Object.prototype.toString.call(input) === '[object Array]';
     },
 
     /**
@@ -13,7 +13,7 @@ export default {
      * @returns {boolean}
      */
     isNumber(input) {
-        return typeof input === "number";
+        return typeof input === 'number';
     },
 
     /**

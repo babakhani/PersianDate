@@ -1,20 +1,22 @@
-import {durationUnit} from './constants.js';
+import { durationUnit } from './constants.js';
 
 class Helpers {
-
     /**
      * @description return converted string to persian digit
      * @param digit
      * @returns {string|*}
      */
-    toPersianDigit (digit, latinDigit = false) {
-        return digit.toString().replace(/\d+/g, function (digit) {
-            let enDigitArr = [], peDigitArr = [], i, j;
+    toPersianDigit(digit, latinDigit = false) {
+        return digit.toString().replace(/\d+/g, (digit) => {
+            let enDigitArr = [],
+                peDigitArr = [],
+                i,
+                j;
             for (i = 0; i < digit.length; i += 1) {
                 enDigitArr.push(digit.charCodeAt(i));
             }
             for (j = 0; j < enDigitArr.length; j += 1) {
-                peDigitArr.push(String.fromCharCode(enDigitArr[j] + ((!!latinDigit && latinDigit === true) ? 1584 : 1728)));
+                peDigitArr.push(String.fromCharCode(enDigitArr[j] + (latinDigit && latinDigit === true ? 1584 : 1728)));
             }
             return peDigitArr.join('');
         });
@@ -25,10 +27,10 @@ class Helpers {
      * @param targetLength
      * @returns {string}
      */
-    leftZeroFill (number, targetLength) {
-        let output = number + '';
+    leftZeroFill(number, targetLength) {
+        let output = `${number}`;
         while (output.length < targetLength) {
-            output = '0' + output;
+            output = `0${output}`;
         }
         return output;
     }
@@ -37,53 +39,45 @@ class Helpers {
      * @description normalize duration params and return valid param
      * @return {{unit: *, value: *}}
      */
-    normalizeDuration () {
-        let unit, value;
-        if (typeof arguments[0] === 'string') {
-            unit = arguments[0];
-            value = arguments[1];
-        }
-        else {
-            value = arguments[0];
-            unit = arguments[1];
+    normalizeDuration(arg0, arg1) {
+        let unit;
+        let value;
+        if (typeof arg0 === 'string') {
+            unit = arg0;
+            value = arg1;
+        } else {
+            value = arg0;
+            unit = arg1;
         }
         if (durationUnit.year.indexOf(unit) > -1) {
             unit = 'year';
-        }
-        else if (durationUnit.month.indexOf(unit) > -1) {
+        } else if (durationUnit.month.indexOf(unit) > -1) {
             unit = 'month';
-        }
-        else if (durationUnit.week.indexOf(unit) > -1) {
+        } else if (durationUnit.week.indexOf(unit) > -1) {
             unit = 'week';
-        }
-        else if (durationUnit.day.indexOf(unit) > -1) {
+        } else if (durationUnit.day.indexOf(unit) > -1) {
             unit = 'day';
-        }
-        else if (durationUnit.hour.indexOf(unit) > -1) {
+        } else if (durationUnit.hour.indexOf(unit) > -1) {
             unit = 'hour';
-        }
-        else if (durationUnit.minute.indexOf(unit) > -1) {
+        } else if (durationUnit.minute.indexOf(unit) > -1) {
             unit = 'minute';
-        }
-        else if (durationUnit.second.indexOf(unit) > -1) {
+        } else if (durationUnit.second.indexOf(unit) > -1) {
             unit = 'second';
-        }
-        else if (durationUnit.millisecond.indexOf(unit) > -1) {
+        } else if (durationUnit.millisecond.indexOf(unit) > -1) {
             unit = 'millisecond';
         }
         return {
             unit: unit,
-            value: value
+            value: value,
         };
     }
-
 
     /**
      *
      * @param number
      * @returns {number}
      */
-    absRound (number) {
+    absRound(number) {
         if (number < 0) {
             return Math.ceil(number);
         } else {
@@ -96,7 +90,7 @@ class Helpers {
      * @param number
      * @return {number}
      */
-    absFloor (number) {
+    absFloor(number) {
         if (number < 0) {
             // -0 -> 0
             return Math.ceil(number) || 0;

@@ -1,11 +1,10 @@
 /*global describe,it*/
-const assert = require('assert');
+const assert = require('node:assert');
 const pDate = require('../dist/persian-date.js');
 const defaultArray = [2017, 1, 1, 12, 32, 40];
 
-
-describe('Create Instance', function () {
-    it('From Array [2017, 1, 12, 1, 1, 1]', function () {
+describe('Create Instance', () => {
+    it('From Array [2017, 1, 12, 1, 1, 1]', () => {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
         assert.deepEqual(new pDate([2017, 2, 29, 1, 1, 1]).toArray(), [2017, 3, 1, 1, 1, 1, 0]);
@@ -16,8 +15,8 @@ describe('Create Instance', function () {
     });
 });
 
-describe('format', function () {
-    it('llll', function () {
+describe('format', () => {
+    it('llll', () => {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
         assert.deepEqual(new pDate(defaultArray).format(), '2017-01-01 12:32:40 PM');
@@ -32,16 +31,15 @@ describe('format', function () {
     });
 });
 
-
-describe('isLeapYear', function () {
-    it('2017 : Normal Year ', function () {
+describe('isLeapYear', () => {
+    it('2017 : Normal Year ', () => {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
         assert.deepEqual(new pDate([2017, 2, 29, 1, 1, 1]).isLeapYear(), false);
         pDate.toCalendar('persian');
         pDate.toLocale('fa');
     });
-    it('2020: Leap Year', function () {
+    it('2020: Leap Year', () => {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
         assert.deepEqual(new pDate([2020, 2, 29, 1, 1, 1]).isLeapYear(), true);
@@ -50,15 +48,15 @@ describe('isLeapYear', function () {
     });
 });
 
-describe('isLeapYear', function () {
-    it('2017 : Normal Year ', function () {
+describe('isLeapYear', () => {
+    it('2017 : Normal Year ', () => {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
         assert.deepEqual(new pDate([2017, 2, 29, 1, 1, 1]).isLeapYear(), false);
         pDate.toCalendar('persian');
         pDate.toLocale('fa');
     });
-    it('2020: Leap Year', function () {
+    it('2020: Leap Year', () => {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
         assert.deepEqual(new pDate([2020, 2, 29, 1, 1, 1]).isLeapYear(), true);
@@ -67,9 +65,8 @@ describe('isLeapYear', function () {
     });
 });
 
-describe('daysInMonth', function () {
-
-    it('Check in 12 month normal year', function () {
+describe('daysInMonth', () => {
+    it('Check in 12 month normal year', () => {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
         assert.deepEqual(new pDate([2017, 1, 12]).daysInMonth(), 31);
@@ -88,7 +85,7 @@ describe('daysInMonth', function () {
         pDate.toLocale('fa');
     });
 
-    it('Check in 12 month leap year', function () {
+    it('Check in 12 month leap year', () => {
         pDate.toCalendar('gregorian');
         pDate.toLocale('en');
         assert.deepEqual(new pDate([2020, 1, 12]).daysInMonth(), 31);
@@ -107,4 +104,3 @@ describe('daysInMonth', function () {
         pDate.toLocale('fa');
     });
 });
-
