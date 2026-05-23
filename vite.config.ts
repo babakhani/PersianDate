@@ -33,9 +33,7 @@ export default defineConfig(({ command, mode }) => {
                     {
                         format: "cjs",
                         exports: "default",
-                        entryFileNames: isMinified
-                            ? `persian-date.min.js`
-                            : `persian-date.js`,
+                        entryFileNames: isMinified ? `persian-date.min.js` : `persian-date.js`,
                         sourcemap: !isMinified,
                         minify: isMinified,
                     },

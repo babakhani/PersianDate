@@ -1,11 +1,11 @@
 {
-  "strict": false,
-  "node": true,
-  "esversion": 6,
-  "globals": {
-    "window": true,
-    "inherit": true,
-    "clearTimeout": false,
-    "setTimeout": false
-  }
+    "strict": false,
+    "node": true,
+    "esversion": 6,
+    "globals": {
+        "window": true,
+        "inherit": true,
+        "clearTimeout": false,
+        "setTimeout": false
+    }
 }
