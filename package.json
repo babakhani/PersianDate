@@ -65,7 +65,7 @@
         "oxlint": "1.66.0",
         "pre-commit": "1.2.2",
         "sync-pkg": "0.7.2",
-        "vite": "8.0.14"
+        "vite": "8.0.16"
     },
     "pre-commit": [
         "test",
